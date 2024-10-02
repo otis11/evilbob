@@ -1,6 +1,7 @@
 :root {
 	--bob-color-base-100: #2b2c2f;
-	--bob-color-base-content: #d9dce4;
+	--bob-color-base-content-100: #d9dce4;
+	--bob-color-base-content-200: #a0a0a0;
 }
 
 * {
@@ -11,10 +12,10 @@
 
 html {
 	background-color: var(--bob-color-base-100);
-	color: var(--bob-color-base-content);
+	color: var(--bob-color-base-content-100);
 }
 
-#bob {
+.search-container {
 	background-color: #2b2c2f;
 	width: 100%;
 	border-radius: 8px;
@@ -22,21 +23,38 @@ html {
 	font-family: sans-serif;
 }
 
-#bob input {
+.search-container input {
 	outline: none;
 	border: none;
 	padding: 20px;
 	width: 100%;
 	font-size: 18px;
 	background-color: #2b2c2f;
-	color: var(--bob-color-base-content);
+	color: var(--bob-color-base-content-100);
 }
 
-#bob ul li {
+.result {
 	padding: 10px 20px;
 	list-style: none;
 }
 
-#bob ul li[aria-selected] {
+.result[aria-selected] {
 	background-color: #232323;
+}
+
+.result-title {
+	font-weight: bold;
+	margin-bottom: 4px;
+	font-size: 1rem;
+}
+
+.result-description {
+	opacity: 0.7;
+	font-size: 0.75rem;
+}
+
+.result-group-title {
+	color: var(--bob-color-base-content-200);
+	font-size: 0.75rem;
+	padding: 8px;
 }

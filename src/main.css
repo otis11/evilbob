@@ -1,0 +1,42 @@
+:root {
+	--bob-color-base-100: #2b2c2f;
+	--bob-color-base-content: #d9dce4;
+}
+
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+}
+
+html {
+	background-color: var(--bob-color-base-100);
+	color: var(--bob-color-base-content);
+}
+
+#bob {
+	background-color: #2b2c2f;
+	width: 100%;
+	border-radius: 8px;
+	box-shadow: 0 16px 70px rgba(0, 0, 0, 0.2);
+	font-family: sans-serif;
+}
+
+#bob input {
+	outline: none;
+	border: none;
+	padding: 20px;
+	width: 100%;
+	font-size: 18px;
+	background-color: #2b2c2f;
+	color: var(--bob-color-base-content);
+}
+
+#bob ul li {
+	padding: 10px 20px;
+	list-style: none;
+}
+
+#bob ul li[aria-selected] {
+	background-color: #232323;
+}

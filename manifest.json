@@ -1,0 +1,34 @@
+{
+    "manifest_version": 3,
+    "name": "bob",
+    "description": "bob",
+    "version": "0.1",
+    "icons": {
+      "16": "images/icon-16.png",
+      "32": "images/icon-32.png",
+      "48": "images/icon-48.png",
+      "128": "images/icon-128.png"
+    },
+    "background": {
+      "service_worker": "background.js"
+    },
+    "action": {
+      "default_icon": {
+        "16": "images/icon-16.png",
+        "32": "images/icon-32.png",
+        "48": "images/icon-48.png",
+        "128": "images/icon-128.png"
+      }
+    },
+    "commands": {
+      "bob.trigger": {
+        "suggested_key": {
+          "default": "Ctrl+Shift+K"
+        },
+        "description": "Trigger bob on Ctrl+Shift+K",
+        "global": true
+      }
+    },
+    "permissions": ["scripting", "activeTab", "tabs"],
+    "host_permissions": ["<all_urls>"]
+  }

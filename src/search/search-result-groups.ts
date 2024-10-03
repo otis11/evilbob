@@ -1,7 +1,11 @@
 import { SearchResultGroupBookmarks } from "./bookmarks";
 import type { SearchResultGroup } from "./search-result-group";
+import { SearchResultGroupSystemCpu } from "./system-cpu";
 
-const searchResultGroups = [new SearchResultGroupBookmarks()];
+const searchResultGroups = [
+	new SearchResultGroupBookmarks(),
+	new SearchResultGroupSystemCpu(),
+];
 
 export async function getSearchGroupsWithPermission() {
 	const groups: SearchResultGroup[] = [];

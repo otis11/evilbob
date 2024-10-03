@@ -35,7 +35,7 @@ export class SearchResultGroupBookmarks extends SearchResultGroup {
 				title: item.title,
 				description: item.url || "",
 				id: item.id,
-				type: "bookmark",
+				icon: iconBookmark,
 				searchText:
 					item.title.toLowerCase() + (item.url?.toLowerCase() || ""),
 			});

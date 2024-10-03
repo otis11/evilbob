@@ -1,12 +1,12 @@
 import { shortcutAsHtmlElement } from "../shortcut";
 
 export type SearchResult = {
-	type: "bookmark";
 	title: string;
 	description: string;
 	id: string;
 	searchText: string;
 	shortcut?: string[];
+	icon?: string;
 };
 
 export type SearchResultGroupConfig = {
@@ -71,7 +71,6 @@ export abstract class SearchResultGroup {
 		for (const [index, result] of this.results.entries()) {
 			const li = document.createElement("li");
 			li.classList.add("result");
-			li.setAttribute("data-type", result.type);
 			li.setAttribute("data-id", result.id);
 			li.setAttribute("data-search", result.searchText);
 			li.setAttribute("data-index", index.toString());
@@ -87,12 +86,15 @@ export abstract class SearchResultGroup {
 			description.classList.add("result-description");
 			description.innerText = result.description;
 
-			const icon = document.createElement("span");
-			icon.classList.add("result-icon");
-			icon.innerHTML = this.icon;
+			if (result.icon) {
+				const icon = document.createElement("span");
+				icon.classList.add("result-icon");
+				icon.innerHTML = result.icon;
+				li.append(icon);
+			}
 
 			content.append(title, description);
-			li.append(icon, content);
+			li.append(content);
 			resultElements.push(li);
 		}
 		return resultElements;

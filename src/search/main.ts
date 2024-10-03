@@ -5,6 +5,7 @@ import { getSearchGroupsWithPermission } from "./search-result-groups";
 
 let searchResultGroups: SearchResultGroup[] = [];
 let selectedSearchResultIndex = 0;
+let filteredSearchElements: NodeListOf<HTMLElement> = [];
 
 const searchInput = document.getElementById("search") as HTMLInputElement;
 const resultsContainer = document.getElementById("results") as HTMLElement;
@@ -23,12 +24,10 @@ function filterSearchResults() {
 			child.classList.add("hidden");
 		}
 	}
-	const firstResultNotHidden =
-		resultsContainer.querySelector("li:not(.hidden)");
+	filteredSearchElements =
+		resultsContainer.querySelectorAll<HTMLElement>("li:not(.hidden)");
 	removeHighlightSelectedIndex();
-	selectedSearchResultIndex = Number.parseInt(
-		firstResultNotHidden?.getAttribute("data-index") || "0",
-	);
+	selectedSearchResultIndex = 0;
 	showSelectedIndex();
 }
 
@@ -50,10 +49,7 @@ function renderSearchResults() {
 function onKeyUp(event: KeyboardEvent) {
 	if (event.key === "ArrowDown") {
 		removeHighlightSelectedIndex();
-		if (
-			selectedSearchResultIndex ===
-			resultsContainer.children.length - 1
-		) {
+		if (selectedSearchResultIndex === filteredSearchElements.length - 1) {
 			selectedSearchResultIndex = 0;
 		} else {
 			selectedSearchResultIndex += 1;
@@ -66,7 +62,7 @@ function onKeyUp(event: KeyboardEvent) {
 			selectedSearchResultIndex === 0 ||
 			selectedSearchResultIndex === -1
 		) {
-			selectedSearchResultIndex = resultsContainer.children.length - 1;
+			selectedSearchResultIndex = filteredSearchElements.length - 1;
 		} else {
 			selectedSearchResultIndex -= 1;
 		}
@@ -83,17 +79,17 @@ function onKeyDown(event: KeyboardEvent) {
 }
 
 function showSelectedIndex() {
-	resultsContainer.children[selectedSearchResultIndex].setAttribute(
+	filteredSearchElements[selectedSearchResultIndex].setAttribute(
 		"aria-selected",
 		"",
 	);
-	resultsContainer.children[selectedSearchResultIndex].scrollIntoView({
+	filteredSearchElements[selectedSearchResultIndex].scrollIntoView({
 		behavior: "smooth",
 	});
 }
 
 function removeHighlightSelectedIndex() {
-	resultsContainer.children[selectedSearchResultIndex].removeAttribute(
+	filteredSearchElements[selectedSearchResultIndex].removeAttribute(
 		"aria-selected",
 	);
 }

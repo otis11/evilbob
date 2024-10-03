@@ -20,8 +20,8 @@
 	padding: 10px 12px;
 	list-style: none;
 	scroll-margin: 61px;
-    display: flex;
-    align-items: center;
+	display: flex;
+	align-items: center;
 }
 
 .result[aria-selected] {
@@ -40,7 +40,7 @@
 }
 
 .result-icon {
-    margin-right: 12px;
+	margin-right: 12px;
 }
 
 .result-group-title {

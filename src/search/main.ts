@@ -1,23 +1,10 @@
-import "../themes"
-import "../global.css"
-import { bobConfig } from "../config";
-import { iconBookmark } from "../icons";
+import "../themes";
+import "../global.css";
+import type { SearchResultGroup } from "./search-result-group";
+import { getGroupsWithPermission } from "./search-result-groups";
 
-const searchResultGroups: SearchResultGroup[] = [];
+let searchResultGroups: SearchResultGroup[] = [];
 let selectedSearchResultIndex = 0;
-
-type SearchResultGroup = {
-	title: string;
-	results: SearchResult[];
-};
-
-type SearchResult = {
-	type: "bookmark";
-	title: string;
-	description: string;
-	id: string;
-	searchText: string;
-};
 
 const searchInput = document.getElementById("search") as HTMLInputElement;
 const resultsContainer = document.getElementById("results") as HTMLElement;
@@ -45,30 +32,6 @@ function filterSearchResults() {
 	showSelectedIndex();
 }
 
-function flattenBookmarksTree(tree: chrome.bookmarks.BookmarkTreeNode[]) {
-	const results: SearchResult[] = [];
-	for (const item of tree) {
-		// is item a folder? TODO i dont think folders are relevant, maybe for ui information
-		// if(item.dateGroupModified) {
-		//     continue
-		// }
-		if (item.children) {
-			results.push(...flattenBookmarksTree(item.children));
-			continue;
-		}
-
-		results.push({
-			title: item.title,
-			description: item.url || "",
-			id: item.id,
-			type: "bookmark",
-			searchText:
-				item.title.toLowerCase() + (item.url?.toLowerCase() || ""),
-		});
-	}
-	return results;
-}
-
 function renderSearchResults() {
 	if (!resultsContainer) {
 		console.error("no results container found");
@@ -78,34 +41,7 @@ function renderSearchResults() {
 	resultsContainer.innerHTML = "";
 
 	for (const group of searchResultGroups) {
-		for (const [index, result] of group.results.entries()) {
-			const li = document.createElement("li");
-			li.classList.add("result");
-			li.setAttribute("data-type", result.type);
-			li.setAttribute("data-id", result.id);
-			li.setAttribute("data-search", result.searchText);
-			li.setAttribute("data-index", index.toString());
-
-            const content = document.createElement('div')
-            content.classList.add('result-content')
-
-			const title = document.createElement("div");
-			title.classList.add("result-title");
-			title.innerText = result.title;
-
-			const description = document.createElement("div");
-			description.classList.add("result-description");
-			description.innerText = result.description;
-
-            const icon = document.createElement('span')
-            icon.classList.add('result-icon')
-            icon.innerHTML = iconBookmark
-
-            content.append(title, description)
-			li.append(icon, content);
-
-			resultsContainer.append(li);
-		}
+		resultsContainer.append(...group.asHtmlElements());
 	}
 
 	showSelectedIndex();
@@ -173,12 +109,7 @@ window.addEventListener("keydown", (event) => {
 	}
 });
 
-if (bobConfig.search.bookmarks.enabled) {
-	chrome.bookmarks.getTree().then((tree) => {
-		searchResultGroups.push({
-			title: "Bookmarks",
-			results: flattenBookmarksTree(tree),
-		});
-		renderSearchResults();
-	});
-}
+(async () => {
+	searchResultGroups = await getGroupsWithPermission();
+	renderSearchResults();
+})();

@@ -29,10 +29,10 @@ await Promise.all([
 	}),
 	// search
 	build({
-        root: './src/search',
-        base: './',
+		root: "./src/search",
+		base: "./",
 		build: {
-            outDir: '../../dist/search',
+			outDir: "../../dist/search",
 			emptyOutDir: false,
 			watch,
 		},

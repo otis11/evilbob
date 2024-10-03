@@ -17,17 +17,24 @@ const resultsContainer = document.getElementById("results") as HTMLElement;
 function filterSearchResults() {
 	const searchString = searchInput?.value;
 	// TODO improve search, Levenshtein distance algorithm? what is good?
-    for(const child of Array.from(resultsContainer.children)) {
-        if(child.getAttribute('data-search')?.includes(searchString.toLowerCase())) {
-            child.classList.remove('hidden')
-        } else {
-            child.classList.add('hidden')
-        }
-    }
-    const firstResultNotHidden = resultsContainer.querySelector('li:not(.hidden)')
-    removeHighlightSelectedIndex()
-    selectedSearchResultIndex = parseInt(firstResultNotHidden?.getAttribute('data-index') || '0')
-    showSelectedIndex()
+	for (const child of Array.from(resultsContainer.children)) {
+		if (
+			child
+				.getAttribute("data-search")
+				?.includes(searchString.toLowerCase())
+		) {
+			child.classList.remove("hidden");
+		} else {
+			child.classList.add("hidden");
+		}
+	}
+	const firstResultNotHidden =
+		resultsContainer.querySelector("li:not(.hidden)");
+	removeHighlightSelectedIndex();
+	selectedSearchResultIndex = Number.parseInt(
+		firstResultNotHidden?.getAttribute("data-index") || "0",
+	);
+	showSelectedIndex();
 }
 
 function flattenBookmarksTree(tree: chrome.bookmarks.BookmarkTreeNode[]) {
@@ -77,7 +84,7 @@ function renderSearchResults() {
 		resultsContainer.append(li);
 	}
 
-    showSelectedIndex()
+	showSelectedIndex();
 }
 
 function onKeyUp(event: KeyboardEvent) {

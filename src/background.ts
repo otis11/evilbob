@@ -13,6 +13,10 @@ chrome.commands.onCommand.addListener((command) => {
 	}
 });
 
+chrome.action.onClicked.addListener(() => {
+	chrome.runtime.openOptionsPage();
+});
+
 function openBob() {
 	chrome.windows.getLastFocused({ populate: false }, (currentWindow) => {
 		chrome.windows.get(openBobWindowId, (activeBobWindow) => {

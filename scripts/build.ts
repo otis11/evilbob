@@ -37,4 +37,14 @@ await Promise.all([
 			watch,
 		},
 	}),
+	// options
+	build({
+		root: "./src/options",
+		base: "./",
+		build: {
+			outDir: "../../dist/options",
+			emptyOutDir: false,
+			watch,
+		},
+	}),
 ]);

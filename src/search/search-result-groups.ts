@@ -3,7 +3,7 @@ import type { SearchResultGroup } from "./search-result-group";
 
 const searchResultGroups = [new SearchResultGroupBookmarks()];
 
-export async function getGroupsWithPermission() {
+export async function getSearchGroupsWithPermission() {
 	const groups: SearchResultGroup[] = [];
 	for (const group of searchResultGroups) {
 		if (await group.hasPermission()) {
@@ -11,4 +11,8 @@ export async function getGroupsWithPermission() {
 		}
 	}
 	return groups;
+}
+
+export function getSearchGroups() {
+	return searchResultGroups;
 }

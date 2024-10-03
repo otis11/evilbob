@@ -12,6 +12,7 @@
 	"background": {
 		"service_worker": "background.js"
 	},
+	"options_page": "options/index.html",
 	"action": {
 		"default_icon": {
 			"16": "images/icon-16.png",
@@ -29,6 +30,6 @@
 			"global": true
 		}
 	},
-	"permissions": [],
-	"host_permissions": []
+	"optional_permissions": ["bookmarks", "storage"],
+	"optional_host_permissions": ["https://*/*"]
 }

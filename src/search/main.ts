@@ -1,7 +1,7 @@
 import "../themes";
 import "../global.css";
 import type { SearchResultGroup } from "./search-result-group";
-import { getGroupsWithPermission } from "./search-result-groups";
+import { getSearchGroupsWithPermission } from "./search-result-groups";
 
 let searchResultGroups: SearchResultGroup[] = [];
 let selectedSearchResultIndex = 0;
@@ -110,6 +110,8 @@ window.addEventListener("keydown", (event) => {
 });
 
 (async () => {
-	searchResultGroups = await getGroupsWithPermission();
+	searchResultGroups = await getSearchGroupsWithPermission();
+	const promises = searchResultGroups.map((group) => group.loadResults());
+	await Promise.all(promises);
 	renderSearchResults();
 })();

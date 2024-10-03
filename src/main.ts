@@ -1,7 +1,12 @@
 import { bobConfig } from "./config";
 
-const searchResults: SearchResult[] = [];
+const searchResultGroups: SearchResultGroup[] = [];
 let selectedSearchResultIndex = 0;
+
+type SearchResultGroup = {
+	title: string;
+	results: SearchResult[];
+};
 
 type SearchResult = {
 	type: "bookmark";
@@ -40,9 +45,15 @@ function filterSearchResults() {
 function flattenBookmarksTree(tree: chrome.bookmarks.BookmarkTreeNode[]) {
 	const results: SearchResult[] = [];
 	for (const item of tree) {
+		// is item a folder? TODO i dont think folders are relevant, maybe for ui information
+		// if(item.dateGroupModified) {
+		//     continue
+		// }
 		if (item.children) {
 			results.push(...flattenBookmarksTree(item.children));
+			continue;
 		}
+
 		results.push({
 			title: item.title,
 			description: item.url || "",
@@ -63,25 +74,27 @@ function renderSearchResults() {
 
 	resultsContainer.innerHTML = "";
 
-	for (const [index, result] of searchResults.entries()) {
-		const li = document.createElement("li");
-		li.classList.add("result");
-		li.setAttribute("data-type", result.type);
-		li.setAttribute("data-id", result.id);
-		li.setAttribute("data-search", result.searchText);
-		li.setAttribute("data-index", index.toString());
+	for (const group of searchResultGroups) {
+		for (const [index, result] of group.results.entries()) {
+			const li = document.createElement("li");
+			li.classList.add("result");
+			li.setAttribute("data-type", result.type);
+			li.setAttribute("data-id", result.id);
+			li.setAttribute("data-search", result.searchText);
+			li.setAttribute("data-index", index.toString());
 
-		const title = document.createElement("div");
-		title.classList.add("result-title");
-		title.innerText = result.title;
+			const title = document.createElement("div");
+			title.classList.add("result-title");
+			title.innerText = result.title;
 
-		const description = document.createElement("div");
-		description.classList.add("result-description");
-		description.innerText = result.description;
+			const description = document.createElement("div");
+			description.classList.add("result-description");
+			description.innerText = result.description;
 
-		li.append(title, description);
+			li.append(title, description);
 
-		resultsContainer.append(li);
+			resultsContainer.append(li);
+		}
 	}
 
 	showSelectedIndex();
@@ -151,7 +164,10 @@ window.addEventListener("keydown", (event) => {
 
 if (bobConfig.search.bookmarks.enabled) {
 	chrome.bookmarks.getTree().then((tree) => {
-		searchResults.push(...flattenBookmarksTree(tree));
+		searchResultGroups.push({
+            title: "Bookmarks",
+            results: flattenBookmarksTree(tree)
+        });
 		renderSearchResults();
 	});
 }

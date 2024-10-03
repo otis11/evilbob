@@ -1,6 +1,7 @@
 import "../themes"
 import "../global.css"
 import { bobConfig } from "../config";
+import { iconBookmark } from "../icons";
 
 const searchResultGroups: SearchResultGroup[] = [];
 let selectedSearchResultIndex = 0;
@@ -85,6 +86,9 @@ function renderSearchResults() {
 			li.setAttribute("data-search", result.searchText);
 			li.setAttribute("data-index", index.toString());
 
+            const content = document.createElement('div')
+            content.classList.add('result-content')
+
 			const title = document.createElement("div");
 			title.classList.add("result-title");
 			title.innerText = result.title;
@@ -93,7 +97,12 @@ function renderSearchResults() {
 			description.classList.add("result-description");
 			description.innerText = result.description;
 
-			li.append(title, description);
+            const icon = document.createElement('span')
+            icon.classList.add('result-icon')
+            icon.innerHTML = iconBookmark
+
+            content.append(title, description)
+			li.append(icon, content);
 
 			resultsContainer.append(li);
 		}

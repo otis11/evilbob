@@ -8,3 +8,10 @@ html {
 	background-color: var(--bob-color-base-100);
 	color: var(--bob-color-base-content-100);
 }
+
+svg {
+    width: 1em;
+    height: 1em;
+    fill: currentColor;
+    font-size: 24px;
+}

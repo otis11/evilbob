@@ -2,4 +2,6 @@ html[data-theme="dark"] {
 	--bob-color-base-100: #2b2c2f;
 	--bob-color-base-content-100: #d9dce4;
 	--bob-color-base-content-200: #a0a0a0;
+	--bob-color-base-content-300: rgba(166, 173, 187, 0.2);
+	--bob-shortcut-font-size: 13px;
 }

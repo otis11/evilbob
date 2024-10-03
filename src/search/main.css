@@ -52,3 +52,7 @@
 .hidden {
 	display: none;
 }
+
+.shortcut {
+	margin-left: auto;
+}

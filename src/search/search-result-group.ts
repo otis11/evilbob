@@ -1,9 +1,12 @@
+import { shortcutAsHtmlElement } from "../shortcut";
+
 export type SearchResult = {
 	type: "bookmark";
 	title: string;
 	description: string;
 	id: string;
 	searchText: string;
+	shortcut?: string[];
 };
 
 export type SearchResultGroupConfig = {
@@ -11,6 +14,7 @@ export type SearchResultGroupConfig = {
 	permissions?: string[];
 	hostPermissions?: string[];
 	icon?: string;
+	shortcut?: string[];
 };
 export abstract class SearchResultGroup {
 	public name: string;
@@ -18,6 +22,7 @@ export abstract class SearchResultGroup {
 	public permissions: string[];
 	public hostPermissions: string[];
 	private results: SearchResult[];
+	public shortcut: string[];
 
 	constructor(config: SearchResultGroupConfig) {
 		this.name = config.name;
@@ -25,6 +30,7 @@ export abstract class SearchResultGroup {
 		this.hostPermissions = config.hostPermissions || [];
 		this.icon = config.icon || "";
 		this.results = [];
+		this.shortcut = config.shortcut || [];
 	}
 
 	public async hasPermission() {
@@ -47,6 +53,21 @@ export abstract class SearchResultGroup {
 
 	public asHtmlElements() {
 		const resultElements: HTMLLIElement[] = [];
+		const groupLi = document.createElement("li");
+		groupLi.classList.add("result");
+
+		const groupTitle = document.createElement("div");
+		groupTitle.classList.add("result-group-title");
+		groupTitle.innerText = this.name;
+		groupLi.setAttribute("data-search", this.name);
+		groupLi.append(groupTitle);
+
+		if (this.shortcut.length) {
+			groupLi.append(shortcutAsHtmlElement(this.shortcut));
+		}
+
+		resultElements.push(groupLi);
+
 		for (const [index, result] of this.results.entries()) {
 			const li = document.createElement("li");
 			li.classList.add("result");

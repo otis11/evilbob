@@ -7,6 +7,7 @@ export class SearchResultGroupBookmarks extends SearchResultGroup {
 			name: "bookmarks",
 			permissions: ["bookmarks"],
 			icon: iconBookmark,
+			shortcut: ["Ctrl", "Shift", "O"],
 		});
 	}
 

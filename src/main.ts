@@ -1,11 +1,7 @@
 import { bobConfig } from "./config";
 
-const searchResultGroups: SearchResultGroup[] = [];
-
-type SearchResultGroup = {
-	title: string;
-	results: SearchResult[];
-};
+const searchResults: SearchResult[] = [];
+let selectedSearchResultIndex = 0;
 
 type SearchResult = {
 	type: "bookmark";
@@ -15,14 +11,23 @@ type SearchResult = {
 	searchText: string;
 };
 
-const searchInput = document.getElementById(
-	"search",
-) as HTMLInputElement | null;
-const resultsContainer = document.getElementById("results");
+const searchInput = document.getElementById("search") as HTMLInputElement;
+const resultsContainer = document.getElementById("results") as HTMLElement;
 
 function filterSearchResults() {
 	const searchString = searchInput?.value;
 	// TODO improve search, Levenshtein distance algorithm? what is good?
+    for(const child of Array.from(resultsContainer.children)) {
+        if(child.getAttribute('data-search')?.includes(searchString.toLowerCase())) {
+            child.classList.remove('hidden')
+        } else {
+            child.classList.add('hidden')
+        }
+    }
+    const firstResultNotHidden = resultsContainer.querySelector('li:not(.hidden)')
+    removeHighlightSelectedIndex()
+    selectedSearchResultIndex = parseInt(firstResultNotHidden?.getAttribute('data-index') || '0')
+    showSelectedIndex()
 }
 
 function flattenBookmarksTree(tree: chrome.bookmarks.BookmarkTreeNode[]) {
@@ -51,35 +56,84 @@ function renderSearchResults() {
 
 	resultsContainer.innerHTML = "";
 
-	for (const group of searchResultGroups) {
-		const div = document.createElement("div");
-		div.classList.add("result-group-title");
-		div.innerText = group.title;
-		resultsContainer.append(div);
+	for (const [index, result] of searchResults.entries()) {
+		const li = document.createElement("li");
+		li.classList.add("result");
+		li.setAttribute("data-type", result.type);
+		li.setAttribute("data-id", result.id);
+		li.setAttribute("data-search", result.searchText);
+		li.setAttribute("data-index", index.toString());
 
-		for (const result of group.results) {
-			const li = document.createElement("li");
-			li.classList.add("result");
-			li.setAttribute("data-type", result.type);
-			li.setAttribute("data-id", result.id);
-			li.setAttribute("data-search", result.searchText);
+		const title = document.createElement("div");
+		title.classList.add("result-title");
+		title.innerText = result.title;
 
-			const title = document.createElement("div");
-			title.classList.add("result-title");
-			title.innerText = result.title;
+		const description = document.createElement("div");
+		description.classList.add("result-description");
+		description.innerText = result.description;
 
-			const description = document.createElement("div");
-			description.classList.add("result-description");
-			description.innerText = result.description;
+		li.append(title, description);
 
-			li.append(title, description);
+		resultsContainer.append(li);
+	}
 
-			resultsContainer.append(li);
+    showSelectedIndex()
+}
+
+function onKeyUp(event: KeyboardEvent) {
+	if (event.key === "ArrowDown") {
+		removeHighlightSelectedIndex();
+		if (
+			selectedSearchResultIndex ===
+			resultsContainer.children.length - 1
+		) {
+			selectedSearchResultIndex = 0;
+		} else {
+			selectedSearchResultIndex += 1;
 		}
+		showSelectedIndex();
+	}
+	if (event.key === "ArrowUp") {
+		removeHighlightSelectedIndex();
+		if (
+			selectedSearchResultIndex === 0 ||
+			selectedSearchResultIndex === -1
+		) {
+			selectedSearchResultIndex = resultsContainer.children.length - 1;
+		} else {
+			selectedSearchResultIndex -= 1;
+		}
+		showSelectedIndex();
+	}
+	if (event.key === "Enter") {
 	}
 }
 
+function onKeyDown(event: KeyboardEvent) {
+	if (event.key === "ArrowDown" || event.key === "ArrowUp") {
+		event.preventDefault();
+	}
+}
+
+function showSelectedIndex() {
+	resultsContainer.children[selectedSearchResultIndex].setAttribute(
+		"aria-selected",
+		"",
+	);
+	resultsContainer.children[selectedSearchResultIndex].scrollIntoView({
+		behavior: "smooth",
+	});
+}
+
+function removeHighlightSelectedIndex() {
+	resultsContainer.children[selectedSearchResultIndex].removeAttribute(
+		"aria-selected",
+	);
+}
+
 searchInput?.addEventListener("input", filterSearchResults);
+searchInput?.addEventListener("keydown", onKeyDown);
+searchInput?.addEventListener("keyup", onKeyUp);
 searchInput?.focus();
 
 window.addEventListener("keydown", (event) => {
@@ -90,10 +144,7 @@ window.addEventListener("keydown", (event) => {
 
 if (bobConfig.search.bookmarks.enabled) {
 	chrome.bookmarks.getTree().then((tree) => {
-		searchResultGroups.push({
-			title: "Bookmarks",
-			results: flattenBookmarksTree(tree),
-		});
+		searchResults.push(...flattenBookmarksTree(tree));
 		renderSearchResults();
 	});
 }

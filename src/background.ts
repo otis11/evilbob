@@ -21,9 +21,9 @@ function openBob() {
 	chrome.windows.getLastFocused({ populate: false }, (currentWindow) => {
 		chrome.windows.get(openBobWindowId, (activeBobWindow) => {
 			if (activeBobWindow) {
-                chrome.windows.update(openBobWindowId, {
-                    focused: true,
-                })
+				chrome.windows.update(openBobWindowId, {
+					focused: true,
+				});
 				return;
 			}
 

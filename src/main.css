@@ -36,6 +36,7 @@ html {
 .result {
 	padding: 10px 20px;
 	list-style: none;
+	scroll-margin: 61px;
 }
 
 .result[aria-selected] {
@@ -57,4 +58,8 @@ html {
 	color: var(--bob-color-base-content-200);
 	font-size: 0.75rem;
 	padding: 8px;
+}
+
+.hidden {
+    display: none;
 }

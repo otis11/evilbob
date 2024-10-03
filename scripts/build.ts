@@ -27,9 +27,12 @@ await Promise.all([
 			},
 		},
 	}),
-	// bob window
+	// search
 	build({
+        root: './src/search',
+        base: './',
 		build: {
+            outDir: '../../dist/search',
 			emptyOutDir: false,
 			watch,
 		},

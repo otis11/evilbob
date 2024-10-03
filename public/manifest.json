@@ -29,6 +29,6 @@
 			"global": true
 		}
 	},
-	"permissions": ["scripting", "activeTab", "tabs", "bookmarks"],
+	"permissions": ["scripting", "activeTab", "tabs", "bookmarks", "storage"],
 	"host_permissions": ["<all_urls>"]
 }

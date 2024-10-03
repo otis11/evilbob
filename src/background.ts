@@ -13,10 +13,6 @@ chrome.commands.onCommand.addListener((command) => {
 	}
 });
 
-chrome.bookmarks.getTree().then((tree) => {
-	console.log(tree);
-});
-
 function openBob() {
 	chrome.windows.getLastFocused({ populate: false }, (currentWindow) => {
 		chrome.windows.get(openBobWindowId, (activeBobWindow) => {
@@ -39,7 +35,7 @@ function openBob() {
 
 			chrome.windows.create(
 				{
-					url: "index.html",
+					url: "search/index.html",
 					type: "popup",
 					width: width,
 					height: height,

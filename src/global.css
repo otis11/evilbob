@@ -1,0 +1,10 @@
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+}
+
+html {
+	background-color: var(--bob-color-base-100);
+	color: var(--bob-color-base-content-100);
+}

@@ -1,5 +1,6 @@
 import { iconBookmark } from "../icons";
-import { type SearchResult, SearchResultGroup } from "./search-result-group";
+import { SearchResult } from "./search-result";
+import { SearchResultGroup } from "./search-result-group";
 
 export class SearchResultGroupBookmarks extends SearchResultGroup {
 	constructor() {
@@ -31,15 +32,24 @@ export class SearchResultGroupBookmarks extends SearchResultGroup {
 				continue;
 			}
 
-			results.push({
-				title: item.title,
-				description: item.url || "",
-				id: item.id,
-				icon: iconBookmark,
-				searchText:
-					item.title.toLowerCase() + (item.url?.toLowerCase() || ""),
-			});
+			results.push(
+				new SearchResultBookmark({
+					title: item.title,
+					description: item.url || "",
+					id: item.id,
+					icon: iconBookmark,
+					searchText:
+						item.title.toLowerCase() +
+						(item.url?.toLowerCase() || ""),
+				}),
+			);
 		}
 		return results;
+	}
+}
+
+export class SearchResultBookmark extends SearchResult {
+	onSelect(): void {
+		console.log("bookmark selected");
 	}
 }

@@ -39,7 +39,7 @@ function openBob() {
 
 			chrome.windows.create(
 				{
-					url: "search/index.html",
+					url: "search-view/index.html",
 					type: "popup",
 					width: width,
 					height: height,
@@ -52,7 +52,7 @@ function openBob() {
 						console.log("bob.open.error.try.default");
 						chrome.windows.create(
 							{
-								url: "index.html",
+								url: "search-view/index.html",
 								type: "popup",
 								width: currentWindow.width,
 								height: currentWindow.height,

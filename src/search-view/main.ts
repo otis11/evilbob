@@ -1,11 +1,11 @@
 import "../themes";
 import "../global.css";
-import type { SearchResultGroup } from "./search-result-group";
-import { getSearchGroupsWithPermission } from "./search-result-groups";
+import type { SearchResultGroup } from "../search/search-result-group";
+import { getSearchGroupsWithPermission } from "../search/search-result-groups";
 
 let searchResultGroups: SearchResultGroup[] = [];
 let selectedSearchResultIndex = 0;
-let filteredSearchElements: NodeListOf<HTMLElement> = [];
+let filteredSearchElements: HTMLElement[] = [];
 
 const searchInput = document.getElementById("search") as HTMLInputElement;
 const resultsContainer = document.getElementById("results") as HTMLElement;
@@ -24,8 +24,9 @@ function filterSearchResults() {
 			child.classList.add("hidden");
 		}
 	}
-	filteredSearchElements =
-		resultsContainer.querySelectorAll<HTMLElement>("li:not(.hidden)");
+	filteredSearchElements = Array.from(
+		resultsContainer.querySelectorAll<HTMLElement>("li:not(.hidden)"),
+	);
 	removeHighlightSelectedIndex();
 	selectedSearchResultIndex = 0;
 	showSelectedIndex();
@@ -40,7 +41,7 @@ function renderSearchResults() {
 	resultsContainer.innerHTML = "";
 
 	for (const group of searchResultGroups) {
-		resultsContainer.append(...group.asHtmlElements());
+		resultsContainer.append(...group.asHtmlElement());
 	}
 
 	showSelectedIndex();

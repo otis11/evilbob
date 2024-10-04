@@ -1,13 +1,5 @@
 import { shortcutAsHtmlElement } from "../shortcut";
-
-export type SearchResult = {
-	title: string;
-	description: string;
-	id: string;
-	searchText: string;
-	shortcut?: string[];
-	icon?: string;
-};
+import type { SearchResult } from "./search-result";
 
 export type SearchResultGroupConfig = {
 	name: string;
@@ -51,7 +43,7 @@ export abstract class SearchResultGroup {
 
 	public abstract getResults(): Promise<SearchResult[]>;
 
-	public asHtmlElements() {
+	public asHtmlElement() {
 		const resultElements: HTMLLIElement[] = [];
 		const groupLi = document.createElement("li");
 		groupLi.classList.add("result");
@@ -69,32 +61,8 @@ export abstract class SearchResultGroup {
 		resultElements.push(groupLi);
 
 		for (const [index, result] of this.results.entries()) {
-			const li = document.createElement("li");
-			li.classList.add("result");
-			li.setAttribute("data-id", result.id);
-			li.setAttribute("data-search", result.searchText);
+			const li = result.asHtmlElement();
 			li.setAttribute("data-index", index.toString());
-
-			const content = document.createElement("div");
-			content.classList.add("result-content");
-
-			const title = document.createElement("div");
-			title.classList.add("result-title");
-			title.innerText = result.title;
-
-			const description = document.createElement("div");
-			description.classList.add("result-description");
-			description.innerText = result.description;
-
-			if (result.icon) {
-				const icon = document.createElement("span");
-				icon.classList.add("result-icon");
-				icon.innerHTML = result.icon;
-				li.append(icon);
-			}
-
-			content.append(title, description);
-			li.append(content);
 			resultElements.push(li);
 		}
 		return resultElements;

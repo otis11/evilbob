@@ -51,7 +51,6 @@ export abstract class SearchResultGroup {
 		const groupTitle = document.createElement("div");
 		groupTitle.classList.add("result-group-title");
 		groupTitle.innerText = this.name;
-		groupLi.setAttribute("data-search", this.name);
 		groupLi.append(groupTitle);
 
 		if (this.shortcut.length) {
@@ -60,9 +59,8 @@ export abstract class SearchResultGroup {
 
 		resultElements.push(groupLi);
 
-		for (const [index, result] of this.results.entries()) {
+		for (const result of this.results) {
 			const li = result.asHtmlElement();
-			li.setAttribute("data-index", index.toString());
 			resultElements.push(li);
 		}
 		return resultElements;

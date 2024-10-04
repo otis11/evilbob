@@ -10,18 +10,26 @@ export type SearchResultConfig = {
 export abstract class SearchResult {
 	title: string;
 	description: string;
-	id: string;
 	searchText: string;
 	shortcut: string[];
 	icon: string;
+	instanceId: string;
+
+	static instanceFromId(id: string): SearchResult | undefined {
+		return SearchResult.globalRegistry[id];
+	}
+
+	static globalRegistry: Record<string, SearchResult> = {};
 
 	constructor(config: SearchResultConfig) {
 		this.title = config.title;
 		this.description = config.description;
-		this.id = config.id;
+		this.instanceId = crypto.randomUUID();
 		this.searchText = config.searchText;
 		this.shortcut = config.shortcut || [];
 		this.icon = config.icon || "";
+
+		SearchResult.globalRegistry[this.instanceId] = this;
 	}
 
 	abstract onSelect(): void;
@@ -29,8 +37,7 @@ export abstract class SearchResult {
 	public asHtmlElement() {
 		const li = document.createElement("li");
 		li.classList.add("result");
-		li.setAttribute("data-id", this.id);
-		li.setAttribute("data-search", this.searchText);
+		li.setAttribute("data-instance-id", this.instanceId);
 
 		const content = document.createElement("div");
 		content.classList.add("result-content");

@@ -1,11 +1,16 @@
 import "../themes";
 import "../global.css";
+import { SearchResult } from "../search/search-result";
 import type { SearchResultGroup } from "../search/search-result-group";
 import { getSearchGroupsWithPermission } from "../search/search-result-groups";
 
 let searchResultGroups: SearchResultGroup[] = [];
 let selectedSearchResultIndex = 0;
 let filteredSearchElements: HTMLElement[] = [];
+let lastMousePosition = {
+	x: 0,
+	y: 0,
+};
 
 const searchInput = document.getElementById("search") as HTMLInputElement;
 const resultsContainer = document.getElementById("results") as HTMLElement;
@@ -15,9 +20,9 @@ function filterSearchResults() {
 	// TODO improve search, Levenshtein distance algorithm? what is good?
 	for (const child of Array.from(resultsContainer.children)) {
 		if (
-			child
-				.getAttribute("data-search")
-				?.includes(searchString.toLowerCase())
+			SearchResult.instanceFromId(
+				child.getAttribute("data-instance-id") || "",
+			)?.searchText?.includes(searchString.toLowerCase())
 		) {
 			child.classList.remove("hidden");
 		} else {
@@ -44,6 +49,9 @@ function renderSearchResults() {
 		resultsContainer.append(...group.asHtmlElement());
 	}
 
+	filteredSearchElements = Array.from(
+		resultsContainer.querySelectorAll<HTMLElement>("li:not(.hidden)"),
+	);
 	showSelectedIndex();
 }
 
@@ -55,7 +63,7 @@ function onKeyUp(event: KeyboardEvent) {
 		} else {
 			selectedSearchResultIndex += 1;
 		}
-		showSelectedIndex();
+		showSelectedIndex(true);
 	}
 	if (event.key === "ArrowUp") {
 		removeHighlightSelectedIndex();
@@ -67,9 +75,14 @@ function onKeyUp(event: KeyboardEvent) {
 		} else {
 			selectedSearchResultIndex -= 1;
 		}
-		showSelectedIndex();
+		showSelectedIndex(true);
 	}
 	if (event.key === "Enter") {
+		const target = filteredSearchElements[selectedSearchResultIndex];
+		const searchResult = SearchResult.instanceFromId(
+			target?.getAttribute("data-instance-id") || "",
+		);
+		console.log(searchResult, event, target);
 	}
 }
 
@@ -79,18 +92,21 @@ function onKeyDown(event: KeyboardEvent) {
 	}
 }
 
-function showSelectedIndex() {
-	filteredSearchElements[selectedSearchResultIndex].setAttribute(
-		"aria-selected",
-		"",
-	);
-	filteredSearchElements[selectedSearchResultIndex].scrollIntoView({
-		behavior: "smooth",
-	});
+function showSelectedIndex(scrollTo = false) {
+	const el = filteredSearchElements[selectedSearchResultIndex];
+	if (!el) {
+		return;
+	}
+	el.setAttribute("aria-selected", "");
+	if (scrollTo) {
+		el.scrollIntoView({
+			behavior: "smooth",
+		});
+	}
 }
 
 function removeHighlightSelectedIndex() {
-	filteredSearchElements[selectedSearchResultIndex].removeAttribute(
+	filteredSearchElements[selectedSearchResultIndex]?.removeAttribute(
 		"aria-selected",
 	);
 }
@@ -105,6 +121,39 @@ window.addEventListener("keydown", (event) => {
 		window.close();
 	}
 });
+
+window.addEventListener("mouseover", (event) => {
+	// ignore mouseover if mouse stood still
+	if (
+		lastMousePosition.x === event.clientX &&
+		lastMousePosition.y === event.clientY
+	) {
+		return;
+	}
+
+	lastMousePosition = {
+		x: event.clientX,
+		y: event.clientY,
+	};
+
+	const target = getLiFromEvent(event);
+	if (target) {
+		removeHighlightSelectedIndex();
+		const index = filteredSearchElements.indexOf(target);
+		selectedSearchResultIndex = index;
+		showSelectedIndex();
+	}
+});
+
+function getLiFromEvent(event: Event) {
+	if (!(event.target instanceof HTMLElement)) {
+		return null;
+	}
+	if (event.target.tagName === "LI") {
+		return event.target;
+	}
+	return event.target.closest("li");
+}
 
 (async () => {
 	searchResultGroups = await getSearchGroupsWithPermission();

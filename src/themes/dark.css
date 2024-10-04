@@ -1,4 +1,6 @@
-html[data-theme="dark"] {
+[data-theme="dark"] {
+	--bob-color-primary: #843938;
+	--bob-color-accent: #c47f7e;
 	--bob-color-base-100: #2b2c2f;
 	--bob-color-base-content-100: #d9dce4;
 	--bob-color-base-content-200: #a0a0a0;

@@ -1,5 +1,6 @@
 import "../themes";
 import "../global.css";
+import "./main.css";
 import { SearchResult } from "../search/search-result";
 import type { SearchResultGroup } from "../search/search-result-group";
 import { getSearchGroupsWithPermission } from "../search/search-result-groups";

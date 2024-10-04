@@ -1,0 +1,31 @@
+.theme-container {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 16px;
+}
+
+.theme-card {
+	display: flex;
+	flex-wrap: wrap;
+	width: 120px;
+}
+
+.theme-card-base {
+	color: var(--bob-color-base-content-100);
+	width: 100%;
+	text-align: center;
+	background-color: var(--bob-color-base-100);
+}
+
+.theme-card-primary,
+.theme-card-accent {
+	height: 40px;
+	width: 50%;
+}
+
+.theme-card-primary {
+	background-color: var(--bob-color-primary);
+}
+.theme-card-accent {
+	background-color: var(--bob-color-accent);
+}

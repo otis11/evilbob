@@ -25,7 +25,7 @@ export abstract class SearchResultGroup {
 		this.shortcut = config.shortcut || [];
 	}
 
-	public async hasPermission() {
+	public async hasPermission(): Promise<boolean> {
 		return new Promise((resolve) => {
 			chrome.permissions.contains(
 				{

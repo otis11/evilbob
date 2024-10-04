@@ -1,9 +1,11 @@
 import "./dark.css";
+import "./light.css";
 
-type Theme = "dark";
+export const Themes = ["dark", "light"] as const;
+type Theme = (typeof Themes)[number];
 const defaultTheme: Theme = "dark";
 
-function setCurrentTheme(theme: Theme) {
+export function setCurrentTheme(theme: Theme) {
 	chrome.permissions.contains({ permissions: ["storage"] }, (result) => {
 		if (result) {
 			chrome.storage.sync.set({ theme: theme });

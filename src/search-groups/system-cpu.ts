@@ -19,25 +19,25 @@ export class SearchGroupSystemCpu extends SearchGroup {
 						title: "Cpu Modal Name",
 						searchText: "cpu modelName",
 						description: cpu.modelName,
-						prepend: Icon.fromString(iconCpu),
+						append: Icon.fromString(iconCpu),
 					}),
 					new SearchResultSystemCpu({
 						title: "Architecture",
 						searchText: "cpu archName",
 						description: cpu.archName,
-						prepend: Icon.fromString(iconCpu),
+						append: Icon.fromString(iconCpu),
 					}),
 					new SearchResultSystemCpu({
 						title: "Number of Processors",
 						searchText: "cpu numOfProcessors",
 						description: cpu.numOfProcessors.toString(),
-						prepend: Icon.fromString(iconCpu),
+						append: Icon.fromString(iconCpu),
 					}),
 					new SearchResultSystemCpu({
 						title: "Cpu Features",
 						searchText: "cpu features",
 						description: cpu.features.join(", "),
-						prepend: Icon.fromString(iconCpu),
+						append: Icon.fromString(iconCpu),
 					}),
 				]);
 			});

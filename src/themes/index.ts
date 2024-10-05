@@ -8,65 +8,32 @@ type Dimension = { width: number; height: number };
 const defaultDimensions = { width: 800, height: 500 };
 
 export function setCurrentTheme(theme: Theme) {
-	chrome.permissions.contains({ permissions: ["storage"] }, (result) => {
-		if (result) {
-			chrome.storage.sync.set({ theme: theme });
-		}
-	});
-	globalThis.document.documentElement.setAttribute("data-theme", theme);
+	chrome.storage.sync.set({ theme: theme });
+	if (globalThis.document?.documentElement) {
+		globalThis.document.documentElement.setAttribute("data-theme", theme);
+	}
 }
 
 export function setCurrentDimensions(dimensions: Dimension) {
-	chrome.permissions.contains({ permissions: ["storage"] }, (result) => {
-		if (result) {
-			chrome.storage.sync.set({ dimensions: JSON.stringify(dimensions) });
-		}
-	});
+	chrome.storage.sync.set({ dimensions: JSON.stringify(dimensions) });
 }
 
 export async function getCurrentDimensions(): Promise<Dimension> {
-	return new Promise((resolve) => {
-		chrome.permissions.contains(
-			{ permissions: ["storage"] },
-			async (result) => {
-				if (result) {
-					const storageResult = await chrome.storage.sync.get([
-						"dimensions",
-					]);
-					resolve(
-						JSON.parse(
-							storageResult.dimensions ||
-								JSON.stringify(defaultDimensions),
-						),
-					);
-				} else {
-					resolve(defaultDimensions);
-				}
-			},
-		);
-	});
+	const storageResult = await chrome.storage.sync.get(["dimensions"]);
+	return JSON.parse(
+		storageResult.dimensions || JSON.stringify(defaultDimensions),
+	);
 }
 
 async function getCurrentTheme(): Promise<Theme> {
-	return new Promise((resolve) => {
-		chrome.permissions.contains(
-			{ permissions: ["storage"] },
-			async (result) => {
-				if (result) {
-					const storageResult = await chrome.storage.sync.get([
-						"theme",
-					]);
-					resolve(storageResult.theme || defaultTheme);
-				} else {
-					resolve(defaultTheme);
-				}
-			},
-		);
-	});
+	const storageResult = await chrome.storage.sync.get(["theme"]);
+	return storageResult.theme || defaultTheme;
 }
 (async () => {
-	// has a document where theme can be set?
 	if (globalThis.document?.documentElement) {
-		setCurrentTheme(await getCurrentTheme());
+		globalThis.document.documentElement.setAttribute(
+			"data-theme",
+			await getCurrentTheme(),
+		);
 	}
 })();

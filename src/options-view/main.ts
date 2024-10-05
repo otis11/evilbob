@@ -1,4 +1,3 @@
-import { getSearchGroups } from "../search/search-result-groups";
 import {
 	Themes,
 	getCurrentDimensions,
@@ -8,24 +7,8 @@ import {
 import "../themes";
 import "../global.css";
 import "./main.css";
+import { getSearchGroups } from "../search/search-result-groups";
 import { PermissionsCheckbox } from "./permissions-checkbox";
-
-async function renderSearchPermissions() {
-	const searchPermissions = document.createElement("div");
-
-	for (const group of getSearchGroups()) {
-		const container = document.createElement("div");
-		container.append(
-			new PermissionsCheckbox({
-				origins: group.hostPermissions,
-				permissions: group.permissions,
-				title: group.name,
-			}).el,
-		);
-		searchPermissions.append(container);
-	}
-	document.body.append(searchPermissions);
-}
 
 function renderThemes() {
 	const themesContainer = document.createElement("div");
@@ -55,14 +38,21 @@ function renderThemes() {
 	document.body.append(themesContainer);
 }
 
-function renderThemesPermissions() {
-	document.body.append(
-		new PermissionsCheckbox({
-			origins: [],
-			permissions: ["storage"],
-			title: "storage",
-		}).el,
-	);
+function renderSearchGroups() {
+	const searchPermissions = document.createElement("div");
+
+	for (const group of getSearchGroups()) {
+		const container = document.createElement("div");
+		container.append(
+			new PermissionsCheckbox({
+				origins: group.hostPermissions,
+				permissions: group.permissions,
+				title: group.name,
+			}).el,
+		);
+		searchPermissions.append(container);
+	}
+	document.body.append(searchPermissions);
 }
 
 function renderHeader() {
@@ -114,5 +104,4 @@ async function renderBobDimensions() {
 renderHeader();
 renderBobDimensions();
 renderThemes();
-renderThemesPermissions();
-renderSearchPermissions();
+renderSearchGroups();

@@ -30,6 +30,7 @@
 			"global": true
 		}
 	},
-	"optional_permissions": ["bookmarks", "storage", "system.cpu"],
+	"permissions": ["storage"],
+	"optional_permissions": ["bookmarks", "system.cpu"],
 	"optional_host_permissions": ["https://*/*"]
 }

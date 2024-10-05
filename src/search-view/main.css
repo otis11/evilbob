@@ -7,13 +7,9 @@
 }
 
 .search-container input {
-	outline: none;
-	border: none;
 	padding: 20px;
 	width: 100%;
 	font-size: 18px;
-	background-color: var(--bob-color-base-100);
-	color: var(--bob-color-base-content-100);
 }
 
 .result {
@@ -25,7 +21,7 @@
 }
 
 .result[aria-selected] {
-	background-color: var(--bob-color-base-200);
+	background-color: var(--bob-color-base-300);
 }
 
 .result-title {

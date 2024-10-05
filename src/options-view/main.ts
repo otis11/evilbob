@@ -15,8 +15,10 @@ import {
 import { PermissionsCheckbox } from "./permissions-checkbox";
 
 function renderThemes() {
+	const container = document.createElement("div");
 	const themesContainer = document.createElement("div");
 	themesContainer.classList.add("theme-container");
+	container.append(groupHeading("Themes"), themesContainer);
 
 	for (const theme of Themes) {
 		const div = document.createElement("div");
@@ -39,11 +41,20 @@ function renderThemes() {
 		div.append(base, primary, accent);
 		themesContainer?.append(div);
 	}
-	document.body.append(themesContainer);
+	document.body.append(container);
+}
+
+function groupHeading(text: string) {
+	const heading = document.createElement("h3");
+	heading.innerText = text;
+	return heading;
 }
 
 async function renderSearchGroups() {
-	const searchPermissions = document.createElement("div");
+	const searchGroups = document.createElement("div");
+
+	searchGroups.append(groupHeading("Search Groups"));
+
 	const order = await getSearchGroupOrder();
 
 	for (const group of await getAlphabeticallyOrderedSearchGroups()) {
@@ -65,9 +76,9 @@ async function renderSearchGroups() {
 			setSearchGroupOrder(newOrder);
 		});
 		container.append(label);
-		searchPermissions.append(container);
+		searchGroups.append(container);
 	}
-	document.body.append(searchPermissions);
+	document.body.append(searchGroups);
 }
 
 function renderHeader() {
@@ -83,6 +94,7 @@ function renderHeader() {
 async function renderBobDimensions() {
 	const dimensions = await getCurrentDimensions();
 	const container = document.createElement("div");
+	container.append(groupHeading("Window Dimensions"));
 
 	const [labelWidth, inputWidth] = numberInput({
 		text: "width",

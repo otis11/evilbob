@@ -29,3 +29,26 @@
 .theme-card-accent {
 	background-color: var(--bob-color-accent);
 }
+
+h3 {
+	padding-top: 20px;
+	padding-bottom: 4px;
+}
+
+body {
+	padding: 24px;
+}
+
+input[type="number"] {
+	width: 80px;
+}
+
+label input {
+	margin-left: 6px;
+}
+
+label {
+	padding: 6px 12px;
+	display: inline-flex;
+	align-items: center;
+}

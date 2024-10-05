@@ -107,9 +107,11 @@ function showSelectedIndex(scrollTo = false) {
 }
 
 function removeHighlightSelectedIndex() {
-	filteredSearchElements[selectedSearchResultIndex]?.removeAttribute(
-		"aria-selected",
-	);
+	for (const el of Array.from(
+		resultsContainer.querySelectorAll("[aria-selected"),
+	)) {
+		el.removeAttribute("aria-selected");
+	}
 }
 
 searchInput?.addEventListener("input", filterSearchResults);

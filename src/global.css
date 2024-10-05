@@ -5,7 +5,7 @@
 }
 
 html {
-	background-color: var(--bob-color-base-100);
+	background-color: var(--bob-color-base-200);
 	color: var(--bob-color-base-content-100);
 }
 
@@ -34,4 +34,12 @@ svg {
 	align-items: center;
 	gap: 4px;
 	font-size: var(--bob-shortcut-font-size);
+}
+
+input {
+	outline: none;
+	border: none;
+	background-color: var(--bob-color-base-100);
+	color: var(--bob-color-base-content-100);
+	padding: 4px 12px;
 }

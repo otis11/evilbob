@@ -86,7 +86,7 @@ function renderHeader() {
 
 	const shortcutText = document.createElement("p");
 	const shortcutLink = "chrome://extensions/shortcuts";
-	shortcutText.innerHTML = `Go to <code>${shortcutLink}</code> to set the shortcut to open bob.`;
+	shortcutText.innerHTML = `Go to <strong>${shortcutLink}</strong> to set the shortcut to open bob.`;
 	header.appendChild(shortcutText);
 	document.body.append(header);
 }

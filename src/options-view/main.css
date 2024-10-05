@@ -35,6 +35,10 @@ h3 {
 	padding-bottom: 4px;
 }
 
+header {
+	font-size: 1.5rem;
+}
+
 body {
 	padding: 24px;
 }

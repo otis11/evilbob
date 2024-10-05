@@ -1,4 +1,5 @@
 import type { SearchGroup } from "../components/search-group";
+import { isChromium } from "../platform";
 import { SearchGroupBookmarks } from "./bookmarks";
 import { SearchGroupShortcuts } from "./shortcuts";
 import { SearchGroupSystemCpu } from "./system-cpu";
@@ -8,11 +9,13 @@ export type SearchGroupStorage = {
 	order?: number;
 };
 
-const all = () => [
-	new SearchGroupBookmarks(),
-	new SearchGroupSystemCpu(),
-	new SearchGroupShortcuts(),
-];
+const all = () => {
+	const results = [new SearchGroupBookmarks(), new SearchGroupShortcuts()];
+	if (isChromium) {
+		results.push(new SearchGroupSystemCpu());
+	}
+	return results;
+};
 
 export class SearchResultGroups {
 	public list: SearchGroup[];

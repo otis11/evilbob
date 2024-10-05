@@ -1,0 +1,41 @@
+{
+	"manifest_version": 3,
+	"name": "bob",
+	"description": "bob",
+	"version": "0.1",
+	"icons": {
+		"16": "images/icon-16.png",
+		"32": "images/icon-32.png",
+		"48": "images/icon-48.png",
+		"128": "images/icon-128.png"
+	},
+	"background": {
+		"scripts": ["background.js"]
+	},
+	"options_page": "options-view/index.html",
+	"action": {
+		"default_icon": {
+			"16": "images/icon-16.png",
+			"32": "images/icon-32.png",
+			"48": "images/icon-48.png",
+			"128": "images/icon-128.png"
+		}
+	},
+	"commands": {
+		"bob.open": {
+			"suggested_key": {
+				"default": "Ctrl+Shift+L"
+			},
+			"description": "Open bob"
+		}
+	},
+	"permissions": ["storage"],
+	"optional_permissions": ["bookmarks"],
+	"optional_host_permissions": ["https://*/*"],
+	"browser_specific_settings": {
+		"gecko": {
+			"id": "{b9b3ea58-ee1c-4d96-8b6e-9548ff99fa5b}",
+			"strict_min_version": "42.0"
+		}
+	}
+}

@@ -7,6 +7,7 @@ import {
 import "../themes";
 import "../global.css";
 import "./main.css";
+import { isChromium } from "../platform";
 import { SearchResultGroups } from "../search-groups";
 
 const searchResultGroups = new SearchResultGroups();
@@ -89,8 +90,13 @@ function renderHeader() {
 	const header = document.createElement("header");
 
 	const shortcutText = document.createElement("p");
-	const shortcutLink = "chrome://extensions/shortcuts";
-	shortcutText.innerHTML = `Go to <strong>${shortcutLink}</strong> to set the shortcut to open bob.`;
+	const shortcutLink = isChromium
+		? "chrome://extensions/shortcuts"
+		: "about:addons";
+	const specificNotice = isChromium
+		? "Setting it to <strong>Global</strong> you can open bob from outside your browser."
+		: 'Click the settings icon in the right corner. Choose "Manage Extension Shortcuts"';
+	shortcutText.innerHTML = `Go to <strong>${shortcutLink}</strong> to set the shortcut to open bob. ${specificNotice}`;
 	header.appendChild(shortcutText);
 	document.body.append(header);
 }

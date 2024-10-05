@@ -2,6 +2,7 @@ import { SearchGroup } from "../components/search-group";
 import { SearchResult } from "../components/search-result";
 import { Shortcut } from "../components/shortcut";
 import { iconConsole } from "../icons";
+import { isFirefox, isMac } from "../platform";
 
 export class SearchGroupShortcuts extends SearchGroup {
 	constructor() {
@@ -11,11 +12,6 @@ export class SearchGroupShortcuts extends SearchGroup {
 	}
 
 	public async getResults(): Promise<SearchResult[]> {
-		const platform = (await new Promise((resolve) => {
-			chrome.runtime.getPlatformInfo(resolve);
-		})) as chrome.runtime.PlatformInfo;
-		const isMac = platform.os === "mac";
-
 		const shortcuts = [
 			new SearchResultShortcut({
 				title: "Open History",
@@ -30,7 +26,9 @@ export class SearchGroupShortcuts extends SearchGroup {
 				description: "Open a new window in Incognito mode",
 				shortcut: isMac
 					? new Shortcut(["⌘", "Shift", "N"])
-					: new Shortcut(["Ctrl", "Shift", "N"]),
+					: isFirefox
+						? new Shortcut(["Ctrl", "Shift", "P"])
+						: new Shortcut(["Ctrl", "Shift", "N"]),
 			}),
 			// tabs
 			new SearchResultShortcut({

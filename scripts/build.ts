@@ -14,41 +14,49 @@ if (existsSync(distFolder)) {
 	mkdirSync(distFolder);
 }
 
-await Promise.all([
-	// background
-	build({
-		build: {
-			minify,
-			emptyOutDir: false,
-			watch,
-			lib: {
-				entry: path.resolve(__dirname, "../src/background.ts"),
-				name: "background",
-				fileName: "background",
-				formats: ["es"],
+const browsers = ["chrome", "firefox"];
+
+for (const browser of browsers) {
+	await Promise.all([
+		// background
+		build({
+			publicDir: `public/${browser}`,
+			build: {
+				outDir: `dist/${browser}`,
+				minify,
+				emptyOutDir: false,
+				watch,
+				lib: {
+					entry: path.resolve(__dirname, "../src/background.ts"),
+					name: "background",
+					fileName: "background",
+					formats: ["es"],
+				},
 			},
-		},
-	}),
-	// search
-	build({
-		root: "./src/search-view",
-		base: "./",
-		build: {
-			minify,
-			outDir: "../../dist/search-view",
-			emptyOutDir: false,
-			watch,
-		},
-	}),
-	// options
-	build({
-		root: "./src/options-view",
-		base: "./",
-		build: {
-			minify,
-			outDir: "../../dist/options-view",
-			emptyOutDir: false,
-			watch,
-		},
-	}),
-]);
+		}),
+		// search
+		build({
+			publicDir: `public/${browser}`,
+			root: "./src/search-view",
+			base: "./",
+			build: {
+				minify,
+				outDir: `../../dist/${browser}/search-view`,
+				emptyOutDir: false,
+				watch,
+			},
+		}),
+		// options
+		build({
+			publicDir: `public/${browser}`,
+			root: "./src/options-view",
+			base: "./",
+			build: {
+				minify,
+				outDir: `../../dist/${browser}/options-view`,
+				emptyOutDir: false,
+				watch,
+			},
+		}),
+	]);
+}

@@ -103,7 +103,6 @@ export class SearchResultShortcut extends SearchResult {
 			title: config.title,
 			description: config.description,
 			searchText: `${config.title} ${config.description}`,
-			icon: iconConsole,
 			shortcut: config.shortcut,
 		});
 	}

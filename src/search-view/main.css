@@ -51,6 +51,7 @@
 
 .result-append {
 	margin-left: auto;
+    padding-left: 10px;
 }
 
 .no-results {
@@ -63,4 +64,13 @@
 
 .no-results span {
 	margin-right: 16px;
+}
+
+.result,
+.result-description,
+.result-content,
+.result-title {
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
 }

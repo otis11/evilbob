@@ -1,6 +1,6 @@
 import { SearchGroup } from "../components/search-group";
 import { SearchResult } from "../components/search-result";
-import { iconCpu } from "../icons";
+import { iconOpenInNew } from "../icons";
 
 export class SearchGroupBob extends SearchGroup {
 	constructor() {
@@ -23,6 +23,7 @@ export class SearchResultBobOpenSettings extends SearchResult {
 			title: "Bob Options",
 			searchText: "bob settings options",
 			description: "Go to bob options page",
+			icon: iconOpenInNew,
 		});
 	}
 	onSelect(): void {

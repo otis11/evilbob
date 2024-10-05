@@ -39,8 +39,14 @@ export class SearchResultGroups {
 	) {
 		const config = await SearchResultGroups.getConfig();
 		config[name] = {
-			enabled: newValues.enabled || config[name]?.enabled || false,
-			order: newValues.order || config[name]?.order || 0,
+			enabled:
+				newValues.enabled === undefined
+					? config[name]?.enabled || false
+					: newValues.enabled,
+			order:
+				newValues.order === undefined
+					? config[name]?.order || 0
+					: newValues.order,
 		};
 		await chrome.storage.sync.set({
 			searchResultGroups: config,

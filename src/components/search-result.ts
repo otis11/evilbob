@@ -4,16 +4,16 @@ export type SearchResultConfig = {
 	title: string;
 	description: string;
 	searchText: string;
-	shortcut?: Shortcut;
-	icon?: string;
+	append?: HTMLElement;
+	prepend?: HTMLElement;
 };
 
 export abstract class SearchResult {
 	title: string;
 	description: string;
 	searchText: string;
-	shortcut?: Shortcut;
-	icon: string;
+	append?: HTMLElement;
+	prepend?: HTMLElement;
 	instanceId: string;
 
 	static instanceFromId(id: string): SearchResult | undefined {
@@ -27,8 +27,8 @@ export abstract class SearchResult {
 		this.description = config.description;
 		this.instanceId = crypto.randomUUID();
 		this.searchText = config.searchText;
-		this.shortcut = config.shortcut;
-		this.icon = config.icon || "";
+		this.append = config.append;
+		this.prepend = config.prepend;
 
 		SearchResult.globalRegistry[this.instanceId] = this;
 	}
@@ -51,18 +51,17 @@ export abstract class SearchResult {
 		description.classList.add("result-description");
 		description.innerText = this.description;
 
-		if (this.icon) {
-			const icon = document.createElement("span");
-			icon.classList.add("result-icon");
-			icon.innerHTML = this.icon;
-			li.append(icon);
+		if (this.prepend) {
+			this.prepend.classList.add("result-prepend");
+			li.append(this.prepend);
 		}
 
 		content.append(title, description);
 		li.append(content);
 
-		if (this.shortcut) {
-			li.append(this.shortcut.asHtmlElement());
+		if (this.append) {
+			this.append.classList.add("result-append");
+			li.append(this.append);
 		}
 
 		return li;

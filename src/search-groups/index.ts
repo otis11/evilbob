@@ -2,6 +2,7 @@ import type { SearchGroup } from "../components/search-group";
 import { isChromium } from "../platform";
 import { SearchGroupBob } from "./bob";
 import { SearchGroupBookmarks } from "./bookmarks";
+import { SearchGroupHistory } from "./history";
 import { SearchGroupPlatform } from "./platform";
 import { SearchGroupShortcuts } from "./shortcuts";
 import { SearchGroupSystemCpu } from "./system-cpu";
@@ -17,6 +18,7 @@ const all = () => {
 		new SearchGroupShortcuts(),
 		new SearchGroupBob(),
 		new SearchGroupPlatform(),
+		new SearchGroupHistory(),
 	];
 	if (isChromium) {
 		results.push(new SearchGroupSystemCpu());

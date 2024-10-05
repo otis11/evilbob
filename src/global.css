@@ -10,13 +10,6 @@ html {
 	font-family: sans-serif;
 }
 
-svg {
-	width: 1em;
-	height: 1em;
-	fill: currentColor;
-	font-size: 24px;
-}
-
 .shortcut kbd {
 	border-radius: 0.5rem;
 	border: 1px solid var(--bob-color-base-content-300);
@@ -55,4 +48,14 @@ button {
 	min-height: var(--bob-input-min-height);
 	min-width: 54px;
 	border: none;
+}
+
+.icon,
+.icon svg,
+.icon img {
+	width: 1em;
+	height: 1em;
+	fill: currentColor;
+	font-size: 24px;
+	position: relative;
 }

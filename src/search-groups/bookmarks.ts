@@ -1,3 +1,4 @@
+import { Icon } from "../components/icon";
 import { SearchGroup } from "../components/search-group";
 import {
 	SearchResult,
@@ -14,11 +15,8 @@ export class SearchGroupBookmarks extends SearchGroup {
 	}
 
 	public async getResults(): Promise<SearchResult[]> {
-		return new Promise((resolve) => {
-			chrome.bookmarks.getTree().then((tree) => {
-				resolve(this.flattenBookmarksTree(tree));
-			});
-		});
+		const tree = await chrome.bookmarks.getTree();
+		return this.flattenBookmarksTree(tree);
 	}
 
 	private flattenBookmarksTree(tree: chrome.bookmarks.BookmarkTreeNode[]) {
@@ -39,7 +37,8 @@ export class SearchGroupBookmarks extends SearchGroup {
 					description: item.url || "",
 					id: item.id,
 					url: item.url,
-					icon: iconBookmark,
+					prepend: Icon.fromUrl(item.url, iconBookmark),
+					append: Icon.fromString(iconBookmark),
 					searchText: `${item.title.toLowerCase()} ${item.url?.toLowerCase() || ""}`,
 				}),
 			);

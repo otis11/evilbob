@@ -1,9 +1,7 @@
 const userAgent =
-	typeof navigator !== "undefined"
-		? navigator.userAgent.toLowerCase()
-		: "idk";
-const platform =
-	typeof navigator !== "undefined" ? navigator.platform.toLowerCase() : "idk";
+	typeof navigator !== "undefined" ? navigator.userAgent.toLowerCase() : "";
+export const platform =
+	typeof navigator !== "undefined" ? navigator.platform.toLowerCase() : "";
 
 export const isChromium =
 	userAgent.includes("chrome") || userAgent.includes("chromium");
@@ -16,3 +14,22 @@ export const isSafari = userAgent.includes("safari") && !isChromium;
 export const isWindows = platform.startsWith("win");
 export const isMac = platform.startsWith("mac");
 export const isMobile = userAgent.includes("mobile");
+
+export const browserName = (() => {
+	const match = userAgent.match(
+		/firefox|librewolf|chrom(?:e|ium)|safari|edg/i,
+	);
+	if (match?.[0]) {
+		return match[0];
+	}
+	return "";
+})();
+export const browserVersion = (() => {
+	const match = userAgent.match(
+		new RegExp(`(?:${browserName})(?:\/| )([^ ]+)`),
+	);
+	if (match?.[1]) {
+		return match[1];
+	}
+	return "";
+})();

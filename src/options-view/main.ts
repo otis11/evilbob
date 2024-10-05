@@ -7,12 +7,9 @@ import {
 import "../themes";
 import "../global.css";
 import "./main.css";
-import {
-	getAlphabeticallyOrderedSearchGroups,
-	getSearchGroupOrder,
-	setSearchGroupOrder,
-} from "../search/search-result-groups";
-import { PermissionsCheckbox } from "./permissions-checkbox";
+import { SearchResultGroups } from "../search/search-result-groups";
+
+const searchResultGroups = new SearchResultGroups();
 
 function renderThemes() {
 	const container = document.createElement("div");
@@ -54,26 +51,33 @@ async function renderSearchGroups() {
 	const searchGroups = document.createElement("div");
 
 	searchGroups.append(groupHeading("Search Groups"));
-
-	const order = await getSearchGroupOrder();
-
-	for (const group of await getAlphabeticallyOrderedSearchGroups()) {
+	searchResultGroups.orderAlphabetically();
+	const config = await SearchResultGroups.getConfig();
+	for (const group of searchResultGroups.list) {
 		const container = document.createElement("div");
-		container.append(
-			new PermissionsCheckbox({
-				origins: group.hostPermissions,
-				permissions: group.permissions,
-				title: group.name,
-			}).el,
-		);
+		const checkboxLabel = document.createElement("label");
+		checkboxLabel.innerText = group.name;
+		const checkbox = document.createElement("input");
+		checkbox.type = "checkbox";
+		checkbox.checked = await group.isEnabled();
+		checkbox.addEventListener("change", () => {
+			if (checkbox.checked) {
+				group.enable();
+			} else {
+				group.disable();
+			}
+		});
+		checkboxLabel.append(checkbox);
+		container.append(checkboxLabel);
 		const [label, input] = numberInput({
 			text: "order",
-			value: order[group.name]?.toString(),
+			value: config[group.name]?.order?.toString() || "0",
 		});
+
 		input.addEventListener("input", async () => {
-			const newOrder = await getSearchGroupOrder();
-			newOrder[group.name] = Number.parseInt(input.value);
-			setSearchGroupOrder(newOrder);
+			SearchResultGroups.setConfig(group.name, {
+				order: Number.parseInt(input.value),
+			});
 		});
 		container.append(label);
 		searchGroups.append(container);

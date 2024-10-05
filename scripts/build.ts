@@ -6,6 +6,7 @@ import { build } from "vite";
 const watch = Bun.argv.includes("--watch")
 	? ({ chokidar: { usePolling: true } } as WatcherOptions)
 	: undefined;
+const minify = Bun.argv.includes("--minify");
 const distFolder = path.resolve(__dirname, "../dist");
 
 if (existsSync(distFolder)) {
@@ -17,6 +18,7 @@ await Promise.all([
 	// background
 	build({
 		build: {
+			minify,
 			emptyOutDir: false,
 			watch,
 			lib: {
@@ -32,6 +34,7 @@ await Promise.all([
 		root: "./src/search-view",
 		base: "./",
 		build: {
+			minify,
 			outDir: "../../dist/search-view",
 			emptyOutDir: false,
 			watch,
@@ -42,6 +45,7 @@ await Promise.all([
 		root: "./src/options-view",
 		base: "./",
 		build: {
+			minify,
 			outDir: "../../dist/options-view",
 			emptyOutDir: false,
 			watch,

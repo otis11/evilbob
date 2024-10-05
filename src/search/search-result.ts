@@ -1,7 +1,8 @@
+import { shortcutAsHtmlElement } from "../shortcut";
+
 export type SearchResultConfig = {
 	title: string;
 	description: string;
-	id: string;
 	searchText: string;
 	shortcut?: string[];
 	icon?: string;
@@ -59,6 +60,11 @@ export abstract class SearchResult {
 
 		content.append(title, description);
 		li.append(content);
+
+		if (this.shortcut) {
+			li.append(shortcutAsHtmlElement(this.shortcut));
+		}
+
 		return li;
 	}
 }

@@ -7,7 +7,6 @@ export class SearchResultGroupSystemCpu extends SearchResultGroup {
 		super({
 			name: "system.cpu",
 			permissions: ["system.cpu"],
-			icon: iconCpu,
 		});
 	}
 
@@ -19,28 +18,24 @@ export class SearchResultGroupSystemCpu extends SearchResultGroup {
 						title: "Cpu Modal Name",
 						searchText: "cpu modelName",
 						description: cpu.modelName,
-						id: "cpu.modelName",
 						icon: iconCpu,
 					}),
 					new SearchResultSystemCpu({
 						title: "Architecture",
 						searchText: "cpu archName",
 						description: cpu.archName,
-						id: "cpu.archName",
 						icon: iconCpu,
 					}),
 					new SearchResultSystemCpu({
 						title: "Number of Processors",
 						searchText: "cpu numOfProcessors",
 						description: cpu.numOfProcessors.toString(),
-						id: "cpu.numOfProcessors",
 						icon: iconCpu,
 					}),
 					new SearchResultSystemCpu({
 						title: "Cpu Features",
 						searchText: "cpu features",
 						description: cpu.features.join(", "),
-						id: "cpu.features",
 						icon: iconCpu,
 					}),
 				]);

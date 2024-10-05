@@ -13,7 +13,7 @@
 	},
 	"scripts": {
 		"dev": "vite",
-		"build": "bun scripts/build.ts",
+		"build": "bun scripts/build.ts --minify",
 		"watch": "bun scripts/build.ts --watch",
 		"preview": "vite preview",
 		"lint": "biome check --write ."

@@ -1,5 +1,5 @@
-import { iconBookmark } from "../icons";
-import { SearchResult } from "./search-result";
+import { iconBookmark, iconConsole } from "../icons";
+import { SearchResult, type SearchResultConfig } from "./search-result";
 import { SearchResultGroup } from "./search-result-group";
 
 export class SearchResultGroupBookmarks extends SearchResultGroup {
@@ -7,8 +7,6 @@ export class SearchResultGroupBookmarks extends SearchResultGroup {
 		super({
 			name: "bookmarks",
 			permissions: ["bookmarks"],
-			icon: iconBookmark,
-			shortcut: ["Ctrl", "Shift", "O"],
 		});
 	}
 
@@ -38,9 +36,7 @@ export class SearchResultGroupBookmarks extends SearchResultGroup {
 					description: item.url || "",
 					id: item.id,
 					icon: iconBookmark,
-					searchText:
-						item.title.toLowerCase() +
-						(item.url?.toLowerCase() || ""),
+					searchText: `${item.title.toLowerCase()} ${item.url?.toLowerCase() || ""}`,
 				}),
 			);
 		}
@@ -49,6 +45,13 @@ export class SearchResultGroupBookmarks extends SearchResultGroup {
 }
 
 export class SearchResultBookmark extends SearchResult {
+	public id: string;
+
+	constructor(config: { id: string } & SearchResultConfig) {
+		super(config);
+		this.id = config.id;
+	}
+
 	onSelect(): void {
 		console.log("bookmark selected");
 	}

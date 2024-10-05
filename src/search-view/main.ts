@@ -3,9 +3,9 @@ import "../global.css";
 import "./main.css";
 import { SearchResult } from "../search/search-result";
 import type { SearchResultGroup } from "../search/search-result-group";
-import { getOrderedSearchGroupsWithPermission } from "../search/search-result-groups";
+import { SearchResultGroups } from "../search/search-result-groups";
 
-let searchResultGroups: SearchResultGroup[] = [];
+const searchResultGroups: SearchResultGroups = new SearchResultGroups();
 let selectedSearchResultIndex = 0;
 let filteredSearchElements: HTMLElement[] = [];
 let lastMousePosition = {
@@ -20,11 +20,13 @@ function filterSearchResults() {
 	const searchString = searchInput?.value;
 	// TODO improve search, Levenshtein distance algorithm? what is good?
 	for (const child of Array.from(resultsContainer.children)) {
-		if (
-			SearchResult.instanceFromId(
-				child.getAttribute("data-instance-id") || "",
-			)?.searchText?.includes(searchString.toLowerCase())
-		) {
+		const instance = SearchResult.instanceFromId(
+			child.getAttribute("data-instance-id") || "",
+		);
+		const isHit = instance?.searchText
+			.toLowerCase()
+			.includes(searchString.toLowerCase());
+		if (isHit) {
 			child.classList.remove("hidden");
 		} else {
 			child.classList.add("hidden");
@@ -46,7 +48,7 @@ function renderSearchResults() {
 
 	resultsContainer.innerHTML = "";
 
-	for (const group of searchResultGroups) {
+	for (const group of searchResultGroups.list) {
 		resultsContainer.append(...group.asHtmlElement());
 	}
 
@@ -115,8 +117,8 @@ function removeHighlightSelectedIndex() {
 }
 
 searchInput?.addEventListener("input", filterSearchResults);
-searchInput?.addEventListener("keydown", onKeyDown);
-searchInput?.addEventListener("keyup", onKeyUp);
+window.addEventListener("keydown", onKeyDown);
+window.addEventListener("keyup", onKeyUp);
 searchInput?.focus();
 
 window.addEventListener("keydown", (event) => {
@@ -159,8 +161,11 @@ function getLiFromEvent(event: Event) {
 }
 
 (async () => {
-	searchResultGroups = await getOrderedSearchGroupsWithPermission();
-	const promises = searchResultGroups.map((group) => group.loadResults());
+	await searchResultGroups.filterEnabled();
+	await searchResultGroups.order();
+	const promises = searchResultGroups.list.map((group) =>
+		group.loadResults(),
+	);
 	await Promise.all(promises);
 	renderSearchResults();
 })();

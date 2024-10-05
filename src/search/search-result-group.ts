@@ -1,40 +1,92 @@
-import { shortcutAsHtmlElement } from "../shortcut";
 import type { SearchResult } from "./search-result";
+import { SearchResultGroups } from "./search-result-groups";
 
 export type SearchResultGroupConfig = {
 	name: string;
 	permissions?: string[];
 	hostPermissions?: string[];
-	icon?: string;
-	shortcut?: string[];
 };
+
 export abstract class SearchResultGroup {
 	public name: string;
-	public icon: string;
 	public permissions: string[];
 	public hostPermissions: string[];
 	private results: SearchResult[];
-	public shortcut: string[];
 
 	constructor(config: SearchResultGroupConfig) {
 		this.name = config.name;
 		this.permissions = config.permissions || [];
 		this.hostPermissions = config.hostPermissions || [];
-		this.icon = config.icon || "";
 		this.results = [];
-		this.shortcut = config.shortcut || [];
 	}
 
-	public async hasPermission(): Promise<boolean> {
+	public async isEnabled(): Promise<boolean> {
 		return new Promise((resolve) => {
 			chrome.permissions.contains(
 				{
 					permissions: this.permissions,
 					origins: this.hostPermissions,
 				},
-				(result) => resolve(!!result),
+				async (result) => {
+					if (result) {
+						const config = await SearchResultGroups.getConfig();
+						resolve(!!config[this.name]?.enabled);
+					} else {
+						resolve(false);
+					}
+				},
 			);
 		});
+	}
+
+	public async enable() {
+		return new Promise((resolve) => {
+			chrome.permissions.request(
+				{
+					permissions: this.permissions,
+					origins: this.hostPermissions,
+				},
+				async (granted) => {
+					if (!granted) {
+						console.error(
+							"could not grant permission for group?",
+							this,
+						);
+					}
+					await SearchResultGroups.setConfig(this.name, {
+						enabled: true,
+					});
+					resolve(true);
+				},
+			);
+		});
+	}
+
+	public async disable() {
+		return new Promise((resolve) => {
+			chrome.permissions.remove(
+				{
+					permissions: this.permissions,
+					origins: this.hostPermissions,
+				},
+				async (removed) => {
+					if (!removed) {
+						console.error(
+							"could not remove permission for group?",
+							this,
+						);
+					}
+					await SearchResultGroups.setConfig(this.name, {
+						enabled: false,
+					});
+					resolve(true);
+				},
+			);
+		});
+	}
+
+	public storageKey() {
+		return `group.config.${this.name}`;
 	}
 
 	public async loadResults() {
@@ -44,25 +96,6 @@ export abstract class SearchResultGroup {
 	public abstract getResults(): Promise<SearchResult[]>;
 
 	public asHtmlElement() {
-		const resultElements: HTMLLIElement[] = [];
-		const groupLi = document.createElement("li");
-		groupLi.classList.add("result");
-
-		const groupTitle = document.createElement("div");
-		groupTitle.classList.add("result-group-title");
-		groupTitle.innerText = this.name;
-		groupLi.append(groupTitle);
-
-		if (this.shortcut.length) {
-			groupLi.append(shortcutAsHtmlElement(this.shortcut));
-		}
-
-		resultElements.push(groupLi);
-
-		for (const result of this.results) {
-			const li = result.asHtmlElement();
-			resultElements.push(li);
-		}
-		return resultElements;
+		return this.results.map((result) => result.asHtmlElement());
 	}
 }

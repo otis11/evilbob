@@ -30,7 +30,7 @@
 		}
 	},
 	"permissions": ["storage"],
-	"optional_permissions": ["bookmarks"],
+	"optional_permissions": ["bookmarks", "history"],
 	"optional_host_permissions": ["https://*/*"],
 	"browser_specific_settings": {
 		"gecko": {

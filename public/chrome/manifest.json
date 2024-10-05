@@ -31,6 +31,6 @@
 		}
 	},
 	"permissions": ["storage"],
-	"optional_permissions": ["bookmarks", "system.cpu"],
+	"optional_permissions": ["bookmarks", "system.cpu", "history"],
 	"optional_host_permissions": ["https://*/*"]
 }

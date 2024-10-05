@@ -35,7 +35,7 @@
 	font-size: 0.75rem;
 }
 
-.result-icon {
+.result .icon {
 	margin-right: 12px;
 }
 
@@ -49,7 +49,7 @@
 	display: none;
 }
 
-.shortcut {
+.result-append {
 	margin-left: auto;
 }
 

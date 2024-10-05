@@ -1,5 +1,10 @@
 import { getSearchGroups } from "../search/search-result-groups";
-import { Themes, setCurrentTheme } from "../themes";
+import {
+	Themes,
+	getCurrentDimensions,
+	setCurrentDimensions,
+	setCurrentTheme,
+} from "../themes";
 import "../themes";
 import "../global.css";
 import "./main.css";
@@ -70,7 +75,44 @@ function renderHeader() {
 	document.body.append(header);
 }
 
+async function renderBobDimensions() {
+	const dimensions = await getCurrentDimensions();
+	const container = document.createElement("div");
+
+	const labelWidth = document.createElement("label");
+	labelWidth.innerText = "width";
+	const inputWidth = document.createElement("input");
+	inputWidth.type = "number";
+	inputWidth.value = dimensions.width.toString();
+	labelWidth.append(inputWidth);
+
+	const labelHeight = document.createElement("label");
+	labelHeight.innerText = "height";
+	const inputHeight = document.createElement("input");
+	inputHeight.type = "number";
+	inputHeight.value = dimensions.height.toString();
+	labelHeight.append(inputHeight);
+
+	inputWidth.addEventListener("input", () => {
+		setCurrentDimensions({
+			width: Number.parseInt(inputWidth.value),
+			height: Number.parseInt(inputHeight.value),
+		});
+	});
+
+	inputHeight.addEventListener("input", () => {
+		setCurrentDimensions({
+			width: Number.parseInt(inputWidth.value),
+			height: Number.parseInt(inputHeight.value),
+		});
+	});
+
+	container.append(labelWidth, labelHeight);
+	document.body.append(container);
+}
+
 renderHeader();
+renderBobDimensions();
 renderThemes();
 renderThemesPermissions();
 renderSearchPermissions();

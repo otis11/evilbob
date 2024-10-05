@@ -1,3 +1,5 @@
+import { getCurrentDimensions } from "./themes";
+
 console.log("bob.background.start");
 
 let openBobWindowId = -1;
@@ -19,7 +21,7 @@ chrome.action.onClicked.addListener(() => {
 
 function openBob() {
 	chrome.windows.getLastFocused({ populate: false }, (currentWindow) => {
-		chrome.windows.get(openBobWindowId, (activeBobWindow) => {
+		chrome.windows.get(openBobWindowId, async (activeBobWindow) => {
 			if (activeBobWindow) {
 				chrome.windows.update(openBobWindowId, {
 					focused: true,
@@ -27,22 +29,23 @@ function openBob() {
 				return;
 			}
 
-			const width = 600;
-			const height = 300;
+			const dimensions = await getCurrentDimensions();
 			const left =
 				(currentWindow.left || 0) +
-				Math.floor(((currentWindow.width || 0) - width) / 2);
+				Math.floor(((currentWindow.width || 0) - dimensions.width) / 2);
 			const top =
 				(currentWindow.top || 0) +
-				Math.floor(((currentWindow.height || 0) - height) / 2);
+				Math.floor(
+					((currentWindow.height || 0) - dimensions.height) / 2,
+				);
 			console.log(currentWindow);
 
 			chrome.windows.create(
 				{
 					url: "search-view/index.html",
 					type: "popup",
-					width: width,
-					height: height,
+					width: dimensions.width,
+					height: dimensions.height,
 					left: left,
 					top: top,
 					focused: true,

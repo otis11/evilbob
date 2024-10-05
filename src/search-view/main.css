@@ -1,5 +1,5 @@
 .search-container {
-	background-color: #2b2c2f;
+	background-color: var(--bob-color-base-100);
 	width: 100%;
 	border-radius: 8px;
 	box-shadow: 0 16px 70px rgba(0, 0, 0, 0.2);
@@ -12,7 +12,7 @@
 	padding: 20px;
 	width: 100%;
 	font-size: 18px;
-	background-color: #2b2c2f;
+	background-color: var(--bob-color-base-100);
 	color: var(--bob-color-base-content-100);
 }
 
@@ -25,7 +25,7 @@
 }
 
 .result[aria-selected] {
-	background-color: #232323;
+	background-color: var(--bob-color-base-200);
 }
 
 .result-title {

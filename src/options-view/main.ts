@@ -7,7 +7,11 @@ import {
 import "../themes";
 import "../global.css";
 import "./main.css";
-import { getSearchGroups } from "../search/search-result-groups";
+import {
+	getSearchGroupOrder,
+	getSearchGroups,
+	setSearchGroupOrder,
+} from "../search/search-result-groups";
 import { PermissionsCheckbox } from "./permissions-checkbox";
 
 function renderThemes() {
@@ -38,10 +42,11 @@ function renderThemes() {
 	document.body.append(themesContainer);
 }
 
-function renderSearchGroups() {
+async function renderSearchGroups() {
 	const searchPermissions = document.createElement("div");
+	const order = await getSearchGroupOrder();
 
-	for (const group of getSearchGroups()) {
+	for (const group of await getSearchGroups()) {
 		const container = document.createElement("div");
 		container.append(
 			new PermissionsCheckbox({
@@ -50,6 +55,16 @@ function renderSearchGroups() {
 				title: group.name,
 			}).el,
 		);
+		const [label, input] = numberInput({
+			text: "order",
+			value: order[group.name]?.toString(),
+		});
+		input.addEventListener("input", async () => {
+			const newOrder = await getSearchGroupOrder();
+			newOrder[group.name] = Number.parseInt(input.value);
+			setSearchGroupOrder(newOrder);
+		});
+		container.append(label);
 		searchPermissions.append(container);
 	}
 	document.body.append(searchPermissions);
@@ -69,19 +84,14 @@ async function renderBobDimensions() {
 	const dimensions = await getCurrentDimensions();
 	const container = document.createElement("div");
 
-	const labelWidth = document.createElement("label");
-	labelWidth.innerText = "width";
-	const inputWidth = document.createElement("input");
-	inputWidth.type = "number";
-	inputWidth.value = dimensions.width.toString();
-	labelWidth.append(inputWidth);
-
-	const labelHeight = document.createElement("label");
-	labelHeight.innerText = "height";
-	const inputHeight = document.createElement("input");
-	inputHeight.type = "number";
-	inputHeight.value = dimensions.height.toString();
-	labelHeight.append(inputHeight);
+	const [labelWidth, inputWidth] = numberInput({
+		text: "width",
+		value: dimensions.width.toString(),
+	});
+	const [labelHeight, inputHeight] = numberInput({
+		text: "height",
+		value: dimensions.height.toString(),
+	});
 
 	inputWidth.addEventListener("input", () => {
 		setCurrentDimensions({
@@ -99,6 +109,19 @@ async function renderBobDimensions() {
 
 	container.append(labelWidth, labelHeight);
 	document.body.append(container);
+}
+
+function numberInput(config: { text: string; value: string }): [
+	HTMLLabelElement,
+	HTMLInputElement,
+] {
+	const label = document.createElement("label");
+	label.innerText = config.text;
+	const input = document.createElement("input");
+	input.type = "number";
+	input.value = config.value;
+	label.append(input);
+	return [label, input];
 }
 
 renderHeader();

@@ -8,6 +8,8 @@
 	display: flex;
 	flex-wrap: wrap;
 	width: 120px;
+	border-radius: var(--bob-input-border-radius);
+	overflow: hidden;
 }
 
 .theme-card-base {

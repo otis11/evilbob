@@ -7,6 +7,7 @@
 html {
 	background-color: var(--bob-color-base-200);
 	color: var(--bob-color-base-content-100);
+	font-family: sans-serif;
 }
 
 svg {
@@ -41,5 +42,17 @@ input {
 	border: none;
 	background-color: var(--bob-color-base-100);
 	color: var(--bob-color-base-content-100);
-	padding: 4px 12px;
+	padding: 4px 16px;
+	min-height: var(--bob-input-min-height);
+	border-radius: var(--bob-input-border-radius);
+}
+
+button {
+	background-color: var(--bob-color-primary);
+	border-radius: var(--bob-input-border-radius);
+	color: var(--bob-color-base-200);
+	padding: 0 16px;
+	min-height: var(--bob-input-min-height);
+	min-width: 54px;
+	border: none;
 }

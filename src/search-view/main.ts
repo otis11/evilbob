@@ -48,6 +48,22 @@ function renderSearchResults() {
 
 	resultsContainer.innerHTML = "";
 
+	if (searchResultGroups.list.length === 0) {
+		const button = document.createElement("button");
+		button.addEventListener("click", () =>
+			chrome.runtime.openOptionsPage(),
+		);
+		button.innerText = "Go to options";
+		const container = document.createElement("div");
+		container.classList.add("no-results");
+		const text = document.createElement("span");
+		text.innerText = "Looks like no search group is enabled. :O";
+
+		container.append(text, button);
+		resultsContainer.append(container);
+		return;
+	}
+
 	for (const group of searchResultGroups.list) {
 		resultsContainer.append(...group.asHtmlElement());
 	}

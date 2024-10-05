@@ -3,13 +3,12 @@
 	width: 100%;
 	border-radius: 8px;
 	box-shadow: 0 16px 70px rgba(0, 0, 0, 0.2);
-	font-family: sans-serif;
 }
 
 .search-container input {
-	padding: 20px;
+	padding: 24px;
 	width: 100%;
-	font-size: 18px;
+	font-size: var(--bob-search-font-size);
 }
 
 .result {
@@ -51,4 +50,16 @@
 
 .shortcut {
 	margin-left: auto;
+}
+
+.no-results {
+	display: flex;
+	justify-content: center;
+	padding: 20px 12px;
+	align-items: center;
+	font-weight: bold;
+}
+
+.no-results span {
+	margin-right: 16px;
 }

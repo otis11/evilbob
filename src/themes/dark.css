@@ -1,5 +1,5 @@
 [data-theme="dark"] {
-	--bob-color-primary: #843938;
+	--bob-color-primary: #a8c7fa;
 	--bob-color-accent: #c47f7e;
 	--bob-color-base-100: #424649;
 	--bob-color-base-200: #303134;
@@ -8,4 +8,7 @@
 	--bob-color-base-content-200: #d9dce4;
 	--bob-color-base-content-300: rgba(166, 173, 187, 0.2);
 	--bob-shortcut-font-size: 13px;
+	--bob-search-font-size: 20px;
+	--bob-input-border-radius: 4px;
+	--bob-input-min-height: 36px;
 }

@@ -1,9 +1,9 @@
 import "../themes";
 import "../global.css";
 import "./main.css";
-import { SearchResult } from "../search/search-result";
-import type { SearchResultGroup } from "../search/search-result-group";
-import { SearchResultGroups } from "../search/search-result-groups";
+import type { SearchGroup } from "../components/search-group";
+import { SearchResult } from "../components/search-result";
+import { SearchResultGroups } from "../search-groups";
 
 const searchResultGroups: SearchResultGroups = new SearchResultGroups();
 let selectedSearchResultIndex = 0;

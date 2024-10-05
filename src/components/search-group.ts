@@ -1,19 +1,19 @@
+import { SearchResultGroups } from "../search-groups";
 import type { SearchResult } from "./search-result";
-import { SearchResultGroups } from "./search-result-groups";
 
-export type SearchResultGroupConfig = {
+export type SearchGroupConfig = {
 	name: string;
 	permissions?: string[];
 	hostPermissions?: string[];
 };
 
-export abstract class SearchResultGroup {
+export abstract class SearchGroup {
 	public name: string;
 	public permissions: string[];
 	public hostPermissions: string[];
 	private results: SearchResult[];
 
-	constructor(config: SearchResultGroupConfig) {
+	constructor(config: SearchGroupConfig) {
 		this.name = config.name;
 		this.permissions = config.permissions || [];
 		this.hostPermissions = config.hostPermissions || [];

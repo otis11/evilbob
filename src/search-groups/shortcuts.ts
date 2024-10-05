@@ -1,8 +1,9 @@
+import { SearchGroup } from "../components/search-group";
+import { SearchResult } from "../components/search-result";
+import { Shortcut } from "../components/shortcut";
 import { iconConsole } from "../icons";
-import { SearchResult } from "./search-result";
-import { SearchResultGroup } from "./search-result-group";
 
-export class SearchResultGroupShortcuts extends SearchResultGroup {
+export class SearchGroupShortcuts extends SearchGroup {
 	constructor() {
 		super({
 			name: "shortcuts",
@@ -15,7 +16,7 @@ export class SearchResultGroupShortcuts extends SearchResultGroup {
 				new SearchResultShortcut({
 					title: "Open Bookmarks",
 					description: "Open Bookmarks",
-					shortcut: ["Ctrl", "Shift", "O"],
+					shortcut: new Shortcut(["Ctrl", "Shift", "O"]),
 				}),
 			]);
 		});
@@ -25,7 +26,7 @@ export class SearchResultGroupShortcuts extends SearchResultGroup {
 export type SearchResultShortcutConfig = {
 	title: string;
 	description: string;
-	shortcut: string[];
+	shortcut: Shortcut;
 };
 
 export class SearchResultShortcut extends SearchResult {

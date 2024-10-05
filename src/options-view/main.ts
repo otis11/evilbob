@@ -7,7 +7,7 @@ import {
 import "../themes";
 import "../global.css";
 import "./main.css";
-import { SearchResultGroups } from "../search/search-result-groups";
+import { SearchResultGroups } from "../search-groups";
 
 const searchResultGroups = new SearchResultGroups();
 

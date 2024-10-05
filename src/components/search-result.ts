@@ -1,10 +1,10 @@
-import { shortcutAsHtmlElement } from "../shortcut";
+import type { Shortcut } from "./shortcut";
 
 export type SearchResultConfig = {
 	title: string;
 	description: string;
 	searchText: string;
-	shortcut?: string[];
+	shortcut?: Shortcut;
 	icon?: string;
 };
 
@@ -12,7 +12,7 @@ export abstract class SearchResult {
 	title: string;
 	description: string;
 	searchText: string;
-	shortcut: string[];
+	shortcut?: Shortcut;
 	icon: string;
 	instanceId: string;
 
@@ -27,7 +27,7 @@ export abstract class SearchResult {
 		this.description = config.description;
 		this.instanceId = crypto.randomUUID();
 		this.searchText = config.searchText;
-		this.shortcut = config.shortcut || [];
+		this.shortcut = config.shortcut;
 		this.icon = config.icon || "";
 
 		SearchResult.globalRegistry[this.instanceId] = this;
@@ -62,7 +62,7 @@ export abstract class SearchResult {
 		li.append(content);
 
 		if (this.shortcut) {
-			li.append(shortcutAsHtmlElement(this.shortcut));
+			li.append(this.shortcut.asHtmlElement());
 		}
 
 		return li;

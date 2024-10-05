@@ -1,8 +1,8 @@
+import { SearchGroup } from "../components/search-group";
+import { SearchResult } from "../components/search-result";
 import { iconCpu } from "../icons";
-import { SearchResult } from "./search-result";
-import { SearchResultGroup } from "./search-result-group";
 
-export class SearchResultGroupSystemCpu extends SearchResultGroup {
+export class SearchGroupSystemCpu extends SearchGroup {
 	constructor() {
 		super({
 			name: "system.cpu",

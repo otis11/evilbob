@@ -1,29 +1,27 @@
-import { SearchResultGroupBookmarks } from "./bookmarks";
-import type { SearchResultGroup } from "./search-result-group";
-import { SearchResultGroupShortcuts } from "./shortcuts";
-import { SearchResultGroupSystemCpu } from "./system-cpu";
+import type { SearchGroup } from "../components/search-group";
+import { SearchGroupBookmarks } from "./bookmarks";
+import { SearchGroupShortcuts } from "./shortcuts";
+import { SearchGroupSystemCpu } from "./system-cpu";
 
-export type SearchResultGroupStorage = {
+export type SearchGroupStorage = {
 	enabled?: boolean;
 	order?: number;
 };
 
 const all = () => [
-	new SearchResultGroupBookmarks(),
-	new SearchResultGroupSystemCpu(),
-	new SearchResultGroupShortcuts(),
+	new SearchGroupBookmarks(),
+	new SearchGroupSystemCpu(),
+	new SearchGroupShortcuts(),
 ];
 
 export class SearchResultGroups {
-	public list: SearchResultGroup[];
+	public list: SearchGroup[];
 
 	constructor() {
 		this.list = all();
 	}
 
-	static async getConfig(): Promise<
-		Record<string, SearchResultGroupStorage>
-	> {
+	static async getConfig(): Promise<Record<string, SearchGroupStorage>> {
 		return (
 			(await chrome.storage.sync.get(["searchResultGroups"]))
 				.searchResultGroups || {}

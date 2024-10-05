@@ -1,8 +1,11 @@
-import { iconBookmark, iconConsole } from "../icons";
-import { SearchResult, type SearchResultConfig } from "./search-result";
-import { SearchResultGroup } from "./search-result-group";
+import { SearchGroup } from "../components/search-group";
+import {
+	SearchResult,
+	type SearchResultConfig,
+} from "../components/search-result";
+import { iconBookmark } from "../icons";
 
-export class SearchResultGroupBookmarks extends SearchResultGroup {
+export class SearchGroupBookmarks extends SearchGroup {
 	constructor() {
 		super({
 			name: "bookmarks",

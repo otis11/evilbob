@@ -29,6 +29,11 @@ function openBob() {
 				return;
 			}
 
+			// window not found catch error
+			if (chrome.runtime.lastError) {
+				console.log(chrome.runtime.lastError.message);
+			}
+
 			const dimensions = await getCurrentDimensions();
 			const left =
 				(currentWindow.left || 0) +
@@ -38,7 +43,6 @@ function openBob() {
 				Math.floor(
 					((currentWindow.height || 0) - dimensions.height) / 2,
 				);
-			console.log(currentWindow);
 
 			chrome.windows.create(
 				{

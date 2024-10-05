@@ -65,5 +65,8 @@ async function getCurrentTheme(): Promise<Theme> {
 	});
 }
 (async () => {
-	setCurrentTheme(await getCurrentTheme());
+	// has a document where theme can be set?
+	if (globalThis.document?.documentElement) {
+		setCurrentTheme(await getCurrentTheme());
+	}
 })();

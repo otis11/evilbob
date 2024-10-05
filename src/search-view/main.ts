@@ -3,7 +3,7 @@ import "../global.css";
 import "./main.css";
 import { SearchResult } from "../search/search-result";
 import type { SearchResultGroup } from "../search/search-result-group";
-import { getSearchGroupsWithPermission } from "../search/search-result-groups";
+import { getOrderedSearchGroupsWithPermission } from "../search/search-result-groups";
 
 let searchResultGroups: SearchResultGroup[] = [];
 let selectedSearchResultIndex = 0;
@@ -157,7 +157,7 @@ function getLiFromEvent(event: Event) {
 }
 
 (async () => {
-	searchResultGroups = await getSearchGroupsWithPermission();
+	searchResultGroups = await getOrderedSearchGroupsWithPermission();
 	const promises = searchResultGroups.map((group) => group.loadResults());
 	await Promise.all(promises);
 	renderSearchResults();

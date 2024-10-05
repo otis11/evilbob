@@ -38,6 +38,7 @@ export class SearchGroupBookmarks extends SearchGroup {
 					title: item.title,
 					description: item.url || "",
 					id: item.id,
+					url: item.url,
 					icon: iconBookmark,
 					searchText: `${item.title.toLowerCase()} ${item.url?.toLowerCase() || ""}`,
 				}),
@@ -49,13 +50,23 @@ export class SearchGroupBookmarks extends SearchGroup {
 
 export class SearchResultBookmark extends SearchResult {
 	public id: string;
+	public url: string | undefined;
 
-	constructor(config: { id: string } & SearchResultConfig) {
+	constructor(
+		config: { url: string | undefined; id: string } & SearchResultConfig,
+	) {
 		super(config);
+		this.url = config.url;
 		this.id = config.id;
 	}
 
 	onSelect(): void {
-		console.log("bookmark selected");
+		if (this.url) {
+			chrome.tabs.create({ url: this.url });
+			window.close();
+		} else {
+			// TODO handle bookmarks with no url?
+			console.error("bookmark has no url", this);
+		}
 	}
 }

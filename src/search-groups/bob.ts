@@ -20,12 +20,13 @@ export class SearchGroupBob extends SearchGroup {
 export class SearchResultBobOpenSettings extends SearchResult {
 	constructor() {
 		super({
-			title: "Bob Settings",
-			searchText: "bob settings",
-			description: "Go to bob settings page",
+			title: "Bob Options",
+			searchText: "bob settings options",
+			description: "Go to bob options page",
 		});
 	}
 	onSelect(): void {
 		chrome.runtime.openOptionsPage();
+		window.close();
 	}
 }

@@ -8,8 +8,8 @@ import "../themes";
 import "../global.css";
 import "./main.css";
 import {
+	getAlphabeticallyOrderedSearchGroups,
 	getSearchGroupOrder,
-	getSearchGroups,
 	setSearchGroupOrder,
 } from "../search/search-result-groups";
 import { PermissionsCheckbox } from "./permissions-checkbox";
@@ -46,7 +46,7 @@ async function renderSearchGroups() {
 	const searchPermissions = document.createElement("div");
 	const order = await getSearchGroupOrder();
 
-	for (const group of await getSearchGroups()) {
+	for (const group of await getAlphabeticallyOrderedSearchGroups()) {
 		const container = document.createElement("div");
 		container.append(
 			new PermissionsCheckbox({

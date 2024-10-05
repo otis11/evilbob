@@ -7,7 +7,7 @@ const searchResultGroups = [
 	new SearchResultGroupSystemCpu(),
 ];
 
-export async function getSearchGroupsWithPermission() {
+export async function getOrderedSearchGroupsWithPermission() {
 	const groups: SearchResultGroup[] = [];
 	for (const group of searchResultGroups) {
 		if (await group.hasPermission()) {
@@ -17,8 +17,16 @@ export async function getSearchGroupsWithPermission() {
 	return await sortGroupsByOrder(groups);
 }
 
-export async function getSearchGroups() {
-	return await sortGroupsByOrder(searchResultGroups);
+export async function getAlphabeticallyOrderedSearchGroups() {
+	return searchResultGroups.sort((a, b) => {
+		if (a.name > b.name) {
+			return 1;
+		}
+		if (a.name < b.name) {
+			return -1;
+		}
+		return 0;
+	});
 }
 
 async function sortGroupsByOrder(groups: SearchResultGroup[]) {

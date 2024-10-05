@@ -17,6 +17,7 @@
 	scroll-margin: 61px;
 	display: flex;
 	align-items: center;
+	cursor: pointer;
 }
 
 .result[aria-selected] {

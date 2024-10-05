@@ -101,7 +101,7 @@ function onKeyUp(event: KeyboardEvent) {
 		const searchResult = SearchResult.instanceFromId(
 			target?.getAttribute("data-instance-id") || "",
 		);
-		console.log(searchResult, event, target);
+		searchResult?.onSelect();
 	}
 }
 
@@ -135,6 +135,15 @@ function removeHighlightSelectedIndex() {
 searchInput?.addEventListener("input", filterSearchResults);
 window.addEventListener("keydown", onKeyDown);
 window.addEventListener("keyup", onKeyUp);
+window.addEventListener("click", (event) => {
+	const target = getLiFromEvent(event);
+	if (target) {
+		const searchResult = SearchResult.instanceFromId(
+			target?.getAttribute("data-instance-id") || "",
+		);
+		searchResult?.onSelect();
+	}
+});
 searchInput?.focus();
 
 window.addEventListener("keydown", (event) => {

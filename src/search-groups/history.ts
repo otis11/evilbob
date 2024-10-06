@@ -1,10 +1,9 @@
-import { Icon } from "../components/icon";
+import { iconFromString, iconFromUrl, iconHistory } from "../components/icon";
 import { SearchGroup } from "../components/search-group";
 import {
 	SearchResult,
 	type SearchResultConfig,
 } from "../components/search-result";
-import { iconHistory } from "../icons";
 
 export class SearchGroupHistory extends SearchGroup {
 	constructor() {
@@ -19,13 +18,13 @@ export class SearchGroupHistory extends SearchGroup {
 		return items.map(
 			(item) =>
 				new SearchResultHistory({
-					description: `${item.visitCount} ${item.url}`,
+					description: `${item.visitCount} visits, ${item.url}`,
 					title: item.title || "",
 					id: item.id,
 					url: item.url,
 					searchText: `${item.title} ${item.url}`,
-					prepend: Icon.fromUrl(item.url, iconHistory),
-					append: Icon.fromString(iconHistory),
+					prepend: iconFromUrl(item.url, iconHistory),
+					append: iconFromString(iconHistory),
 				}),
 		);
 	}

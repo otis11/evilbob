@@ -2,9 +2,9 @@ import "../themes";
 import "../global.css";
 import "./main.css";
 import { SearchResult } from "../components/search-result";
-import { SearchResultGroups } from "../search-groups";
+import { SearchGroups } from "../search-groups";
 
-const searchResultGroups: SearchResultGroups = new SearchResultGroups();
+const searchResultGroups: SearchGroups = new SearchGroups();
 let selectedSearchResultIndex = 0;
 let filteredSearchElements: HTMLElement[] = [];
 let lastMousePosition = {

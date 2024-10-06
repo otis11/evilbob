@@ -7,6 +7,14 @@ import { SearchGroupPlatform } from "./platform";
 import { SearchGroupShortcuts } from "./shortcuts";
 import { SearchGroupSystemCpu } from "./system-cpu";
 
+export type SearchGroupName =
+	| "bookmarks"
+	| "history"
+	| "system.cpu"
+	| "shortcuts"
+	| "platform"
+	| "bob";
+
 export type SearchGroupStorage = {
 	enabled?: boolean;
 	order?: number;
@@ -26,7 +34,34 @@ const all = () => {
 	return results;
 };
 
-export class SearchResultGroups {
+const defaultConfig: Record<SearchGroupName, SearchGroupStorage> = {
+	bob: {
+		enabled: true,
+		order: 20,
+	},
+	history: {
+		enabled: false,
+		order: 100,
+	},
+	"system.cpu": {
+		enabled: false,
+		order: 70,
+	},
+	bookmarks: {
+		enabled: false,
+		order: 50,
+	},
+	platform: {
+		enabled: true,
+		order: 80,
+	},
+	shortcuts: {
+		order: 90,
+		enabled: true,
+	},
+};
+
+export class SearchGroups {
 	public list: SearchGroup[];
 
 	constructor() {
@@ -40,6 +75,19 @@ export class SearchResultGroups {
 		);
 	}
 
+	static async setConfigToDefaults() {
+		await chrome.storage.sync.set({
+			searchResultGroups: defaultConfig,
+		});
+	}
+
+	static async hasEmptyConfig() {
+		return (
+			Object.keys(await chrome.storage.sync.get(["searchResultGroups"]))
+				.length === 0
+		);
+	}
+
 	static async setConfig(
 		name: string,
 		newValues: {
@@ -47,7 +95,7 @@ export class SearchResultGroups {
 			order?: number;
 		},
 	) {
-		const config = await SearchResultGroups.getConfig();
+		const config = await SearchGroups.getConfig();
 		config[name] = {
 			enabled:
 				newValues.enabled === undefined
@@ -88,7 +136,7 @@ export class SearchResultGroups {
 	}
 
 	public async order() {
-		const config = await SearchResultGroups.getConfig();
+		const config = await SearchGroups.getConfig();
 		this.list.sort((a, b) => {
 			const orderA = config[a.name].order || 0;
 			const orderB = config[b.name].order || 0;

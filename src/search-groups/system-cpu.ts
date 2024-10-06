@@ -1,7 +1,6 @@
-import { Icon } from "../components/icon";
+import { iconCpu, iconFromString } from "../components/icon";
 import { SearchGroup } from "../components/search-group";
 import { SearchResult } from "../components/search-result";
-import { iconCpu } from "../icons";
 
 export class SearchGroupSystemCpu extends SearchGroup {
 	constructor() {
@@ -19,25 +18,25 @@ export class SearchGroupSystemCpu extends SearchGroup {
 						title: "Cpu Modal Name",
 						searchText: "cpu modelName",
 						description: cpu.modelName,
-						append: Icon.fromString(iconCpu),
+						append: iconFromString(iconCpu),
 					}),
 					new SearchResultSystemCpu({
 						title: "Architecture",
 						searchText: "cpu archName",
 						description: cpu.archName,
-						append: Icon.fromString(iconCpu),
+						append: iconFromString(iconCpu),
 					}),
 					new SearchResultSystemCpu({
 						title: "Number of Processors",
 						searchText: "cpu numOfProcessors",
 						description: cpu.numOfProcessors.toString(),
-						append: Icon.fromString(iconCpu),
+						append: iconFromString(iconCpu),
 					}),
 					new SearchResultSystemCpu({
 						title: "Cpu Features",
 						searchText: "cpu features",
 						description: cpu.features.join(", "),
-						append: Icon.fromString(iconCpu),
+						append: iconFromString(iconCpu),
 					}),
 				]);
 			});

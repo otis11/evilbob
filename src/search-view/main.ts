@@ -1,7 +1,6 @@
 import "../themes";
 import "../global.css";
 import "./main.css";
-import type { SearchGroup } from "../components/search-group";
 import { SearchResult } from "../components/search-result";
 import { SearchResultGroups } from "../search-groups";
 

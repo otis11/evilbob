@@ -1,4 +1,4 @@
-import { iconFromString, iconOpenInNew } from "../components/icon";
+import { iconBob, iconFromString } from "../components/icon";
 import { SearchGroup } from "../components/search-group";
 import { SearchResult } from "../components/search-result";
 
@@ -21,9 +21,9 @@ export class SearchResultBobOpenSettings extends SearchResult {
 	constructor() {
 		super({
 			title: "Bob Options",
-			searchText: "bob settings options",
-			description: "Go to bob options page",
-			prepend: iconFromString(iconOpenInNew),
+			searchText: "bob settings options change",
+			description: "Change me here!",
+			prepend: iconFromString(iconBob),
 		});
 	}
 	onSelect(): void {

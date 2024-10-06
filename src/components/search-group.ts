@@ -1,14 +1,14 @@
-import { SearchResultGroups } from "../search-groups";
+import { type SearchGroupName, SearchGroups } from "../search-groups";
 import type { SearchResult } from "./search-result";
 
 export type SearchGroupConfig = {
-	name: string;
+	name: SearchGroupName;
 	permissions?: string[];
 	hostPermissions?: string[];
 };
 
 export abstract class SearchGroup {
-	public name: string;
+	public name: SearchGroupName;
 	public permissions: string[];
 	public hostPermissions: string[];
 	private results: SearchResult[];
@@ -29,7 +29,7 @@ export abstract class SearchGroup {
 				},
 				async (result) => {
 					if (result) {
-						const config = await SearchResultGroups.getConfig();
+						const config = await SearchGroups.getConfig();
 						resolve(!!config[this.name]?.enabled);
 					} else {
 						resolve(false);
@@ -53,7 +53,7 @@ export abstract class SearchGroup {
 							this,
 						);
 					}
-					await SearchResultGroups.setConfig(this.name, {
+					await SearchGroups.setConfig(this.name, {
 						enabled: true,
 					});
 					resolve(true);
@@ -76,7 +76,7 @@ export abstract class SearchGroup {
 							this,
 						);
 					}
-					await SearchResultGroups.setConfig(this.name, {
+					await SearchGroups.setConfig(this.name, {
 						enabled: false,
 					});
 					resolve(true);

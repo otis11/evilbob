@@ -1,10 +1,9 @@
-import { Icon } from "../components/icon";
+import { iconBookmark, iconFromString, iconFromUrl } from "../components/icon";
 import { SearchGroup } from "../components/search-group";
 import {
 	SearchResult,
 	type SearchResultConfig,
 } from "../components/search-result";
-import { iconBookmark } from "../icons";
 
 export class SearchGroupBookmarks extends SearchGroup {
 	constructor() {
@@ -37,8 +36,8 @@ export class SearchGroupBookmarks extends SearchGroup {
 					description: item.url || "",
 					id: item.id,
 					url: item.url,
-					prepend: Icon.fromUrl(item.url, iconBookmark),
-					append: Icon.fromString(iconBookmark),
+					prepend: iconFromUrl(item.url, iconBookmark),
+					append: iconFromString(iconBookmark),
 					searchText: `${item.title.toLowerCase()} ${item.url?.toLowerCase() || ""}`,
 				}),
 			);

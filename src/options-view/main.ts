@@ -8,9 +8,9 @@ import "../themes";
 import "../global.css";
 import "./main.css";
 import { isChromium } from "../platform";
-import { SearchResultGroups } from "../search-groups";
+import { SearchGroups } from "../search-groups";
 
-const searchResultGroups = new SearchResultGroups();
+const searchResultGroups = new SearchGroups();
 
 function renderThemes() {
 	const container = document.createElement("div");
@@ -53,7 +53,7 @@ async function renderSearchGroups() {
 
 	searchGroups.append(groupHeading("Search Groups"));
 	searchResultGroups.orderAlphabetically();
-	const config = await SearchResultGroups.getConfig();
+	const config = await SearchGroups.getConfig();
 	for (const group of searchResultGroups.list) {
 		const container = document.createElement("div");
 		const checkboxLabel = document.createElement("label");
@@ -76,7 +76,7 @@ async function renderSearchGroups() {
 		});
 
 		input.addEventListener("input", async () => {
-			SearchResultGroups.setConfig(group.name, {
+			SearchGroups.setConfig(group.name, {
 				order: Number.parseInt(input.value),
 			});
 		});

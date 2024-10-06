@@ -1,8 +1,25 @@
+import { SearchGroups } from "./search-groups";
 import { getCurrentDimensions } from "./themes";
 
 console.log("bob.background.start");
 
 let openBobWindowId = -1;
+
+chrome.runtime.onInstalled.addListener(async (details) => {
+	if (details.reason === "install") {
+		if (await SearchGroups.hasEmptyConfig()) {
+			await SearchGroups.setConfigToDefaults();
+		}
+		chrome.runtime.openOptionsPage();
+	}
+
+	if (details.reason === "update") {
+		// TODO on update show changelog? probably to annoying on each update
+	}
+
+	// TODO uninstall url?
+	// chrome.runtime.setUninstallURL();
+});
 
 chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
 	console.log("bob.background.message.received", message, sender);

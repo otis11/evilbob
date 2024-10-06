@@ -1,7 +1,6 @@
 import { SearchGroup } from "../components/search-group";
 import { SearchResult } from "../components/search-result";
 import { Shortcut } from "../components/shortcut";
-import { iconConsole } from "../icons";
 import { isFirefox, isMac } from "../platform";
 
 export class SearchGroupShortcuts extends SearchGroup {

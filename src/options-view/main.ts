@@ -54,10 +54,18 @@ async function renderSearchGroups() {
 	searchGroups.append(groupHeading("Search Groups"));
 	searchResultGroups.orderAlphabetically();
 	const config = await SearchGroups.getConfig();
+	const searchGroupHeading = document.createElement("label");
+	searchGroupHeading.innerText = "Group";
+	const searchGroupOrderHeading = document.createElement("label");
+	searchGroupOrderHeading.innerText = "Order";
+	searchGroups.append(searchGroupHeading, searchGroupOrderHeading);
+
 	for (const group of searchResultGroups.list) {
 		const container = document.createElement("div");
+		container.classList.add("search-group-container");
 		const checkboxLabel = document.createElement("label");
-		checkboxLabel.innerText = group.name;
+		const checkboxLabelText = document.createElement("span");
+		checkboxLabelText.innerText = group.name;
 		const checkbox = document.createElement("input");
 		checkbox.type = "checkbox";
 		checkbox.checked = await group.isEnabled();
@@ -68,10 +76,9 @@ async function renderSearchGroups() {
 				group.disable();
 			}
 		});
-		checkboxLabel.append(checkbox);
+		checkboxLabel.append(checkbox, checkboxLabelText);
 		container.append(checkboxLabel);
 		const [label, input] = numberInput({
-			text: "order",
 			value: config[group.name]?.order?.toString() || "0",
 		});
 
@@ -96,8 +103,8 @@ function renderHeader() {
 	const specificNotice = isChromium
 		? "Setting it to <strong>Global</strong> you can open bob from outside your browser."
 		: 'Click the settings icon in the right corner. Choose "Manage Extension Shortcuts"';
-	shortcutText.innerHTML = `Go to <strong>${shortcutLink}</strong> to set the shortcut to open bob. ${specificNotice}`;
-	header.appendChild(shortcutText);
+	shortcutText.innerHTML = `Hello, Hello! Go to <strong>${shortcutLink}</strong> to set the shortcut to open bob. ${specificNotice}`;
+	header.append(shortcutText);
 	document.body.append(header);
 }
 
@@ -106,12 +113,17 @@ async function renderBobDimensions() {
 	const container = document.createElement("div");
 	container.append(groupHeading("Window Dimensions"));
 
+	const title = document.createElement("div");
+	const headingWidth = document.createElement("label");
+	headingWidth.innerText = "Width";
+	const headingHeight = document.createElement("label");
+	headingHeight.innerText = "Height";
+	title.append(headingWidth, headingHeight);
+
 	const [labelWidth, inputWidth] = numberInput({
-		text: "width",
 		value: dimensions.width.toString(),
 	});
 	const [labelHeight, inputHeight] = numberInput({
-		text: "height",
 		value: dimensions.height.toString(),
 	});
 
@@ -129,16 +141,15 @@ async function renderBobDimensions() {
 		});
 	});
 
-	container.append(labelWidth, labelHeight);
+	container.append(title, labelWidth, labelHeight);
 	document.body.append(container);
 }
 
-function numberInput(config: { text: string; value: string }): [
+function numberInput(config: { value: string }): [
 	HTMLLabelElement,
 	HTMLInputElement,
 ] {
 	const label = document.createElement("label");
-	label.innerText = config.text;
 	const input = document.createElement("input");
 	input.type = "number";
 	input.value = config.value;
@@ -146,7 +157,19 @@ function numberInput(config: { text: string; value: string }): [
 	return [label, input];
 }
 
-renderHeader();
-renderBobDimensions();
-renderThemes();
-renderSearchGroups();
+function renderFooter() {
+	const footer = document.createElement("footer");
+	const img = document.createElement("img");
+	img.src = "/icons/bob-icon-48x48.png";
+
+	footer.append(img);
+	document.body.append(footer);
+}
+
+(async () => {
+	renderHeader();
+	await renderSearchGroups();
+	await renderBobDimensions();
+	renderThemes();
+	renderFooter();
+})();

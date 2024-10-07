@@ -43,6 +43,11 @@ header {
 
 body {
 	padding: 24px;
+	display: flex;
+	flex-direction: column;
+	height: 100vh;
+	max-width: 1000px;
+	margin: auto;
 }
 
 input[type="number"] {
@@ -50,11 +55,27 @@ input[type="number"] {
 }
 
 label input {
-	margin-left: 6px;
+	margin-right: 6px;
 }
 
 label {
-	padding: 6px 12px;
+	padding: 8px;
 	display: inline-flex;
 	align-items: center;
+	min-width: 140px;
+	font-size: 1rem;
+	line-height: 1;
+}
+
+footer {
+	margin-top: auto;
+	display: flex;
+	justify-content: center;
+}
+
+.search-group-container {
+	display: flex;
+	width: max-content;
+	align-items: center;
+	border-bottom: 1px solid var(--bob-color-base-content-300);
 }

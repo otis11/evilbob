@@ -70,6 +70,7 @@ function renderSearchResults() {
 	filteredSearchElements = Array.from(
 		resultsContainer.querySelectorAll<HTMLElement>("li:not(.hidden)"),
 	);
+	filterSearchResults();
 	showSelectedIndex();
 }
 
@@ -174,6 +175,10 @@ window.addEventListener("mouseover", (event) => {
 	}
 });
 
+document.getElementById("reload")?.addEventListener("click", () => {
+	loadFreshSearchResults();
+});
+
 function getLiFromEvent(event: Event) {
 	if (!(event.target instanceof HTMLElement)) {
 		return null;
@@ -184,7 +189,7 @@ function getLiFromEvent(event: Event) {
 	return event.target.closest("li");
 }
 
-(async () => {
+async function loadFreshSearchResults() {
 	await searchResultGroups.filterEnabled();
 	await searchResultGroups.order();
 	const promises = searchResultGroups.list.map((group) =>
@@ -192,4 +197,6 @@ function getLiFromEvent(event: Event) {
 	);
 	await Promise.all(promises);
 	renderSearchResults();
-})();
+}
+
+loadFreshSearchResults();

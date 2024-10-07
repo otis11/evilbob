@@ -69,3 +69,11 @@
 	overflow: hidden;
 	white-space: nowrap;
 }
+
+#reload {
+	position: absolute;
+	z-index: 1;
+	top: 24px;
+	right: 24px;
+	cursor: pointer;
+}

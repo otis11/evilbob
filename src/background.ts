@@ -26,7 +26,6 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
 });
 
 chrome.commands.onCommand.addListener((command) => {
-	console.log("bob.background.command.received", command);
 	if (command === "bob.open") {
 		openBob();
 	}
@@ -40,6 +39,9 @@ function openBob() {
 	chrome.windows.getLastFocused({ populate: false }, (currentWindow) => {
 		chrome.windows.get(openBobWindowId, async (activeBobWindow) => {
 			if (activeBobWindow) {
+				chrome.storage.sync.set({
+					lastFocusedWindowId: currentWindow.id,
+				});
 				chrome.windows.update(openBobWindowId, {
 					focused: true,
 				});

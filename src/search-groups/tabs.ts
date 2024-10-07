@@ -31,7 +31,7 @@ export class SearchResultSortTabsByDomain extends SearchResult {
 			chrome.tabs
 				.query({ windowId: storage.lastFocusedWindowId })
 				.then((tabs) => {
-					const tabsSorted = tabs.sort((a, b) => {
+					const tabsSortedAlphabetically = tabs.sort((a, b) => {
 						if (!a.url || !b.url) {
 							// TODO use name instead of url?
 							return 0;
@@ -45,20 +45,30 @@ export class SearchResultSortTabsByDomain extends SearchResult {
 						return 0;
 					});
 
-					let tabSortedIds = "";
-					let tabIds = "";
-					for (const [index, _] of tabsSorted.entries()) {
-						tabSortedIds += tabsSorted[index];
-						tabIds += tabs[index];
+					let isSortingNeeded = false;
+					for (const [
+						index,
+						_,
+					] of tabsSortedAlphabetically.entries()) {
+						// t1 t2 t3
+						// t3 t2 t1
+						// t1 t2 t3
+						if (tabsSortedAlphabetically[index].index !== index) {
+							isSortingNeeded = true;
+							break;
+						}
 					}
 
-					if (tabIds === tabSortedIds) {
+					if (!isSortingNeeded) {
 						// TODO replace with notifcation or sonner
 						alert("already ordered");
 						return;
 					}
 
-					for (const [index, tab] of tabsSorted.entries()) {
+					for (const [
+						index,
+						tab,
+					] of tabsSortedAlphabetically.entries()) {
 						if (tab.id) {
 							chrome.tabs.move(tab.id, { index });
 						}

@@ -7,4 +7,5 @@
 # specifics
 ### chromium
 - `system.cpu`
+- `system.memory`
 - Commands can be global

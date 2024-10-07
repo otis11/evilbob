@@ -12,12 +12,12 @@ export class SearchGroupTabs extends SearchGroup {
 
 	public getResults(): Promise<SearchResult[]> {
 		return new Promise((resolve) => {
-			resolve([new SearchResultSortTabsByDomain()]);
+			resolve([new SearchResultSortTabsAlphabetically()]);
 		});
 	}
 }
 
-export class SearchResultSortTabsByDomain extends SearchResult {
+export class SearchResultSortTabsAlphabetically extends SearchResult {
 	constructor() {
 		super({
 			title: "Sort tabs alphabetically",

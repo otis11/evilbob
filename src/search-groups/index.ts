@@ -6,12 +6,14 @@ import { SearchGroupHistory } from "./history";
 import { SearchGroupPlatform } from "./platform";
 import { SearchGroupShortcuts } from "./shortcuts";
 import { SearchGroupSystemCpu } from "./system-cpu";
+import { SearchGroupSystemMemory } from "./system-memory";
 import { SearchGroupTabs } from "./tabs";
 
 export type SearchGroupName =
 	| "bookmarks"
 	| "history"
 	| "system.cpu"
+	| "system.memory"
 	| "shortcuts"
 	| "platform"
 	| "bob"
@@ -33,6 +35,7 @@ const all = () => {
 	];
 	if (isChromium) {
 		results.push(new SearchGroupSystemCpu());
+		results.push(new SearchGroupSystemMemory());
 	}
 	return results;
 };
@@ -49,6 +52,10 @@ const defaultConfig: Record<SearchGroupName, SearchGroupStorage> = {
 	"system.cpu": {
 		enabled: false,
 		order: 70,
+	},
+	"system.memory": {
+		enabled: false,
+		order: 69,
 	},
 	bookmarks: {
 		enabled: false,

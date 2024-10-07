@@ -1,6 +1,6 @@
-import { iconBob, iconFromString } from "../components/icon";
 import { SearchGroup } from "../components/search-group";
 import { SearchResult } from "../components/search-result";
+import { iconBob, iconFromString } from "../icons";
 
 export class SearchGroupBob extends SearchGroup {
 	constructor() {

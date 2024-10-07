@@ -6,6 +6,7 @@ import { SearchGroupHistory } from "./history";
 import { SearchGroupPlatform } from "./platform";
 import { SearchGroupShortcuts } from "./shortcuts";
 import { SearchGroupSystemCpu } from "./system-cpu";
+import { SearchGroupTabs } from "./tabs";
 
 export type SearchGroupName =
 	| "bookmarks"
@@ -13,7 +14,8 @@ export type SearchGroupName =
 	| "system.cpu"
 	| "shortcuts"
 	| "platform"
-	| "bob";
+	| "bob"
+	| "tabs";
 
 export type SearchGroupStorage = {
 	enabled?: boolean;
@@ -27,6 +29,7 @@ const all = () => {
 		new SearchGroupBob(),
 		new SearchGroupPlatform(),
 		new SearchGroupHistory(),
+		new SearchGroupTabs(),
 	];
 	if (isChromium) {
 		results.push(new SearchGroupSystemCpu());
@@ -58,6 +61,10 @@ const defaultConfig: Record<SearchGroupName, SearchGroupStorage> = {
 	shortcuts: {
 		order: 90,
 		enabled: true,
+	},
+	tabs: {
+		order: 30,
+		enabled: false,
 	},
 };
 

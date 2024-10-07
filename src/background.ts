@@ -86,10 +86,16 @@ function openBob() {
 							},
 							(newWindow) => {
 								openBobWindowId = newWindow?.id || -1;
+								chrome.storage.sync.set({
+									lastFocusedWindowId: currentWindow.id,
+								});
 							},
 						);
 					} else {
 						openBobWindowId = newWindow.id || -1;
+						chrome.storage.sync.set({
+							lastFocusedWindowId: currentWindow.id,
+						});
 					}
 				},
 			);

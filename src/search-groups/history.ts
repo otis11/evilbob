@@ -1,9 +1,9 @@
-import { iconFromString, iconFromUrl, iconHistory } from "../components/icon";
 import { SearchGroup } from "../components/search-group";
 import {
 	SearchResult,
 	type SearchResultConfig,
 } from "../components/search-result";
+import { iconFromString, iconFromUrl, iconHistory } from "../icons";
 
 export class SearchGroupHistory extends SearchGroup {
 	constructor() {

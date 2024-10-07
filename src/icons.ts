@@ -35,4 +35,9 @@ export const iconOpenInNew =
 	'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>open-in-new</title><path d="M14,3V5H17.59L7.76,14.83L9.17,16.24L19,6.41V10H21V3M19,19H5V5H12V3H5C3.89,3 3,3.9 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V12H19V19Z" /></svg>';
 export const iconHistory =
 	'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>history</title><path d="M13.5,8H12V13L16.28,15.54L17,14.33L13.5,12.25V8M13,3A9,9 0 0,0 4,12H1L4.96,16.03L9,12H6A7,7 0 0,1 13,5A7,7 0 0,1 20,12A7,7 0 0,1 13,19C11.07,19 9.32,18.21 8.06,16.94L6.64,18.36C8.27,20 10.5,21 13,21A9,9 0 0,0 22,12A9,9 0 0,0 13,3" /></svg>';
-export const iconBob = '<svg width="18" height="16" viewBox="0 0 18 16" fill="none" xmlns="http://www.w3.org/2000/svg"><rect width="16" height="16" rx="4" transform="matrix(-1 0 0 1 17 0)" fill="#FFDA58"/><circle cx="3.32268" cy="3.32268" r="3.82268" transform="matrix(-1 0 0 1 8.5144 4.03833)" fill="white" stroke="black"/><circle cx="3.32268" cy="3.32268" r="3.82268" transform="matrix(-1 0 0 1 16.0798 4.03833)" fill="white" stroke="black"/></svg>'
+export const iconBob =
+	'<svg width="18" height="16" viewBox="0 0 18 16" fill="none" xmlns="http://www.w3.org/2000/svg"><rect width="16" height="16" rx="4" transform="matrix(-1 0 0 1 17 0)" fill="#FFDA58"/><circle cx="3.32268" cy="3.32268" r="3.82268" transform="matrix(-1 0 0 1 8.5144 4.03833)" fill="white" stroke="black"/><circle cx="3.32268" cy="3.32268" r="3.82268" transform="matrix(-1 0 0 1 16.0798 4.03833)" fill="white" stroke="black"/></svg>';
+export const iconTab =
+	'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>tab</title><path d="M21,3H3A2,2 0 0,0 1,5V19A2,2 0 0,0 3,21H21A2,2 0 0,0 23,19V5A2,2 0 0,0 21,3M21,19H3V5H13V9H21V19Z" /></svg>';
+export const iconSortAlphabetically =
+	'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>sort-alphabetical-ascending</title><path d="M19 17H22L18 21L14 17H17V3H19M11 13V15L7.67 19H11V21H5V19L8.33 15H5V13M9 3H7C5.9 3 5 3.9 5 5V11H7V9H9V11H11V5C11 3.9 10.11 3 9 3M9 7H7V5H9Z" /></svg>';

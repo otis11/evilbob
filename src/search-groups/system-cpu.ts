@@ -1,6 +1,6 @@
-import { iconCpu, iconFromString } from "../components/icon";
 import { SearchGroup } from "../components/search-group";
 import { SearchResult } from "../components/search-result";
+import { iconCpu, iconFromString } from "../icons";
 
 export class SearchGroupSystemCpu extends SearchGroup {
 	constructor() {

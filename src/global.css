@@ -50,12 +50,18 @@ button {
 	border: none;
 }
 
-.icon,
-.icon svg,
-.icon img {
+svg,
+img {
 	width: 1em;
 	height: 1em;
 	fill: currentColor;
 	font-size: 24px;
-	position: relative;
+}
+
+.icon {
+	display: inline-flex;
+}
+
+.spacer {
+	flex: 1;
 }

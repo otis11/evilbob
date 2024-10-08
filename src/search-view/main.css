@@ -70,10 +70,23 @@
 	white-space: nowrap;
 }
 
-#reload {
-	position: absolute;
-	z-index: 1;
-	top: 24px;
-	right: 24px;
-	cursor: pointer;
+.results {
+	padding-bottom: 40px;
+}
+
+footer {
+	display: flex;
+	align-items: center;
+	padding: 4px 8px;
+	position: fixed;
+	bottom: 0;
+	left: 0;
+	width: 100%;
+	background-color: var(--bob-color-base-300);
+	font-size: 0.75rem;
+	gap: 12px;
+}
+
+footer .icon svg {
+	font-size: 1rem;
 }

@@ -3,7 +3,6 @@ import { isChromium } from "../platform";
 import { SearchGroupBob } from "./bob";
 import { SearchGroupBookmarks } from "./bookmarks";
 import { SearchGroupHistory } from "./history";
-import { SearchGroupPlatform } from "./platform";
 import { SearchGroupShortcuts } from "./shortcuts";
 import { SearchGroupSystemCpu } from "./system-cpu";
 import { SearchGroupSystemMemory } from "./system-memory";
@@ -15,7 +14,6 @@ export type SearchGroupName =
 	| "system.cpu"
 	| "system.memory"
 	| "shortcuts"
-	| "platform"
 	| "bob"
 	| "tabs";
 
@@ -29,7 +27,6 @@ const all = () => {
 		new SearchGroupBookmarks(),
 		new SearchGroupShortcuts(),
 		new SearchGroupBob(),
-		new SearchGroupPlatform(),
 		new SearchGroupHistory(),
 		new SearchGroupTabs(),
 	];

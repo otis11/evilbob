@@ -1,7 +1,10 @@
 import "../themes";
 import "../global.css";
 import "./main.css";
+import packageJson from "../../package.json";
 import { SearchResult } from "../components/search-result";
+import { iconCog, iconFromString, iconReload } from "../icons";
+import { browserName, browserVersion } from "../platform";
 import { SearchGroups } from "../search-groups";
 
 const searchResultGroups: SearchGroups = new SearchGroups();
@@ -37,6 +40,31 @@ function filterSearchResults() {
 	removeHighlightSelectedIndex();
 	selectedSearchResultIndex = 0;
 	showSelectedIndex();
+}
+
+export function renderFooter() {
+	const footer = document.getElementById("footer");
+
+	const browser = document.createElement("span");
+	browser.innerText = `${browserName} ${browserVersion}`;
+
+	const bobVersion = document.createElement("span");
+	bobVersion.innerText = `Bob ${packageJson.version}`;
+
+	const reload = iconFromString(iconReload);
+	reload.addEventListener("click", () => {
+		loadFreshSearchResults();
+	});
+
+	const settings = iconFromString(iconCog);
+	settings.addEventListener("click", () => {
+		chrome.runtime.openOptionsPage();
+	});
+
+	const spacer = document.createElement("span");
+	spacer.classList.add("spacer");
+
+	footer?.append(bobVersion, browser, spacer, reload, settings);
 }
 
 function renderSearchResults() {
@@ -175,10 +203,6 @@ window.addEventListener("mouseover", (event) => {
 	}
 });
 
-document.getElementById("reload")?.addEventListener("click", () => {
-	loadFreshSearchResults();
-});
-
 function getLiFromEvent(event: Event) {
 	if (!(event.target instanceof HTMLElement)) {
 		return null;
@@ -199,4 +223,5 @@ async function loadFreshSearchResults() {
 	renderSearchResults();
 }
 
+renderFooter();
 loadFreshSearchResults();

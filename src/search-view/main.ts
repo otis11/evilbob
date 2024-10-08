@@ -180,6 +180,10 @@ window.addEventListener("keydown", (event) => {
 	}
 });
 
+window.addEventListener("focus", () => {
+	searchInput.focus();
+});
+
 window.addEventListener("mouseover", (event) => {
 	// ignore mouseover if mouse stood still
 	if (

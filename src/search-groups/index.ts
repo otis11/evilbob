@@ -58,10 +58,6 @@ const defaultConfig: Record<SearchGroupName, SearchGroupStorage> = {
 		enabled: false,
 		order: 50,
 	},
-	platform: {
-		enabled: true,
-		order: 80,
-	},
 	shortcuts: {
 		order: 90,
 		enabled: true,

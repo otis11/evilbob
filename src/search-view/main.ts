@@ -51,12 +51,12 @@ export function renderFooter() {
 	const bobVersion = document.createElement("span");
 	bobVersion.innerText = `Bob ${packageJson.version}`;
 
-	const reload = iconFromString(iconReload);
+	const reload = iconFromString(iconReload, "16px");
 	reload.addEventListener("click", () => {
 		loadFreshSearchResults();
 	});
 
-	const settings = iconFromString(iconCog);
+	const settings = iconFromString(iconCog, "16px");
 	settings.addEventListener("click", () => {
 		chrome.runtime.openOptionsPage();
 	});

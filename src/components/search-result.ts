@@ -52,16 +52,20 @@ export abstract class SearchResult {
 		description.innerText = this.description;
 
 		if (this.prepend) {
-			this.prepend.classList.add("result-prepend");
-			li.append(this.prepend);
+			const span = document.createElement("span");
+			span.classList.add("result-prepend");
+			span.append(this.prepend);
+			li.append(span);
 		}
 
 		content.append(title, description);
 		li.append(content);
 
 		if (this.append) {
-			this.append.classList.add("result-append");
-			li.append(this.append);
+			const span = document.createElement("span");
+			span.classList.add("result-append");
+			span.append(this.append);
+			li.append(span);
 		}
 
 		return li;

@@ -1,28 +1,30 @@
-export function iconFromString(html: string) {
+export function iconFromString(html: string, fontSize = "24px") {
 	const span = document.createElement("span");
-	span.classList.add("icon");
 	span.innerHTML = html;
-	return span;
+	const svg = span.firstElementChild as HTMLElement;
+	svg.style.fontSize = fontSize;
+	return svg;
 }
 
-export function iconFromUrl(url: string | undefined, fallbackIcon: string) {
+export function iconFromUrl(
+	url: string | undefined,
+	fallbackIcon: string,
+	fontSize = "24px",
+) {
 	if (!url) {
 		return iconFromString(fallbackIcon);
 	}
 	const domain = new URL(url).hostname;
 
-	const span = document.createElement("span");
-	span.classList.add("icon");
 	const faviconUrl = `https://${domain}/favicon.ico`;
 	const img = document.createElement("img");
 	img.src = faviconUrl;
 	img.alt = "Favicon";
-	img.classList.add("icon");
+	img.style.fontSize = fontSize;
 	img.onerror = () => {
 		img.outerHTML = iconFromString(fallbackIcon).outerHTML;
 	};
-	span.append(img);
-	return span;
+	return img;
 }
 
 export const iconBookmark =

@@ -35,7 +35,7 @@
 	font-size: 0.875rem;
 }
 
-.result .icon {
+.result-prepend {
 	margin-right: 12px;
 }
 
@@ -45,7 +45,7 @@
 
 .result-append {
 	margin-left: auto;
-	padding-left: 10px;
+	padding-left: 12px;
 }
 
 .no-results {

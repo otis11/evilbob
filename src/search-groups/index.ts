@@ -18,7 +18,7 @@ export type SearchGroupName =
 	| "shortcuts"
 	| "bob"
 	| "google"
-	| "bang"
+	| "filter"
 	| "tabs";
 
 export type SearchGroupStorage = {

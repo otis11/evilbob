@@ -5,7 +5,7 @@ import { iconFilter, iconFromString } from "../icons";
 export class SearchGroupFilter extends SearchGroup {
 	constructor() {
 		super({
-			name: "bang",
+			name: "filter",
 			permissions: [],
 		});
 	}

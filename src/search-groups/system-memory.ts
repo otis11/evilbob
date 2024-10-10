@@ -16,7 +16,7 @@ export class SearchGroupSystemMemory extends SearchGroup {
 			new SearchResultSystemMemory({
 				title: "Memory",
 				searchText: "memory capacity available",
-				description: `${formatMemory(memory.availableCapacity)}/${formatMemory(memory.capacity)} GB`,
+				description: `${formatMemory(memory.capacity - memory.availableCapacity)}/${formatMemory(memory.capacity)} GB`,
 				append: iconFromString(iconCpu),
 			}),
 		];

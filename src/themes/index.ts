@@ -7,15 +7,15 @@ const defaultTheme: Theme = "dark";
 type Dimension = { width: number; height: number };
 const defaultDimensions = { width: 800, height: 500 };
 
-export function setCurrentTheme(theme: Theme) {
-	chrome.storage.sync.set({ theme: theme });
+export async function setCurrentTheme(theme: Theme) {
+	await chrome.storage.sync.set({ theme: theme });
 	if (globalThis.document?.documentElement) {
 		globalThis.document.documentElement.setAttribute("data-theme", theme);
 	}
 }
 
-export function setCurrentDimensions(dimensions: Dimension) {
-	chrome.storage.sync.set({ dimensions: JSON.stringify(dimensions) });
+export async function setCurrentDimensions(dimensions: Dimension) {
+	await chrome.storage.sync.set({ dimensions: JSON.stringify(dimensions) });
 }
 
 export async function getCurrentDimensions(): Promise<Dimension> {
@@ -37,3 +37,8 @@ async function getCurrentTheme(): Promise<Theme> {
 		);
 	}
 })();
+
+export async function setThemeToDefaults() {
+	await setCurrentDimensions(defaultDimensions);
+	await setCurrentTheme(defaultTheme);
+}

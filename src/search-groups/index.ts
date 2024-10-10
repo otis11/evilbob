@@ -73,10 +73,10 @@ const defaultConfig: Record<SearchGroupName, SearchGroupStorage> = {
 		enabled: false,
 	},
 	google: {
-		order: 30,
+		order: 200,
 		enabled: true,
 	},
-	bang: {
+	filter: {
 		order: 1,
 		enabled: true,
 	},

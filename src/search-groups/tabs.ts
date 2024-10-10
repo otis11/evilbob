@@ -1,4 +1,4 @@
-import { SearchGroup } from "../components/search-group";
+import { type Search, SearchGroup } from "../components/search-group";
 import { SearchResult } from "../components/search-result";
 import { iconFromString, iconSortAlphabetically } from "../icons";
 
@@ -14,6 +14,10 @@ export class SearchGroupTabs extends SearchGroup {
 		return new Promise((resolve) => {
 			resolve([new SearchResultSortTabsAlphabetically()]);
 		});
+	}
+
+	public shouldRenderAlone(search: Search): boolean {
+		return false;
 	}
 }
 

@@ -1,4 +1,4 @@
-import { SearchGroup } from "../components/search-group";
+import { type Search, SearchGroup } from "../components/search-group";
 import { SearchResult } from "../components/search-result";
 import { Shortcut } from "../components/shortcut";
 import { isFirefox, isMac } from "../platform";
@@ -8,6 +8,10 @@ export class SearchGroupShortcuts extends SearchGroup {
 		super({
 			name: "shortcuts",
 		});
+	}
+
+	public shouldRenderAlone(search: Search): boolean {
+		return false;
 	}
 
 	public async getResults(): Promise<SearchResult[]> {

@@ -1,4 +1,4 @@
-import { SearchGroup } from "../components/search-group";
+import { type Search, SearchGroup } from "../components/search-group";
 import {
 	SearchResult,
 	type SearchResultConfig,
@@ -27,6 +27,18 @@ export class SearchGroupHistory extends SearchGroup {
 					append: iconFromString(iconHistory),
 				}),
 		);
+	}
+
+	public isSearchHitForResult(
+		search: Search,
+		instance: SearchResult,
+	): boolean {
+		return instance.searchText.includes(
+			search.text.replaceAll("!h", "").trim(),
+		);
+	}
+	public shouldRenderAlone(search: Search): boolean {
+		return search.text.includes("!h");
 	}
 }
 

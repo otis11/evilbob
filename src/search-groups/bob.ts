@@ -1,4 +1,4 @@
-import { SearchGroup } from "../components/search-group";
+import { type Search, SearchGroup } from "../components/search-group";
 import { SearchResult } from "../components/search-result";
 import { iconBob, iconFromString } from "../icons";
 
@@ -14,6 +14,10 @@ export class SearchGroupBob extends SearchGroup {
 		return new Promise((resolve) => {
 			resolve([new SearchResultBobOpenSettings()]);
 		});
+	}
+
+	public shouldRenderAlone(search: Search): boolean {
+		return false;
 	}
 }
 

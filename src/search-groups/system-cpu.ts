@@ -1,4 +1,4 @@
-import { SearchGroup } from "../components/search-group";
+import { type Search, SearchGroup } from "../components/search-group";
 import { SearchResult } from "../components/search-result";
 import { iconCpu, iconFromString } from "../icons";
 
@@ -8,6 +8,10 @@ export class SearchGroupSystemCpu extends SearchGroup {
 			name: "system.cpu",
 			permissions: ["system.cpu"],
 		});
+	}
+
+	public shouldRenderAlone(search: Search): boolean {
+		return false;
 	}
 
 	public getResults(): Promise<SearchResult[]> {

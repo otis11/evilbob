@@ -1,5 +1,5 @@
 import { type SearchGroupName, SearchGroups } from "../search-groups";
-import type { SearchResult } from "./search-result";
+import { SearchResult } from "./search-result";
 
 export type SearchGroupConfig = {
 	name: SearchGroupName;
@@ -7,11 +7,17 @@ export type SearchGroupConfig = {
 	hostPermissions?: string[];
 };
 
+export type Search = {
+	text: string;
+	selectionStart: number | null;
+};
+
 export abstract class SearchGroup {
 	public name: SearchGroupName;
 	public permissions: string[];
 	public hostPermissions: string[];
 	private results: SearchResult[];
+	private renderedNodes: HTMLLIElement[] = [];
 
 	constructor(config: SearchGroupConfig) {
 		this.name = config.name;
@@ -95,7 +101,37 @@ export abstract class SearchGroup {
 
 	public abstract getResults(): Promise<SearchResult[]>;
 
+	public abstract shouldRenderAlone(search: Search): boolean;
+
 	public asHtmlElement() {
-		return this.results.map((result) => result.asHtmlElement());
+		this.renderedNodes = this.results.map((result) =>
+			result.asHtmlElement(),
+		);
+		return this.renderedNodes;
+	}
+
+	public isSearchHitForResult(search: Search, instance: SearchResult) {
+		const cleanSearch = search.text.toLowerCase().trim();
+		return instance?.searchText.toLowerCase().includes(cleanSearch);
+	}
+
+	public filterRenderedNodes(search: Search) {
+		for (const node of this.renderedNodes) {
+			const instance = SearchResult.instanceFromId(
+				node.getAttribute("data-instance-id") || "",
+			);
+
+			if (instance && this.isSearchHitForResult(search, instance)) {
+				node.classList.remove("hidden");
+			} else {
+				node.classList.add("hidden");
+			}
+		}
+	}
+
+	public hideRenderedNodes() {
+		for (const node of this.renderedNodes) {
+			node.classList.add("hidden");
+		}
 	}
 }

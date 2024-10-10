@@ -1,3 +1,4 @@
+import type { Search } from "./search-group";
 import type { Shortcut } from "./shortcut";
 
 export type SearchResultConfig = {
@@ -33,7 +34,7 @@ export abstract class SearchResult {
 		SearchResult.globalRegistry[this.instanceId] = this;
 	}
 
-	abstract onSelect(): void;
+	abstract onSelect(search: Search): void;
 
 	public asHtmlElement() {
 		const li = document.createElement("li");

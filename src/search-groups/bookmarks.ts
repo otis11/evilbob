@@ -1,4 +1,4 @@
-import { SearchGroup } from "../components/search-group";
+import { type Search, SearchGroup } from "../components/search-group";
 import {
 	SearchResult,
 	type SearchResultConfig,
@@ -11,6 +11,19 @@ export class SearchGroupBookmarks extends SearchGroup {
 			name: "bookmarks",
 			permissions: ["bookmarks"],
 		});
+	}
+
+	public shouldRenderAlone(search: Search): boolean {
+		return search.text.includes("!b");
+	}
+
+	public isSearchHitForResult(
+		search: Search,
+		instance: SearchResult,
+	): boolean {
+		return instance.searchText.includes(
+			search.text.replaceAll("!b", "").trim(),
+		);
 	}
 
 	public async getResults(): Promise<SearchResult[]> {

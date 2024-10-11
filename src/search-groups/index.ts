@@ -9,6 +9,7 @@ import { SearchGroupShortcuts } from "./shortcuts";
 import { SearchGroupSystemCpu } from "./system-cpu";
 import { SearchGroupSystemMemory } from "./system-memory";
 import { SearchGroupTabs } from "./tabs";
+import { SearchGroupUserScripts } from "./user-scripts";
 
 export type SearchGroupName =
 	| "bookmarks"
@@ -19,6 +20,7 @@ export type SearchGroupName =
 	| "bob"
 	| "google"
 	| "filter"
+	| "user-scripts"
 	| "tabs";
 
 export type SearchGroupStorage = {
@@ -35,6 +37,7 @@ const all = () => {
 		new SearchGroupTabs(),
 		new SearchGroupGoogle(),
 		new SearchGroupFilter(),
+		new SearchGroupUserScripts(),
 	];
 	if (isChromium) {
 		results.push(new SearchGroupSystemCpu());
@@ -79,6 +82,10 @@ const defaultConfig: Record<SearchGroupName, SearchGroupStorage> = {
 	filter: {
 		order: 1,
 		enabled: true,
+	},
+	"user-scripts": {
+		order: 20,
+		enabled: false,
 	},
 };
 

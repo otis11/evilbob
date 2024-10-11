@@ -58,5 +58,23 @@ for (const browser of browsers) {
 				watch,
 			},
 		}),
+		// user-scripts
+		build({
+			publicDir: `public/${browser}`,
+			root: "./src/user-scripts",
+			base: "./",
+			build: {
+				minify,
+				outDir: `../../dist/${browser}/user-scripts`,
+				rollupOptions: {
+					input: ["src/user-scripts/list-media.ts"],
+					output: {
+						entryFileNames: "[name].js",
+					},
+				},
+				emptyOutDir: false,
+				watch,
+			},
+		}),
 	]);
 }

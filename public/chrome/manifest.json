@@ -36,7 +36,8 @@
 		"system.cpu",
 		"system.memory",
 		"history",
-		"tabs"
+		"tabs",
+		"scripting"
 	],
 	"optional_host_permissions": ["https://*/*"]
 }

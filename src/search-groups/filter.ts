@@ -32,17 +32,7 @@ export class SearchGroupFilter extends SearchGroup {
 
 	public shouldRenderAlone(search: Search): boolean {
 		const currentWord = search.currentWord();
-		return currentWord === this.filter;
-	}
-
-	public isSearchHitForResult(
-		search: Search,
-		instance: SearchResult,
-	): boolean {
-		if (search.isEmpty()) {
-			return true;
-		}
-		const currentWord = search.currentWord();
+		console.log(currentWord);
 		return currentWord === this.filter;
 	}
 }

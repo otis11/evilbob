@@ -30,15 +30,6 @@ export class SearchGroupHistory extends SearchGroup {
 				}),
 		);
 	}
-
-	public isSearchHitForResult(
-		search: Search,
-		instance: SearchResult,
-	): boolean {
-		return instance.searchText.includes(
-			search.text.replaceAll(this.filter, "").toLowerCase().trim(),
-		);
-	}
 }
 
 export class SearchResultHistory extends SearchResult {

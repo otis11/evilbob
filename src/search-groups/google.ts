@@ -59,25 +59,6 @@ export class SearchGroupGoogle extends SearchGroup {
 			]);
 		});
 	}
-
-	isSearchHitForResult(search: Search, instance: SearchResult) {
-		if (instance.title === "Google") {
-			return true;
-		}
-
-		if (!this.filter) {
-			return false;
-		}
-
-		const currentWord = search.currentWord();
-		if (
-			typeof currentWord === "string" &&
-			search.text.includes(this.filter)
-		) {
-			return instance.searchText.includes(currentWord);
-		}
-		return false;
-	}
 }
 
 export class SearchResultGoogle extends SearchResult {

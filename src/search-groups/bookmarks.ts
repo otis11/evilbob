@@ -15,15 +15,6 @@ export class SearchGroupBookmarks extends SearchGroup {
 		});
 	}
 
-	public isSearchHitForResult(
-		search: Search,
-		instance: SearchResult,
-	): boolean {
-		return instance.searchText.includes(
-			search.text.replaceAll(this.filter, "").toLowerCase().trim(),
-		);
-	}
-
 	public async getResults(): Promise<SearchResult[]> {
 		const tree = await chrome.bookmarks.getTree();
 		return this.flattenBookmarksTree(tree);

@@ -109,18 +109,13 @@ export abstract class SearchGroup {
 		return this.renderedNodes;
 	}
 
-	public isSearchHitForResult(search: Search, instance: SearchResult) {
-		const cleanSearch = search.text.toLowerCase().trim();
-		return instance?.searchText.toLowerCase().includes(cleanSearch);
-	}
-
 	public filterRenderedNodes(search: Search) {
 		for (const node of this.renderedNodes) {
 			const instance = SearchResult.instanceFromId(
 				node.getAttribute("data-instance-id") || "",
 			);
 
-			if (instance && this.isSearchHitForResult(search, instance)) {
+			if (instance && instance.isHit(search)) {
 				node.classList.remove("hidden");
 			} else {
 				node.classList.add("hidden");

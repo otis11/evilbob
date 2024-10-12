@@ -40,7 +40,7 @@ export class SearchResultUserScript extends SearchResult {
 			title: config.title,
 			searchText: "list media",
 			description: config.description,
-			append: iconFromString(iconScript),
+			prepend: iconFromString(iconScript),
 		});
 
 		this.fileName = config.fileName;

@@ -7,12 +7,12 @@ export function resetElementStyles(
 	el: HTMLElement,
 	config?: resetElementStylesConfig,
 ) {
-	el.style.minWidth = config?.width || "unset";
-	el.style.minHeight = config?.height || "unset";
-	el.style.maxWidth = config?.width || "unset";
-	el.style.maxHeight = config?.height || "unset";
-	el.style.position = "static";
-	el.style.display = "block";
-	el.style.margin = "0";
-	el.style.padding = "0";
+	el.style.setProperty("min-width", config?.width || "unset", "important");
+	el.style.setProperty("min-height", config?.height || "unset", "important");
+	el.style.setProperty("max-width", config?.width || "unset", "important");
+	el.style.setProperty("max-height", config?.height || "unset", "important");
+	el.style.setProperty("position", "static", "important");
+	el.style.setProperty("display", "block", "important");
+	el.style.setProperty("margin", "0", "important");
+	el.style.setProperty("padding", "0", "important");
 }

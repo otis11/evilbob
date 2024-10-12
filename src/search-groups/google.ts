@@ -63,7 +63,7 @@ export class SearchGroupGoogle extends SearchGroup {
 	}
 
 	isSearchHitForResult(search: Search, instance: SearchResult) {
-		const currentWord = search.getCurrentWord();
+		const currentWord = search.currentWord();
 		if (typeof currentWord === "string") {
 			return instance.searchText.includes(currentWord);
 		}

@@ -22,15 +22,17 @@ export class SearchGroupFilter extends SearchGroup {
 	}
 
 	public shouldRenderAlone(search: Search): boolean {
-		if (!search.selectionStart) {
-			return false;
-		}
-		const lastTypeChar = search.text[search.selectionStart - 1];
-		if (lastTypeChar === "!") {
-			return true;
-		}
-		return false;
+        const currentWord = search.currentWord()
+		return currentWord === "!";
 	}
+
+    public isSearchHitForResult(search: Search, instance: SearchResult): boolean {
+        if(search.isEmpty()) {
+            return true
+        }
+        const currentWord = search.currentWord()
+		return currentWord === "!";
+    }
 }
 
 export class SearchResultFilter extends SearchResult {
@@ -44,7 +46,11 @@ export class SearchResultFilter extends SearchResult {
 	}
 	onSelect(search: Search): void {
 		if (search.inputElement) {
-			search.inputElement.value += this.title;
+            let addition = this.title
+            if(search.currentWord() === '!') {
+                addition = addition.slice(1)
+            }
+			search.inputElement.value += addition;
 			search.inputElement.scrollIntoView();
 			search.inputElement.focus();
 		}

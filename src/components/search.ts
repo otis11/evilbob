@@ -15,11 +15,11 @@ export class Search {
 		this.inputElement = config.inputElement;
 	}
 
-	getCurrentWord() {
+	currentWord() {
 		if (this.selectionStart === null) {
 			return null;
 		}
-		const words = this.getWords();
+		const words = this.words();
 		let wordsLengthGoneThrough = 0;
 		for (const word of words) {
 			wordsLengthGoneThrough += word.length;
@@ -30,7 +30,11 @@ export class Search {
 		return words.at(-1);
 	}
 
-	getWords() {
+	words() {
 		return this.text.split(" ");
 	}
+
+    isEmpty() {
+        return this.text.trim().length === 0
+    }
 }

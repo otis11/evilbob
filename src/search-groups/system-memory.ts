@@ -11,10 +11,6 @@ export class SearchGroupSystemMemory extends SearchGroup {
 		});
 	}
 
-	public shouldRenderAlone(search: Search): boolean {
-		return false;
-	}
-
 	public async getResults(): Promise<SearchResult[]> {
 		const memory = await chrome.system.memory.getInfo();
 		return [

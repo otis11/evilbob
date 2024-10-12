@@ -16,10 +16,6 @@ export class SearchGroupTabs extends SearchGroup {
 			resolve([new SearchResultSortTabsAlphabetically()]);
 		});
 	}
-
-	public shouldRenderAlone(search: Search): boolean {
-		return false;
-	}
 }
 
 export class SearchResultSortTabsAlphabetically extends SearchResult {

@@ -11,6 +11,7 @@ export class SearchGroupHistory extends SearchGroup {
 		super({
 			name: "history",
 			permissions: ["history"],
+			filter: "!h",
 		});
 	}
 
@@ -35,11 +36,8 @@ export class SearchGroupHistory extends SearchGroup {
 		instance: SearchResult,
 	): boolean {
 		return instance.searchText.includes(
-			search.text.replace("!h", "").toLowerCase().trim(),
+			search.text.replaceAll(this.filter, "").toLowerCase().trim(),
 		);
-	}
-	public shouldRenderAlone(search: Search): boolean {
-		return search.text.includes("!h");
 	}
 }
 

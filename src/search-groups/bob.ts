@@ -21,10 +21,6 @@ export class SearchGroupBob extends SearchGroup {
 			]);
 		});
 	}
-
-	public shouldRenderAlone(search: Search): boolean {
-		return false;
-	}
 }
 
 export class SearchResultBobOpenSettings extends SearchResult {

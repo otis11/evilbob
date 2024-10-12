@@ -1,3 +1,4 @@
+import { SearchGroups } from ".";
 import type { Search } from "../components/search";
 import { SearchGroup } from "../components/search-group";
 import { SearchResult } from "../components/search-result";
@@ -8,31 +9,42 @@ export class SearchGroupFilter extends SearchGroup {
 		super({
 			name: "filter",
 			permissions: [],
+			filter: "!",
 		});
 	}
 
-	public getResults(): Promise<SearchResult[]> {
-		return new Promise((resolve) => {
-			resolve([
-				new SearchResultFilter("!g", "Search Google"),
-				new SearchResultFilter("!h", "Search History"),
-				new SearchResultFilter("!b", "Search Bookmarks"),
-			]);
-		});
+	public async getResults(): Promise<SearchResult[]> {
+		const groups = new SearchGroups();
+		await groups.filterEnabled();
+		const results = [];
+		for (const group of groups.list) {
+			if (group.filter) {
+				results.push(
+					new SearchResultFilter(
+						group.filter,
+						`Filter for ${group.name}`,
+					),
+				);
+			}
+		}
+		return results;
 	}
 
 	public shouldRenderAlone(search: Search): boolean {
-        const currentWord = search.currentWord()
-		return currentWord === "!";
+		const currentWord = search.currentWord();
+		return currentWord === this.filter;
 	}
 
-    public isSearchHitForResult(search: Search, instance: SearchResult): boolean {
-        if(search.isEmpty()) {
-            return true
-        }
-        const currentWord = search.currentWord()
-		return currentWord === "!";
-    }
+	public isSearchHitForResult(
+		search: Search,
+		instance: SearchResult,
+	): boolean {
+		if (search.isEmpty()) {
+			return true;
+		}
+		const currentWord = search.currentWord();
+		return currentWord === this.filter;
+	}
 }
 
 export class SearchResultFilter extends SearchResult {
@@ -46,10 +58,10 @@ export class SearchResultFilter extends SearchResult {
 	}
 	onSelect(search: Search): void {
 		if (search.inputElement) {
-            let addition = this.title
-            if(search.currentWord() === '!') {
-                addition = addition.slice(1)
-            }
+			let addition = this.title;
+			if (search.currentWord() === "!") {
+				addition = addition.slice(1);
+			}
 			search.inputElement.value += addition;
 			search.inputElement.scrollIntoView();
 			search.inputElement.focus();

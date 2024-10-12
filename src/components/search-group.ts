@@ -6,6 +6,7 @@ export type SearchGroupConfig = {
 	name: SearchGroupName;
 	permissions?: string[];
 	hostPermissions?: string[];
+	filter?: string;
 };
 
 export abstract class SearchGroup {
@@ -14,12 +15,14 @@ export abstract class SearchGroup {
 	public hostPermissions: string[];
 	private results: SearchResult[];
 	private renderedNodes: HTMLLIElement[] = [];
+	public filter: string;
 
 	constructor(config: SearchGroupConfig) {
 		this.name = config.name;
 		this.permissions = config.permissions || [];
 		this.hostPermissions = config.hostPermissions || [];
 		this.results = [];
+		this.filter = config.filter || "";
 	}
 
 	public async isEnabled(): Promise<boolean> {
@@ -97,8 +100,6 @@ export abstract class SearchGroup {
 
 	public abstract getResults(): Promise<SearchResult[]>;
 
-	public abstract shouldRenderAlone(search: Search): boolean;
-
 	public asHtmlElement() {
 		this.renderedNodes = this.results.map((result) =>
 			result.asHtmlElement(),
@@ -129,5 +130,9 @@ export abstract class SearchGroup {
 		for (const node of this.renderedNodes) {
 			node.classList.add("hidden");
 		}
+	}
+
+	public shouldRenderAlone(search: Search) {
+		return !!this.filter && search.text.includes(this.filter);
 	}
 }

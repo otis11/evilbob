@@ -34,7 +34,7 @@ export class Search {
 		return this.text.split(" ");
 	}
 
-    isEmpty() {
-        return this.text.trim().length === 0
-    }
+	isEmpty() {
+		return this.text.trim().length === 0;
+	}
 }

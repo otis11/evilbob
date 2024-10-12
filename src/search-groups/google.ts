@@ -8,6 +8,7 @@ export class SearchGroupGoogle extends SearchGroup {
 		super({
 			name: "google",
 			permissions: [],
+			filter: "!g",
 		});
 	}
 
@@ -54,17 +55,25 @@ export class SearchGroupGoogle extends SearchGroup {
 					"-",
 					"-site:facebook.com. Exclude results.",
 				),
+				new SearchResultGoogle("Google", "Search Google"),
 			]);
 		});
 	}
 
-	public shouldRenderAlone(search: Search): boolean {
-		return search.text.includes("!g");
-	}
-
 	isSearchHitForResult(search: Search, instance: SearchResult) {
+		if (instance.title === "Google") {
+			return true;
+		}
+
+		if (!this.filter) {
+			return false;
+		}
+
 		const currentWord = search.currentWord();
-		if (typeof currentWord === "string") {
+		if (
+			typeof currentWord === "string" &&
+			search.text.includes(this.filter)
+		) {
 			return instance.searchText.includes(currentWord);
 		}
 		return false;

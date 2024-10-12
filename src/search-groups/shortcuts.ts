@@ -11,10 +11,6 @@ export class SearchGroupShortcuts extends SearchGroup {
 		});
 	}
 
-	public shouldRenderAlone(search: Search): boolean {
-		return false;
-	}
-
 	public async getResults(): Promise<SearchResult[]> {
 		const shortcuts = [
 			new SearchResultShortcut({

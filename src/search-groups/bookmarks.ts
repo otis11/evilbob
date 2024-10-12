@@ -11,11 +11,8 @@ export class SearchGroupBookmarks extends SearchGroup {
 		super({
 			name: "bookmarks",
 			permissions: ["bookmarks"],
+			filter: "!b",
 		});
-	}
-
-	public shouldRenderAlone(search: Search): boolean {
-		return search.text.includes("!b");
 	}
 
 	public isSearchHitForResult(
@@ -23,7 +20,7 @@ export class SearchGroupBookmarks extends SearchGroup {
 		instance: SearchResult,
 	): boolean {
 		return instance.searchText.includes(
-			search.text.replaceAll("!b", "").trim(),
+			search.text.replaceAll(this.filter, "").toLowerCase().trim(),
 		);
 	}
 

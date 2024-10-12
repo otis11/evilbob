@@ -12,10 +12,6 @@ export class SearchGroupUserScripts extends SearchGroup {
 		});
 	}
 
-	public shouldRenderAlone(search: Search): boolean {
-		return false;
-	}
-
 	public async getResults(): Promise<SearchResult[]> {
 		return [
 			new SearchResultUserScript({

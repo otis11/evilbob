@@ -11,10 +11,6 @@ export class SearchGroupSystemCpu extends SearchGroup {
 		});
 	}
 
-	public shouldRenderAlone(search: Search): boolean {
-		return false;
-	}
-
 	public getResults(): Promise<SearchResult[]> {
 		return new Promise((resolve) => {
 			chrome.system.cpu.getInfo((cpu) => {

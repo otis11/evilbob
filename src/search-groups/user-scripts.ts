@@ -67,6 +67,7 @@ export class SearchResultUserScript extends SearchResult {
 				target: { tabId },
 				files: [`user-scripts/${this.fileName}`],
 			});
+            window.close()
 		}
 	}
 }

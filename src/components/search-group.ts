@@ -16,6 +16,7 @@ export abstract class SearchGroup {
 	private results: SearchResult[];
 	private renderedNodes: HTMLLIElement[] = [];
 	public filter: string;
+	public isResultsLoaded = false;
 
 	constructor(config: SearchGroupConfig) {
 		this.name = config.name;
@@ -96,6 +97,7 @@ export abstract class SearchGroup {
 
 	public async loadResults() {
 		this.results = await this.getResults();
+		this.isResultsLoaded = true;
 	}
 
 	public abstract getResults(): Promise<SearchResult[]>;

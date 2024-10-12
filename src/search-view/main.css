@@ -90,3 +90,12 @@ footer {
 footer .icon svg {
 	font-size: 1rem;
 }
+
+#status-stripe {
+	display: flex;
+	align-items: center;
+}
+
+#status-stripe:not(:empty) {
+	padding: 4px 12px;
+}

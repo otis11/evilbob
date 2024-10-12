@@ -4,7 +4,7 @@ import "./main.css";
 import packageJson from "../../package.json";
 import { Search } from "../components/search";
 import { SearchResult } from "../components/search-result";
-import { iconCog, iconFromString, iconReload } from "../icons";
+import { iconCog, iconFromString, iconLoading, iconReload } from "../icons";
 import { browserName, browserVersion } from "../platform";
 import { SearchGroups } from "../search-groups";
 
@@ -18,6 +18,7 @@ let lastMousePosition = {
 
 const searchInput = document.getElementById("search") as HTMLInputElement;
 const resultsContainer = document.getElementById("results") as HTMLElement;
+const statusStripe = document.getElementById("status-stripe") as HTMLElement;
 
 function filterSearchResults() {
 	const search = new Search({
@@ -99,6 +100,9 @@ function renderSearchResults() {
 	}
 
 	for (const group of searchResultGroups.list) {
+		if (!group.isResultsLoaded) {
+			continue;
+		}
 		resultsContainer.append(...group.asHtmlElement());
 	}
 
@@ -237,11 +241,21 @@ function getLiFromEvent(event: Event) {
 async function loadFreshSearchResults() {
 	await searchResultGroups.filterEnabled();
 	await searchResultGroups.order();
-	const promises = searchResultGroups.list.map((group) =>
-		group.loadResults(),
-	);
-	await Promise.all(promises);
-	renderSearchResults();
+	for (const group of searchResultGroups.list) {
+		group.loadResults().then((results) => {
+			const notLoaded = searchResultGroups.list.filter(
+				(group) => !group.isResultsLoaded,
+			);
+			statusStripe.innerHTML = "";
+			if (notLoaded.length > 0) {
+				const icon = iconFromString(iconLoading);
+				icon.classList.add("rotate-animation");
+				const text = notLoaded.map((group) => group.name).join(", ");
+				statusStripe.append(icon, text);
+				renderSearchResults();
+			}
+		});
+	}
 }
 
 renderFooter();

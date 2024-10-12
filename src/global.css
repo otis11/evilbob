@@ -60,3 +60,16 @@ img {
 .spacer {
 	flex: 1;
 }
+
+.rotate-animation {
+	animation: rotateAnimation 1s infinite ease;
+}
+
+@keyframes rotateAnimation {
+	from {
+		transform: rotateZ(0);
+	}
+	to {
+		transform: rotateZ(360deg);
+	}
+}

@@ -21,6 +21,7 @@ const resultsContainer = document.getElementById("results") as HTMLElement;
 
 function filterSearchResults() {
 	const search = new Search({
+		inputElement: searchInput,
 		text: searchInput?.value || "",
 		selectionStart: searchInput.selectionStart,
 	});
@@ -136,6 +137,7 @@ function onKeyUp(event: KeyboardEvent) {
 			target?.getAttribute("data-instance-id") || "",
 		);
 		const search = new Search({
+			inputElement: searchInput,
 			selectionStart: searchInput.selectionStart,
 			text: searchInput.value,
 		});
@@ -180,6 +182,7 @@ window.addEventListener("click", (event) => {
 			target?.getAttribute("data-instance-id") || "",
 		);
 		const search = new Search({
+			inputElement: searchInput,
 			selectionStart: searchInput.selectionStart,
 			text: searchInput.value,
 		});

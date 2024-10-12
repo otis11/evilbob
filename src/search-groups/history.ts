@@ -23,7 +23,7 @@ export class SearchGroupHistory extends SearchGroup {
 					title: item.title || "",
 					id: item.id,
 					url: item.url,
-					searchText: `${item.title} ${item.url}`,
+					searchText: `${item.title?.toLowerCase()} ${item.url?.toLowerCase()}`,
 					prepend: iconFromUrl(item.url, iconHistory),
 					append: iconFromString(iconHistory),
 				}),
@@ -35,7 +35,7 @@ export class SearchGroupHistory extends SearchGroup {
 		instance: SearchResult,
 	): boolean {
 		return instance.searchText.includes(
-			search.text.replaceAll("!h", "").trim(),
+			search.text.replace("!h", "").toLowerCase().trim(),
 		);
 	}
 	public shouldRenderAlone(search: Search): boolean {

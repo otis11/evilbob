@@ -42,5 +42,11 @@ export class SearchResultFilter extends SearchResult {
 			prepend: iconFromString(iconFilter),
 		});
 	}
-	onSelect(): void {}
+	onSelect(search: Search): void {
+		if (search.inputElement) {
+			search.inputElement.value += this.title;
+			search.inputElement.scrollIntoView();
+			search.inputElement.focus();
+		}
+	}
 }

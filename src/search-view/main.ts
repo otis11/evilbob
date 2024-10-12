@@ -2,7 +2,7 @@ import "../themes";
 import "../global.css";
 import "./main.css";
 import packageJson from "../../package.json";
-import type { Search } from "../components/search-group";
+import { Search } from "../components/search";
 import { SearchResult } from "../components/search-result";
 import { iconCog, iconFromString, iconReload } from "../icons";
 import { browserName, browserVersion } from "../platform";
@@ -20,10 +20,10 @@ const searchInput = document.getElementById("search") as HTMLInputElement;
 const resultsContainer = document.getElementById("results") as HTMLElement;
 
 function filterSearchResults() {
-	const search: Search = {
+	const search = new Search({
 		text: searchInput?.value || "",
 		selectionStart: searchInput.selectionStart,
-	};
+	});
 	// TODO improve search, Levenshtein distance algorithm? what is good?
 
 	const groupAlone = searchResultGroups.list.find((group) =>
@@ -135,10 +135,10 @@ function onKeyUp(event: KeyboardEvent) {
 		const searchResult = SearchResult.instanceFromId(
 			target?.getAttribute("data-instance-id") || "",
 		);
-		const search: Search = {
+		const search = new Search({
 			selectionStart: searchInput.selectionStart,
 			text: searchInput.value,
-		};
+		});
 		searchResult?.onSelect(search);
 	}
 }
@@ -179,10 +179,10 @@ window.addEventListener("click", (event) => {
 		const searchResult = SearchResult.instanceFromId(
 			target?.getAttribute("data-instance-id") || "",
 		);
-		const search: Search = {
+		const search = new Search({
 			selectionStart: searchInput.selectionStart,
 			text: searchInput.value,
-		};
+		});
 		searchResult?.onSelect(search);
 	}
 });

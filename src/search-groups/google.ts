@@ -1,4 +1,5 @@
-import { type Search, SearchGroup } from "../components/search-group";
+import type { Search } from "../components/search";
+import { SearchGroup } from "../components/search-group";
 import { SearchResult } from "../components/search-result";
 import { iconFromString, iconGoogle } from "../icons";
 
@@ -12,7 +13,48 @@ export class SearchGroupGoogle extends SearchGroup {
 
 	public getResults(): Promise<SearchResult[]> {
 		return new Promise((resolve) => {
-			resolve([new SearchResultGoogle("intitle", 'intitle="Youtube"')]);
+			resolve([
+				new SearchResultGoogle(
+					"intitle",
+					'intitle:"Youtube". Searches for pages with a specific keyword in the title',
+				),
+				new SearchResultGoogle(
+					"inurl",
+					"inurl:python. Searches for URLs containing a specific keyword",
+				),
+				new SearchResultGoogle(
+					"filetype",
+					"filetype:pdf. Searches for specific file types",
+				),
+				new SearchResultGoogle(
+					"site",
+					"site:github.com. Limits search to a specific website.",
+				),
+				new SearchResultGoogle(
+					"intext",
+					'intext:"Hello World".  Searches for pages with a specific keyword in the page content.',
+				),
+				new SearchResultGoogle(
+					"before/after",
+					"before:2000-01-01 after:2001-01-01. Searches for a specific date range.",
+				),
+				new SearchResultGoogle(
+					"|",
+					"site:facebook.com | site:twitter.com. Searches for a OR b.",
+				),
+				new SearchResultGoogle(
+					"&",
+					"site:facebook.com & site:twitter.com. Searches for a AND b.",
+				),
+				new SearchResultGoogle(
+					"&",
+					"site:facebook.com & site:twitter.com. Searches for a AND b.",
+				),
+				new SearchResultGoogle(
+					"-",
+					"-site:facebook.com. Exclude results.",
+				),
+			]);
 		});
 	}
 
@@ -21,7 +63,11 @@ export class SearchGroupGoogle extends SearchGroup {
 	}
 
 	isSearchHitForResult(search: Search, instance: SearchResult) {
-		return true;
+		const currentWord = search.getCurrentWord();
+		if (typeof currentWord === "string") {
+			return instance.searchText.includes(currentWord);
+		}
+		return false;
 	}
 }
 

@@ -1,15 +1,11 @@
 import { type SearchGroupName, SearchGroups } from "../search-groups";
+import type { Search } from "./search";
 import { SearchResult } from "./search-result";
 
 export type SearchGroupConfig = {
 	name: SearchGroupName;
 	permissions?: string[];
 	hostPermissions?: string[];
-};
-
-export type Search = {
-	text: string;
-	selectionStart: number | null;
 };
 
 export abstract class SearchGroup {

@@ -1,5 +1,4 @@
-import type { Search } from "./search-group";
-import type { Shortcut } from "./shortcut";
+import type { Search } from "./search";
 
 export type SearchResultConfig = {
 	title: string;

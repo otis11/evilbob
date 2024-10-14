@@ -252,8 +252,8 @@ async function loadFreshSearchResults() {
 				icon.classList.add("rotate-animation");
 				const text = notLoaded.map((group) => group.name).join(", ");
 				statusStripe.append(icon, text);
-				renderSearchResults();
 			}
+			renderSearchResults();
 		});
 	}
 }

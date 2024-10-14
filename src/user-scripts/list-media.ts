@@ -1,6 +1,6 @@
 import { FlexContainer } from "../components/flex-container";
 import { Heading } from "../components/heading";
-import { resetElementStyles } from "../util/resetElementStyles";
+import { resetElementStyles } from "../util/reset-element-styles";
 
 (() => {
 	console.log("list-media user script");

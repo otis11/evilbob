@@ -2,6 +2,7 @@ import type { Search } from "../components/search";
 import { SearchGroup } from "../components/search-group";
 import { SearchResult } from "../components/search-result";
 import { iconCpu, iconFromString } from "../icons";
+import { formatBytes } from "../util/format-bytes";
 
 export class SearchGroupSystemMemory extends SearchGroup {
 	constructor() {
@@ -16,8 +17,8 @@ export class SearchGroupSystemMemory extends SearchGroup {
 		return [
 			new SearchResultSystemMemory({
 				title: "Memory",
-				searchText: "memory capacity available",
-				description: `${formatMemory(memory.capacity - memory.availableCapacity)}/${formatMemory(memory.capacity)} GB`,
+				searchText: "memory",
+				description: `${formatBytes(memory.capacity - memory.availableCapacity)}/${formatBytes(memory.capacity)} GB`,
 				append: iconFromString(iconCpu),
 			}),
 		];
@@ -28,11 +29,4 @@ export class SearchResultSystemMemory extends SearchResult {
 	onSelect(): void {
 		console.log("on select system Memory");
 	}
-}
-
-function formatMemory(bytes: number) {
-	const kib = bytes / 1024;
-	const mib = kib / 1024;
-	const gib = mib / 1024;
-	return `${gib.toFixed(1)}`.replace(".", ",");
 }

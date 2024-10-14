@@ -35,6 +35,7 @@
 		"bookmarks",
 		"system.cpu",
 		"system.memory",
+		"system.storage",
 		"history",
 		"tabs",
 		"scripting"

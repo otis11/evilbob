@@ -50,10 +50,11 @@ export class Search {
 			return [str, []];
 		}
 		const modifier = [];
+		let strWithoutModifier = str;
 		for (const match of matches) {
-			str.replace(match, "");
+			strWithoutModifier = strWithoutModifier.replace(match, "");
 			modifier.push(match);
 		}
-		return [str, modifier];
+		return [strWithoutModifier, modifier];
 	}
 }

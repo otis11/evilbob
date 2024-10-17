@@ -77,6 +77,10 @@ export class SearchResultGoogle extends SearchResult {
 		}
 
 		const currentWord = search.currentWord();
+		if (currentWord === "") {
+			return true;
+		}
+
 		if (currentWord) {
 			return this.searchText.includes(currentWord);
 		}

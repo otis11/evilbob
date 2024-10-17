@@ -52,6 +52,7 @@ export class SearchResultFilter extends SearchResult {
 			return true;
 		}
 		const currentWord = search.currentWord();
+		console.log(currentWord);
 		return currentWord === "!";
 	}
 

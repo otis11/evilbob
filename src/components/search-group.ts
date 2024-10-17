@@ -130,6 +130,6 @@ export abstract class SearchGroup {
 	}
 
 	public shouldRenderAlone(search: Search) {
-		return !!this.filter && search.text.includes(this.filter);
+		return !!this.filter && search.modifier.includes(this.filter);
 	}
 }

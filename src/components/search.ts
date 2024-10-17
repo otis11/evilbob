@@ -5,14 +5,20 @@ export type SearchConfig = {
 };
 
 export class Search {
+	static MODIFIER_PREFIX = "!";
+
+	originalText: string;
 	text: string;
+	modifier: string[];
 	selectionStart: number | null;
 	inputElement?: HTMLInputElement;
 
 	constructor(config: SearchConfig) {
-		this.text = config.text;
+		this.originalText = config.text;
 		this.selectionStart = config.selectionStart;
 		this.inputElement = config.inputElement;
+
+		[this.text, this.modifier] = this.parseString(config.text);
 	}
 
 	currentWord() {
@@ -35,6 +41,20 @@ export class Search {
 	}
 
 	isEmpty() {
-		return this.text.trim().length === 0;
+		return this.originalText.trim().length === 0;
+	}
+
+	parseString(str: string): [string, string[]] {
+		const matches = str.match(/![a-zA-Z0-9]+/g);
+		if (!matches) {
+			return [str, []];
+		}
+		const modifier = [];
+		let strWithoutModifier = str;
+		for (const match of matches) {
+			strWithoutModifier = strWithoutModifier.replace(match, "");
+			modifier.push(match);
+		}
+		return [strWithoutModifier, modifier];
 	}
 }

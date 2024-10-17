@@ -1,4 +1,3 @@
-import type { Search } from "../components/search";
 import { SearchGroup } from "../components/search-group";
 import {
 	SearchResult,
@@ -13,15 +12,6 @@ export class SearchGroupBookmarks extends SearchGroup {
 			permissions: ["bookmarks"],
 			filter: "!b",
 		});
-	}
-
-	public isSearchHitForResult(
-		search: Search,
-		instance: SearchResult,
-	): boolean {
-		return instance.searchText.includes(
-			search.text.replaceAll(this.filter, "").toLowerCase().trim(),
-		);
 	}
 
 	public async getResults(): Promise<SearchResult[]> {

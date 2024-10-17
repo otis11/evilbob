@@ -1,5 +1,4 @@
 import { SearchGroups } from ".";
-import type { Search } from "../components/search";
 import { SearchGroup } from "../components/search-group";
 import { SearchResult } from "../components/search-result";
 import { iconBob, iconFromString } from "../icons";

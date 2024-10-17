@@ -33,6 +33,11 @@ export abstract class SearchResult {
 		SearchResult.globalRegistry[this.instanceId] = this;
 	}
 
+	public isHit(search: Search) {
+		const cleanSearch = search.text.toLowerCase().trim();
+		return this.searchText.toLowerCase().includes(cleanSearch);
+	}
+
 	abstract onSelect(search: Search): void;
 
 	public asHtmlElement() {

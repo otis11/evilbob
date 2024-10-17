@@ -70,6 +70,18 @@ export class SearchResultGoogle extends SearchResult {
 			prepend: iconFromString(iconGoogle),
 		});
 	}
+
+	public isHit(search: Search): boolean {
+		if (this.title === "Google") {
+			return true;
+		}
+
+		const currentWord = search.currentWord();
+		if (currentWord) {
+			return this.searchText.includes(currentWord);
+		}
+		return false;
+	}
 	onSelect(search: Search): void {
 		chrome.tabs.create({
 			url: `https://google.com/search?q=${search.text.replaceAll("!g", "").trim().replaceAll(" ", "+")}`,

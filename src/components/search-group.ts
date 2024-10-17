@@ -115,7 +115,7 @@ export abstract class SearchGroup {
 				node.getAttribute("data-instance-id") || "",
 			);
 
-			if (instance && instance.isHit(search)) {
+			if (instance?.isHit(search)) {
 				node.classList.remove("hidden");
 			} else {
 				node.classList.add("hidden");

@@ -46,6 +46,15 @@ export class SearchResultFilter extends SearchResult {
 			prepend: iconFromString(iconFilter),
 		});
 	}
+
+	public isHit(search: Search): boolean {
+		if (search.isEmpty()) {
+			return true;
+		}
+		const currentWord = search.currentWord();
+		return currentWord === "!";
+	}
+
 	onSelect(search: Search): void {
 		if (search.inputElement) {
 			let addition = this.title;

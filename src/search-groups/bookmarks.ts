@@ -1,4 +1,3 @@
-import type { Search } from "../components/search";
 import { SearchGroup } from "../components/search-group";
 import {
 	SearchResult,

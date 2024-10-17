@@ -32,7 +32,6 @@ export class SearchGroupFilter extends SearchGroup {
 
 	public shouldRenderAlone(search: Search): boolean {
 		const currentWord = search.currentWord();
-		console.log(currentWord);
 		return currentWord === this.filter;
 	}
 }
@@ -52,7 +51,6 @@ export class SearchResultFilter extends SearchResult {
 			return true;
 		}
 		const currentWord = search.currentWord();
-		console.log(currentWord);
 		return currentWord === "!";
 	}
 

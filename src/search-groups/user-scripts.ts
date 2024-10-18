@@ -9,6 +9,7 @@ export class SearchGroupUserScripts extends SearchGroup {
 			name: "user-scripts",
 			permissions: ["tabs", "scripting"],
 			hostPermissions: ["https://*/*"],
+			description: "Execute custom scripts.",
 		});
 	}
 

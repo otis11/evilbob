@@ -11,6 +11,7 @@ export class SearchGroupBookmarks extends SearchGroup {
 			name: "bookmarks",
 			permissions: ["bookmarks"],
 			filter: "!b",
+			description: "Search & interact with bookmarks.",
 		});
 	}
 

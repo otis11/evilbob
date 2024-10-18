@@ -9,6 +9,8 @@ export class SearchGroupBob extends SearchGroup {
 		super({
 			name: "bob",
 			permissions: [],
+			description:
+				"Internal Bob commands like open settings, reset settings ...",
 		});
 	}
 

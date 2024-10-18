@@ -4,6 +4,7 @@ import { SearchResult } from "./search-result";
 
 export type SearchGroupConfig = {
 	name: SearchGroupName;
+	description: string;
 	permissions?: string[];
 	hostPermissions?: string[];
 	filter?: string;
@@ -17,6 +18,7 @@ export abstract class SearchGroup {
 	private renderedNodes: HTMLLIElement[] = [];
 	public filter: string;
 	public isResultsLoaded = false;
+	public description: string;
 
 	constructor(config: SearchGroupConfig) {
 		this.name = config.name;
@@ -24,6 +26,7 @@ export abstract class SearchGroup {
 		this.hostPermissions = config.hostPermissions || [];
 		this.results = [];
 		this.filter = config.filter || "";
+		this.description = config.description;
 	}
 
 	public async isEnabled(): Promise<boolean> {

@@ -9,6 +9,7 @@ export class SearchGroupGoogle extends SearchGroup {
 			name: "google",
 			permissions: [],
 			filter: "!g",
+			description: "Google search & Google filters like intitle:youtube.",
 		});
 	}
 

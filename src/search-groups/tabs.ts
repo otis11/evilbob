@@ -8,6 +8,8 @@ export class SearchGroupTabs extends SearchGroup {
 		super({
 			name: "tabs",
 			permissions: ["tabs"],
+			description:
+				"Search & interact with browser tabs. For example sort them.",
 		});
 	}
 

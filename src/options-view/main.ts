@@ -59,7 +59,16 @@ async function renderSearchGroups() {
 	searchGroupHeading.innerText = "Group";
 	const searchGroupOrderHeading = document.createElement("label");
 	searchGroupOrderHeading.innerText = "Order";
-	searchGroups.append(searchGroupHeading, searchGroupOrderHeading);
+	const searchGroupDescriptionHeading = document.createElement("label");
+	searchGroupDescriptionHeading.classList.add(
+		"search-group-description-heading",
+	);
+	searchGroupDescriptionHeading.innerText = "Description";
+	searchGroups.append(
+		searchGroupHeading,
+		searchGroupDescriptionHeading,
+		searchGroupOrderHeading,
+	);
 
 	for (const group of searchResultGroups.list) {
 		const container = document.createElement("div");
@@ -78,7 +87,11 @@ async function renderSearchGroups() {
 			}
 		});
 		checkboxLabel.append(checkbox, checkboxLabelText);
-		container.append(checkboxLabel);
+		const description = document.createElement("div");
+		description.classList.add("search-group-description");
+		description.innerText = group.description;
+		checkboxLabelText.innerText = group.name;
+		container.append(checkboxLabel, description);
 		const [label, input] = numberInput({
 			value: config[group.name]?.order?.toString() || "0",
 		});

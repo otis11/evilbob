@@ -8,6 +8,7 @@ export class SearchGroupShortcuts extends SearchGroup {
 	constructor() {
 		super({
 			name: "shortcuts",
+			description: "Search for browser shortcuts.",
 		});
 	}
 

@@ -10,6 +10,7 @@ export class SearchGroupFilter extends SearchGroup {
 			name: "filter",
 			permissions: [],
 			filter: "!",
+			description: "Filter to render a specific group only.",
 		});
 	}
 

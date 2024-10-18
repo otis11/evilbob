@@ -12,6 +12,7 @@ export class SearchGroupHistory extends SearchGroup {
 			name: "history",
 			permissions: ["history"],
 			filter: "!h",
+			description: "Search & interact with browser history.",
 		});
 	}
 

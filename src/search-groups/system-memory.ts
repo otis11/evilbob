@@ -9,6 +9,7 @@ export class SearchGroupSystemMemory extends SearchGroup {
 		super({
 			name: "system.memory",
 			permissions: ["system.memory"],
+			description: "Information about your system memory.",
 		});
 	}
 

@@ -8,6 +8,7 @@ export class SearchGroupSystemStorage extends SearchGroup {
 		super({
 			name: "system.storage",
 			permissions: ["system.storage"],
+			description: "Information about your system storage.",
 		});
 	}
 

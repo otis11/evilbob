@@ -1,6 +1,7 @@
 import type { Search } from "../components/search";
 import { SearchGroup } from "../components/search-group";
 import { SearchResult } from "../components/search-result";
+import { SearchResultInfo } from "../components/search-result-info";
 import { type Tag, Tags } from "../components/tags";
 import {
 	faviconFromUrl,
@@ -36,6 +37,7 @@ export class SearchResultExtension extends SearchResult {
 				? { text: "enabled", type: "success" }
 				: { text: "disabled", type: "error" },
 			{ text: extension.installType, type: "default" },
+			{ text: extension.version, type: "default" },
 		];
 
 		super({
@@ -63,12 +65,9 @@ export class SearchGroupExtensionOptions extends SearchGroup {
 
 	public async getResults(): Promise<SearchResult[]> {
 		return [
-			new SearchResultExtensionOptionsInfo(
-				"Version",
-				this.extension.version,
-			),
-			new SearchResultExtensionOptionsInfo("Id", this.extension.id),
-			new SearchResultExtensionOptionsInfo(
+			new SearchResultInfo("Version", this.extension.version),
+			new SearchResultInfo("Id", this.extension.id),
+			new SearchResultInfo(
 				"Host Permissions",
 				"Host permissions allow extensions to interact with the URL's matching patterns.",
 				this.extension.hostPermissions.map((perm) => ({
@@ -76,7 +75,7 @@ export class SearchGroupExtensionOptions extends SearchGroup {
 					type: "default",
 				})),
 			),
-			new SearchResultExtensionOptionsInfo(
+			new SearchResultInfo(
 				"Permissions",
 				"To access most extension APIs and features, you must declare permissions in your extension's manifest. Some permissions trigger warnings that users must allow to continue using the extension.",
 				this.extension.permissions.map((perm) => ({
@@ -84,20 +83,13 @@ export class SearchGroupExtensionOptions extends SearchGroup {
 					type: "default",
 				})),
 			),
-			new SearchResultExtensionOptionsInfo(
-				"Short name",
-				this.extension.shortName,
-			),
-			new SearchResultExtensionOptionsInfo(
-				"Offline enabled",
-				"Is offline enabled?",
-				[
-					this.extension.offlineEnabled
-						? { text: "yes", type: "success" }
-						: { text: "no", type: "error" },
-				],
-			),
-			new SearchResultExtensionOptionsInfo(
+			new SearchResultInfo("Short name", this.extension.shortName),
+			new SearchResultInfo("Offline enabled", "Is offline enabled?", [
+				this.extension.offlineEnabled
+					? { text: "yes", type: "success" }
+					: { text: "no", type: "error" },
+			]),
+			new SearchResultInfo(
 				"May disable",
 				"Can be disabled by the user?",
 				[
@@ -108,17 +100,4 @@ export class SearchGroupExtensionOptions extends SearchGroup {
 			),
 		];
 	}
-}
-
-export class SearchResultExtensionOptionsInfo extends SearchResult {
-	constructor(title: string, description: string, tags?: Tag[]) {
-		super({
-			title,
-			description,
-			tags,
-			searchText: `${title} ${description}`,
-		});
-	}
-
-	onSelect(search: Search): void {}
 }

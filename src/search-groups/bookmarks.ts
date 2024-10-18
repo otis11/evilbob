@@ -3,7 +3,7 @@ import {
 	SearchResult,
 	type SearchResultConfig,
 } from "../components/search-result";
-import { faviconFromUrl, iconBookmark, iconFromString } from "../icons";
+import { faviconFromUrl, iconBookmark } from "../icons";
 
 export class SearchGroupBookmarks extends SearchGroup {
 	constructor() {

@@ -35,15 +35,13 @@ export function iconFromUrl(
 	if (!url) {
 		return iconFromString(fallbackIcon);
 	}
-	const domain = new URL(url).hostname;
-
 	const img = document.createElement("img");
-	img.src = url;
-	img.alt = "Icon";
-	img.style.fontSize = fontSize;
 	img.onerror = () => {
 		img.outerHTML = iconFromString(fallbackIcon).outerHTML;
 	};
+	img.src = url;
+	img.alt = "Icon";
+	img.style.fontSize = fontSize;
 	return img;
 }
 

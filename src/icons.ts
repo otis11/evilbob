@@ -18,12 +18,12 @@ export function faviconFromUrl(
 
 	const faviconUrl = `https://${domain}/favicon.ico`;
 	const img = document.createElement("img");
-	img.src = faviconUrl;
-	img.alt = "Favicon";
-	img.style.fontSize = fontSize;
 	img.onerror = () => {
 		img.outerHTML = iconFromString(fallbackIcon).outerHTML;
 	};
+	img.src = faviconUrl;
+	img.alt = "Favicon";
+	img.style.fontSize = fontSize;
 	return img;
 }
 

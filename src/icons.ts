@@ -17,14 +17,17 @@ export function faviconFromUrl(
 	const domain = new URL(url).hostname;
 
 	const faviconUrl = `https://${domain}/favicon.ico`;
+	const container = document.createElement("span");
+	container.style.display = "inline-flex";
 	const img = document.createElement("img");
 	img.onerror = () => {
-		img.outerHTML = iconFromString(fallbackIcon).outerHTML;
+		container.innerHTML = iconFromString(fallbackIcon).outerHTML;
 	};
 	img.src = faviconUrl;
 	img.alt = "Favicon";
 	img.style.fontSize = fontSize;
-	return img;
+	container.append(img);
+	return container;
 }
 
 export function iconFromUrl(

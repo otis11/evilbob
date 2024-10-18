@@ -30,7 +30,6 @@ export class SearchGroupHistory extends SearchGroup {
 					],
 					searchText: `${item.title?.toLowerCase()} ${item.url?.toLowerCase()}`,
 					prepend: faviconFromUrl(item.url, iconHistory),
-					append: iconFromString(iconHistory),
 				}),
 		);
 	}

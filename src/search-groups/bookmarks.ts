@@ -39,7 +39,6 @@ export class SearchGroupBookmarks extends SearchGroup {
 					id: item.id,
 					url: item.url,
 					prepend: faviconFromUrl(item.url, iconBookmark),
-					append: iconFromString(iconBookmark),
 					searchText: `${item.title.toLowerCase()} ${item.url?.toLowerCase() || ""}`,
 				}),
 			);

@@ -20,7 +20,7 @@ export class SearchGroupSystemStorage extends SearchGroup {
 					title: device.name,
 					searchText: "storage capacity available",
 					description: `${formatBytes(device.capacity)} GB - ${device.type}`,
-					append: iconFromString(iconNas),
+					prepend: iconFromString(iconNas),
 				}),
 		);
 	}

@@ -28,6 +28,9 @@
 	font-weight: bold;
 	margin-bottom: 4px;
 	font-size: 1.125rem;
+	display: flex;
+	gap: 4px;
+	align-items: center;
 }
 
 .result-description {

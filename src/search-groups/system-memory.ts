@@ -20,7 +20,7 @@ export class SearchGroupSystemMemory extends SearchGroup {
 				title: "Memory",
 				searchText: "memory",
 				description: `${formatBytes(memory.capacity - memory.availableCapacity)}/${formatBytes(memory.capacity)} GB`,
-				append: iconFromString(iconCpu),
+				prepend: iconFromString(iconCpu),
 			}),
 		];
 	}

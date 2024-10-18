@@ -41,7 +41,6 @@ export class SearchResultExtension extends SearchResult {
 			title: extension.name,
 			description: extension.description,
 			prepend: icon,
-			append: iconFromString(iconPuzzleOutline),
 			searchText: `${extension.name} ${extension.description}`,
 			tags,
 		});

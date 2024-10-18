@@ -161,14 +161,26 @@ function onKeyUp(event: KeyboardEvent) {
 		});
 
 		if (event.shiftKey && !isOptionsVisible && searchResult) {
-			selectedSearchResultForOptions = searchResult;
-			renderResultOptions();
-			document.documentElement.style.overflow = "hidden";
+			showOptionsForResult(searchResult);
 		} else {
 			searchResult?.onSelect(search);
 		}
 	}
 }
+
+function showOptionsForResult(searchResult: SearchResult) {
+	selectedSearchResultForOptions = searchResult;
+	renderResultOptions();
+	document.documentElement.style.overflow = "hidden";
+}
+
+window.addEventListener("show-options-for-result", (event) => {
+	// @ts-ignore
+	if (event.detail) {
+		// @ts-ignore
+		showOptionsForResult(event.detail);
+	}
+});
 
 function onKeyDown(event: KeyboardEvent) {
 	if (event.key === "ArrowDown" || event.key === "ArrowUp") {

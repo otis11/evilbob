@@ -39,7 +39,8 @@
 		"history",
 		"tabs",
 		"scripting",
-		"management"
+		"management",
+		"sessions"
 	],
 	"optional_host_permissions": ["https://*/*"]
 }

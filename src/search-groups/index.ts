@@ -6,6 +6,7 @@ import { SearchGroupFilter } from "./filter";
 import { SearchGroupGoogle } from "./google";
 import { SearchGroupHistory } from "./history";
 import { SearchGroupManagement } from "./management";
+import { SearchGroupSessions } from "./sessions";
 import { SearchGroupShortcuts } from "./shortcuts";
 import { SearchGroupSystemCpu } from "./system-cpu";
 import { SearchGroupSystemMemory } from "./system-memory";
@@ -25,6 +26,7 @@ export type SearchGroupName =
 	| "filter"
 	| "user-scripts"
 	| "management"
+	| "sessions"
 	| "tabs";
 
 export type SearchGroupStorage = {
@@ -43,6 +45,7 @@ const all = () => {
 		new SearchGroupFilter(),
 		new SearchGroupUserScripts(),
 		new SearchGroupManagement(),
+		new SearchGroupSessions(),
 	];
 	if (isChromium) {
 		results.push(new SearchGroupSystemCpu());
@@ -99,6 +102,10 @@ const defaultConfig: Record<SearchGroupName, SearchGroupStorage> = {
 	},
 	management: {
 		order: 20,
+		enabled: false,
+	},
+	sessions: {
+		order: 30,
 		enabled: false,
 	},
 };

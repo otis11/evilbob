@@ -1,14 +1,8 @@
-import type { Search } from "../components/search";
 import { SearchGroup } from "../components/search-group";
 import { SearchResult } from "../components/search-result";
 import { SearchResultInfo } from "../components/search-result-info";
-import { type Tag, Tags } from "../components/tags";
-import {
-	faviconFromUrl,
-	iconFromString,
-	iconFromUrl,
-	iconPuzzleOutline,
-} from "../icons";
+import type { Tag } from "../components/tags";
+import { iconFromUrl } from "../icons";
 
 export class SearchGroupManagement extends SearchGroup {
 	constructor() {
@@ -51,7 +45,7 @@ export class SearchResultExtension extends SearchResult {
 	}
 
 	onSelect(): void {
-		console.log("on select system Memory");
+		this.emitShowOptionsEvent();
 	}
 }
 

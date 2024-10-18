@@ -46,6 +46,12 @@ export abstract class SearchResult {
 		return this.searchText.toLowerCase().includes(cleanSearch);
 	}
 
+	public emitShowOptionsEvent() {
+		window.dispatchEvent(
+			new CustomEvent("show-options-for-result", { detail: this }),
+		);
+	}
+
 	abstract onSelect(search: Search): void;
 
 	public asHtmlElement() {

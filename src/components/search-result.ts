@@ -1,4 +1,5 @@
 import type { Search } from "./search";
+import type { SearchGroup } from "./search-group";
 import { type Tag, Tags } from "./tags";
 
 export type SearchResultConfig = {
@@ -8,6 +9,7 @@ export type SearchResultConfig = {
 	append?: HTMLElement;
 	prepend?: HTMLElement;
 	tags?: Tag[];
+	options?: SearchGroup;
 };
 
 export abstract class SearchResult {
@@ -18,6 +20,7 @@ export abstract class SearchResult {
 	prepend?: HTMLElement;
 	instanceId: string;
 	tags: Tag[];
+	options?: SearchGroup;
 
 	static instanceFromId(id: string): SearchResult | undefined {
 		return SearchResult.globalRegistry[id];
@@ -33,8 +36,17 @@ export abstract class SearchResult {
 		this.append = config.append;
 		this.prepend = config.prepend;
 		this.tags = config.tags || [];
+		this.options = config.options;
 
 		SearchResult.globalRegistry[this.instanceId] = this;
+	}
+
+	public emitSelectOptionsEvent() {
+		window.dispatchEvent(
+			new CustomEvent("select-search-result-options", {
+				detail: { result: this },
+			}),
+		);
 	}
 
 	public isHit(search: Search) {

@@ -10,14 +10,25 @@ import { SearchGroups } from "../search-groups";
 
 const searchResultGroups: SearchGroups = new SearchGroups();
 let selectedSearchResultIndex = 0;
+let lastSelectedSearchResultIndex = 0;
 let filteredSearchElements: HTMLElement[] = [];
 let lastMousePosition = {
 	x: 0,
 	y: 0,
 };
 
+let selectedSearchResultForOptions: null | SearchResult = null;
+let isOptionsVisible = false;
 const searchInput = document.getElementById("search") as HTMLInputElement;
 const resultsContainer = document.getElementById("results") as HTMLElement;
+const optionsResults = document.getElementById(
+	"options-results",
+) as HTMLElement;
+const optionsResult = document.getElementById("options-result") as HTMLElement;
+const options = document.getElementById("options") as HTMLElement;
+const optionsSearchInput = document.getElementById(
+	"options-search",
+) as HTMLInputElement;
 const statusStripe = document.getElementById("status-stripe") as HTMLElement;
 
 function filterSearchResults() {
@@ -141,9 +152,12 @@ function onKeyUp(event: KeyboardEvent) {
 			target?.getAttribute("data-instance-id") || "",
 		);
 		const search = new Search({
-			inputElement: searchInput,
-			selectionStart: searchInput.selectionStart,
-			text: searchInput.value,
+			inputElement: isOptionsVisible ? optionsSearchInput : searchInput,
+			selectionStart: (isOptionsVisible
+				? optionsSearchInput
+				: searchInput
+			).selectionStart,
+			text: (isOptionsVisible ? optionsSearchInput : searchInput).value,
 		});
 		searchResult?.onSelect(search);
 	}
@@ -170,13 +184,16 @@ function showSelectedIndex(scrollTo = false) {
 
 function removeHighlightSelectedIndex() {
 	for (const el of Array.from(
-		resultsContainer.querySelectorAll("[aria-selected"),
+		(isOptionsVisible ? optionsResults : resultsContainer).querySelectorAll(
+			"[aria-selected",
+		),
 	)) {
 		el.removeAttribute("aria-selected");
 	}
 }
 
 searchInput?.addEventListener("input", filterSearchResults);
+optionsSearchInput?.addEventListener("input", filterSearchResultsOptions);
 window.addEventListener("keydown", onKeyDown);
 window.addEventListener("keyup", onKeyUp);
 window.addEventListener("click", (event) => {
@@ -186,9 +203,12 @@ window.addEventListener("click", (event) => {
 			target?.getAttribute("data-instance-id") || "",
 		);
 		const search = new Search({
-			inputElement: searchInput,
-			selectionStart: searchInput.selectionStart,
-			text: searchInput.value,
+			inputElement: isOptionsVisible ? optionsSearchInput : searchInput,
+			selectionStart: (isOptionsVisible
+				? optionsSearchInput
+				: searchInput
+			).selectionStart,
+			text: (isOptionsVisible ? optionsSearchInput : searchInput).value,
 		});
 		searchResult?.onSelect(search);
 	}
@@ -197,12 +217,27 @@ searchInput?.focus();
 
 window.addEventListener("keydown", (event) => {
 	if (event.key === "Escape") {
-		window.close();
+		if (isOptionsVisible) {
+			options.style.display = "none";
+			isOptionsVisible = false;
+			filteredSearchElements = Array.from(
+				resultsContainer.querySelectorAll<HTMLElement>(
+					"li:not(.hidden)",
+				),
+			);
+			selectedSearchResultIndex = lastSelectedSearchResultIndex;
+			removeHighlightSelectedIndex();
+			showSelectedIndex();
+			searchInput?.focus();
+			optionsSearchInput.value = "";
+		} else {
+			window.close();
+		}
 	}
 });
 
 window.addEventListener("focus", () => {
-	searchInput.focus();
+	(isOptionsVisible ? optionsSearchInput : searchInput).focus();
 });
 
 window.addEventListener("mouseover", (event) => {
@@ -257,6 +292,49 @@ async function loadFreshSearchResults() {
 		});
 	}
 }
+
+async function renderResultOptions() {
+	if (!selectedSearchResultForOptions?.options) {
+		return;
+	}
+	lastSelectedSearchResultIndex = selectedSearchResultIndex;
+	isOptionsVisible = true;
+	options.style.display = "block";
+	optionsResults.innerHTML = "";
+	optionsResult.innerHTML =
+		selectedSearchResultForOptions.asHtmlElement().outerHTML;
+	await selectedSearchResultForOptions.options.loadResults();
+	optionsResults.append(
+		...selectedSearchResultForOptions.options.asHtmlElement(),
+	);
+	filterSearchResultsOptions();
+	optionsSearchInput.focus();
+}
+
+function filterSearchResultsOptions() {
+	if (!selectedSearchResultForOptions?.options) {
+		return;
+	}
+	const search = new Search({
+		inputElement: optionsSearchInput,
+		text: optionsSearchInput?.value || "",
+		selectionStart: optionsSearchInput.selectionStart,
+	});
+	selectedSearchResultForOptions.options.filterRenderedNodes(search);
+
+	filteredSearchElements = Array.from(
+		optionsResults.querySelectorAll<HTMLElement>("li:not(.hidden)"),
+	);
+	removeHighlightSelectedIndex();
+	selectedSearchResultIndex = 0;
+	showSelectedIndex();
+}
+
+window.addEventListener("select-search-result-options", (event) => {
+	// @ts-ignore
+	selectedSearchResultForOptions = event.detail.result;
+	renderResultOptions();
+});
 
 renderFooter();
 loadFreshSearchResults();

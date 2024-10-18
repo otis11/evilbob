@@ -3,7 +3,7 @@ import type { Search } from "./search";
 import { SearchResult } from "./search-result";
 
 export type SearchGroupConfig = {
-	name: SearchGroupName;
+	name: string;
 	description: string;
 	permissions?: string[];
 	hostPermissions?: string[];
@@ -11,7 +11,7 @@ export type SearchGroupConfig = {
 };
 
 export abstract class SearchGroup {
-	public name: SearchGroupName;
+	public name: string;
 	public permissions: string[];
 	public hostPermissions: string[];
 	private results: SearchResult[];

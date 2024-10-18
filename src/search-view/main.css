@@ -103,3 +103,14 @@ footer .icon svg {
 #status-stripe:not(:empty) {
 	padding: 4px 12px;
 }
+
+#options {
+	z-index: 20;
+	position: fixed;
+	left: 0;
+	top: 0;
+	height: 100%;
+	width: 100%;
+	display: none;
+	background-color: var(--bob-color-base-200);
+}

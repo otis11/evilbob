@@ -3,7 +3,7 @@ import {
 	SearchResult,
 	type SearchResultConfig,
 } from "../components/search-result";
-import { iconBookmark, iconFromString, iconFromUrl } from "../icons";
+import { faviconFromUrl, iconBookmark, iconFromString } from "../icons";
 
 export class SearchGroupBookmarks extends SearchGroup {
 	constructor() {
@@ -38,7 +38,7 @@ export class SearchGroupBookmarks extends SearchGroup {
 					description: item.url || "",
 					id: item.id,
 					url: item.url,
-					prepend: iconFromUrl(item.url, iconBookmark),
+					prepend: faviconFromUrl(item.url, iconBookmark),
 					append: iconFromString(iconBookmark),
 					searchText: `${item.title.toLowerCase()} ${item.url?.toLowerCase() || ""}`,
 				}),

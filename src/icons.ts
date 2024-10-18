@@ -6,7 +6,7 @@ export function iconFromString(html: string, fontSize = "24px") {
 	return svg;
 }
 
-export function iconFromUrl(
+export function faviconFromUrl(
 	url: string | undefined,
 	fallbackIcon: string,
 	fontSize = "24px",
@@ -20,6 +20,26 @@ export function iconFromUrl(
 	const img = document.createElement("img");
 	img.src = faviconUrl;
 	img.alt = "Favicon";
+	img.style.fontSize = fontSize;
+	img.onerror = () => {
+		img.outerHTML = iconFromString(fallbackIcon).outerHTML;
+	};
+	return img;
+}
+
+export function iconFromUrl(
+	url: string | undefined,
+	fallbackIcon: string,
+	fontSize = "24px",
+) {
+	if (!url) {
+		return iconFromString(fallbackIcon);
+	}
+	const domain = new URL(url).hostname;
+
+	const img = document.createElement("img");
+	img.src = url;
+	img.alt = "Icon";
 	img.style.fontSize = fontSize;
 	img.onerror = () => {
 		img.outerHTML = iconFromString(fallbackIcon).outerHTML;
@@ -59,3 +79,5 @@ export const iconLoading =
 	'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>loading</title><path d="M12,4V2A10,10 0 0,0 2,12H4A8,8 0 0,1 12,4Z" /></svg>';
 export const iconNas =
 	'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>nas</title><path d="M4,5C2.89,5 2,5.89 2,7V17C2,18.11 2.89,19 4,19H20C21.11,19 22,18.11 22,17V7C22,5.89 21.11,5 20,5H4M4.5,7A1,1 0 0,1 5.5,8A1,1 0 0,1 4.5,9A1,1 0 0,1 3.5,8A1,1 0 0,1 4.5,7M7,7H20V17H7V7M8,8V16H11V8H8M12,8V16H15V8H12M16,8V16H19V8H16M9,9H10V10H9V9M13,9H14V10H13V9M17,9H18V10H17V9Z" /></svg>';
+export const iconPuzzleOutline =
+	'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>puzzle-outline</title><path d="M22,13.5C22,15.26 20.7,16.72 19,16.96V20A2,2 0 0,1 17,22H13.2V21.7A2.7,2.7 0 0,0 10.5,19C9,19 7.8,20.21 7.8,21.7V22H4A2,2 0 0,1 2,20V16.2H2.3C3.79,16.2 5,15 5,13.5C5,12 3.79,10.8 2.3,10.8H2V7A2,2 0 0,1 4,5H7.04C7.28,3.3 8.74,2 10.5,2C12.26,2 13.72,3.3 13.96,5H17A2,2 0 0,1 19,7V10.04C20.7,10.28 22,11.74 22,13.5M17,15H18.5A1.5,1.5 0 0,0 20,13.5A1.5,1.5 0 0,0 18.5,12H17V7H12V5.5A1.5,1.5 0 0,0 10.5,4A1.5,1.5 0 0,0 9,5.5V7H4V9.12C5.76,9.8 7,11.5 7,13.5C7,15.5 5.75,17.2 4,17.88V20H6.12C6.8,18.25 8.5,17 10.5,17C12.5,17 14.2,18.25 14.88,20H17V15Z" /></svg>';

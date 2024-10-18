@@ -4,7 +4,7 @@ import {
 	SearchResult,
 	type SearchResultConfig,
 } from "../components/search-result";
-import { iconFromString, iconFromUrl, iconHistory } from "../icons";
+import { faviconFromUrl, iconFromString, iconHistory } from "../icons";
 
 export class SearchGroupHistory extends SearchGroup {
 	constructor() {
@@ -26,7 +26,7 @@ export class SearchGroupHistory extends SearchGroup {
 					id: item.id,
 					url: item.url,
 					searchText: `${item.title?.toLowerCase()} ${item.url?.toLowerCase()}`,
-					prepend: iconFromUrl(item.url, iconHistory),
+					prepend: faviconFromUrl(item.url, iconHistory),
 					append: iconFromString(iconHistory),
 				}),
 		);

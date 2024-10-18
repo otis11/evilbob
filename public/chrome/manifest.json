@@ -38,7 +38,8 @@
 		"system.storage",
 		"history",
 		"tabs",
-		"scripting"
+		"scripting",
+		"management"
 	],
 	"optional_host_permissions": ["https://*/*"]
 }

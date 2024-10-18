@@ -159,7 +159,14 @@ function onKeyUp(event: KeyboardEvent) {
 			).selectionStart,
 			text: (isOptionsVisible ? optionsSearchInput : searchInput).value,
 		});
-		searchResult?.onSelect(search);
+
+		if (event.shiftKey && !isOptionsVisible && searchResult) {
+			selectedSearchResultForOptions = searchResult;
+			renderResultOptions();
+			document.documentElement.style.overflow = "hidden";
+		} else {
+			searchResult?.onSelect(search);
+		}
 	}
 }
 
@@ -230,6 +237,7 @@ window.addEventListener("keydown", (event) => {
 			showSelectedIndex();
 			searchInput?.focus();
 			optionsSearchInput.value = "";
+			document.documentElement.style.overflow = "unset";
 		} else {
 			window.close();
 		}
@@ -299,7 +307,7 @@ async function renderResultOptions() {
 	}
 	lastSelectedSearchResultIndex = selectedSearchResultIndex;
 	isOptionsVisible = true;
-	options.style.display = "block";
+	options.style.display = "flex";
 	optionsResults.innerHTML = "";
 	optionsResult.innerHTML =
 		selectedSearchResultForOptions.asHtmlElement().outerHTML;
@@ -329,12 +337,6 @@ function filterSearchResultsOptions() {
 	selectedSearchResultIndex = 0;
 	showSelectedIndex();
 }
-
-window.addEventListener("select-search-result-options", (event) => {
-	// @ts-ignore
-	selectedSearchResultForOptions = event.detail.result;
-	renderResultOptions();
-});
 
 renderFooter();
 loadFreshSearchResults();

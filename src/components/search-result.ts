@@ -41,14 +41,6 @@ export abstract class SearchResult {
 		SearchResult.globalRegistry[this.instanceId] = this;
 	}
 
-	public emitSelectOptionsEvent() {
-		window.dispatchEvent(
-			new CustomEvent("select-search-result-options", {
-				detail: { result: this },
-			}),
-		);
-	}
-
 	public isHit(search: Search) {
 		const cleanSearch = search.text.toLowerCase().trim();
 		return this.searchText.toLowerCase().includes(cleanSearch);
@@ -75,7 +67,7 @@ export abstract class SearchResult {
 		if (this.prepend) {
 			const span = document.createElement("span");
 			span.classList.add("result-prepend");
-			span.append(this.prepend);
+			span.append(this.prepend.cloneNode(true));
 			li.append(span);
 		}
 
@@ -91,7 +83,7 @@ export abstract class SearchResult {
 		if (this.append) {
 			const span = document.createElement("span");
 			span.classList.add("result-append");
-			span.append(this.append);
+			span.append(this.append.cloneNode(true));
 			li.append(span);
 		}
 

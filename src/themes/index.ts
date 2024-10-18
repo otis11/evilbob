@@ -5,7 +5,7 @@ export const Themes = ["dark", "light"] as const;
 type Theme = (typeof Themes)[number];
 const defaultTheme: Theme = "dark";
 type Dimension = { width: number; height: number };
-const defaultDimensions = { width: 800, height: 500 };
+const defaultDimensions = { width: 900, height: 600 };
 
 export async function setCurrentTheme(theme: Theme) {
 	await chrome.storage.sync.set({ theme: theme });

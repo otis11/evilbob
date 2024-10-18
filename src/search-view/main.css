@@ -113,4 +113,9 @@ footer .icon svg {
 	width: 100%;
 	display: none;
 	background-color: var(--bob-color-base-200);
+	flex-direction: column;
+}
+
+#options-results {
+	overflow-y: auto;
 }

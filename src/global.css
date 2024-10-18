@@ -73,3 +73,27 @@ img {
 		transform: rotateZ(360deg);
 	}
 }
+
+.tag {
+	padding: 3px 6px;
+	border-radius: 8px;
+	font-size: 12px;
+	line-height: 1;
+}
+
+.tag-container {
+	display: flex;
+	gap: 4px;
+}
+
+.tag.tag-success {
+	background-color: green;
+}
+
+.tag.tag-error {
+	background-color: red;
+}
+
+.tag.tag-default {
+	background-color: var(--bob-color-base-100);
+}

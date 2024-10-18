@@ -1,4 +1,5 @@
 import type { Search } from "./search";
+import { type Tag, Tags } from "./tags";
 
 export type SearchResultConfig = {
 	title: string;
@@ -6,6 +7,7 @@ export type SearchResultConfig = {
 	searchText: string;
 	append?: HTMLElement;
 	prepend?: HTMLElement;
+	tags?: Tag[];
 };
 
 export abstract class SearchResult {
@@ -15,6 +17,7 @@ export abstract class SearchResult {
 	append?: HTMLElement;
 	prepend?: HTMLElement;
 	instanceId: string;
+	tags: Tag[];
 
 	static instanceFromId(id: string): SearchResult | undefined {
 		return SearchResult.globalRegistry[id];
@@ -29,6 +32,7 @@ export abstract class SearchResult {
 		this.searchText = config.searchText;
 		this.append = config.append;
 		this.prepend = config.prepend;
+		this.tags = config.tags || [];
 
 		SearchResult.globalRegistry[this.instanceId] = this;
 	}
@@ -63,7 +67,13 @@ export abstract class SearchResult {
 			li.append(span);
 		}
 
-		content.append(title, description);
+		content.append(title);
+
+		if (this.tags.length > 0) {
+			const tags = Tags(this.tags);
+			content.append(tags);
+		}
+		content.append(description);
 		li.append(content);
 
 		if (this.append) {

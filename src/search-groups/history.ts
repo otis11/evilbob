@@ -21,10 +21,13 @@ export class SearchGroupHistory extends SearchGroup {
 		return items.map(
 			(item) =>
 				new SearchResultHistory({
-					description: `${item.visitCount} visits, ${item.url}`,
+					description: `${item.url}`,
 					title: item.title || "",
 					id: item.id,
 					url: item.url,
+					tags: [
+						{ text: `${item.visitCount} visits`, type: "default" },
+					],
 					searchText: `${item.title?.toLowerCase()} ${item.url?.toLowerCase()}`,
 					prepend: faviconFromUrl(item.url, iconHistory),
 					append: iconFromString(iconHistory),

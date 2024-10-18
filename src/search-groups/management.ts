@@ -1,5 +1,6 @@
 import { SearchGroup } from "../components/search-group";
 import { SearchResult } from "../components/search-result";
+import type { Tag } from "../components/tags";
 import {
 	faviconFromUrl,
 	iconFromString,
@@ -29,12 +30,20 @@ export class SearchResultExtension extends SearchResult {
 	constructor(extension: chrome.management.ExtensionInfo) {
 		const iconUrl = extension.icons ? extension.icons[0].url : "";
 		const icon = iconFromUrl(iconUrl, "");
+		const tags: Tag[] = [
+			extension.enabled
+				? { text: "enabled", type: "success" }
+				: { text: "disabled", type: "error" },
+			{ text: extension.installType, type: "default" },
+		];
+
 		super({
 			title: extension.name,
 			description: extension.description,
 			prepend: icon,
 			append: iconFromString(iconPuzzleOutline),
 			searchText: `${extension.name} ${extension.description}`,
+			tags,
 		});
 	}
 

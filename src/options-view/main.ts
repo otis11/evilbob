@@ -7,7 +7,11 @@ import {
 import "../themes";
 import "../global.css";
 import "./main.css";
-import { iconFromString, iconGithub } from "../icons";
+import { FlexContainer } from "../components/flex-container";
+import type { Search } from "../components/search";
+import { SearchResult } from "../components/search-result";
+import { Tags } from "../components/tags";
+import { iconBob, iconFromString, iconGithub } from "../icons";
 import { isChromium } from "../platform";
 import { SearchGroups } from "../search-groups";
 
@@ -20,10 +24,10 @@ function renderThemes() {
 	container.append(groupHeading("Themes"), themesContainer);
 
 	for (const theme of Themes) {
-		const div = document.createElement("div");
-		div.setAttribute("data-theme", theme);
-		div.classList.add("theme-card");
-		div.addEventListener("click", () => {
+		const cardContainer = document.createElement("div");
+		cardContainer.setAttribute("data-theme", theme);
+		cardContainer.classList.add("theme-card");
+		cardContainer.addEventListener("click", () => {
 			setCurrentTheme(theme);
 		});
 
@@ -31,14 +35,18 @@ function renderThemes() {
 		base.classList.add("theme-card-base");
 		base.innerText = theme;
 
-		const primary = document.createElement("div");
-		primary.classList.add("theme-card-primary");
+		const cardColors = document.createElement("div");
+		cardColors.classList.add("theme-card-colors");
+		for (const color of ["primary", "accent", "success", "error"]) {
+			const colorDiv = document.createElement("div");
+			colorDiv.style.backgroundColor = `var(--bob-color-${color})`;
+			cardColors.append(colorDiv);
+		}
 
-		const accent = document.createElement("div");
-		accent.classList.add("theme-card-accent");
-
-		div.append(base, primary, accent);
-		themesContainer?.append(div);
+		const li = new SearchResultTheme().asHtmlElement();
+		li.style.width = "100%";
+		cardContainer.append(base, cardColors, li);
+		themesContainer?.append(cardContainer);
 	}
 	document.body.append(container);
 }
@@ -182,6 +190,22 @@ function renderFooter() {
 
 	footer.append(githubLink);
 	document.body.append(footer);
+}
+
+class SearchResultTheme extends SearchResult {
+	constructor() {
+		super({
+			title: "title",
+			description: "description",
+			tags: [
+				{ text: "tag 1", type: "default" },
+				{ text: "tag error", type: "error" },
+			],
+			searchText: "",
+			prepend: iconFromString(iconBob),
+		});
+	}
+	onSelect(search: Search): void {}
 }
 
 (async () => {

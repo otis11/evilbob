@@ -7,9 +7,11 @@
 .theme-card {
 	display: flex;
 	flex-wrap: wrap;
-	width: 120px;
+	width: 220px;
 	border-radius: var(--bob-input-border-radius);
 	overflow: hidden;
+	border: 1px solid var(--bob-color-base-content-300);
+	color: var(--bob-color-base-content-100);
 }
 
 .theme-card-base {
@@ -90,4 +92,25 @@ footer a {
 	width: max-content;
 	align-items: center;
 	border-bottom: 1px solid var(--bob-color-base-content-300);
+}
+
+.theme-card-colors {
+	display: flex;
+	height: 40px;
+	width: 100%;
+}
+
+.theme-card-colors div {
+	height: 100%;
+	width: 100%;
+}
+
+.theme-card-components {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	background-color: var(--bob-color-base-300);
+	width: 100%;
+	gap: 4px;
+	padding: 4px;
 }

@@ -24,7 +24,11 @@ export class SearchGroupManagement extends SearchGroup {
 
 export class SearchResultExtension extends SearchResult {
 	constructor(extension: chrome.management.ExtensionInfo) {
-		const iconUrl = extension.icons ? extension.icons[0].url : "";
+		const iconUrl = extension.icons
+			? extension.icons[1]
+				? extension.icons[1].url
+				: extension.icons[0].url
+			: "";
 		const icon = iconFromUrl(iconUrl);
 		const tags: Tag[] = [
 			{ html: iconFromString(iconPuzzleOutline, "12px").outerHTML },

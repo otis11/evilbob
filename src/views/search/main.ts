@@ -7,6 +7,7 @@ import { SearchGroups } from "../../components/search-groups/search-groups";
 import { SearchResult } from "../../components/search-result/search-result";
 import { iconCog, iconFromString, iconLoading, iconReload } from "../../icons";
 import { browserName, browserVersion } from "../../platform";
+const searchResultsCounter = document.createElement("span");
 
 const searchResultGroups: SearchGroups = new SearchGroups();
 let selectedSearchResultIndex = 0;
@@ -59,6 +60,7 @@ function filterSearchResults() {
 	removeHighlightSelectedIndex();
 	selectedSearchResultIndex = 0;
 	showSelectedIndex();
+	searchResultsCounter.innerHTML = `${filteredSearchElements.length}/${resultsContainer.children.length} results`;
 }
 
 export async function renderFooter() {
@@ -91,6 +93,7 @@ export async function renderFooter() {
 	enabledGroups.innerText = `${enabled}/${total} search groups enabled`;
 
 	footer?.append(
+		searchResultsCounter,
 		enabledGroups,
 		spacer,
 		browser,
@@ -362,6 +365,7 @@ function filterSearchResultsOptions() {
 	removeHighlightSelectedIndex();
 	selectedSearchResultIndex = 0;
 	showSelectedIndex();
+	searchResultsCounter.innerHTML = `${filteredSearchElements.length}/${optionsResults.children.length} results`;
 }
 
 renderFooter();

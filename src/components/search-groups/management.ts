@@ -91,12 +91,14 @@ export class SearchGroupExtensionOptions extends SearchGroup {
 		}
 		// types say can be undefined but in firefox there is a default extension with doesnt have this defined.
 		if (this.extension.permissions) {
-			new SearchResultInfo(
-				"Permissions",
-				"To access most extension APIs and features, you must declare permissions in your extension's manifest. Some permissions trigger warnings that users must allow to continue using the extension.",
-				this.extension.permissions.map((perm) => ({
-					text: perm,
-				})),
+			results.push(
+				new SearchResultInfo(
+					"Permissions",
+					"To access most extension APIs and features, you must declare permissions in your extension's manifest. Some permissions trigger warnings that users must allow to continue using the extension.",
+					this.extension.permissions.map((perm) => ({
+						text: perm,
+					})),
+				),
 			);
 		}
 		return results;

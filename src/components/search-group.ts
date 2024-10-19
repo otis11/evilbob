@@ -34,7 +34,6 @@ export abstract class SearchGroup {
 			"chromium",
 			"firefox",
 			"chrome",
-			"firefox",
 			"edg",
 		];
 	}

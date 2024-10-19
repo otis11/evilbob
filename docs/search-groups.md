@@ -1,4 +1,5 @@
 # Search Groups
+Search Groups provide results and actions inside the command palette.
 
 | Name | Description | Supported browsers |
 | ---- | ----------- | ------------------ |

@@ -1,8 +1,9 @@
 # Themes
 This would create a theme with the name `example`.
-Create a new `example.css` inside `src/themes` to get started. Copy the contents of `src/themes/dark.css` to include all available variables. Change `[data-theme="dark"]` to `[data-theme="example"]` and adjust the variables to your liking.
-Add the theme name to `export const Themes = [..., "example"] as const;` inside `src/themes/config.ts`.
-Last, import the theme inside `src/themes/index.ts`
+1. Create a new `example.css` inside `src/themes` to get started. Copy the contents of `src/themes/dark.css` to include all available variables. 
+2. Change `[data-theme="dark"]` to `[data-theme="example"]` and adjust the variables to your liking.
+3. Add the theme name to `export const Themes = [..., "example"] as const;` inside `src/themes/config.ts`.
+4. Last, import the theme inside `src/themes/index.ts`
 ```js
 import "./dark.css";
 ...

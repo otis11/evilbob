@@ -3,7 +3,9 @@ import path from "node:path";
 import { SEARCH_GROUPS } from "../src/components/search-groups/config";
 
 const filePath = path.resolve(__dirname, "../docs/search-groups.md");
-let markdown = "# Search Groups";
+let markdown = "# Search Groups\n";
+markdown +=
+	"Search Groups provide results and actions inside the command palette.";
 
 markdown += "\n\n";
 markdown += "| Name | Description | Supported browsers |\n";

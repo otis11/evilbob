@@ -44,3 +44,7 @@
 	overflow: hidden;
 	white-space: nowrap;
 }
+
+.result.hidden {
+	display: none;
+}

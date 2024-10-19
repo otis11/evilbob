@@ -1,4 +1,4 @@
-import { iconFromUrl, iconPuzzleOutline } from "../../icons";
+import { iconFromString, iconFromUrl, iconPuzzleOutline } from "../../icons";
 import { SearchGroup } from "../search-group";
 import { SearchResult } from "../search-result/search-result";
 import { SearchResultInfo } from "../search-result/search-result-info";
@@ -27,11 +27,12 @@ export class SearchResultExtension extends SearchResult {
 		const iconUrl = extension.icons ? extension.icons[0].url : "";
 		const icon = iconFromUrl(iconUrl);
 		const tags: Tag[] = [
+			{ html: iconFromString(iconPuzzleOutline, "12px").outerHTML },
 			extension.enabled
 				? { text: "enabled", type: "success" }
 				: { text: "disabled", type: "error" },
-			{ text: extension.installType, type: "default" },
-			{ text: extension.version, type: "default" },
+			{ text: extension.installType },
+			{ text: extension.version },
 		];
 
 		super({
@@ -84,7 +85,6 @@ export class SearchGroupExtensionOptions extends SearchGroup {
 					"Host permissions allow extensions to interact with the URL's matching patterns.",
 					this.extension.hostPermissions.map((perm) => ({
 						text: perm,
-						type: "default",
 					})),
 				),
 			);
@@ -96,7 +96,6 @@ export class SearchGroupExtensionOptions extends SearchGroup {
 				"To access most extension APIs and features, you must declare permissions in your extension's manifest. Some permissions trigger warnings that users must allow to continue using the extension.",
 				this.extension.permissions.map((perm) => ({
 					text: perm,
-					type: "default",
 				})),
 			);
 		}

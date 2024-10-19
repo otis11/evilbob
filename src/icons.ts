@@ -8,6 +8,7 @@ export function iconFromString(html: string, fontSize = "24px") {
 	if (svg) {
 		svg.style.fontSize = fontSize;
 	}
+	span.style.display = "inline-flex";
 	return span;
 }
 

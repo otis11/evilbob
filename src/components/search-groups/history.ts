@@ -26,6 +26,10 @@ export class SearchGroupHistory extends SearchGroup {
 					id: item.id,
 					url: item.url,
 					tags: [
+						{
+							html: iconFromString(iconHistory, "12px").outerHTML,
+							type: "default",
+						},
 						{ text: `${item.visitCount} visits`, type: "default" },
 					],
 					searchText: `${item.title?.toLowerCase()} ${item.url?.toLowerCase()}`,

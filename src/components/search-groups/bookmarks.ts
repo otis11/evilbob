@@ -1,4 +1,4 @@
-import { faviconFromUrl, iconBookmark } from "../../icons";
+import { faviconFromUrl, iconBookmark, iconFromString } from "../../icons";
 import { SearchGroup } from "../search-group";
 import {
 	SearchResult,
@@ -38,6 +38,13 @@ export class SearchGroupBookmarks extends SearchGroup {
 					description: item.url || "",
 					id: item.id,
 					url: item.url,
+					tags: [
+						{
+							html: iconFromString(iconBookmark, "12px")
+								.outerHTML,
+							type: "default",
+						},
+					],
 					prepend: item.url ? faviconFromUrl(item.url) : undefined,
 					searchText: `${item.title.toLowerCase()} ${item.url?.toLowerCase() || ""}`,
 				}),

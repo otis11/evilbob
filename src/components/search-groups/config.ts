@@ -35,7 +35,7 @@ export type SearchGroupStorage = {
 
 export const SEARCH_GROUPS_USER_AGENT_FILTERED = () => {
 	return SEARCH_GROUPS.filter((group) => {
-		group.supportedBrowser.includes(browserName);
+		return group.supportedBrowser.includes(browserName);
 	});
 };
 

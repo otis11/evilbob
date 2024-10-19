@@ -7,7 +7,7 @@
 html {
 	background-color: var(--bob-color-base-200);
 	color: var(--bob-color-base-content-100);
-	font-family: sans-serif;
+	font-family: var(--bob-font-family);
 }
 
 .shortcut kbd {
@@ -32,10 +32,10 @@ html {
 
 input {
 	outline: none;
-	border: none;
+	border: var(--bob-input-border);
 	background-color: var(--bob-color-base-100);
 	color: var(--bob-color-base-content-100);
-	padding: 4px 16px;
+	padding: var(--bob-input-padding);
 	min-height: var(--bob-input-min-height);
 	border-radius: var(--bob-input-border-radius);
 }
@@ -44,10 +44,10 @@ button {
 	background-color: var(--bob-color-primary);
 	border-radius: var(--bob-input-border-radius);
 	color: var(--bob-color-base-200);
-	padding: 0 16px;
+	padding: var(--bob-button-padding);
 	min-height: var(--bob-input-min-height);
 	min-width: 54px;
-	border: none;
+	border: var(--bob-button-border);
 }
 
 svg,
@@ -75,23 +75,23 @@ img {
 }
 
 .tag {
-	padding: 3px 6px;
-	border-radius: 8px;
-	font-size: 12px;
+	padding: var(--bob-tag-padding);
+	border-radius: var(--bob-tag-border-radius);
+	font-size: var(--bob-tag-font-size);
 	line-height: 1;
 }
 
 .tag-container {
 	display: flex;
-	gap: 4px;
+	gap: var(--bob-tag-spacing);
 }
 
 .tag.tag-success {
-	background-color: green;
+	background-color: var(--bob-color-success);
 }
 
 .tag.tag-error {
-	background-color: red;
+	background-color: var(--bob-color-error);
 }
 
 .tag.tag-default {

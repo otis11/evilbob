@@ -15,14 +15,21 @@ export const isWindows = platform.startsWith("win");
 export const isMac = platform.startsWith("mac");
 export const isMobile = userAgent.includes("mobile");
 
+export type BrowserName =
+	| "chromium"
+	| "firefox"
+	| "chrome"
+	| "edg"
+	| "librewolf";
+
 export const browserName = (() => {
 	const match = userAgent.match(
 		/firefox|librewolf|chrom(?:e|ium)|safari|edg/i,
 	);
 	if (match?.[0]) {
-		return match[0];
+		return match[0] as BrowserName;
 	}
-	return "";
+	return "" as BrowserName;
 })();
 export const browserVersion = (() => {
 	const match = userAgent.match(

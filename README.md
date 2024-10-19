@@ -1,11 +1,6 @@
-# bob
+# Bob
+Hello, Hello! This is Bob. A browser command palette.
 
-- https://pictogrammers.com/library/mdi/
-- https://developer.chrome.com/docs/extensions/reference/api
-
-
-# specifics
-### chromium
-- `system.cpu`
-- `system.memory`
-- Commands can be global
+# Documentation
+- [Search Groups](./docs/search-groups.md)
+- [Contributing](./docs/contributing.md)

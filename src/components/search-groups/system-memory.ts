@@ -10,6 +10,7 @@ export class SearchGroupSystemMemory extends SearchGroup {
 			name: "system.memory",
 			permissions: ["system.memory"],
 			description: "Information about your system memory.",
+			supportedBrowser: ["chromium", "chrome", "edg"],
 		});
 	}
 

@@ -1,11 +1,11 @@
+import {
+	type Dimension,
+	type Theme,
+	defaultTheme,
+	defaultWindowDimensions,
+} from "./config";
 import "./dark.css";
 import "./light.css";
-
-export const Themes = ["dark", "light"] as const;
-export type Theme = (typeof Themes)[number];
-const defaultTheme: Theme = "dark";
-type Dimension = { width: number; height: number };
-const defaultDimensions = { width: 900, height: 600 };
 
 export async function setCurrentTheme(theme: Theme) {
 	await chrome.storage.sync.set({ theme: theme });
@@ -21,7 +21,7 @@ export async function setCurrentDimensions(dimensions: Dimension) {
 export async function getCurrentDimensions(): Promise<Dimension> {
 	const storageResult = await chrome.storage.sync.get(["dimensions"]);
 	return JSON.parse(
-		storageResult.dimensions || JSON.stringify(defaultDimensions),
+		storageResult.dimensions || JSON.stringify(defaultWindowDimensions),
 	);
 }
 
@@ -39,6 +39,6 @@ async function getCurrentTheme(): Promise<Theme> {
 })();
 
 export async function setThemeToDefaults() {
-	await setCurrentDimensions(defaultDimensions);
+	await setCurrentDimensions(defaultWindowDimensions);
 	await setCurrentTheme(defaultTheme);
 }

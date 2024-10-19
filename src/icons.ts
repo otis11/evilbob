@@ -1,3 +1,6 @@
+// Icons are from:
+// - https://pictogrammers.com/library/mdi/
+
 export function iconFromString(html: string, fontSize = "24px") {
 	const span = document.createElement("span");
 	span.innerHTML = html;

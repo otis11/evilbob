@@ -1,3 +1,4 @@
+import type { BrowserName } from "../platform";
 import type { Search } from "./search";
 import { SearchGroups } from "./search-groups/search-groups";
 import { SearchResult } from "./search-result/search-result";
@@ -8,6 +9,7 @@ export type SearchGroupConfig = {
 	permissions?: string[];
 	hostPermissions?: string[];
 	filter?: string;
+	supportedBrowser?: BrowserName[];
 };
 
 export abstract class SearchGroup {
@@ -19,6 +21,7 @@ export abstract class SearchGroup {
 	public filter: string;
 	public isResultsLoaded = false;
 	public description: string;
+	public supportedBrowser: BrowserName[];
 
 	constructor(config: SearchGroupConfig) {
 		this.name = config.name;
@@ -27,6 +30,13 @@ export abstract class SearchGroup {
 		this.results = [];
 		this.filter = config.filter || "";
 		this.description = config.description;
+		this.supportedBrowser = config.supportedBrowser || [
+			"chromium",
+			"firefox",
+			"chrome",
+			"firefox",
+			"edg",
+		];
 	}
 
 	public async isEnabled(): Promise<boolean> {

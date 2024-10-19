@@ -9,6 +9,7 @@ export class SearchGroupSystemCpu extends SearchGroup {
 			name: "system.cpu",
 			permissions: ["system.cpu"],
 			description: "Information about your system cpu.",
+			supportedBrowser: ["chromium", "chrome", "edg"],
 		});
 	}
 

@@ -1,5 +1,4 @@
-import { isChromium } from "../../platform";
-import type { SearchGroup } from "../search-group";
+import { browserName, isChromium } from "../../platform";
 import { SearchGroupBob } from "./bob";
 import { SearchGroupBookmarks } from "./bookmarks";
 import { SearchGroupFilter } from "./filter";
@@ -34,26 +33,27 @@ export type SearchGroupStorage = {
 	order?: number;
 };
 
-export const SEARCH_GROUPS = () => {
-	const results = [
-		new SearchGroupBookmarks(),
-		new SearchGroupShortcuts(),
-		new SearchGroupBob(),
-		new SearchGroupHistory(),
-		new SearchGroupTabs(),
-		new SearchGroupGoogle(),
-		new SearchGroupFilter(),
-		new SearchGroupUserScripts(),
-		new SearchGroupManagement(),
-		new SearchGroupSessions(),
-	];
-	if (isChromium) {
-		results.push(new SearchGroupSystemCpu());
-		results.push(new SearchGroupSystemMemory());
-		results.push(new SearchGroupSystemStorage());
-	}
-	return results;
+export const SEARCH_GROUPS_USER_AGENT_FILTERED = () => {
+	return SEARCH_GROUPS.filter((group) => {
+		group.supportedBrowser.includes(browserName);
+	});
 };
+
+export const SEARCH_GROUPS = [
+	new SearchGroupBookmarks(),
+	new SearchGroupShortcuts(),
+	new SearchGroupBob(),
+	new SearchGroupHistory(),
+	new SearchGroupTabs(),
+	new SearchGroupGoogle(),
+	new SearchGroupFilter(),
+	new SearchGroupUserScripts(),
+	new SearchGroupManagement(),
+	new SearchGroupSessions(),
+	new SearchGroupSystemCpu(),
+	new SearchGroupSystemMemory(),
+	new SearchGroupSystemStorage(),
+];
 
 export const SEARCH_GROUPS_DEFAULT_CONFIG: Record<
 	SearchGroupName,

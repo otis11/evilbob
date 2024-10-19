@@ -9,6 +9,7 @@ export class SearchGroupSystemStorage extends SearchGroup {
 			name: "system.storage",
 			permissions: ["system.storage"],
 			description: "Information about your system storage.",
+			supportedBrowser: ["chromium", "chrome", "edg"],
 		});
 	}
 

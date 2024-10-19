@@ -1,7 +1,7 @@
 import type { SearchGroup } from "../search-group";
 import {
-	SEARCH_GROUPS,
 	SEARCH_GROUPS_DEFAULT_CONFIG,
+	SEARCH_GROUPS_USER_AGENT_FILTERED,
 	type SearchGroupStorage,
 } from "./config";
 
@@ -9,7 +9,7 @@ export class SearchGroups {
 	public list: SearchGroup[];
 
 	constructor() {
-		this.list = SEARCH_GROUPS();
+		this.list = SEARCH_GROUPS_USER_AGENT_FILTERED();
 	}
 
 	static async getConfig(): Promise<Record<string, SearchGroupStorage>> {

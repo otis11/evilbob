@@ -1,8 +1,8 @@
-import { SearchGroup } from "../components/search-group";
-import { SearchResult } from "../components/search-result";
-import { SearchResultInfo } from "../components/search-result-info";
-import type { Tag } from "../components/tags";
-import { iconFromUrl } from "../icons";
+import { iconFromUrl } from "../../icons";
+import { SearchGroup } from "../search-group";
+import { SearchResult } from "../search-result/search-result";
+import { SearchResultInfo } from "../search-result/search-result-info";
+import type { Tag } from "../tags/tags";
 
 export class SearchGroupManagement extends SearchGroup {
 	constructor() {

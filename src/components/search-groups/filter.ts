@@ -1,8 +1,8 @@
-import { SearchGroups } from ".";
-import type { Search } from "../components/search";
-import { SearchGroup } from "../components/search-group";
-import { SearchResult } from "../components/search-result";
-import { iconFilter, iconFromString } from "../icons";
+import { iconFilter, iconFromString } from "../../icons";
+import type { Search } from "../search";
+import { SearchGroup } from "../search-group";
+import { SearchResult } from "../search-result/search-result";
+import { SearchGroups } from "./search-groups";
 
 export class SearchGroupFilter extends SearchGroup {
 	constructor() {

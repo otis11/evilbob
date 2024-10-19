@@ -1,10 +1,10 @@
-import type { Search } from "../components/search";
-import { SearchGroup } from "../components/search-group";
+import { faviconFromUrl, iconFromString, iconHistory } from "../../icons";
+import type { Search } from "../search";
+import { SearchGroup } from "../search-group";
 import {
 	SearchResult,
 	type SearchResultConfig,
-} from "../components/search-result";
-import { faviconFromUrl, iconFromString, iconHistory } from "../icons";
+} from "../search-result/search-result";
 
 export class SearchGroupHistory extends SearchGroup {
 	constructor() {

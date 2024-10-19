@@ -1,0 +1,46 @@
+.result {
+	padding: 12px 12px;
+	list-style: none;
+	scroll-margin: 61px;
+	display: flex;
+	align-items: center;
+	cursor: pointer;
+	background-color: var(--bob-color-base-200);
+}
+
+.result[aria-selected] {
+	background-color: var(--bob-color-base-300);
+}
+
+.result-title {
+	font-weight: bold;
+	margin-bottom: 4px;
+	font-size: 1.125rem;
+	display: flex;
+	gap: 4px;
+	align-items: center;
+}
+
+.result-description {
+	margin-top: 4px;
+	opacity: 0.7;
+	font-size: 0.875rem;
+}
+
+.result-prepend {
+	margin-right: 12px;
+}
+
+.result-append {
+	margin-left: auto;
+	padding-left: 12px;
+}
+
+.result,
+.result-description,
+.result-content,
+.result-title {
+	text-overflow: ellipsis;
+	overflow: hidden;
+	white-space: nowrap;
+}

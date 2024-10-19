@@ -1,7 +1,7 @@
-import { SearchGroup } from "../components/search-group";
-import { SearchResult } from "../components/search-result";
-import { iconFromString, iconNas } from "../icons";
-import { formatBytes } from "../util/format-bytes";
+import { iconFromString, iconNas } from "../../icons";
+import { formatBytes } from "../../util/format-bytes";
+import { SearchGroup } from "../search-group";
+import { SearchResult } from "../search-result/search-result";
 
 export class SearchGroupSystemStorage extends SearchGroup {
 	constructor() {

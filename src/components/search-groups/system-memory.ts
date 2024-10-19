@@ -1,8 +1,8 @@
-import type { Search } from "../components/search";
-import { SearchGroup } from "../components/search-group";
-import { SearchResult } from "../components/search-result";
-import { iconCpu, iconFromString } from "../icons";
-import { formatBytes } from "../util/format-bytes";
+import { iconCpu, iconFromString } from "../../icons";
+import { formatBytes } from "../../util/format-bytes";
+import type { Search } from "../search";
+import { SearchGroup } from "../search-group";
+import { SearchResult } from "../search-result/search-result";
 
 export class SearchGroupSystemMemory extends SearchGroup {
 	constructor() {

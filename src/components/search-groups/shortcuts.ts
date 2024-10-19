@@ -1,8 +1,7 @@
-import type { Search } from "../components/search";
-import { SearchGroup } from "../components/search-group";
-import { SearchResult } from "../components/search-result";
-import { Shortcut } from "../components/shortcut";
-import { isFirefox, isMac } from "../platform";
+import { isFirefox, isMac } from "../../platform";
+import { SearchGroup } from "../search-group";
+import { SearchResult } from "../search-result/search-result";
+import { Shortcut } from "../shortcut/shortcut";
 
 export class SearchGroupShortcuts extends SearchGroup {
 	constructor() {

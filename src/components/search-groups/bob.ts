@@ -1,8 +1,8 @@
-import { SearchGroups } from ".";
-import { SearchGroup } from "../components/search-group";
-import { SearchResult } from "../components/search-result";
-import { iconBob, iconFromString } from "../icons";
-import { setThemeToDefaults } from "../themes";
+import { iconBob, iconFromString } from "../../icons";
+import { setThemeToDefaults } from "../../themes";
+import { SearchGroup } from "../search-group";
+import { SearchResult } from "../search-result/search-result";
+import { SearchGroups } from "./search-groups";
 
 export class SearchGroupBob extends SearchGroup {
 	constructor() {

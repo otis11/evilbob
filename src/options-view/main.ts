@@ -7,13 +7,10 @@ import {
 import "../themes";
 import "../global.css";
 import "./main.css";
-import { FlexContainer } from "../components/flex-container";
-import type { Search } from "../components/search";
-import { SearchResult } from "../components/search-result";
-import { Tags } from "../components/tags";
+import { SearchGroups } from "../components/search-groups/search-groups";
+import { ThemeCard } from "../components/theme-card/theme-card";
 import { iconBob, iconFromString, iconGithub } from "../icons";
 import { isChromium } from "../platform";
-import { SearchGroups } from "../search-groups";
 
 const searchResultGroups = new SearchGroups();
 
@@ -24,29 +21,7 @@ function renderThemes() {
 	container.append(groupHeading("Themes"), themesContainer);
 
 	for (const theme of Themes) {
-		const cardContainer = document.createElement("div");
-		cardContainer.setAttribute("data-theme", theme);
-		cardContainer.classList.add("theme-card");
-		cardContainer.addEventListener("click", () => {
-			setCurrentTheme(theme);
-		});
-
-		const base = document.createElement("div");
-		base.classList.add("theme-card-base");
-		base.innerText = theme;
-
-		const cardColors = document.createElement("div");
-		cardColors.classList.add("theme-card-colors");
-		for (const color of ["primary", "accent", "success", "error"]) {
-			const colorDiv = document.createElement("div");
-			colorDiv.style.backgroundColor = `var(--bob-color-${color})`;
-			cardColors.append(colorDiv);
-		}
-
-		const li = new SearchResultTheme().asHtmlElement();
-		li.style.width = "100%";
-		cardContainer.append(base, cardColors, li);
-		themesContainer?.append(cardContainer);
+		themesContainer.append(ThemeCard(theme));
 	}
 	document.body.append(container);
 }
@@ -190,22 +165,6 @@ function renderFooter() {
 
 	footer.append(githubLink);
 	document.body.append(footer);
-}
-
-class SearchResultTheme extends SearchResult {
-	constructor() {
-		super({
-			title: "title",
-			description: "description",
-			tags: [
-				{ text: "tag 1", type: "default" },
-				{ text: "tag error", type: "error" },
-			],
-			searchText: "",
-			prepend: iconFromString(iconBob),
-		});
-	}
-	onSelect(search: Search): void {}
 }
 
 (async () => {

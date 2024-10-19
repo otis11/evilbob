@@ -1,0 +1,16 @@
+.theme-card {
+	display: flex;
+	flex-wrap: wrap;
+	width: 220px;
+	border-radius: var(--bob-input-border-radius);
+	overflow: hidden;
+	border: 1px solid var(--bob-color-base-content-300);
+	color: var(--bob-color-base-content-100);
+}
+
+.theme-card-base {
+	color: var(--bob-color-base-content-100);
+	width: 100%;
+	text-align: center;
+	background-color: var(--bob-color-base-100);
+}

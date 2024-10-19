@@ -1,0 +1,23 @@
+.tag {
+	padding: var(--bob-tag-padding);
+	border-radius: var(--bob-tag-border-radius);
+	font-size: var(--bob-tag-font-size);
+	line-height: 1;
+}
+
+.tag-container {
+	display: flex;
+	gap: var(--bob-tag-spacing);
+}
+
+.tag.tag-success {
+	background-color: var(--bob-color-success);
+}
+
+.tag.tag-error {
+	background-color: var(--bob-color-error);
+}
+
+.tag.tag-default {
+	background-color: var(--bob-color-base-100);
+}

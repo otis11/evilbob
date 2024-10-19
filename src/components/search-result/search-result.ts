@@ -1,6 +1,7 @@
-import type { Search } from "./search";
-import type { SearchGroup } from "./search-group";
-import { type Tag, Tags } from "./tags";
+import type { Search } from "../search";
+import type { SearchGroup } from "../search-group";
+import { type Tag, Tags } from "../tags/tags";
+import "./search-result.css";
 
 export type SearchResultConfig = {
 	title: string;

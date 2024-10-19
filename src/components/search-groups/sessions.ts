@@ -1,6 +1,6 @@
-import { SearchGroup } from "../components/search-group";
-import { SearchResult } from "../components/search-result";
-import { SearchResultInfo } from "../components/search-result-info";
+import { SearchGroup } from "../search-group";
+import { SearchResult } from "../search-result/search-result";
+import { SearchResultInfo } from "../search-result/search-result-info";
 
 export class SearchGroupSessions extends SearchGroup {
 	constructor() {

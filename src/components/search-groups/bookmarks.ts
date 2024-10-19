@@ -1,9 +1,9 @@
-import { SearchGroup } from "../components/search-group";
+import { faviconFromUrl, iconBookmark } from "../../icons";
+import { SearchGroup } from "../search-group";
 import {
 	SearchResult,
 	type SearchResultConfig,
-} from "../components/search-result";
-import { faviconFromUrl, iconBookmark } from "../icons";
+} from "../search-result/search-result";
 
 export class SearchGroupBookmarks extends SearchGroup {
 	constructor() {

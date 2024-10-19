@@ -1,3 +1,5 @@
+import "./tags.css";
+
 export type Tag = {
 	text: string;
 	type: "default" | "error" | "success";

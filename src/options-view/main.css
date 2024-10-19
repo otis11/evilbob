@@ -4,36 +4,6 @@
 	gap: 16px;
 }
 
-.theme-card {
-	display: flex;
-	flex-wrap: wrap;
-	width: 220px;
-	border-radius: var(--bob-input-border-radius);
-	overflow: hidden;
-	border: 1px solid var(--bob-color-base-content-300);
-	color: var(--bob-color-base-content-100);
-}
-
-.theme-card-base {
-	color: var(--bob-color-base-content-100);
-	width: 100%;
-	text-align: center;
-	background-color: var(--bob-color-base-100);
-}
-
-.theme-card-primary,
-.theme-card-accent {
-	height: 40px;
-	width: 50%;
-}
-
-.theme-card-primary {
-	background-color: var(--bob-color-primary);
-}
-.theme-card-accent {
-	background-color: var(--bob-color-accent);
-}
-
 h3 {
 	padding-top: 20px;
 	padding-bottom: 4px;

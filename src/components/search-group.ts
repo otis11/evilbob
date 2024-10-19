@@ -1,6 +1,6 @@
-import { type SearchGroupName, SearchGroups } from "../search-groups";
 import type { Search } from "./search";
-import { SearchResult } from "./search-result";
+import { SearchGroups } from "./search-groups/search-groups";
+import { SearchResult } from "./search-result/search-result";
 
 export type SearchGroupConfig = {
 	name: string;

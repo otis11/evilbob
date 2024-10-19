@@ -4,51 +4,29 @@
 export function iconFromString(html: string, fontSize = "24px") {
 	const span = document.createElement("span");
 	span.innerHTML = html;
-	const svg = span.firstElementChild as HTMLElement;
-	svg.style.fontSize = fontSize;
-	return svg;
+	const svg = span.firstElementChild as HTMLElement | null;
+	if (svg) {
+		svg.style.fontSize = fontSize;
+	}
+	return span;
 }
 
-export function faviconFromUrl(
-	url: string | undefined,
-	fallbackIcon: string,
-	fontSize = "24px",
-) {
-	if (!url) {
-		return iconFromString(fallbackIcon);
-	}
+export function faviconFromUrl(url: string, fontSize = "24px") {
 	const domain = new URL(url).hostname;
-
 	const faviconUrl = `https://${domain}/favicon.ico`;
+	return iconFromUrl(faviconUrl, fontSize);
+}
+
+export function iconFromUrl(url: string, fontSize = "24px") {
 	const container = document.createElement("span");
 	container.style.display = "inline-flex";
+	container.style.overflow = "hidden";
 	const img = document.createElement("img");
-	img.onerror = () => {
-		container.innerHTML = iconFromString(fallbackIcon).outerHTML;
-	};
-	img.src = faviconUrl;
+	img.src = url;
 	img.alt = "Favicon";
 	img.style.fontSize = fontSize;
 	container.append(img);
 	return container;
-}
-
-export function iconFromUrl(
-	url: string | undefined,
-	fallbackIcon: string,
-	fontSize = "24px",
-) {
-	if (!url) {
-		return iconFromString(fallbackIcon);
-	}
-	const img = document.createElement("img");
-	img.onerror = () => {
-		img.outerHTML = iconFromString(fallbackIcon).outerHTML;
-	};
-	img.src = url;
-	img.alt = "Icon";
-	img.style.fontSize = fontSize;
-	return img;
 }
 
 export const iconBookmark =

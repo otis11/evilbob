@@ -13,3 +13,4 @@ Done :)
 
 # References
 - [Chrome Extension Api Docs](https://developer.chrome.com/docs/extensions/reference/api)
+- [Firefox Extension Api Docs](https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions)

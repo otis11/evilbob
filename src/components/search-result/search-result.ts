@@ -74,7 +74,7 @@ export abstract class SearchResult {
 		if (this.prepend) {
 			const span = document.createElement("span");
 			span.classList.add("result-prepend");
-			span.append(this.prepend.cloneNode(true));
+			span.append(this.prepend);
 			li.append(span);
 		}
 
@@ -90,7 +90,7 @@ export abstract class SearchResult {
 		if (this.append) {
 			const span = document.createElement("span");
 			span.classList.add("result-append");
-			span.append(this.append.cloneNode(true));
+			span.append(this.append);
 			li.append(span);
 		}
 

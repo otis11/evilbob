@@ -5,7 +5,7 @@ import { SearchGroupFilter } from "./filter";
 import { SearchGroupGoogle } from "./google";
 import { SearchGroupHistory } from "./history";
 import { SearchGroupManagement } from "./management";
-import { SearchGroupSessions } from "./sessions";
+import { SearchGroupSessionDevices } from "./sessions.devices";
 import { SearchGroupShortcuts } from "./shortcuts";
 import { SearchGroupSystemCpu } from "./system-cpu";
 import { SearchGroupSystemMemory } from "./system-memory";
@@ -25,7 +25,7 @@ export type SearchGroupName =
 	| "filter"
 	| "user-scripts"
 	| "management"
-	| "sessions"
+	| "sessions.devices"
 	| "tabs";
 
 export type SearchGroupStorage = {
@@ -49,7 +49,7 @@ export const SEARCH_GROUPS = [
 	new SearchGroupFilter(),
 	new SearchGroupUserScripts(),
 	new SearchGroupManagement(),
-	new SearchGroupSessions(),
+	new SearchGroupSessionDevices(),
 	new SearchGroupSystemCpu(),
 	new SearchGroupSystemMemory(),
 	new SearchGroupSystemStorage(),
@@ -107,7 +107,7 @@ export const SEARCH_GROUPS_DEFAULT_CONFIG: Record<
 		order: 7,
 		enabled: false,
 	},
-	sessions: {
+	"sessions.devices": {
 		order: 6,
 		enabled: false,
 	},

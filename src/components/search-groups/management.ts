@@ -1,4 +1,4 @@
-import { iconFromUrl } from "../../icons";
+import { iconFromUrl, iconPuzzleOutline } from "../../icons";
 import { SearchGroup } from "../search-group";
 import { SearchResult } from "../search-result/search-result";
 import { SearchResultInfo } from "../search-result/search-result-info";
@@ -25,7 +25,7 @@ export class SearchGroupManagement extends SearchGroup {
 export class SearchResultExtension extends SearchResult {
 	constructor(extension: chrome.management.ExtensionInfo) {
 		const iconUrl = extension.icons ? extension.icons[0].url : "";
-		const icon = iconFromUrl(iconUrl, "");
+		const icon = iconFromUrl(iconUrl);
 		const tags: Tag[] = [
 			extension.enabled
 				? { text: "enabled", type: "success" }
@@ -58,25 +58,9 @@ export class SearchGroupExtensionOptions extends SearchGroup {
 	}
 
 	public async getResults(): Promise<SearchResult[]> {
-		return [
+		const results = [
 			new SearchResultInfo("Version", this.extension.version),
 			new SearchResultInfo("Id", this.extension.id),
-			new SearchResultInfo(
-				"Host Permissions",
-				"Host permissions allow extensions to interact with the URL's matching patterns.",
-				this.extension.hostPermissions.map((perm) => ({
-					text: perm,
-					type: "default",
-				})),
-			),
-			new SearchResultInfo(
-				"Permissions",
-				"To access most extension APIs and features, you must declare permissions in your extension's manifest. Some permissions trigger warnings that users must allow to continue using the extension.",
-				this.extension.permissions.map((perm) => ({
-					text: perm,
-					type: "default",
-				})),
-			),
 			new SearchResultInfo("Short name", this.extension.shortName),
 			new SearchResultInfo("Offline enabled", "Is offline enabled?", [
 				this.extension.offlineEnabled
@@ -93,5 +77,29 @@ export class SearchGroupExtensionOptions extends SearchGroup {
 				],
 			),
 		];
+		if (this.extension.hostPermissions) {
+			results.push(
+				new SearchResultInfo(
+					"Host Permissions",
+					"Host permissions allow extensions to interact with the URL's matching patterns.",
+					this.extension.hostPermissions.map((perm) => ({
+						text: perm,
+						type: "default",
+					})),
+				),
+			);
+		}
+		// types say can be undefined but in firefox there is a default extension with doesnt have this defined.
+		if (this.extension.permissions) {
+			new SearchResultInfo(
+				"Permissions",
+				"To access most extension APIs and features, you must declare permissions in your extension's manifest. Some permissions trigger warnings that users must allow to continue using the extension.",
+				this.extension.permissions.map((perm) => ({
+					text: perm,
+					type: "default",
+				})),
+			);
+		}
+		return results;
 	}
 }

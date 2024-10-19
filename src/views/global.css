@@ -10,6 +10,10 @@ html {
 	font-family: var(--bob-font-family);
 }
 
+img::before {
+	display: none;
+}
+
 input {
 	outline: none;
 	border: var(--bob-input-border);

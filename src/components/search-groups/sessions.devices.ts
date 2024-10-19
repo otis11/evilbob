@@ -2,12 +2,14 @@ import { SearchGroup } from "../search-group";
 import { SearchResult } from "../search-result/search-result";
 import { SearchResultInfo } from "../search-result/search-result-info";
 
-export class SearchGroupSessions extends SearchGroup {
+// separated from sessions because only chrome has .getDevices
+export class SearchGroupSessionDevices extends SearchGroup {
 	constructor() {
 		super({
-			name: "sessions",
+			name: "sessions.devices",
 			permissions: ["sessions"],
-			description: "Search & interact with your sessions.",
+			description: "Search your session devices.",
+			supportedBrowser: ["chrome", "chromium", "edg"],
 		});
 	}
 
@@ -23,7 +25,7 @@ export class SearchResultSessionDevices extends SearchResult {
 			title: "Session Devices",
 			description: "",
 			searchText: "session devices",
-			options: new SearchGroupSessionDevices(devices),
+			options: new SearchGroupSessionDevicesDeep(devices),
 		});
 	}
 
@@ -32,7 +34,7 @@ export class SearchResultSessionDevices extends SearchResult {
 	}
 }
 
-export class SearchGroupSessionDevices extends SearchGroup {
+export class SearchGroupSessionDevicesDeep extends SearchGroup {
 	constructor(private devices: chrome.sessions.Device[]) {
 		super({
 			name: "session-devices",

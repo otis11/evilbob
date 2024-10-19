@@ -29,7 +29,7 @@ export class SearchGroupHistory extends SearchGroup {
 						{ text: `${item.visitCount} visits`, type: "default" },
 					],
 					searchText: `${item.title?.toLowerCase()} ${item.url?.toLowerCase()}`,
-					prepend: faviconFromUrl(item.url, iconHistory),
+					prepend: item.url ? faviconFromUrl(item.url) : undefined,
 				}),
 		);
 	}

@@ -12,7 +12,7 @@
 	"background": {
 		"service_worker": "background.js"
 	},
-	"options_page": "options-view/index.html",
+	"options_page": "views/options/index.html",
 	"action": {
 		"default_icon": {
 			"16": "icons/bob-icon-16x16.png",

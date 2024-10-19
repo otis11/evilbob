@@ -3,14 +3,14 @@ import {
 	getCurrentDimensions,
 	setCurrentDimensions,
 	setCurrentTheme,
-} from "../themes";
-import "../themes";
+} from "../../themes";
+import "../../themes";
 import "../global.css";
 import "./main.css";
-import { SearchGroups } from "../components/search-groups/search-groups";
-import { ThemeCard } from "../components/theme-card/theme-card";
-import { iconBob, iconFromString, iconGithub } from "../icons";
-import { isChromium } from "../platform";
+import { SearchGroups } from "../../components/search-groups/search-groups";
+import { ThemeCard } from "../../components/theme-card/theme-card";
+import { iconBob, iconFromString, iconGithub } from "../../icons";
+import { isChromium } from "../../platform";
 
 const searchResultGroups = new SearchGroups();
 

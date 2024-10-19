@@ -1,4 +1,12 @@
-import { cpSync, existsSync, mkdirSync, rmSync } from "node:fs";
+import {
+	cpSync,
+	existsSync,
+	fstatSync,
+	lstatSync,
+	mkdirSync,
+	readdirSync,
+	rmSync,
+} from "node:fs";
 import path from "node:path";
 import type { WatcherOptions } from "rollup";
 import { build } from "vite";
@@ -15,6 +23,14 @@ if (existsSync(distFolder)) {
 }
 
 const browsers = ["chrome", "firefox"];
+
+const views = readdirSync(path.resolve(__dirname, "../src/views")).filter(
+	(file) =>
+		lstatSync(
+			path.resolve(__dirname, `../src/views/${file}`),
+		).isDirectory(),
+);
+const userScripts = readdirSync(path.resolve(__dirname, "../src/user-scripts"));
 
 for (const browser of browsers) {
 	await Promise.all([
@@ -34,31 +50,20 @@ for (const browser of browsers) {
 				},
 			},
 		}),
-		// search
-		build({
-			publicDir: `public/${browser}`,
-			root: "./src/search-view",
-			base: "./",
-			build: {
-				minify,
-				outDir: `../../dist/${browser}/search-view`,
-				emptyOutDir: false,
-				watch,
-			},
+		// views
+		...views.map((view) => {
+			return build({
+				publicDir: `public/${browser}`,
+				root: `./src/views/${view}`,
+				base: "./",
+				build: {
+					minify,
+					outDir: `../../../dist/${browser}/views/${view}`,
+					emptyOutDir: false,
+					watch,
+				},
+			});
 		}),
-		// options
-		build({
-			publicDir: `public/${browser}`,
-			root: "./src/options-view",
-			base: "./",
-			build: {
-				minify,
-				outDir: `../../dist/${browser}/options-view`,
-				emptyOutDir: false,
-				watch,
-			},
-		}),
-		// user-scripts
 		build({
 			publicDir: `public/${browser}`,
 			root: "./src/user-scripts",
@@ -67,7 +72,9 @@ for (const browser of browsers) {
 				minify,
 				outDir: `../../dist/${browser}/user-scripts`,
 				rollupOptions: {
-					input: ["src/user-scripts/list-media.ts"],
+					input: userScripts.map(
+						(userScript) => `src/user-scripts/${userScript}`,
+					),
 					output: {
 						entryFileNames: "[name].js",
 					},

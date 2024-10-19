@@ -1,12 +1,12 @@
-import "../themes";
+import "../../themes";
 import "../global.css";
 import "./main.css";
-import packageJson from "../../package.json";
-import { Search } from "../components/search";
-import { SearchGroups } from "../components/search-groups/search-groups";
-import { SearchResult } from "../components/search-result/search-result";
-import { iconCog, iconFromString, iconLoading, iconReload } from "../icons";
-import { browserName, browserVersion } from "../platform";
+import packageJson from "../../../package.json";
+import { Search } from "../../components/search";
+import { SearchGroups } from "../../components/search-groups/search-groups";
+import { SearchResult } from "../../components/search-result/search-result";
+import { iconCog, iconFromString, iconLoading, iconReload } from "../../icons";
+import { browserName, browserVersion } from "../../platform";
 
 const searchResultGroups: SearchGroups = new SearchGroups();
 let selectedSearchResultIndex = 0;

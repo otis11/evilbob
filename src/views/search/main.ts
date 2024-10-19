@@ -61,7 +61,7 @@ function filterSearchResults() {
 	showSelectedIndex();
 }
 
-export function renderFooter() {
+export async function renderFooter() {
 	const footer = document.getElementById("footer");
 
 	const browser = document.createElement("span");
@@ -83,7 +83,21 @@ export function renderFooter() {
 	const spacer = document.createElement("span");
 	spacer.classList.add("spacer");
 
-	footer?.append(bobVersion, browser, spacer, reload, settings);
+	const searchGroupsForEnabled = new SearchGroups();
+	const total = searchGroupsForEnabled.list.length;
+	await searchGroupsForEnabled.filterEnabled();
+	const enabled = searchGroupsForEnabled.list.length;
+	const enabledGroups = document.createElement("span");
+	enabledGroups.innerText = `${enabled}/${total} search groups enabled`;
+
+	footer?.append(
+		enabledGroups,
+		spacer,
+		browser,
+		bobVersion,
+		reload,
+		settings,
+	);
 }
 
 function renderSearchResults() {

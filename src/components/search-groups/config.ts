@@ -61,54 +61,54 @@ export const SEARCH_GROUPS_DEFAULT_CONFIG: Record<
 > = {
 	bob: {
 		enabled: true,
-		order: 20,
+		order: 2,
 	},
 	history: {
 		enabled: false,
-		order: 100,
+		order: 4,
 	},
 	"system.cpu": {
 		enabled: false,
-		order: 70,
+		order: 11,
 	},
 	"system.memory": {
 		enabled: false,
-		order: 69,
+		order: 10,
 	},
 	"system.storage": {
 		enabled: false,
-		order: 68,
+		order: 9,
 	},
 	bookmarks: {
 		enabled: false,
-		order: 50,
+		order: 3,
 	},
 	shortcuts: {
-		order: 90,
+		order: 8,
 		enabled: true,
 	},
 	tabs: {
-		order: 30,
+		order: 1,
 		enabled: false,
 	},
 	google: {
-		order: 200,
+		order: 12,
 		enabled: true,
 	},
 	filter: {
-		order: 1,
+		order: 0,
 		enabled: true,
 	},
 	"user-scripts": {
-		order: 20,
+		order: 5,
 		enabled: false,
 	},
 	management: {
-		order: 20,
+		order: 7,
 		enabled: false,
 	},
 	sessions: {
-		order: 30,
+		order: 6,
 		enabled: false,
 	},
 };

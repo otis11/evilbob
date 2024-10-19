@@ -1,3 +1,5 @@
+import "./shortcut.css";
+
 export class Shortcut {
 	constructor(public keys: string[]) {}
 

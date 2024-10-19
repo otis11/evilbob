@@ -8,11 +8,11 @@ markdown +=
 	"Search Groups provide results and actions inside the command palette.";
 
 markdown += "\n\n";
-markdown += "| Name | Description | Supported browsers |\n";
-markdown += "| ---- | ----------- | ------------------ |\n";
+markdown += "| Name | Description | Permissions | Supported browsers |\n";
+markdown += "| ---- | ----------- | ------------|------------------ |\n";
 
 for (const group of SEARCH_GROUPS) {
-	markdown += `| ${group.name} | ${group.description} | ${group.supportedBrowser.join(", ")} | \n`;
+	markdown += `| ${group.name} | ${group.description} | ${group.permissions.join(", ")} | ${group.supportedBrowser.join(", ")} | \n`;
 }
 
 writeFileSync(filePath, markdown);

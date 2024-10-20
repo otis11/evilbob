@@ -1,6 +1,6 @@
 import { iconBob, iconFromString } from "../../icons";
-import { setCurrentTheme } from "../../themes";
-import type { Theme } from "../../themes/config";
+import { setCurrentTheme } from "../../theme";
+import type { Theme } from "../../theme/themes";
 import type { Search } from "../search";
 import { SearchResult } from "../search-result/search-result";
 import "./theme-card.css";

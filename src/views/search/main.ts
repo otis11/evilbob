@@ -1,4 +1,4 @@
-import "../../themes";
+import "../../theme";
 import "../global.css";
 import "./main.css";
 import { Search } from "../../components/search";

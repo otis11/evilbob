@@ -1,11 +1,7 @@
-import {
-	type Dimension,
-	type Theme,
-	defaultTheme,
-	defaultWindowDimensions,
-} from "./config";
-import "./dark.css";
-import "./light.css";
+import { type Theme, defaultTheme } from "./themes";
+
+type Dimension = { width: number; height: number };
+const defaultWindowDimensions = { width: 900, height: 600 };
 
 export async function setCurrentTheme(theme: Theme) {
 	await chrome.storage.sync.set({ theme: theme });

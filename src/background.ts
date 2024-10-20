@@ -1,5 +1,5 @@
 import { SearchGroups } from "./components/search-groups/search-groups";
-import { getCurrentDimensions } from "./themes";
+import { getCurrentDimensions } from "./theme";
 
 console.log("bob.background.start");
 

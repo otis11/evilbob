@@ -1,5 +1,5 @@
 import { iconBob, iconFromString } from "../../icons";
-import { setThemeToDefaults } from "../../themes";
+import { setThemeToDefaults } from "../../theme";
 import { SearchGroup } from "../search-group";
 import { SearchResult } from "../search-result/search-result";
 import { SearchGroups } from "./search-groups";

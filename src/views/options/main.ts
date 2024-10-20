@@ -1,12 +1,12 @@
-import { getCurrentDimensions, setCurrentDimensions } from "../../themes";
-import "../../themes";
+import { getCurrentDimensions, setCurrentDimensions } from "../../theme";
+import "../../theme";
 import "../global.css";
 import "./main.css";
 import { SearchGroups } from "../../components/search-groups/search-groups";
 import { ThemeCard } from "../../components/theme-card/theme-card";
 import { iconBob, iconFromString, iconGithub } from "../../icons";
 import { isChromium } from "../../platform";
-import { Themes } from "../../themes/config";
+import { Themes } from "../../theme/themes";
 
 const searchResultGroups = new SearchGroups();
 

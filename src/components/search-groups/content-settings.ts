@@ -10,6 +10,7 @@ export class SearchGroupContentSettings extends SearchGroup {
 			permissions: ["contentSettings"],
 			description:
 				"Settings that control whether websites can use features such as cookies, JavaScript, and plugins",
+			supportedBrowser: ["chrome", "chromium", "edg"],
 		});
 	}
 

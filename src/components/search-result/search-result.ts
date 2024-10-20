@@ -11,7 +11,6 @@ export type SearchResultConfig = {
 	prepend?: HTMLElement;
 	tags?: Tag[];
 	options?: SearchGroup;
-	titleIcon?: HTMLElement;
 };
 
 export abstract class SearchResult {
@@ -20,7 +19,6 @@ export abstract class SearchResult {
 	searchText: string;
 	append?: HTMLElement;
 	prepend?: HTMLElement;
-	titleIcon?: HTMLElement;
 	instanceId: string;
 	tags: Tag[];
 	options?: SearchGroup;

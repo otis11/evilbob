@@ -1,4 +1,14 @@
-import { iconFromString, iconSortAlphabetically } from "../../icons";
+import {
+	faviconFromUrl,
+	iconFromString,
+	iconFromUrl,
+	iconIncognito,
+	iconMusic,
+	iconMusicOff,
+	iconPin,
+	iconSortAlphabetically,
+	iconTab,
+} from "../../icons";
 import type { Search } from "../search";
 import { SearchGroup } from "../search-group";
 import { SearchResult } from "../search-result/search-result";
@@ -8,15 +18,62 @@ export class SearchGroupTabs extends SearchGroup {
 		super({
 			name: "tabs",
 			permissions: ["tabs"],
+			filter: "!t",
 			description:
 				"Search & interact with browser tabs. For example sort them.",
 		});
 	}
 
-	public getResults(): Promise<SearchResult[]> {
-		return new Promise((resolve) => {
-			resolve([new SearchResultSortTabsAlphabetically()]);
+	public async getResults(): Promise<SearchResult[]> {
+		const tabs = await chrome.tabs.query({});
+		return [
+			...tabs.map((tab) => new SearchResultTab(tab)),
+			new SearchResultSortTabsAlphabetically(),
+		];
+	}
+}
+
+export class SearchResultTab extends SearchResult {
+	constructor(private tab: chrome.tabs.Tab) {
+		const tags = [{ html: iconFromString(iconTab, "12px").outerHTML }];
+		if (tab.incognito) {
+			tags.push({
+				html: iconFromString(iconIncognito, "12px").outerHTML,
+			});
+		}
+		if (tab.audible) {
+			tags.push({
+				html: iconFromString(iconMusic, "12px").outerHTML,
+			});
+		}
+		if (tab.pinned) {
+			tags.push({
+				html: iconFromString(iconPin, "12px").outerHTML,
+			});
+		}
+		if (tab.mutedInfo?.muted) {
+			tags.push({
+				html: `${iconFromString(iconMusicOff, "12px").outerHTML} ${tab.mutedInfo.reason}`,
+			});
+		}
+		const icon = tab.favIconUrl
+			? iconFromUrl(tab.favIconUrl)
+			: faviconFromUrl(tab.url || "");
+		super({
+			title: tab.title || "",
+			prepend: icon,
+			searchText: `${tab.title} ${tab.url}`,
+			description: `${tab.url}`,
+			tags,
 		});
+	}
+
+	async onSelect(search: Search): Promise<void> {
+		await chrome.tabs.highlight({
+			tabs: [this.tab.index],
+			windowId: this.tab.windowId,
+		});
+		window.close();
 	}
 }
 

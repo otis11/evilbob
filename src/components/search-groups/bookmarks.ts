@@ -42,7 +42,6 @@ export class SearchGroupBookmarks extends SearchGroup {
 						{
 							html: iconFromString(iconBookmark, "12px")
 								.outerHTML,
-							type: "default",
 						},
 					],
 					prepend: item.url ? faviconFromUrl(item.url) : undefined,

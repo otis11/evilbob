@@ -14,13 +14,11 @@ export class SearchGroupBob extends SearchGroup {
 		});
 	}
 
-	public getResults(): Promise<SearchResult[]> {
-		return new Promise((resolve) => {
-			resolve([
-				new SearchResultBobOpenSettings(),
-				new SearchResultBobResetSettings(),
-			]);
-		});
+	public async getResults(): Promise<SearchResult[]> {
+		return [
+			new SearchResultBobOpenSettings(),
+			new SearchResultBobResetSettings(),
+		];
 	}
 }
 

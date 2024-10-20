@@ -1,9 +1,9 @@
 # Bob
 Hello, Hello! This is Bob. A browser command palette. 
 
-Bob opens in a new window and can be opened from basically anywhere in the browser using a defined shortcut! (in Chromium even from outside the browser, when setting the shortcut to global)
+Bob opens from anywhere in your browser using a shortcut! (Chromium allows the shortcut to be global)
 
-Bob lets you decide which Search Groups and linked permissions should be enabled/disabled.
+Search results are organized into Search Groups with linked permissions. For instance, the "tabs" group helps manage tabs and needs permission to do so. Almost all Search Groups are off by default, to start off minimal. Pick the ones you love!
 
 # Documentation
 - [Search Groups](./docs/search-groups.md)

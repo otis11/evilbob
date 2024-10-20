@@ -16,3 +16,4 @@ Search Groups provide results and actions inside the command palette.
 | system.cpu | Information about your system cpu. | system.cpu | chromium, chrome, edg | 
 | system.memory | Information about your system memory. | system.memory | chromium, chrome, edg | 
 | system.storage | Information about your system storage. | system.storage | chromium, chrome, edg | 
+| content-settings | Settings that control whether websites can use features such as cookies, JavaScript, and plugins | contentSettings | chrome, chromium, edg | 

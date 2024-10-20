@@ -14,33 +14,6 @@ import { SearchGroupSystemStorage } from "./system-storage";
 import { SearchGroupTabs } from "./tabs";
 import { SearchGroupUserScripts } from "./user-scripts";
 
-export type SearchGroupName =
-	| "bookmarks"
-	| "history"
-	| "system.cpu"
-	| "system.memory"
-	| "system.storage"
-	| "shortcuts"
-	| "bob"
-	| "google"
-	| "filter"
-	| "user-scripts"
-	| "management"
-	| "sessions.devices"
-	| "content-settings"
-	| "tabs";
-
-export type SearchGroupStorage = {
-	enabled?: boolean;
-	order?: number;
-};
-
-export const SEARCH_GROUPS_USER_AGENT_FILTERED = () => {
-	return SEARCH_GROUPS.filter((group) => {
-		return group.supportedBrowser.includes(browserName);
-	});
-};
-
 export const SEARCH_GROUPS = [
 	new SearchGroupBookmarks(),
 	new SearchGroupShortcuts(),
@@ -58,64 +31,73 @@ export const SEARCH_GROUPS = [
 	new SearchGroupContentSettings(),
 ];
 
-export const SEARCH_GROUPS_DEFAULT_CONFIG: Record<
-	SearchGroupName,
-	SearchGroupStorage
-> = {
-	bob: {
-		enabled: true,
-		order: 2,
-	},
-	history: {
-		enabled: false,
-		order: 4,
-	},
-	"content-settings": {
-		enabled: false,
-		order: 13,
-	},
-	"system.cpu": {
-		enabled: false,
-		order: 11,
-	},
-	"system.memory": {
-		enabled: false,
-		order: 10,
-	},
-	"system.storage": {
-		enabled: false,
-		order: 9,
-	},
-	bookmarks: {
-		enabled: false,
-		order: 3,
-	},
-	shortcuts: {
-		order: 8,
-		enabled: true,
-	},
-	tabs: {
-		order: 1,
-		enabled: false,
-	},
-	google: {
-		order: 12,
-		enabled: true,
-	},
-	filter: {
-		order: 0,
-		enabled: true,
-	},
-	"user-scripts": {
-		order: 5,
-		enabled: false,
-	},
-	management: {
-		order: 7,
-		enabled: false,
-	},
-	"sessions.devices": {
-		order: 6,
-		enabled: false,
-	},
+export const SEARCH_GROUPS_DEFAULT_CONFIG: Record<string, SearchGroupStorage> =
+	{
+		bob: {
+			enabled: true,
+			order: 2,
+		},
+		history: {
+			enabled: false,
+			order: 4,
+		},
+		"content-settings": {
+			enabled: false,
+			order: 13,
+		},
+		"system.cpu": {
+			enabled: false,
+			order: 11,
+		},
+		"system.memory": {
+			enabled: false,
+			order: 10,
+		},
+		"system.storage": {
+			enabled: false,
+			order: 9,
+		},
+		bookmarks: {
+			enabled: false,
+			order: 3,
+		},
+		shortcuts: {
+			order: 8,
+			enabled: false,
+		},
+		tabs: {
+			order: 1,
+			enabled: false,
+		},
+		google: {
+			order: 12,
+			enabled: true,
+		},
+		filter: {
+			order: 0,
+			enabled: true,
+		},
+		"user-scripts": {
+			order: 5,
+			enabled: false,
+		},
+		management: {
+			order: 7,
+			enabled: false,
+		},
+		"sessions.devices": {
+			order: 6,
+			enabled: false,
+		},
+	};
+
+export type SearchGroupStorage = {
+	enabled?: boolean;
+	order?: number;
+};
+
+export const SEARCH_GROUPS_USER_AGENT_FILTERED = () => {
+	return SEARCH_GROUPS.filter((group) => {
+		return group.supportedBrowser.includes(browserName);
+	});
 };

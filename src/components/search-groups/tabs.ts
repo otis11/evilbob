@@ -51,7 +51,7 @@ export class SearchResultTab extends SearchResult {
 				html: iconFromString(iconPin, "12px").outerHTML,
 			});
 		}
-		if (tab.mutedInfo && tab.mutedInfo.muted) {
+		if (tab.mutedInfo?.muted) {
 			tags.push({
 				html: `${iconFromString(iconMusicOff, "12px").outerHTML} ${tab.mutedInfo.reason}`,
 			});

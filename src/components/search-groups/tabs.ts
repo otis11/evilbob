@@ -6,9 +6,11 @@ import {
 	iconMusic,
 	iconMusicOff,
 	iconPin,
+	iconPinOff,
 	iconSortAlphabetically,
 	iconTab,
 } from "../../icons";
+import { getLastActiveTab } from "../../util/last-active-tab";
 import type { Search } from "../search";
 import { SearchGroup } from "../search-group";
 import { SearchResult } from "../search-result/search-result";
@@ -29,7 +31,87 @@ export class SearchGroupTabs extends SearchGroup {
 		return [
 			...tabs.map((tab) => new SearchResultTab(tab)),
 			new SearchResultSortTabsAlphabetically(),
+			new SearchResultTabMute(),
+			new SearchResultTabUnmute(),
+			new SearchResultTabPin(),
+			new SearchResultTabUnpin(),
 		];
+	}
+}
+
+export class SearchResultTabMute extends SearchResult {
+	constructor() {
+		super({
+			title: "Mute Tab",
+			description: "",
+			searchText: "mute tab",
+			prepend: iconFromString(iconMusicOff),
+		});
+	}
+
+	async onSelect(search: Search): Promise<void> {
+		const lastActive = await getLastActiveTab();
+		if (lastActive?.id) {
+			await chrome.tabs.update(lastActive.id, { muted: true });
+			window.close();
+		}
+	}
+}
+
+export class SearchResultTabUnmute extends SearchResult {
+	constructor() {
+		super({
+			title: "Unmute Tab",
+			description: "",
+			searchText: "unmute tab",
+			prepend: iconFromString(iconMusic),
+		});
+	}
+
+	async onSelect(search: Search): Promise<void> {
+		const lastActive = await getLastActiveTab();
+		if (lastActive?.id) {
+			await chrome.tabs.update(lastActive.id, { muted: false });
+			window.close();
+		}
+	}
+}
+
+export class SearchResultTabPin extends SearchResult {
+	constructor() {
+		super({
+			title: "Pin Tab",
+			description: "",
+			searchText: "pin tab",
+			prepend: iconFromString(iconPin),
+		});
+	}
+
+	async onSelect(search: Search): Promise<void> {
+		const lastActive = await getLastActiveTab();
+		if (lastActive?.id) {
+			await chrome.tabs.update(lastActive.id, { pinned: true });
+			window.close();
+		}
+	}
+}
+
+export class SearchResultTabUnpin extends SearchResult {
+	constructor() {
+		super({
+			title: "Unpin Tab",
+			description: "",
+			searchText: "unpin tab",
+			prepend: iconFromString(iconPinOff),
+		});
+	}
+
+	async onSelect(search: Search): Promise<void> {
+		const lastActive = await getLastActiveTab();
+		if (lastActive?.id) {
+			await chrome.tabs.update(lastActive.id, { pinned: false });
+			window.close();
+		}
 	}
 }
 

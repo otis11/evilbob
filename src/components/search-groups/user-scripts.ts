@@ -1,4 +1,5 @@
 import { iconFromString, iconScript } from "../../icons";
+import { getLastActiveTab } from "../../util/last-active-tab";
 import type { Search } from "../search";
 import { SearchGroup } from "../search-group";
 import { SearchResult } from "../search-result/search-result";
@@ -45,23 +46,10 @@ export class SearchResultUserScript extends SearchResult {
 	}
 
 	async onSelect(): Promise<void> {
-		const storage = await chrome.storage.sync.get(["lastFocusedWindowId"]);
-		const tabs = await chrome.tabs.query({
-			windowId: storage.lastFocusedWindowId,
-			active: true,
-		});
-		if (tabs.length === 0) {
-			console.error(
-				"user script not executed, no active tab found",
-				this,
-			);
-			return;
-		}
-
-		const tabId = tabs[0].id;
-		if (tabId) {
+		const lastActive = await getLastActiveTab();
+		if (lastActive?.id) {
 			chrome.scripting.executeScript({
-				target: { tabId },
+				target: { tabId: lastActive?.id },
 				files: [`user-scripts/${this.fileName}`],
 			});
 			window.close();

@@ -1,6 +1,7 @@
 import { browserName, isChromium } from "../../platform";
 import { SearchGroupBob } from "./bob";
 import { SearchGroupBookmarks } from "./bookmarks";
+import { SearchGroupContentSettings } from "./content-settings";
 import { SearchGroupFilter } from "./filter";
 import { SearchGroupGoogle } from "./google";
 import { SearchGroupHistory } from "./history";
@@ -26,6 +27,7 @@ export type SearchGroupName =
 	| "user-scripts"
 	| "management"
 	| "sessions.devices"
+	| "content-settings"
 	| "tabs";
 
 export type SearchGroupStorage = {
@@ -53,6 +55,7 @@ export const SEARCH_GROUPS = [
 	new SearchGroupSystemCpu(),
 	new SearchGroupSystemMemory(),
 	new SearchGroupSystemStorage(),
+	new SearchGroupContentSettings(),
 ];
 
 export const SEARCH_GROUPS_DEFAULT_CONFIG: Record<
@@ -66,6 +69,10 @@ export const SEARCH_GROUPS_DEFAULT_CONFIG: Record<
 	history: {
 		enabled: false,
 		order: 4,
+	},
+	"content-settings": {
+		enabled: false,
+		order: 13,
 	},
 	"system.cpu": {
 		enabled: false,

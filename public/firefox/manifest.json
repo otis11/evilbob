@@ -36,7 +36,8 @@
 		"tabs",
 		"scripting",
 		"management",
-		"sessions"
+		"sessions",
+		"contentSettings"
 	],
 	"optional_host_permissions": ["https://*/*"],
 	"browser_specific_settings": {

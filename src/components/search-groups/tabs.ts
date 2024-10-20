@@ -29,12 +29,12 @@ export class SearchGroupTabs extends SearchGroup {
 	public async getResults(): Promise<SearchResult[]> {
 		const tabs = await chrome.tabs.query({});
 		return [
-			...tabs.map((tab) => new SearchResultTab(tab)),
 			new SearchResultSortTabsAlphabetically(),
 			new SearchResultTabMute(),
 			new SearchResultTabUnmute(),
 			new SearchResultTabPin(),
 			new SearchResultTabUnpin(),
+			...tabs.map((tab) => new SearchResultTab(tab)),
 		];
 	}
 }

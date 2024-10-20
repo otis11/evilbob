@@ -1,7 +1,6 @@
 import "../../themes";
 import "../global.css";
 import "./main.css";
-import packageJson from "../../../package.json";
 import { Search } from "../../components/search";
 import { SearchGroups } from "../../components/search-groups/search-groups";
 import { SearchResult } from "../../components/search-result/search-result";
@@ -70,7 +69,7 @@ export async function renderFooter() {
 	browser.innerText = `${browserName} ${browserVersion}`;
 
 	const bobVersion = document.createElement("span");
-	bobVersion.innerText = `Bob ${packageJson.version}`;
+	bobVersion.innerText = `Bob ${chrome.runtime.getManifest().version}`;
 
 	const reload = iconFromString(iconReload, "16px");
 	reload.addEventListener("click", () => {

@@ -14,6 +14,7 @@ import { getLastActiveTab } from "../../util/last-active-tab";
 import type { Search } from "../search";
 import { SearchGroup } from "../search-group";
 import { SearchResult } from "../search-result/search-result";
+import type { Tag } from "../tags/tags";
 
 export class SearchGroupTabs extends SearchGroup {
 	constructor() {
@@ -117,7 +118,9 @@ export class SearchResultTabUnpin extends SearchResult {
 
 export class SearchResultTab extends SearchResult {
 	constructor(private tab: chrome.tabs.Tab) {
-		const tags = [{ html: iconFromString(iconTab, "12px").outerHTML }];
+		const tags: Tag[] = [
+			{ html: iconFromString(iconTab, "12px").outerHTML },
+		];
 		if (tab.incognito) {
 			tags.push({
 				html: iconFromString(iconIncognito, "12px").outerHTML,
@@ -136,6 +139,12 @@ export class SearchResultTab extends SearchResult {
 		if (tab.mutedInfo?.muted) {
 			tags.push({
 				html: `${iconFromString(iconMusicOff, "12px").outerHTML} ${tab.mutedInfo.reason}`,
+			});
+		}
+		if (tab.highlighted) {
+			tags.push({
+				text: "active",
+				type: "success",
 			});
 		}
 		const icon = tab.favIconUrl

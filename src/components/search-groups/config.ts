@@ -12,6 +12,7 @@ import { SearchGroupSystemCpu } from "./system-cpu";
 import { SearchGroupSystemMemory } from "./system-memory";
 import { SearchGroupSystemStorage } from "./system-storage";
 import { SearchGroupTabs } from "./tabs";
+import { SearchGroupTopSites } from "./top-sites";
 import { SearchGroupUserScripts } from "./user-scripts";
 
 export const SEARCH_GROUPS = [
@@ -29,6 +30,7 @@ export const SEARCH_GROUPS = [
 	new SearchGroupSystemMemory(),
 	new SearchGroupSystemStorage(),
 	new SearchGroupContentSettings(),
+	new SearchGroupTopSites(),
 ];
 
 export const SEARCH_GROUPS_DEFAULT_CONFIG: Record<string, SearchGroupStorage> =

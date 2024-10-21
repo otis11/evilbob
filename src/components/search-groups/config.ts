@@ -13,6 +13,7 @@ import { SearchGroupSystemCpu } from "./system-cpu";
 import { SearchGroupSystemMemory } from "./system-memory";
 import { SearchGroupSystemStorage } from "./system-storage";
 import { SearchGroupTabs } from "./tabs";
+import { SearchGroupTabsActions } from "./tabs-actions";
 import { SearchGroupTopSites } from "./top-sites";
 import { SearchGroupUserScripts } from "./user-scripts";
 
@@ -33,6 +34,7 @@ export const SEARCH_GROUPS = [
 	new SearchGroupContentSettings(),
 	new SearchGroupTopSites(),
 	new SearchGroupCommands(),
+	new SearchGroupTabsActions(),
 ];
 
 export const SEARCH_GROUPS_DEFAULT_CONFIG: Record<string, SearchGroupStorage> =

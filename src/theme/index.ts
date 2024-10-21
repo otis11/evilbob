@@ -15,7 +15,7 @@ export async function setCurrentTheme(theme: Theme) {
 	}
 }
 
-async function loadCustomTheme() {
+export async function loadCustomTheme() {
 	const theme = await getCustomTheme();
 	const style = document.createElement("style");
 	style.textContent = theme;

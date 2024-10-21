@@ -1,4 +1,8 @@
-import { getCurrentDimensions, setCurrentDimensions } from "../../theme";
+import {
+	getCurrentDimensions,
+	loadCustomTheme,
+	setCurrentDimensions,
+} from "../../theme";
 import "../../theme";
 import "../global.css";
 import "./main.css";
@@ -187,4 +191,5 @@ function renderFooter() {
 	await renderBobDimensions();
 	renderThemes();
 	renderFooter();
+	await loadCustomTheme();
 })();

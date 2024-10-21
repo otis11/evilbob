@@ -1,5 +1,6 @@
 import {
 	faviconFromUrl,
+	iconArrowVerticalSplit,
 	iconFromString,
 	iconFromUrl,
 	iconIncognito,
@@ -9,8 +10,13 @@ import {
 	iconPinOff,
 	iconSortAlphabetically,
 	iconTab,
+	iconWindowRestore,
 } from "../../icons";
 import { getLastActiveTab } from "../../util/last-active-tab";
+import {
+	getLastActiveWindow,
+	getLastActiveWindowTabs,
+} from "../../util/last-active-window";
 import type { Search } from "../search";
 import { SearchGroup } from "../search-group";
 import { SearchResult } from "../search-result/search-result";
@@ -31,6 +37,8 @@ export class SearchGroupTabs extends SearchGroup {
 		const tabs = await chrome.tabs.query({});
 		return [
 			new SearchResultSortTabsAlphabetically(),
+			new SearchResultMergeWindows(),
+			new SearchResultSplitIntoWindows(),
 			new SearchResultTabMute(),
 			new SearchResultTabUnmute(),
 			new SearchResultTabPin(),
@@ -178,10 +186,7 @@ export class SearchResultSortTabsAlphabetically extends SearchResult {
 		});
 	}
 	async onSelect(): Promise<void> {
-		const storage = await chrome.storage.sync.get(["lastFocusedWindowId"]);
-		const tabs = await chrome.tabs.query({
-			windowId: storage.lastFocusedWindowId,
-		});
+		const tabs = await getLastActiveWindowTabs();
 
 		const tabsSortedAlphabetically = tabs.sort((a, b) => {
 			if (!a.url || !b.url) {
@@ -219,6 +224,50 @@ export class SearchResultSortTabsAlphabetically extends SearchResult {
 				chrome.tabs.move(tab.id, { index });
 			}
 		}
+		window.close();
+	}
+}
+
+export class SearchResultMergeWindows extends SearchResult {
+	constructor() {
+		super({
+			title: "Merge windows",
+			searchText: "merge windows",
+			description: "",
+			prepend: iconFromString(iconWindowRestore),
+		});
+	}
+	async onSelect(): Promise<void> {
+		const lastWindow = await getLastActiveWindow();
+		const tabs = await chrome.tabs.query({});
+		const tabsNotInLastWindow = tabs
+			.filter((tab) => tab.windowId !== lastWindow.id)
+			.map((w) => w.id || -1);
+		await chrome.tabs.move(tabsNotInLastWindow, {
+			windowId: lastWindow.id,
+			index: 999,
+		});
+		window.close();
+	}
+}
+
+export class SearchResultSplitIntoWindows extends SearchResult {
+	constructor() {
+		super({
+			title: "Split tabs into windows",
+			searchText: "split tabs into windows",
+			description: "",
+			prepend: iconFromString(iconArrowVerticalSplit),
+		});
+	}
+
+	async onSelect(): Promise<void> {
+		const tabs = await getLastActiveWindowTabs();
+		const promises = [];
+		for (const tab of tabs) {
+			promises.push(chrome.windows.create({ tabId: tab.id }));
+		}
+		await Promise.all(promises);
 		window.close();
 	}
 }

@@ -78,3 +78,7 @@ export const iconArrowUpBold =
 	'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>arrow-up-bold</title><path d="M15,20H9V12H4.16L12,4.16L19.84,12H15V20Z" /></svg>';
 export const iconConsoleLine =
 	'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>console-line</title><path d="M13,19V16H21V19H13M8.5,13L2.47,7H6.71L11.67,11.95C12.25,12.54 12.25,13.5 11.67,14.07L6.74,19H2.5L8.5,13Z" /></svg>';
+export const iconWindowRestore =
+	'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>window-restore</title><path d="M4,8H8V4H20V16H16V20H4V8M16,8V14H18V6H10V8H16M6,12V18H14V12H6Z" /></svg>';
+export const iconArrowVerticalSplit =
+	'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>arrow-split-vertical</title><path d="M18,16V13H15V22H13V2H15V11H18V8L22,12L18,16M2,12L6,16V13H9V22H11V2H9V11H6V8L2,12Z" /></svg>';

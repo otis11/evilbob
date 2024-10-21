@@ -4,7 +4,7 @@ import "../global.css";
 import "./main.css";
 import { SearchGroups } from "../../components/search-groups/search-groups";
 import { ThemeCard } from "../../components/theme-card/theme-card";
-import { iconBob, iconFromString, iconGithub } from "../../icons";
+import { iconBob, iconFromString, iconGithub, iconPencil } from "../../icons";
 import { isChromium } from "../../platform";
 import { Themes } from "../../theme/themes";
 
@@ -17,7 +17,25 @@ function renderThemes() {
 	container.append(groupHeading("Themes"), themesContainer);
 
 	for (const theme of Themes) {
-		themesContainer.append(ThemeCard(theme));
+		const card = ThemeCard(theme);
+		if (theme === "custom") {
+			const editButton = document.createElement("button");
+			editButton.style.display = "flex";
+			editButton.style.alignItems = "center";
+			editButton.style.margin = "8px auto";
+			const icon = iconFromString(iconPencil);
+			icon.style.marginRight = "4px";
+			const editText = document.createElement("span");
+			editText.innerText = "Edit";
+			editButton.append(icon, editText);
+			editButton.addEventListener("click", () => {
+				chrome.tabs.create({
+					url: "views/custom-theme/index.html",
+				});
+			});
+			card.append(editButton);
+		}
+		themesContainer.append(card);
 	}
 	document.body.append(container);
 }

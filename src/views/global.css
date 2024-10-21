@@ -14,7 +14,8 @@ img::before {
 	display: none;
 }
 
-input {
+input,
+textarea {
 	outline: none;
 	border: var(--bob-input-border);
 	background-color: var(--bob-color-base-100);

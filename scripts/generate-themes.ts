@@ -10,7 +10,7 @@ content += themeFiles
 	.map((themeFile) => `import "../themes/${themeFile}";\n`)
 	.join("");
 content += "\n";
-content += `export const Themes = [${themeFiles.map((themeFile) => `"${themeFile.replace(".css", "")}"`).join(", ")}] as const;\n`;
+content += `export const Themes = ["custom", ${themeFiles.map((themeFile) => `"${themeFile.replace(".css", "")}"`).join(", ")}] as const;\n`;
 content += "export type Theme = (typeof Themes)[number];\n";
 content += `export const defaultTheme: Theme = "${defaultTheme}";\n`;
 

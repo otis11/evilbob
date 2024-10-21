@@ -2,6 +2,6 @@
 import "../themes/dark.css";
 import "../themes/light.css";
 
-export const Themes = ["dark", "light"] as const;
+export const Themes = ["custom", "dark", "light"] as const;
 export type Theme = (typeof Themes)[number];
 export const defaultTheme: Theme = "dark";

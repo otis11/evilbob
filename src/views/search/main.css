@@ -43,6 +43,7 @@ footer {
 	background-color: var(--bob-color-base-300);
 	font-size: 0.75rem;
 	gap: 12px;
+	z-index: 100;
 }
 
 footer .icon svg {

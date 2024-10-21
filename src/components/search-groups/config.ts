@@ -95,6 +95,18 @@ export const SEARCH_GROUPS_DEFAULT_CONFIG: Record<string, SearchGroupStorage> =
 			order: 6,
 			enabled: false,
 		},
+		"top-sites": {
+			order: 16,
+			enabled: false,
+		},
+		"tabs-actions": {
+			order: 1,
+			enabled: false,
+		},
+		commands: {
+			order: 17,
+			enabled: false,
+		},
 	};
 
 export type SearchGroupStorage = {

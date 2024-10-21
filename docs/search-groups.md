@@ -7,7 +7,7 @@ Search Groups provide results and actions inside the command palette.
 | shortcuts | Search for browser shortcuts. |  | chromium, firefox, chrome, edg | 
 | bob | Internal Bob commands like open settings, reset settings ... |  | chromium, firefox, chrome, edg | 
 | history | Search & interact with browser history. | history | chromium, firefox, chrome, edg | 
-| tabs | Search & interact with browser tabs. For example sort them. | tabs | chromium, firefox, chrome, edg | 
+| tabs | Search browser tabs. | tabs | chromium, firefox, chrome, edg | 
 | google | Google search & Google filters like intitle:youtube. |  | chromium, firefox, chrome, edg | 
 | filter | Filter to render a specific group only. |  | chromium, firefox, chrome, edg | 
 | user-scripts | Execute custom scripts. | tabs, scripting | chromium, firefox, chrome, edg | 
@@ -17,3 +17,6 @@ Search Groups provide results and actions inside the command palette.
 | system.memory | Information about your system memory. | system.memory | chromium, chrome, edg | 
 | system.storage | Information about your system storage. | system.storage | chromium, chrome, edg | 
 | content-settings | Settings that control whether websites can use features such as cookies, JavaScript, and plugins | contentSettings | chrome, chromium, edg | 
+| top-sites | The top sites (i.e. most visited sites) that are displayed on the new tab page | topSites | chromium, firefox, chrome, edg | 
+| commands | Available commands from extensions. |  | chromium, firefox, chrome, edg | 
+| tabs-actions | Interact with browser tabs. Sort, merge, duplicate... | tabs | chromium, firefox, chrome, edg | 

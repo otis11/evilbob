@@ -33,15 +33,16 @@ export class SearchGroupTabsActions extends SearchGroup {
 
 	public async getResults(): Promise<SearchResult[]> {
 		return [
+			new SearchResultCloseOtherTabs(),
 			new SearchResultSortTabsAlphabetically(),
-			new SearchResultMergeWindows(),
-			new SearchResultSplitIntoWindows(),
-			new SearchResultCloseByRegex(),
 			new SearchResultTabDuplicate(),
 			new SearchResultTabMute(),
 			new SearchResultTabUnmute(),
 			new SearchResultTabPin(),
 			new SearchResultTabUnpin(),
+			new SearchResultMergeWindows(),
+			new SearchResultCloseByRegex(),
+			new SearchResultSplitIntoWindows(),
 		];
 	}
 }
@@ -231,6 +232,30 @@ export class SearchResultSplitIntoWindows extends SearchResult {
 		const promises = [];
 		for (const tab of tabs) {
 			promises.push(chrome.windows.create({ tabId: tab.id }));
+		}
+		await Promise.all(promises);
+		window.close();
+	}
+}
+
+export class SearchResultCloseOtherTabs extends SearchResult {
+	constructor() {
+		super({
+			title: "Close other tabs",
+			searchText: "close other tabs",
+			description: "",
+			prepend: iconFromString(iconTabRemove),
+		});
+	}
+
+	async onSelect(): Promise<void> {
+		const tabs = await getLastActiveWindowTabs();
+		const lastActiveTab = await getLastActiveTab();
+		const promises = [];
+		for (const tab of tabs) {
+			if (tab.id && tab.id !== lastActiveTab?.id) {
+				promises.push(chrome.tabs.remove(tab.id));
+			}
 		}
 		await Promise.all(promises);
 		window.close();

@@ -1,6 +1,7 @@
 import { browserName, isChromium } from "../../platform";
 import { SearchGroupBob } from "./bob";
 import { SearchGroupBookmarks } from "./bookmarks";
+import { SearchGroupCommands } from "./commands";
 import { SearchGroupContentSettings } from "./content-settings";
 import { SearchGroupFilter } from "./filter";
 import { SearchGroupGoogle } from "./google";
@@ -31,6 +32,7 @@ export const SEARCH_GROUPS = [
 	new SearchGroupSystemStorage(),
 	new SearchGroupContentSettings(),
 	new SearchGroupTopSites(),
+	new SearchGroupCommands(),
 ];
 
 export const SEARCH_GROUPS_DEFAULT_CONFIG: Record<string, SearchGroupStorage> =

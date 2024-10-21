@@ -37,7 +37,8 @@
 		"scripting",
 		"management",
 		"sessions",
-		"topSites"
+		"topSites",
+		"commands"
 	],
 	"optional_host_permissions": ["https://*/*"],
 	"browser_specific_settings": {

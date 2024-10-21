@@ -42,7 +42,8 @@
 		"management",
 		"sessions",
 		"contentSettings",
-		"topSites"
+		"topSites",
+		"commands"
 	],
 	"optional_host_permissions": ["https://*/*"]
 }

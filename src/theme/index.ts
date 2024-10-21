@@ -17,9 +17,14 @@ export async function setCurrentTheme(theme: Theme) {
 
 export async function loadCustomTheme() {
 	const theme = await getCustomTheme();
-	const style = document.createElement("style");
-	style.textContent = theme;
-	globalThis.document.head.append(style);
+	const style = document.getElementById("custom-theme-style");
+	if (style) {
+		style.textContent = theme;
+	} else {
+		const style = document.createElement("style");
+		style.textContent = theme;
+		globalThis.document.head.append(style);
+	}
 }
 
 export async function setCustomTheme(theme: string) {

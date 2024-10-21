@@ -26,6 +26,9 @@ This would create a theme with the name `example`.
 3. Change `[data-theme="dark"]` to `[data-theme="example"]` and adjust the variables to your liking.
 4. Run `bun scripts/generate-themes.ts` to update `themes.ts`.
 
+# Update docs
+4. Run `bun scripts/generate-docs.ts`.
+
 # References
 - [Chrome Extension Api Docs](https://developer.chrome.com/docs/extensions/reference/api)
 - [Firefox Extension Api Docs](https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions)

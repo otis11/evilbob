@@ -6,5 +6,6 @@ Bob's search results are organized into Search Groups with linked permissions. F
 # Documentation
 - [Contributing](./docs/contributing.md)
 - [Search Groups](./docs/search-groups.md)
+- [Themes](./docs/themes.md)
 
 ![Bob Screenshot](./src/assets/bob-screenshot.png)

@@ -15,3 +15,9 @@ h1 {
 	text-align: center;
 	margin-bottom: 24px;
 }
+
+#preview {
+	margin-bottom: 24px;
+	display: flex;
+	justify-content: center;
+}

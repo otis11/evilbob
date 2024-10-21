@@ -10,6 +10,7 @@ import {
 	iconPinOff,
 	iconSortAlphabetically,
 	iconTab,
+	iconTabRemove,
 	iconWindowRestore,
 } from "../../icons";
 import { getLastActiveTab } from "../../util/last-active-tab";
@@ -39,6 +40,7 @@ export class SearchGroupTabs extends SearchGroup {
 			new SearchResultSortTabsAlphabetically(),
 			new SearchResultMergeWindows(),
 			new SearchResultSplitIntoWindows(),
+			new SearchResultCloseByRegex(),
 			new SearchResultTabMute(),
 			new SearchResultTabUnmute(),
 			new SearchResultTabPin(),
@@ -125,7 +127,7 @@ export class SearchResultTabUnpin extends SearchResult {
 }
 
 export class SearchResultTab extends SearchResult {
-	constructor(private tab: chrome.tabs.Tab) {
+	constructor(protected tab: chrome.tabs.Tab) {
 		const tags: Tag[] = [
 			{ html: iconFromString(iconTab, "12px").outerHTML },
 		];
@@ -268,6 +270,55 @@ export class SearchResultSplitIntoWindows extends SearchResult {
 			promises.push(chrome.windows.create({ tabId: tab.id }));
 		}
 		await Promise.all(promises);
+		window.close();
+	}
+}
+
+export class SearchResultCloseByRegex extends SearchResult {
+	constructor() {
+		super({
+			options: new SearchResultCloseByRegexGroup(),
+			title: "Close tabs by regex",
+			description:
+				"Close the following tabs by regex. Select any tab to close them.",
+			searchText: "close tabs by regex",
+			prepend: iconFromString(iconTabRemove),
+		});
+	}
+
+	onSelect(search: Search): void {
+		this.emitShowOptionsEvent();
+	}
+}
+
+class SearchResultCloseByRegexGroup extends SearchGroup {
+	constructor() {
+		super({
+			name: "Close by regex group",
+			description: "",
+		});
+	}
+
+	public async getResults(): Promise<SearchResult[]> {
+		const tabs = await chrome.tabs.query({});
+		return tabs.map((tab) => new SearchResultTabCloseByRegex(tab));
+	}
+}
+
+class SearchResultTabCloseByRegex extends SearchResultTab {
+	public isHit(search: Search): boolean {
+		const regex = new RegExp(search.text);
+		return regex.test(this.tab.url || "");
+	}
+
+	async onSelect(search: Search): Promise<void> {
+		const tabs = await chrome.tabs.query({});
+		const regex = new RegExp(search.text);
+		for (const tab of tabs) {
+			if (regex.test(tab.url || "") && tab.id) {
+				await chrome.tabs.remove(tab.id);
+			}
+		}
 		window.close();
 	}
 }

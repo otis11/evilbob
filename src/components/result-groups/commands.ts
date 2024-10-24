@@ -4,7 +4,7 @@ import { Result } from "../result/result";
 import { Shortcut } from "../shortcut/shortcut";
 
 export class ResultGroupCommands extends ResultGroup {
-	filter = "c";
+	prefix = "c";
 	permissions = [];
 	description = "Available commands from extensions.";
 

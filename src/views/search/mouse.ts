@@ -49,7 +49,6 @@ window.addEventListener("mouseover", (event) => {
 			? resultOptionsContainer
 			: resultsContainer;
 		const index = Array.from(container.children).indexOf(target);
-		console.log(event, target, index, container, isResultOptionsVisible());
 
 		updateSelectedIndex(index);
 	}

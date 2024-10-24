@@ -37,7 +37,6 @@ function onKeyUp(event: KeyboardEvent) {
 		} else {
 			newIndex -= 1;
 		}
-		console.log("arrow up", newIndex);
 		updateSelectedIndex(newIndex, true);
 	}
 	if (event.key === "Enter") {

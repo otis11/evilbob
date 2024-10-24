@@ -130,30 +130,6 @@ export abstract class Result {
 		const content = document.createElement("div");
 		content.classList.add("result-content");
 
-		const title = document.createElement("div");
-		title.classList.add("result-title");
-		title.innerHTML = this.title
-			.split("")
-			.map((char, index) => {
-				if (this.lastSearch?.title.matches[index]) {
-					return `<span class="result-hit">${char}</span>`;
-				}
-				return char;
-			})
-			.join("");
-
-		const description = document.createElement("div");
-		description.classList.add("result-description");
-		description.innerHTML = this.description
-			.split("")
-			.map((char, index) => {
-				if (this.lastSearch?.description.matches[index]) {
-					return `<span class="result-hit">${char}</span>`;
-				}
-				return char;
-			})
-			.join("");
-
 		if (this.prepend) {
 			const span = document.createElement("span");
 			span.classList.add("result-prepend");
@@ -161,12 +137,15 @@ export abstract class Result {
 			li.append(span);
 		}
 
+		const title = this.makeTitleElement();
 		content.append(title);
 
 		if (this.tags.length > 0) {
 			const tags = Tags(this.tags);
 			content.append(tags);
 		}
+
+		const description = this.makeDescriptionElement();
 		content.append(description);
 		li.append(content);
 
@@ -178,5 +157,41 @@ export abstract class Result {
 		}
 
 		return li;
+	}
+
+	makeDescriptionElement() {
+		const description = document.createElement("div");
+		description.classList.add("result-description");
+		description.append(
+			...this.description.split("").map((char, index) => {
+				if (this.lastSearch?.description.matches[index]) {
+					const span = document.createElement("span");
+					span.classList.add("result-hit");
+					span.innerText = char;
+					return span;
+				}
+				return document.createTextNode(char);
+			}),
+		);
+
+		return description;
+	}
+
+	makeTitleElement() {
+		const title = document.createElement("div");
+		title.classList.add("result-title");
+		title.innerHTML = "";
+		title.append(
+			...this.title.split("").map((char, index) => {
+				if (this.lastSearch?.title.matches[index]) {
+					const span = document.createElement("span");
+					span.classList.add("result-hit");
+					span.innerText = char;
+					return span;
+				}
+				return document.createTextNode(char);
+			}),
+		);
+		return title;
 	}
 }

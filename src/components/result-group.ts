@@ -2,15 +2,6 @@ import type { BrowserName } from "../platform";
 import type { Result } from "./result/result";
 import type { Search } from "./search";
 
-export type ResultGroupConfig = {
-	name: string;
-	description: string;
-	permissions?: string[];
-	hostPermissions?: string[];
-	filter?: string;
-	supportedBrowser?: BrowserName[];
-};
-
 export abstract class ResultGroup {
 	public name = this.constructor.name;
 	public nameHumanReadable = this.name.replace("ResultGroup", "");

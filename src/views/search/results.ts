@@ -30,7 +30,6 @@ export async function filterResults() {
 			isResultOptionsVisible() ? optionsSearchInput : searchInput,
 			search.words().slice(1).join(" "),
 		);
-		console.log(searchWithoutPrefix, search.words().slice(1).join(" "));
 		resultsFilteredAndSorted = searchResults(
 			groupAlone.results,
 			searchWithoutPrefix,

@@ -1,5 +1,6 @@
-import { DEFAULT_CONFIG, updateConfig } from "../../config";
+import { DEFAULT_CONFIG, setConfig } from "../../config";
 import { iconBob, iconFromString } from "../../icons";
+import { DEFAULT_USAGE, setUsage } from "../../usage";
 import { ResultGroup } from "../result-group";
 import { Result } from "../result/result";
 
@@ -9,7 +10,12 @@ export class ResultGroupBob extends ResultGroup {
 		"Internal Bob commands like open settings, reset settings ...";
 
 	public async getResults(): Promise<Result[]> {
-		return [new ResultBobOpenSettings(), new ResultBobResetSettings()];
+		return [
+			new ResultBobOpenSettings(),
+			new ResultBobResetSettings(),
+			new ResultBobResetUsage(),
+			new ResultBobShowUsage(),
+		];
 	}
 }
 
@@ -36,7 +42,37 @@ export class ResultBobResetSettings extends Result {
 		});
 	}
 	async execute(): Promise<void> {
-		updateConfig(DEFAULT_CONFIG);
+		setConfig(DEFAULT_CONFIG);
+		window.close();
+	}
+}
+
+export class ResultBobResetUsage extends Result {
+	constructor() {
+		super({
+			title: "Bob Reset Usage",
+			description: "Reset my usage to default",
+			prepend: iconFromString(iconBob),
+		});
+	}
+	async execute(): Promise<void> {
+		setUsage(DEFAULT_USAGE);
+		window.close();
+	}
+}
+
+export class ResultBobShowUsage extends Result {
+	constructor() {
+		super({
+			title: "Bob Show Usage",
+			description: "Show my bob usage.",
+			prepend: iconFromString(iconBob),
+		});
+	}
+	async execute(): Promise<void> {
+		chrome.tabs.create({
+			url: "views/usage/index.html",
+		});
 		window.close();
 	}
 }

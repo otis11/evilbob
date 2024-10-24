@@ -1,5 +1,4 @@
 import type { Result } from "../../components/result/result";
-import { getConfigCache } from "./config-cache";
 import {
 	optionsSearchInput,
 	resultsContainer,
@@ -8,11 +7,16 @@ import {
 } from "./dom";
 import { isResultOptionsVisible } from "./result-options";
 import { newSearch, searchResults } from "./search";
-import { getResultGroups, getResults } from "./search-data";
+import {
+	getConfigCache,
+	getResultGroups,
+	getResults,
+	getUsageCache,
+} from "./search-data";
 import { updateSelectedIndex } from "./selected";
 
 export async function filterResults() {
-	const config = await getConfigCache();
+	const usage = await getUsageCache();
 	const search = newSearch(
 		isResultOptionsVisible() ? optionsSearchInput : searchInput,
 	);
@@ -30,10 +34,10 @@ export async function filterResults() {
 		resultsFilteredAndSorted = searchResults(
 			groupAlone.results,
 			searchWithoutPrefix,
-			config,
+			usage,
 		);
 	} else {
-		resultsFilteredAndSorted = searchResults(getResults(), search, config);
+		resultsFilteredAndSorted = searchResults(getResults(), search, usage);
 	}
 
 	const elements = resultsFilteredAndSorted.map((item) =>

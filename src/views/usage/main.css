@@ -1,0 +1,34 @@
+h1 {
+	text-align: center;
+	margin-bottom: 24px;
+}
+
+body {
+	padding: 24px;
+	display: flex;
+	flex-direction: column;
+	height: 100vh;
+	max-width: 1000px;
+	margin: auto;
+}
+
+.result-usage {
+	display: flex;
+	width: 100%;
+	border-bottom: 1px solid var(--bob-color-base-content-300);
+	padding: 4px;
+}
+
+.result-usage:nth-child(2n) {
+	background-color: var(--bob-color-base-content-300);
+}
+
+.result-usage-id {
+	font-weight: bold;
+	flex: 1;
+}
+
+.result-usage-last {
+	min-width: 160px;
+	text-align: right;
+}

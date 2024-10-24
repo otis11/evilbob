@@ -1,8 +1,11 @@
-import { RESULT_GROUPS_BROWSER_FILTERED } from "../../components/result-groups";
+import {
+	RESULT_GROUPS_BROWSER_FILTERED,
+	getEnabledResultGroups,
+} from "../../components/result-groups";
 import { iconCog, iconFromString, iconReload } from "../../icons";
 import { browserName, browserVersion } from "../../platform";
 import { resultsCounter } from "./dom";
-import { getResultGroups, loadFreshData } from "./search-data";
+import { loadFreshData } from "./search-data";
 
 export async function renderFooter() {
 	const footer = document.getElementById("footer");
@@ -27,7 +30,7 @@ export async function renderFooter() {
 	spacer.classList.add("spacer");
 
 	const total = RESULT_GROUPS_BROWSER_FILTERED.length;
-	const enabled = getResultGroups().length;
+	const enabled = (await getEnabledResultGroups()).length;
 	const enabledGroups = document.createElement("span");
 	enabledGroups.innerText = `${enabled}/${total} result groups enabled`;
 

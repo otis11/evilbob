@@ -1,11 +1,12 @@
 import type { Result } from "../../components/result/result";
 import { Search } from "../../components/search";
 import type { BobConfig } from "../../config";
+import type { BobUsage } from "../../usage";
 
 export function sortResults(
 	results: Result[],
 	search: Search,
-	config: BobConfig,
+	usage: BobUsage,
 ) {
 	return results.sort((a, b) => {
 		const aa = a.search(search);
@@ -26,8 +27,8 @@ export function sortResults(
 		// 	return 1;
 		// }
 		// by recent usage
-		const aL = config.resultsUsage[a.id()]?.l || 0;
-		const bL = config.resultsUsage[b.id()]?.l || 0;
+		const aL = usage.results[a.id()]?.l || 0;
+		const bL = usage.results[b.id()]?.l || 0;
 		if (aL > bL) {
 			return -1;
 		}
@@ -42,7 +43,7 @@ export function sortResults(
 export function searchResults(
 	results: Result[],
 	search: Search,
-	config: BobConfig,
+	usage: BobUsage,
 ) {
 	const filtered = results.filter((result) => {
 		const r = result.search(search);
@@ -50,7 +51,7 @@ export function searchResults(
 			? r.title.score > 0 || r.description.score > 0
 			: true;
 	});
-	return sortResults(filtered, search, config);
+	return sortResults(filtered, search, usage);
 }
 
 export function newSearch(input: HTMLInputElement, text?: string) {

@@ -15,7 +15,6 @@ export type ResultUsage = {
 };
 export type BobConfig = {
 	groups: Record<string, ResultGroupConfig | undefined>;
-	resultsUsage: Record<string, ResultUsage | undefined>;
 	dimensions: Dimensions;
 	theme: Theme;
 	customTheme: string;
@@ -23,7 +22,6 @@ export type BobConfig = {
 
 export const DEFAULT_CONFIG: BobConfig = {
 	groups: {},
-	resultsUsage: {},
 	dimensions: { width: 900, height: 600 },
 	theme: "dark",
 	customTheme: darkTheme.replace(
@@ -37,6 +35,12 @@ export async function updateConfig(newConfig: Partial<BobConfig>) {
 
 	await chrome.storage.sync.set({
 		config: deepMerge(currentConfig, newConfig),
+	});
+}
+
+export async function setConfig(newConfig: Partial<BobConfig>) {
+	await chrome.storage.sync.set({
+		config: newConfig,
 	});
 }
 

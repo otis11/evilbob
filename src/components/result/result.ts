@@ -1,4 +1,5 @@
 import { getConfig, updateConfig } from "../../config";
+import { getUsage, updateUsage } from "../../usage";
 import { wordSplitMatch } from "../../util/word-split-match";
 import type { ResultGroup } from "../result-group";
 import type { Search } from "../search";
@@ -101,8 +102,8 @@ export abstract class Result {
 	}
 
 	public async onSelect(search: Search) {
-		const config = await getConfig();
-		let usage = config.resultsUsage[this.id()];
+		const currentUsage = await getUsage();
+		let usage = currentUsage.results[this.id()];
 		if (!usage) {
 			usage = {
 				c: 0,
@@ -111,8 +112,8 @@ export abstract class Result {
 		}
 		usage.l = new Date().getTime();
 		usage.c += 1;
-		await updateConfig({
-			resultsUsage: {
+		await updateUsage({
+			results: {
 				[this.id()]: usage,
 			},
 		});

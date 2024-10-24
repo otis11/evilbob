@@ -4,11 +4,7 @@ import "../global.css";
 import "./main.css";
 import { FlexContainer } from "../../components/flex-container";
 import { ResultGroupCard } from "../../components/result-group-card/result-group-card";
-import {
-	RESULT_GROUPS,
-	disableResultGroup,
-	enableResultGroup,
-} from "../../components/result-groups";
+import { RESULT_GROUPS } from "../../components/result-groups";
 import { ThemeCard } from "../../components/theme-card/theme-card";
 import { type ResultGroupConfig, getConfig, updateConfig } from "../../config";
 import { iconFromString, iconGithub, iconPencil } from "../../icons";

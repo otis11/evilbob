@@ -30,8 +30,6 @@ const views = readdirSync(path.resolve(__dirname, "../src/views")).filter(
 			path.resolve(__dirname, `../src/views/${file}`),
 		).isDirectory(),
 );
-const userScripts = readdirSync(path.resolve(__dirname, "../src/user-scripts"));
-
 for (const browser of browsers) {
 	await Promise.all([
 		// background
@@ -63,25 +61,6 @@ for (const browser of browsers) {
 					watch,
 				},
 			});
-		}),
-		build({
-			publicDir: `public/${browser}`,
-			root: "./src/user-scripts",
-			base: "./",
-			build: {
-				minify,
-				outDir: `../../dist/${browser}/user-scripts`,
-				rollupOptions: {
-					input: userScripts.map(
-						(userScript) => `src/user-scripts/${userScript}`,
-					),
-					output: {
-						entryFileNames: "[name].js",
-					},
-				},
-				emptyOutDir: false,
-				watch,
-			},
 		}),
 	]);
 }

@@ -1,19 +1,22 @@
 import { ThemeCard } from "../../components/theme-card/theme-card";
+import { getConfig, updateConfig } from "../../config";
 import "../../theme";
-import { getCustomTheme, loadCustomTheme, setCustomTheme } from "../../theme";
+import { loadCustomTheme } from "../../theme";
 import { debounce } from "../../util/debounce";
 import "../global.css";
 import "./main.css";
 
 const preview = document.getElementById("preview") as HTMLElement;
 const textarea = document.getElementById("textarea") as HTMLTextAreaElement;
-getCustomTheme().then((theme) => {
-	textarea.value = theme;
+getConfig().then((config) => {
+	textarea.value = config.customTheme;
 });
 
 textarea.addEventListener("input", () => {
 	debounce(() => {
-		setCustomTheme(textarea.value);
+		updateConfig({
+			customTheme: textarea.value,
+		});
 		loadCustomTheme();
 	});
 });

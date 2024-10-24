@@ -1,5 +1,4 @@
-import { SearchGroups } from "./components/search-groups/search-groups";
-import { getCurrentDimensions } from "./theme";
+import { getConfig } from "./config";
 
 console.log("bob.background.start");
 
@@ -7,9 +6,6 @@ let openBobWindowId = -1;
 
 chrome.runtime.onInstalled.addListener(async (details) => {
 	if (details.reason === "install") {
-		if (await SearchGroups.hasEmptyConfig()) {
-			await SearchGroups.setConfigToDefaults();
-		}
 		chrome.runtime.openOptionsPage();
 	}
 
@@ -53,22 +49,25 @@ function openBob() {
 				console.log(chrome.runtime.lastError.message);
 			}
 
-			const dimensions = await getCurrentDimensions();
+			const config = await getConfig();
 			const left =
 				(currentWindow.left || 0) +
-				Math.floor(((currentWindow.width || 0) - dimensions.width) / 2);
+				Math.floor(
+					((currentWindow.width || 0) - config.dimensions.width) / 2,
+				);
 			const top =
 				(currentWindow.top || 0) +
 				Math.floor(
-					((currentWindow.height || 0) - dimensions.height) / 2,
+					((currentWindow.height || 0) - config.dimensions.height) /
+						2,
 				);
 
 			chrome.windows.create(
 				{
 					url: "views/search/index.html",
 					type: "popup",
-					width: dimensions.width,
-					height: dimensions.height,
+					width: config.dimensions.width,
+					height: config.dimensions.height,
 					left: left,
 					top: top,
 					focused: true,

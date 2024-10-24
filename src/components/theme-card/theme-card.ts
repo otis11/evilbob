@@ -1,16 +1,18 @@
+import { updateConfig } from "../../config";
 import { iconBob, iconFromString } from "../../icons";
-import { setCurrentTheme } from "../../theme";
+import { loadTheme } from "../../theme";
 import type { Theme } from "../../theme/themes";
+import { Result } from "../result/result";
 import type { Search } from "../search";
-import { SearchResult } from "../search-result/search-result";
 import "./theme-card.css";
 
 export function ThemeCard(theme: Theme) {
 	const cardContainer = document.createElement("div");
 	cardContainer.setAttribute("data-theme", theme);
 	cardContainer.classList.add("theme-card");
-	cardContainer.addEventListener("click", () => {
-		setCurrentTheme(theme);
+	cardContainer.addEventListener("click", async () => {
+		await updateConfig({ theme });
+		await loadTheme();
 	});
 
 	const base = document.createElement("div");
@@ -25,13 +27,13 @@ export function ThemeCard(theme: Theme) {
 		cardColors.append(colorDiv);
 	}
 
-	const li = new SearchResultTheme().asHtmlElement();
+	const li = new ResultTheme().asHtmlElement();
 	li.style.width = "100%";
 	cardContainer.append(base, cardColors, li);
 	return cardContainer;
 }
 
-class SearchResultTheme extends SearchResult {
+class ResultTheme extends Result {
 	constructor() {
 		super({
 			title: "title",
@@ -40,9 +42,8 @@ class SearchResultTheme extends SearchResult {
 				{ text: "tag 1", type: "default" },
 				{ text: "tag error", type: "error" },
 			],
-			searchText: "",
 			prepend: iconFromString(iconBob),
 		});
 	}
-	onSelect(search: Search): void {}
+	async execute(search: Search): Promise<void> {}
 }

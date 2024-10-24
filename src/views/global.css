@@ -25,6 +25,10 @@ textarea {
 	border-radius: var(--bob-input-border-radius);
 }
 
+input[type="checkbox"] {
+	min-height: unset;
+}
+
 button {
 	background-color: var(--bob-color-primary);
 	border-radius: var(--bob-input-border-radius);

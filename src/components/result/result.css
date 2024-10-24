@@ -32,6 +32,15 @@
 	padding: var(--bob-result-append-spacing);
 }
 
+.result-options {
+	margin-left: auto;
+	padding: 12px;
+}
+
+.result-options svg {
+	pointer-events: none;
+}
+
 .result,
 .result-description,
 .result-content,

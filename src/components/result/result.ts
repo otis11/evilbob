@@ -1,4 +1,5 @@
 import { getConfig, updateConfig } from "../../config";
+import { iconCog, iconDotsVertical, iconFromString } from "../../icons";
 import { getUsage, updateUsage } from "../../usage";
 import { wordSplitMatch } from "../../util/word-split-match";
 import type { ResultGroup } from "../result-group";
@@ -153,6 +154,18 @@ export abstract class Result {
 			const span = document.createElement("span");
 			span.classList.add("result-append");
 			span.append(this.append.cloneNode(true));
+			li.append(span);
+		}
+
+		if (this.options) {
+			const span = document.createElement("span");
+			span.classList.add("result-options");
+			span.append(iconFromString(iconDotsVertical));
+			span.title = "Shift Enter";
+			span.addEventListener("click", (event) => {
+				event.stopImmediatePropagation();
+				this.emitShowOptionsEvent();
+			});
 			li.append(span);
 		}
 

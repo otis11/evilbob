@@ -21,7 +21,17 @@ export type BobConfig = {
 };
 
 export const DEFAULT_CONFIG: BobConfig = {
-	groups: {},
+	groups: {
+		ResultGroupBob: {
+			enabled: true,
+		},
+		ResultGroupPrefixes: {
+			enabled: true,
+		},
+		ResultGroupWindow: {
+			enabled: true,
+		},
+	},
 	dimensions: { width: 900, height: 600 },
 	theme: "dark",
 	customTheme: darkTheme.replace(

@@ -42,10 +42,6 @@ export class ResultGroupGoogle extends ResultGroup {
 					"&",
 					"site:facebook.com & site:twitter.com. Searches for a AND b.",
 				),
-				new ResultGoogle(
-					"&",
-					"site:facebook.com & site:twitter.com. Searches for a AND b.",
-				),
 				new ResultGoogle("-", "-site:facebook.com. Exclude results."),
 				new ResultGoogleSearch(),
 			]);

@@ -1,5 +1,4 @@
 import type { Result } from "../../components/result/result";
-import { getConfigCache } from "./config-cache";
 import {
 	optionsRoot,
 	optionsSearchInput,
@@ -10,6 +9,7 @@ import {
 } from "./dom";
 import { filterResults } from "./results";
 import { newSearch, searchResults } from "./search";
+import { getUsageCache } from "./search-data";
 import {
 	getSelectedResultIndex,
 	setLastSelectedResultIndex,
@@ -49,14 +49,14 @@ export async function showResultOptions(searchResult: Result) {
 }
 
 export async function filterResultsOptions() {
-	const config = await getConfigCache();
+	const usage = await getUsageCache();
 	if (!selectedResult?.options) {
 		return;
 	}
 	const resultsFilteredAndSorted = searchResults(
 		selectedResult.options.results,
 		newSearch(optionsSearchInput),
-		config,
+		usage,
 	);
 
 	const elements = resultsFilteredAndSorted.map((item) =>

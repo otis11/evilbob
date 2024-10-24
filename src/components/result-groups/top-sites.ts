@@ -3,7 +3,7 @@ import { ResultGroup } from "../result-group";
 import { Result } from "../result/result";
 
 export class ResultGroupTopSites extends ResultGroup {
-	prefix = "p";
+	prefix = "top";
 	permissions = ["topSites"];
 	description =
 		"The top sites (i.e. most visited sites) that are displayed on the new tab page";

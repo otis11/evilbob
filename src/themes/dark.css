@@ -34,7 +34,7 @@
 	--bob-button-padding: 0 16px;
 	--bob-button-border: none;
 
-	/* search results */
+	/* results */
 	--bob-result-spacing: 12px;
 	--bob-result-title-spacing: 0 0 4px 0;
 	--bob-result-title-font-size: 1.125rem;
@@ -43,4 +43,6 @@
 	--bob-result-description-spacing: 4px 0 0 0;
 	--bob-result-prepend-spacing: 0 12px 0 0;
 	--bob-result-append-spacing: 0 0 0 12px;
+	--bob-result-hit-color: var(--bob-color-primary);
+	--bob-result-hit-font-weight: bold;
 }

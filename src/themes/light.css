@@ -43,4 +43,6 @@
 	--bob-result-description-spacing: 4px 0 0 0;
 	--bob-result-prepend-spacing: 0 12px 0 0;
 	--bob-result-append-spacing: 0 0 0 12px;
+	--bob-result-hit-color: var(--bob-color-primary);
+	--bob-result-hit-font-weight: bold;
 }

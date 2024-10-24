@@ -1,18 +1,19 @@
-import {
-	getCurrentDimensions,
-	loadCustomTheme,
-	setCurrentDimensions,
-} from "../../theme";
+import { loadCustomTheme } from "../../theme";
 import "../../theme";
 import "../global.css";
 import "./main.css";
-import { SearchGroups } from "../../components/search-groups/search-groups";
+import { FlexContainer } from "../../components/flex-container";
+import { ResultGroupCard } from "../../components/result-group-card/result-group-card";
+import {
+	RESULT_GROUPS,
+	disableResultGroup,
+	enableResultGroup,
+} from "../../components/result-groups";
 import { ThemeCard } from "../../components/theme-card/theme-card";
-import { iconBob, iconFromString, iconGithub, iconPencil } from "../../icons";
+import { type ResultGroupConfig, getConfig, updateConfig } from "../../config";
+import { iconFromString, iconGithub, iconPencil } from "../../icons";
 import { isChromium } from "../../platform";
 import { Themes } from "../../theme/themes";
-
-const searchResultGroups = new SearchGroups();
 
 function renderThemes() {
 	const container = document.createElement("div");
@@ -50,62 +51,82 @@ function groupHeading(text: string) {
 	return heading;
 }
 
-async function renderSearchGroups() {
-	const searchGroups = document.createElement("div");
+async function renderResultGroups() {
+	const resultGroups = document.createElement("div");
 
-	searchGroups.append(groupHeading("Search Groups"));
-	searchResultGroups.orderAlphabetically();
-	const config = await SearchGroups.getConfig();
-	const searchGroupHeading = document.createElement("label");
-	searchGroupHeading.innerText = "Group";
-	const searchGroupOrderHeading = document.createElement("label");
-	searchGroupOrderHeading.innerText = "Order";
-	const searchGroupDescriptionHeading = document.createElement("label");
-	searchGroupDescriptionHeading.classList.add(
-		"search-group-description-heading",
-	);
-	searchGroupDescriptionHeading.innerText = "Description";
-	searchGroups.append(
-		searchGroupHeading,
-		searchGroupDescriptionHeading,
-		searchGroupOrderHeading,
-	);
+	resultGroups.append(groupHeading("Result Groups"));
+	const config = await getConfig();
 
-	for (const group of searchResultGroups.list) {
-		const container = document.createElement("div");
-		container.classList.add("search-group-container");
-		const checkboxLabel = document.createElement("label");
-		const checkboxLabelText = document.createElement("span");
-		checkboxLabelText.innerText = group.name;
-		const checkbox = document.createElement("input");
-		checkbox.type = "checkbox";
-		checkbox.checked = await group.isEnabled();
-		checkbox.addEventListener("change", () => {
-			if (checkbox.checked) {
-				group.enable();
-			} else {
-				group.disable();
-			}
-		});
-		checkboxLabel.append(checkbox, checkboxLabelText);
-		const description = document.createElement("div");
-		description.classList.add("search-group-description");
-		description.innerText = group.description;
-		checkboxLabelText.innerText = group.name;
-		container.append(checkboxLabel, description);
-		const [label, input] = numberInput({
-			value: config[group.name]?.order?.toString() || "0",
-		});
+	const labelAllGroups = document.createElement("label");
+	labelAllGroups.classList.add("result-group-title");
 
-		input.addEventListener("input", async () => {
-			SearchGroups.setConfig(group.name, {
-				order: Number.parseInt(input.value),
-			});
+	const checkbox = document.createElement("input");
+	checkbox.type = "checkbox";
+	checkbox.checked =
+		RESULT_GROUPS.length ===
+		RESULT_GROUPS.filter((g) => config.groups[g.name]?.enabled).length;
+	checkbox.addEventListener("change", async () => {
+		const groupConfig: Record<string, ResultGroupConfig> = {};
+		for (const group of RESULT_GROUPS) {
+			groupConfig[group.name] = {
+				enabled: checkbox.checked,
+			};
+		}
+		const permissions = RESULT_GROUPS.flatMap((g) => g.permissions);
+		const hostPermissions = RESULT_GROUPS.flatMap((g) => g.hostPermissions);
+
+		if (checkbox.checked) {
+			chrome.permissions.request(
+				{
+					permissions: permissions,
+					origins: hostPermissions,
+				},
+				async (granted) => {
+					if (!granted) {
+						console.error("could not grant permission for all?");
+						return;
+					}
+					await updateConfig({
+						groups: groupConfig,
+					});
+					window.location.reload();
+				},
+			);
+		} else {
+			chrome.permissions.remove(
+				{
+					permissions: permissions,
+					origins: hostPermissions,
+				},
+				async (removed) => {
+					if (!removed) {
+						console.error("could not remove permission for all?");
+						return;
+					}
+					await updateConfig({
+						groups: groupConfig,
+					});
+					window.location.reload();
+				},
+			);
+		}
+
+		await updateConfig({
+			groups: groupConfig,
 		});
-		container.append(label);
-		searchGroups.append(container);
+		window.location.reload();
+	});
+
+	const labelText = document.createElement("span");
+	labelText.innerText = "All";
+	labelAllGroups.append(checkbox, labelText);
+
+	resultGroups.append(labelAllGroups);
+
+	for (const group of RESULT_GROUPS) {
+		resultGroups.append(ResultGroupCard(group, config));
 	}
-	document.body.append(searchGroups);
+	document.body.append(resultGroups);
 }
 
 function renderHeader() {
@@ -124,51 +145,54 @@ function renderHeader() {
 }
 
 async function renderBobDimensions() {
-	const dimensions = await getCurrentDimensions();
-	const container = document.createElement("div");
+	const config = await getConfig();
+	const container = FlexContainer({ flexDirection: "column" });
 	container.append(groupHeading("Window Dimensions"));
 
-	const title = document.createElement("div");
-	const headingWidth = document.createElement("label");
-	headingWidth.innerText = "Width";
-	const headingHeight = document.createElement("label");
-	headingHeight.innerText = "Height";
-	title.append(headingWidth, headingHeight);
-
 	const [labelWidth, inputWidth] = numberInput({
-		value: dimensions.width.toString(),
+		value: config.dimensions.width.toString(),
+		label: "Width",
 	});
 	const [labelHeight, inputHeight] = numberInput({
-		value: dimensions.height.toString(),
+		value: config.dimensions.height.toString(),
+		label: "Height",
 	});
 
 	inputWidth.addEventListener("input", () => {
-		setCurrentDimensions({
-			width: Number.parseInt(inputWidth.value),
-			height: Number.parseInt(inputHeight.value),
+		updateConfig({
+			dimensions: {
+				width: Number.parseInt(inputWidth.value),
+				height: Number.parseInt(inputHeight.value),
+			},
 		});
 	});
 
 	inputHeight.addEventListener("input", () => {
-		setCurrentDimensions({
-			width: Number.parseInt(inputWidth.value),
-			height: Number.parseInt(inputHeight.value),
+		updateConfig({
+			dimensions: {
+				width: Number.parseInt(inputWidth.value),
+				height: Number.parseInt(inputHeight.value),
+			},
 		});
 	});
 
-	container.append(title, labelWidth, labelHeight);
+	labelHeight.style.marginBottom = "8px";
+	labelWidth.style.marginBottom = "8px";
+	container.append(labelWidth, labelHeight);
 	document.body.append(container);
 }
 
-function numberInput(config: { value: string }): [
+function numberInput(config: { value: string; label: string }): [
 	HTMLLabelElement,
 	HTMLInputElement,
 ] {
 	const label = document.createElement("label");
 	const input = document.createElement("input");
+	const labelText = document.createElement("span");
+	labelText.innerText = config.label;
 	input.type = "number";
 	input.value = config.value;
-	label.append(input);
+	label.append(input, labelText);
 	return [label, input];
 }
 
@@ -187,7 +211,7 @@ function renderFooter() {
 
 (async () => {
 	renderHeader();
-	await renderSearchGroups();
+	await renderResultGroups();
 	await renderBobDimensions();
 	renderThemes();
 	renderFooter();

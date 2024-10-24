@@ -1,22 +1,22 @@
 import { readdirSync, writeFileSync } from "node:fs";
 import path from "node:path";
-import { SEARCH_GROUPS } from "../src/components/search-groups/config";
+import { RESULT_GROUPS } from "../src/components/result-groups";
 import { Themes } from "../src/theme/themes";
 
-generateSearchGroupsMarkdown();
+generateResultGroupsMarkdown();
 generateThemesMarkdown();
 
-function generateSearchGroupsMarkdown() {
-	const filePath = path.resolve(__dirname, "../docs/search-groups.md");
-	let markdown = "# Search Groups\n";
+function generateResultGroupsMarkdown() {
+	const filePath = path.resolve(__dirname, "../docs/result-groups.md");
+	let markdown = "# Result Groups\n";
 	markdown +=
-		"Search Groups provide results and actions inside the command palette.";
+		"Result Groups provide results and actions inside the command palette.";
 
 	markdown += "\n\n";
 	markdown += "| Name | Description | Permissions | Supported browsers |\n";
 	markdown += "| ---- | ----------- | ------------|------------------ |\n";
 
-	for (const group of SEARCH_GROUPS) {
+	for (const group of RESULT_GROUPS) {
 		markdown += `| ${group.name} | ${group.description} | ${group.permissions.join(", ")} | ${group.supportedBrowser.join(", ")} | \n`;
 	}
 

@@ -29,7 +29,7 @@ export async function renderFooter() {
 	const total = RESULT_GROUPS_BROWSER_FILTERED.length;
 	const enabled = getResultGroups().length;
 	const enabledGroups = document.createElement("span");
-	enabledGroups.innerText = `${enabled}/${total} search groups enabled`;
+	enabledGroups.innerText = `${enabled}/${total} result groups enabled`;
 
 	footer?.append(
 		resultsCounter,

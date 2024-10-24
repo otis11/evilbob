@@ -9,6 +9,8 @@ body {
 	padding: 24px;
 	max-width: 1000px;
 	margin: auto;
+	display: flex;
+	flex-direction: column;
 }
 
 h1 {
@@ -19,5 +21,12 @@ h1 {
 #preview {
 	margin-bottom: 24px;
 	display: flex;
+	justify-content: center;
+}
+
+header {
+	display: flex;
+	gap: 40px;
+	align-items: center;
 	justify-content: center;
 }

@@ -5,6 +5,7 @@ Bob's results are organized into result groups with linked permissions. For inst
 
 # Documentation
 - [Contributing](./docs/contributing.md)
+- [Code of Conduct](./CODE_OF_CONDUCT.md)
 - [Result Groups](./docs/result-groups.md)
 - [Themes](./docs/themes.md)
 

@@ -35,7 +35,7 @@ export class ResultGroupTabsActions extends ResultGroup {
 			new ResultTabPin(),
 			new ResultTabUnpin(),
 			new ResultMergeWindows(),
-			new ResultCloseByRegex(),
+			new ResultCloseBySearch(),
 			new ResultSplitIntoWindows(),
 		];
 	}
@@ -247,13 +247,13 @@ export class ResultCloseOtherTabs extends Result {
 	}
 }
 
-export class ResultCloseByRegex extends Result {
+export class ResultCloseBySearch extends Result {
 	constructor() {
 		super({
-			options: new ResultCloseByRegexGroup(),
-			title: "Close tabs by regex",
+			options: new ResultOptionsCloseBySearch(),
+			title: "Close tabs by search",
 			description:
-				"Close the following tabs by regex. Select any tab to close them.",
+				"Close the following tabs by search. Select any tab to close them.",
 			prepend: iconFromString(iconTabRemove),
 		});
 	}
@@ -263,22 +263,15 @@ export class ResultCloseByRegex extends Result {
 	}
 }
 
-class ResultCloseByRegexGroup extends ResultGroup {
+class ResultOptionsCloseBySearch extends ResultGroup {
 	public async getResults(): Promise<Result[]> {
 		const tabs = await chrome.tabs.query({});
-		return tabs.map((tab) => new ResultTabCloseByRegex(tab));
+		return tabs.map((tab) => new ResultTabCloseBySearch(tab));
 	}
 }
 
-class ResultTabCloseByRegex extends ResultTab {
+class ResultTabCloseBySearch extends ResultTab {
 	async execute(search: Search): Promise<void> {
-		const tabs = await chrome.tabs.query({});
-		const regex = new RegExp(search.text);
-		for (const tab of tabs) {
-			if (regex.test(tab.url || "") && tab.id) {
-				await chrome.tabs.remove(tab.id);
-			}
-		}
-		window.close();
+		window.alert("Todo get active displayed search results");
 	}
 }

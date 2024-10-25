@@ -1,8 +1,9 @@
 import { getConfig, updateConfig } from "../../config";
-import { browserName, isChromium } from "../../platform";
+import { browserName } from "../../platform";
 import type { ResultGroup } from "../result-group";
 import { ResultGroupBob } from "./bob";
 import { ResultGroupBookmarks } from "./bookmarks";
+import { ResultGroupChatGPT } from "./chatgpt";
 import { ResultGroupCommands } from "./commands";
 import { ResultGroupContentSettings } from "./content-settings";
 import { ResultGroupGoogle } from "./google";
@@ -37,6 +38,7 @@ export const RESULT_GROUPS = [
 	new ResultGroupCommands(),
 	new ResultGroupTabsActions(),
 	new ResultGroupWindow(),
+	new ResultGroupChatGPT(),
 ];
 
 export const RESULT_GROUPS_BROWSER_FILTERED = (() => {

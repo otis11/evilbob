@@ -38,7 +38,6 @@ export abstract class Result {
 		};
 	};
 	cachedHtmlElement?: HTMLLIElement;
-	shouldAlwaysRender?: boolean;
 
 	static instanceFromId(id: string): Result | undefined {
 		return Result.globalRegistry[id];
@@ -80,6 +79,30 @@ export abstract class Result {
 			),
 			textLower: search.textLower,
 		};
+
+		return this.lastSearch;
+	}
+
+	makeFakeSearch(search: Search, scoreTitle?: number) {
+		this.lastSearch = {
+			title: wordSplitMatch(
+				search.text,
+				search.textLower,
+				this.title,
+				this.titleLower,
+			),
+			description: wordSplitMatch(
+				search.text,
+				search.textLower,
+				this.description,
+				this.descriptionLower,
+			),
+			textLower: search.textLower,
+		};
+
+		if (scoreTitle) {
+			this.lastSearch.title.score = scoreTitle;
+		}
 
 		return this.lastSearch;
 	}

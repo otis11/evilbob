@@ -1,7 +1,7 @@
 import { iconFromString, iconGoogle } from "../../icons";
 import { ResultGroup } from "../result-group";
 import { Result } from "../result/result";
-import type { Search } from "../search";
+import { Search } from "../search";
 
 export class ResultGroupGoogle extends ResultGroup {
 	prefix = "g";
@@ -64,16 +64,25 @@ export class ResultGoogle extends Result {
 
 	async execute(search: Search): Promise<void> {
 		chrome.tabs.create({
-			url: `https://google.com/search?q=${search.text.replaceAll("g", "").trim().replaceAll(" ", "+")}`,
+			url: `https://google.com/search?q=${search.text.replace("g", "").trim().replaceAll(" ", "+")}`,
 		});
 		window.close();
 	}
 }
 
 export class ResultGoogleSearch extends Result {
-	shouldAlwaysRender?: boolean | undefined = true;
 	public id(): string {
 		return this.name() + this.title;
+	}
+
+	public search(search: Search) {
+		return this.makeFakeSearch(
+			new Search({
+				selectionStart: 0,
+				text: "",
+			}),
+			search.minMatchScore() + 1,
+		);
 	}
 
 	constructor() {
@@ -85,8 +94,12 @@ export class ResultGoogleSearch extends Result {
 	}
 
 	async execute(search: Search): Promise<void> {
+		const query =
+			search.words()[0] === "g"
+				? search.text.slice(1).trim()
+				: search.text;
 		chrome.tabs.create({
-			url: `https://google.com/search?q=${search.text.replaceAll("g", "").trim().replaceAll(" ", "+")}`,
+			url: `https://google.com/search?q=${query.replaceAll(" ", "+")}`,
 		});
 		window.close();
 	}

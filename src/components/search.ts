@@ -35,4 +35,8 @@ export class Search {
 	words() {
 		return this.text.split(" ");
 	}
+
+	minMatchScore() {
+		return Math.floor(this.text.length / 2);
+	}
 }

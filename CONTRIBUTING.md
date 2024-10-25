@@ -5,7 +5,7 @@ Thanks in advance for making Bob a better extension :)!
 [Code of Conduct](./CODE_OF_CONDUCT.md)
 
 - **Check for Existing Issues**  
-  Before contributing, check if any [open issues](https://github.com/otis11/Bob/issues) relate to your idea.
+  Before contributing, check if any [open issues](https://github.com/otis11/bob-command-palette/issues) relate to your idea.
 
 - **No Relevant Issue?**  
   Open one to discuss your bug or feature suggestion with active developers.

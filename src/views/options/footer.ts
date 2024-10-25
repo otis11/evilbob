@@ -5,7 +5,7 @@ export function renderFooter() {
 
 	const githubIcon = iconFromString(iconGithub, "48px");
 	const githubLink = document.createElement("a");
-	githubLink.href = "https://github.com/otis11/Bob";
+	githubLink.href = "https://github.com/otis11/bob-command-palette";
 	githubLink.target = "_blank";
 	githubLink.append(githubIcon);
 

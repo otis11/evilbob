@@ -11,19 +11,19 @@ export class ResultGroupBob extends ResultGroup {
 
 	public async getResults(): Promise<Result[]> {
 		return [
-			new ResultBobOpenSettings(),
-			new ResultBobResetSettings(),
+			new ResultBobOpenOptions(),
+			new ResultBobResetOptions(),
 			new ResultBobResetUsage(),
 			new ResultBobShowUsage(),
 		];
 	}
 }
 
-export class ResultBobOpenSettings extends Result {
+export class ResultBobOpenOptions extends Result {
 	constructor() {
 		super({
 			title: "Bob Options",
-			description: "Change me here!",
+			description: "Change me here! Settings",
 			prepend: iconFromString(iconBob),
 		});
 	}
@@ -33,11 +33,11 @@ export class ResultBobOpenSettings extends Result {
 	}
 }
 
-export class ResultBobResetSettings extends Result {
+export class ResultBobResetOptions extends Result {
 	constructor() {
 		super({
-			title: "Bob Reset Settings",
-			description: "Reset my settings to default",
+			title: "Bob Reset Options",
+			description: "Reset my options to default. Settings",
 			prepend: iconFromString(iconBob),
 		});
 	}

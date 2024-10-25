@@ -7,13 +7,18 @@ import {
 } from "./dom";
 import { isResultOptionsVisible } from "./result-options";
 import { newSearch, searchResults } from "./search";
-import {
-	getConfigCache,
-	getResultGroups,
-	getResults,
-	getUsageCache,
-} from "./search-data";
+import { getResultGroups, getResults, getUsageCache } from "./search-data";
 import { updateSelectedIndex } from "./selected";
+
+let currentResults: Result[] = [];
+
+export function getCurrentResults() {
+	return currentResults;
+}
+
+export function setCurrentResults(newResults: Result[]) {
+	currentResults = newResults;
+}
 
 export async function filterResults() {
 	const usage = await getUsageCache();
@@ -24,24 +29,22 @@ export async function filterResults() {
 		group.shouldRenderAlone(search),
 	);
 
-	let resultsFilteredAndSorted: Result[] = [];
+	currentResults = [];
 	if (groupAlone) {
 		const searchWithoutPrefix = newSearch(
 			isResultOptionsVisible() ? optionsSearchInput : searchInput,
 			search.words().slice(1).join(" "),
 		);
-		resultsFilteredAndSorted = searchResults(
+		currentResults = searchResults(
 			groupAlone.results,
 			searchWithoutPrefix,
 			usage,
 		);
 	} else {
-		resultsFilteredAndSorted = searchResults(getResults(), search, usage);
+		currentResults = searchResults(getResults(), search, usage);
 	}
 
-	const elements = resultsFilteredAndSorted.map((item) =>
-		item.asHtmlElement(),
-	);
+	const elements = currentResults.map((item) => item.asHtmlElement());
 
 	resultsContainer.innerHTML = "";
 	resultsContainer.append(...elements);

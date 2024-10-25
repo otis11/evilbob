@@ -125,7 +125,7 @@ export abstract class Result {
 		return this.name().replace("Result", "");
 	}
 
-	public async onSelect(search: Search) {
+	public async onSelect(search: Search, results: Result[]) {
 		const currentUsage = await getUsage();
 		let usage = currentUsage.results[this.id()];
 		if (!usage) {
@@ -141,10 +141,10 @@ export abstract class Result {
 				[this.id()]: usage,
 			},
 		});
-		await this.execute(search);
+		await this.execute(search, results);
 	}
 
-	abstract execute(search: Search): Promise<void>;
+	abstract execute(search: Search, results: Result[]): Promise<void>;
 
 	public asHtmlElement() {
 		const li = document.createElement("li");

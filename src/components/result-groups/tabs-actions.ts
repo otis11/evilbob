@@ -271,7 +271,12 @@ class ResultOptionsCloseBySearch extends ResultGroup {
 }
 
 class ResultTabCloseBySearch extends ResultTab {
-	async execute(search: Search): Promise<void> {
-		window.alert("Todo get active displayed search results");
+	async execute(search: Search, results: Result[]): Promise<void> {
+		for (const result of results) {
+			if (result instanceof ResultTab && result.tab.id) {
+				await chrome.tabs.remove(result.tab.id);
+			}
+		}
+		window.close();
 	}
 }

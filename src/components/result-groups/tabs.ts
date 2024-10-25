@@ -25,7 +25,7 @@ export class ResultGroupTabs extends ResultGroup {
 }
 
 export class ResultTab extends Result {
-	constructor(protected tab: chrome.tabs.Tab) {
+	constructor(public tab: chrome.tabs.Tab) {
 		const tags: Tag[] = [
 			{ html: iconFromString(iconTab, "12px").outerHTML },
 		];
@@ -70,7 +70,7 @@ export class ResultTab extends Result {
 		return this.name() + this.tab.url;
 	}
 
-	async execute(search: Search): Promise<void> {
+	async execute(search: Search, results: Result[]): Promise<void> {
 		await chrome.tabs.highlight({
 			tabs: [this.tab.index],
 			windowId: this.tab.windowId,

@@ -7,6 +7,7 @@ import {
 	searchInput,
 } from "./dom";
 import { isResultOptionsVisible } from "./result-options";
+import { getCurrentResults } from "./results";
 import { newSearch } from "./search";
 import { updateSelectedIndex } from "./selected";
 
@@ -24,7 +25,7 @@ window.addEventListener("click", (event) => {
 		const search = newSearch(
 			isResultOptionsVisible() ? optionsSearchInput : searchInput,
 		);
-		searchResult?.onSelect(search);
+		searchResult?.onSelect(search, getCurrentResults());
 	}
 });
 

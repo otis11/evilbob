@@ -81,7 +81,7 @@ export class ResultGoogleSearch extends Result {
 				selectionStart: 0,
 				text: "",
 			}),
-			search.minMatchScore() + 1,
+			search.text.length > 0 ? search.minMatchScore() + 1 : 0,
 		);
 	}
 

@@ -7,7 +7,7 @@ import {
 	resultsCounter,
 	selectedResultForOptions,
 } from "./dom";
-import { filterResults } from "./results";
+import { filterResults, setCurrentResults } from "./results";
 import { newSearch, searchResults } from "./search";
 import { getUsageCache } from "./search-data";
 import {
@@ -62,6 +62,8 @@ export async function filterResultsOptions() {
 	const elements = resultsFilteredAndSorted.map((item) =>
 		item.asHtmlElement(),
 	);
+
+	setCurrentResults(resultsFilteredAndSorted);
 
 	resultOptionsContainer.innerHTML = "";
 	resultOptionsContainer.append(...elements);

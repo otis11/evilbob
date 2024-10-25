@@ -10,6 +10,7 @@ import {
 	isResultOptionsVisible,
 	showResultOptions,
 } from "./result-options";
+import { getCurrentResults } from "./results";
 import { newSearch } from "./search";
 import {
 	getLastSelectedResultIndex,
@@ -51,7 +52,7 @@ function onKeyUp(event: KeyboardEvent) {
 		if (event.shiftKey && !isResultOptionsVisible() && searchResult) {
 			showResultOptions(searchResult);
 		} else {
-			searchResult?.onSelect(search);
+			searchResult?.onSelect(search, getCurrentResults());
 		}
 	}
 }

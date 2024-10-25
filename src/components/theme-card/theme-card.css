@@ -4,9 +4,14 @@
 	width: 220px;
 	border-radius: var(--bob-input-border-radius);
 	overflow: hidden;
-	border: 1px solid var(--bob-color-base-content-300);
+	border: 2px solid var(--bob-color-base-content-300);
 	color: var(--bob-color-base-content-100);
 	background-color: var(--bob-color-base-100);
+}
+
+.theme-card-active {
+	border-color: var(--bob-color-success);
+	border-width: 4px;
 }
 
 .theme-card-base {

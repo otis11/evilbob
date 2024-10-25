@@ -1,10 +1,9 @@
 import { FlexContainer } from "../../components/flex-container";
 import { GroupHeading } from "../../components/group-heading";
 import { NumberInput } from "../../components/number-input";
-import { getConfig, updateConfig } from "../../config";
+import { type BobConfig, updateConfig } from "../../config";
 
-export async function renderBobDimensions() {
-	const config = await getConfig();
+export async function renderBobDimensions(config: BobConfig) {
 	const container = FlexContainer({ flexDirection: "column" });
 	container.append(GroupHeading("Window Dimensions"));
 

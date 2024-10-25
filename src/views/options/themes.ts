@@ -1,16 +1,17 @@
 import { GroupHeading } from "../../components/group-heading";
 import { ThemeCard } from "../../components/theme-card/theme-card";
+import { type BobConfig, getConfig } from "../../config";
 import { iconFromString, iconPencil } from "../../icons";
 import { Themes } from "../../theme/themes";
 
-export function renderThemes() {
+export async function renderThemes(config: BobConfig) {
 	const container = document.createElement("div");
 	const themesContainer = document.createElement("div");
 	themesContainer.classList.add("theme-container");
 	container.append(GroupHeading("Themes"), themesContainer);
 
 	for (const theme of Themes) {
-		const card = ThemeCard(theme);
+		const card = ThemeCard(theme, config.theme === theme);
 		if (theme === "custom") {
 			const editButton = document.createElement("button");
 			editButton.style.display = "flex";

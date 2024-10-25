@@ -1,13 +1,16 @@
 import { GroupHeading } from "../../components/group-heading";
 import { ResultGroupCard } from "../../components/result-group-card/result-group-card";
 import { RESULT_GROUPS } from "../../components/result-groups";
-import { type ResultGroupConfig, getConfig, updateConfig } from "../../config";
+import {
+	type BobConfig,
+	type ResultGroupConfig,
+	updateConfig,
+} from "../../config";
 
-export async function renderResultGroups() {
+export async function renderResultGroups(config: BobConfig) {
 	const resultGroups = document.createElement("div");
 
 	resultGroups.append(GroupHeading("Result Groups"));
-	const config = await getConfig();
 
 	const labelAllGroups = document.createElement("label");
 	labelAllGroups.classList.add("result-group-title");

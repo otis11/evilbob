@@ -6,13 +6,23 @@ import { Result } from "../result/result";
 import type { Search } from "../search";
 import "./theme-card.css";
 
-export function ThemeCard(theme: Theme) {
+export function ThemeCard(theme: Theme, isActiveTheme = false) {
 	const cardContainer = document.createElement("div");
 	cardContainer.setAttribute("data-theme", theme);
 	cardContainer.classList.add("theme-card");
+	if (isActiveTheme) {
+		cardContainer.classList.add("theme-card-active");
+	}
 	cardContainer.addEventListener("click", async () => {
 		await updateConfig({ theme });
 		await loadTheme();
+		const active = document.querySelector(".theme-card-active");
+		active?.classList.remove("theme-card-active");
+
+		const newActive = document.querySelector(
+			`.theme-card[data-theme="${theme}"]`,
+		);
+		newActive?.classList.add("theme-card-active");
 	});
 
 	const base = document.createElement("div");

@@ -1,7 +1,7 @@
 {
 	"manifest_version": 3,
 	"name": "Bob",
-	"description": "Hello, Hello! This is Bob. A browser command palette.",
+	"description": "Hi! This is Bob, a command palette for your browser.",
 	"version": "0.1",
 	"icons": {
 		"16": "icons/bob-icon-16x16.png",

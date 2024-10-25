@@ -1,5 +1,6 @@
 {
 	"name": "bob",
+	"description": "Hi! This is Bob, a command palette for your browser.",
 	"module": "index.ts",
 	"type": "module",
 	"devDependencies": {

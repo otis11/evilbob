@@ -1,5 +1,5 @@
 # Bob
-Hello, Hello! This is Bob. A browser command palette.
+Hi! This is Bob, a command palette for your browser.
 
 Bob's results are organized into result groups with linked permissions. For instance, the "history" result group helps to search through your history and needs permission to do so. Almost all result groups are off by default to start off minimal. Pick the ones you love!
 

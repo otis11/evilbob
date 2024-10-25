@@ -20,7 +20,7 @@ import { Result } from "../result/result";
 import type { Search } from "../search";
 import { ResultTab } from "./tabs";
 
-export class ResultGroupTabsActions extends ResultGroup {
+export class ResultGroupTabActions extends ResultGroup {
 	permissions = ["tabs"];
 	prefix = "a";
 	description = "Interact with browser tabs. Sort, merge, duplicate...";

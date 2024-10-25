@@ -15,8 +15,8 @@ import { ResultGroupShortcuts } from "./shortcuts";
 import { ResultGroupSystemCpu } from "./system-cpu";
 import { ResultGroupSystemMemory } from "./system-memory";
 import { ResultGroupSystemStorage } from "./system-storage";
+import { ResultGroupTabActions } from "./tab-actions";
 import { ResultGroupTabs } from "./tabs";
-import { ResultGroupTabsActions } from "./tabs-actions";
 import { ResultGroupTopSites } from "./top-sites";
 import { ResultGroupWindow } from "./window";
 
@@ -36,7 +36,7 @@ export const RESULT_GROUPS = [
 	new ResultGroupContentSettings(),
 	new ResultGroupTopSites(),
 	new ResultGroupCommands(),
-	new ResultGroupTabsActions(),
+	new ResultGroupTabActions(),
 	new ResultGroupWindow(),
 	new ResultGroupChatGPT(),
 ];

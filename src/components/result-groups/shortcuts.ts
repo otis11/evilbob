@@ -26,52 +26,51 @@ export class ResultGroupShortcuts extends ResultGroup {
 						: new Shortcut(["Ctrl", "Shift", "N"]),
 			}),
 			// // tabs
-			// new ResultShortcut({
-			// 	title: "New Tab",
-			// 	description: "Open a new tab",
-			// 	shortcut: isMac
-			// 		? new Shortcut(["⌘", "T"])
-			// 		: new Shortcut(["Ctrl", "T"]),
-			// }),
-			// new ResultShortcut({
-			// 	title: "Close Tab",
-			// 	description: "Close the current tab",
-			// 	shortcut: isMac
-			// 		? new Shortcut(["⌘", "W"])
-			// 		: new Shortcut(["Ctrl", "W"]),
-			// }),
-			// new ResultShortcut({
-			// 	title: "Reopen Tabs",
-			// 	description:
-			// 		"Reopen previously closed tabs in the order that they were closed",
-			// 	shortcut: isMac
-			// 		? new Shortcut(["⌘", "Shift", "T"])
-			// 		: new Shortcut(["Ctrl", "Shift", "T"]),
-			// }),
-			// // bookmarks
-			// new ResultShortcut({
-			// 	title: "Save Bookmark",
-			// 	description: "Save the current page as a bookmark",
-			// 	shortcut: isMac
-			// 		? new Shortcut(["⌘", "D"])
-			// 		: new Shortcut(["Ctrl", "D"]),
-			// }),
-			// new ResultShortcut({
-			// 	title: "Open Bookmarks",
-			// 	description: "Open Bookmarks",
-			// 	shortcut: isMac
-			// 		? new Shortcut(["⌘", "Option", "B"])
-			// 		: new Shortcut(["Ctrl", "Shift", "O"]),
-			// }),
-			// // search bar
-			// new ResultShortcut({
-			// 	title: "Focus Search",
-			// 	description: "Put a cursor in the search bar",
-			// 	shortcut: isMac
-			// 		? new Shortcut(["Ctrl", "I"])
-			// 		: new Shortcut(["Ctrl", "L"]),
-			// }),
-			// other
+			new ResultShortcut({
+				title: "New Tab",
+				description: "Open a new tab",
+				shortcut: isMac
+					? new Shortcut(["⌘", "T"])
+					: new Shortcut(["Ctrl", "T"]),
+			}),
+			new ResultShortcut({
+				title: "Close Tab",
+				description: "Close the current tab",
+				shortcut: isMac
+					? new Shortcut(["⌘", "W"])
+					: new Shortcut(["Ctrl", "W"]),
+			}),
+			new ResultShortcut({
+				title: "Reopen Tabs",
+				description:
+					"Reopen previously closed tabs in the order that they were closed",
+				shortcut: isMac
+					? new Shortcut(["⌘", "Shift", "T"])
+					: new Shortcut(["Ctrl", "Shift", "T"]),
+			}),
+			// bookmarks
+			new ResultShortcut({
+				title: "Save Bookmark",
+				description: "Save the current page as a bookmark",
+				shortcut: isMac
+					? new Shortcut(["⌘", "D"])
+					: new Shortcut(["Ctrl", "D"]),
+			}),
+			new ResultShortcut({
+				title: "Open Bookmarks",
+				description: "Open Bookmarks",
+				shortcut: isMac
+					? new Shortcut(["⌘", "Option", "B"])
+					: new Shortcut(["Ctrl", "Shift", "O"]),
+			}),
+			// search bar
+			new ResultShortcut({
+				title: "Focus Search",
+				description: "Put a cursor in the search bar",
+				shortcut: isMac
+					? new Shortcut(["Ctrl", "I"])
+					: new Shortcut(["Ctrl", "L"]),
+			}),
 		];
 		if (!isMac) {
 			shortcuts.push(

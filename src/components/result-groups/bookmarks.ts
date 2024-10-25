@@ -1,6 +1,7 @@
 import { faviconFromUrl, iconBookmark, iconFromString } from "../../icons";
 import { ResultGroup } from "../result-group";
 import { Result, type ResultConfig } from "../result/result";
+import type { Search } from "../search";
 
 export class ResultGroupBookmarks extends ResultGroup {
 	permissions = ["bookmarks"];
@@ -42,6 +43,7 @@ export class ResultBookmark extends Result {
 			],
 			prepend: bookmark.url ? faviconFromUrl(bookmark.url) : undefined,
 		});
+		this.options = new ResultBookmarkOptions(this.bookmark);
 	}
 
 	public id(): string {
@@ -56,5 +58,29 @@ export class ResultBookmark extends Result {
 			// TODO handle bookmarks with no url?
 			console.error("bookmark has no url", this);
 		}
+	}
+}
+
+class ResultBookmarkOptions extends ResultGroup {
+	constructor(private bookmark: chrome.bookmarks.BookmarkTreeNode) {
+		super();
+	}
+
+	public async getResults(): Promise<Result[]> {
+		return [new ResultRemoveBookmark(this.bookmark)];
+	}
+}
+
+class ResultRemoveBookmark extends Result {
+	constructor(private bookmark: chrome.bookmarks.BookmarkTreeNode) {
+		super({
+			title: "Remove",
+			description: "Remove bookmark. Delete",
+		});
+	}
+
+	public async execute(search: Search, results: Result[]): Promise<void> {
+		await chrome.bookmarks.remove(this.bookmark.id);
+		window.close();
 	}
 }

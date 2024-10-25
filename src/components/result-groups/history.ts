@@ -1,6 +1,7 @@
 import { faviconFromUrl, iconFromString, iconHistory } from "../../icons";
 import { ResultGroup } from "../result-group";
 import { Result, type ResultConfig } from "../result/result";
+import type { Search } from "../search";
 
 export class ResultGroupHistory extends ResultGroup {
 	permissions = ["history"];
@@ -27,6 +28,8 @@ export class ResultHistory extends Result {
 			],
 			prepend: item.url ? faviconFromUrl(item.url) : undefined,
 		});
+
+		this.options = new ResultHistoryOptions(this.item);
 	}
 
 	public id(): string {
@@ -38,8 +41,33 @@ export class ResultHistory extends Result {
 			chrome.tabs.create({ url: this.item.url });
 			window.close();
 		} else {
-			// TODO handle bookmarks with no url?
-			console.error("bookmark has no url", this);
+			console.error("history has no url", this);
+		}
+	}
+}
+
+class ResultHistoryOptions extends ResultGroup {
+	constructor(private item: chrome.history.HistoryItem) {
+		super();
+	}
+
+	public async getResults(): Promise<Result[]> {
+		return [new ResultRemoveHistory(this.item)];
+	}
+}
+
+class ResultRemoveHistory extends Result {
+	constructor(private item: chrome.history.HistoryItem) {
+		super({
+			title: "Remove url occurences",
+			description: "Remove all url occurences from history. Delete",
+		});
+	}
+
+	public async execute(search: Search, results: Result[]): Promise<void> {
+		if (this.item.url) {
+			await chrome.history.deleteUrl({ url: this.item.url });
+			window.close();
 		}
 	}
 }

@@ -5,6 +5,8 @@ import { Result } from "../result/result";
 
 export class ResultGroupWindow extends ResultGroup {
 	permissions = [];
+	public description =
+		"Interact with chrome windows, for instance 'close other windows'";
 
 	public async getResults(): Promise<Result[]> {
 		return [new ResultCloseOtherWindows()];

@@ -13,11 +13,13 @@ function generateResultGroupsMarkdown() {
 		"Result Groups provide results and actions inside the command palette.";
 
 	markdown += "\n\n";
-	markdown += "| Name | Description | Permissions | Supported browsers |\n";
-	markdown += "| ---- | ----------- | ------------|------------------ |\n";
+	markdown +=
+		"| Name | Description | Prefix | Permissions | Supported browsers |\n";
+	markdown +=
+		"| ---- | ----------- | ----- | ------------|------------------- |\n";
 
 	for (const group of RESULT_GROUPS) {
-		markdown += `| ${group.name} | ${group.description} | ${group.permissions.join(", ")} | ${group.supportedBrowser.join(", ")} | \n`;
+		markdown += `| ${group.nameHumanReadable} | ${group.description} | ${group.prefix || ""} | ${group.permissions.join(", ")} | ${group.supportedBrowser.join(", ")} |\n`;
 	}
 
 	writeFileSync(filePath, markdown);

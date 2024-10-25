@@ -12,6 +12,12 @@ body {
 	margin: auto;
 }
 
+h3 {
+	padding-bottom: 4px;
+	font-size: 1.125rem;
+	text-align: center;
+}
+
 .result-usage {
 	display: flex;
 	width: 100%;
@@ -24,8 +30,11 @@ body {
 }
 
 .result-usage-id {
-	font-weight: bold;
 	flex: 1;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	padding-right: 8px;
+	white-space: nowrap;
 }
 
 .result-usage-last {

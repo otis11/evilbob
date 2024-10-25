@@ -9,4 +9,4 @@ Bob's results are organized into result groups with linked permissions. For inst
 - [Result Groups](./docs/result-groups.md)
 - [Themes](./docs/themes.md)
 
-![Bob Screenshot](./src/assets/bob-screenshot.png)
+![Bob Screenshot](./src/assets/bob-screenshot-browser.png)

@@ -14,7 +14,8 @@
 	},
 	"version": "0.1.0",
 	"scripts": {
-		"dev": "vite",
+		"dev": "vite --c vite.config.website.ts",
+		"build:website": "vite build --c vite.config.website.ts",
 		"build": "bun scripts/build.ts --minify",
 		"watch": "bun scripts/build.ts --watch",
 		"preview": "vite preview",

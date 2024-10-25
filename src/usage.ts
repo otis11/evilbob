@@ -19,17 +19,17 @@ export const DEFAULT_USAGE: BobUsage = {
 export async function updateUsage(newUsage: Partial<BobUsage>) {
 	const currentUsage = await getUsage();
 
-	await chrome.storage.sync.set({
+	await chrome.storage.local.set({
 		usage: deepMerge(currentUsage, newUsage),
 	});
 }
 
 export async function setUsage(newUsage: Partial<BobUsage>) {
-	await chrome.storage.sync.set({
+	await chrome.storage.local.set({
 		usage: newUsage,
 	});
 }
 
 export async function getUsage(): Promise<BobUsage> {
-	return (await chrome.storage.sync.get(["usage"])).usage || DEFAULT_USAGE;
+	return (await chrome.storage.local.get(["usage"])).usage || DEFAULT_USAGE;
 }

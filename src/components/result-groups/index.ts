@@ -6,6 +6,7 @@ import { ResultGroupBookmarks } from "./bookmarks";
 import { ResultGroupChatGPT } from "./chatgpt";
 import { ResultGroupCommands } from "./commands";
 import { ResultGroupContentSettings } from "./content-settings";
+import { ResultGroupDownloads } from "./downloads";
 import { ResultGroupGoogle } from "./google";
 import { ResultGroupHistory } from "./history";
 import { ResultGroupManagement } from "./management";
@@ -39,6 +40,7 @@ export const RESULT_GROUPS = [
 	new ResultGroupTabActions(),
 	new ResultGroupWindow(),
 	new ResultGroupChatGPT(),
+	new ResultGroupDownloads(),
 ];
 
 export const RESULT_GROUPS_BROWSER_FILTERED = (() => {

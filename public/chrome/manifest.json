@@ -43,7 +43,8 @@
 		"sessions",
 		"contentSettings",
 		"topSites",
-		"commands"
+		"commands",
+		"downloads"
 	],
 	"optional_host_permissions": ["https://*/*"]
 }

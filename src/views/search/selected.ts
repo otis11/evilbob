@@ -1,4 +1,5 @@
-import { resultOptionsContainer, resultsContainer } from "./dom";
+import { isElementInViewport } from "../../util/viewport";
+import { resultOptionsContainer, resultsContainer, searchInput } from "./dom";
 import { isResultOptionsVisible } from "./result-options";
 
 let selectedResultIndex = 0;
@@ -29,14 +30,15 @@ export function updateSelectedIndex(newIndex?: number, scrollTo = false) {
 		isResultOptionsVisible() ? resultOptionsContainer : resultsContainer
 	).children[selectedResultIndex];
 
-	if (!el) {
+	if (!(el instanceof HTMLElement)) {
 		return;
 	}
 	el.setAttribute("aria-selected", "");
 	if (scrollTo) {
-		el.scrollIntoView({
-			behavior: "smooth",
-		});
+		if (!isElementInViewport(el)) {
+			document.documentElement.scrollTop =
+				el.offsetTop - searchInput.clientHeight;
+		}
 	}
 }
 

@@ -22,3 +22,4 @@ textarea.addEventListener("input", () => {
 });
 
 preview.innerHTML = ThemeCard("custom").outerHTML;
+loadCustomTheme();

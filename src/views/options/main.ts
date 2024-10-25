@@ -117,11 +117,21 @@ async function renderResultGroups() {
 	labelText.innerText = "All";
 	labelAllGroups.append(checkbox, labelText);
 
-	resultGroups.append(labelAllGroups);
-
-	for (const group of RESULT_GROUPS) {
-		resultGroups.append(ResultGroupCard(group, config));
+	const resultGroupsContainer = document.createElement("div");
+	resultGroupsContainer.classList.add("result-groups-container");
+	const sortedResultGroups = RESULT_GROUPS.sort((a, b) => {
+		if (a.name > b.name) {
+			return 1;
+		}
+		if (a.name < b.name) {
+			return -1;
+		}
+		return 0;
+	});
+	for (const group of sortedResultGroups) {
+		resultGroupsContainer.append(ResultGroupCard(group, config));
 	}
+	resultGroups.append(labelAllGroups, resultGroupsContainer);
 	document.body.append(resultGroups);
 }
 

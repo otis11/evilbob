@@ -1,3 +1,7 @@
 .result-group-card {
-	padding-bottom: 8px;
+	padding: 8px;
+	width: 180px;
+	border-radius: var(--bob-input-border-radius);
+	overflow: hidden;
+	border: 1px solid var(--bob-color-base-content-300);
 }

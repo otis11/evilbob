@@ -1,4 +1,5 @@
 import { faviconFromUrl, iconArrowUpBold, iconFromString } from "../../icons";
+import { refocusLastActiveWindow } from "../../util/last-active-window";
 import { ResultGroup } from "../result-group";
 import { Result } from "../result/result";
 
@@ -30,6 +31,6 @@ export class ResultMostVisitedURL extends Result {
 
 	async execute(): Promise<void> {
 		chrome.tabs.create({ url: this.site.url });
-		window.close();
+		refocusLastActiveWindow();
 	}
 }

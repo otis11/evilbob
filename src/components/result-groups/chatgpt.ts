@@ -1,4 +1,5 @@
 import { iconBrain, iconFromString } from "../../icons";
+import { refocusLastActiveWindow } from "../../util/last-active-window";
 import { ResultGroup } from "../result-group";
 import { Result } from "../result/result";
 import { Search } from "../search";
@@ -55,6 +56,6 @@ export class ResultChatGPTStartChatQuery extends Result {
 	async execute(search: Search): Promise<void> {
 		const query = encodeURI(search.text);
 		await chrome.tabs.create({ url: `https://chatgpt.com?q=${query}` });
-		window.close();
+		refocusLastActiveWindow();
 	}
 }

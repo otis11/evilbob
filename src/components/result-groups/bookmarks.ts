@@ -1,4 +1,5 @@
 import { faviconFromUrl, iconBookmark, iconFromString } from "../../icons";
+import { refocusLastActiveWindow } from "../../util/last-active-window";
 import { ResultGroup } from "../result-group";
 import { Result } from "../result/result";
 import type { Search } from "../search";
@@ -53,7 +54,7 @@ export class ResultBookmark extends Result {
 	async execute(): Promise<void> {
 		if (this.bookmark.url) {
 			chrome.tabs.create({ url: this.bookmark.url });
-			window.close();
+			refocusLastActiveWindow();
 		} else {
 			// TODO handle bookmarks with no url?
 			console.error("bookmark has no url", this);
@@ -81,6 +82,6 @@ class ResultRemoveBookmark extends Result {
 
 	public async execute(search: Search, results: Result[]): Promise<void> {
 		await chrome.bookmarks.remove(this.bookmark.id);
-		window.close();
+		refocusLastActiveWindow();
 	}
 }

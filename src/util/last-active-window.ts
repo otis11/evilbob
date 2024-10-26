@@ -12,3 +12,10 @@ export async function getLastActiveWindowTabs() {
 		windowId: storage.lastFocusedWindowId,
 	});
 }
+
+export async function refocusLastActiveWindow() {
+	const storage = await chrome.storage.sync.get(["lastFocusedWindowId"]);
+	await chrome.windows.update(storage.lastFocusedWindowId, {
+		focused: true,
+	});
+}

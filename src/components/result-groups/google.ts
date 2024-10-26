@@ -1,4 +1,5 @@
 import { iconFromString, iconGoogle } from "../../icons";
+import { refocusLastActiveWindow } from "../../util/last-active-window";
 import { ResultGroup } from "../result-group";
 import { Result } from "../result/result";
 import { Search } from "../search";
@@ -66,7 +67,7 @@ export class ResultGoogle extends Result {
 		chrome.tabs.create({
 			url: `https://google.com/search?q=${search.text.replace("g", "").trim().replaceAll(" ", "+")}`,
 		});
-		window.close();
+		refocusLastActiveWindow();
 	}
 }
 
@@ -101,6 +102,6 @@ export class ResultGoogleSearch extends Result {
 		chrome.tabs.create({
 			url: `https://google.com/search?q=${query.replaceAll(" ", "+")}`,
 		});
-		window.close();
+		refocusLastActiveWindow();
 	}
 }

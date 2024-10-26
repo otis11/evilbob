@@ -1,5 +1,8 @@
 import { iconFromString, iconWindowClose } from "../../icons";
-import { getLastActiveWindow } from "../../util/last-active-window";
+import {
+	getLastActiveWindow,
+	refocusLastActiveWindow,
+} from "../../util/last-active-window";
 import { ResultGroup } from "../result-group";
 import { Result } from "../result/result";
 
@@ -30,6 +33,6 @@ export class ResultCloseOtherWindows extends Result {
 				await chrome.windows.remove(w.id);
 			}
 		}
-		window.close();
+		refocusLastActiveWindow();
 	}
 }

@@ -1,4 +1,5 @@
 import { Result } from "../../components/result/result";
+import { refocusLastActiveWindow } from "../../util/last-active-window";
 import {
 	optionsSearchInput,
 	resultOptionsContainer,
@@ -115,7 +116,7 @@ window.addEventListener("keydown", (event) => {
 			searchInput?.focus();
 			document.documentElement.style.overflow = "unset";
 		} else {
-			window.close();
+			refocusLastActiveWindow();
 		}
 	}
 });

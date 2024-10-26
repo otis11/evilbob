@@ -1,3 +1,4 @@
+import type { BrowserName } from "../../platform";
 import { ResultGroup } from "../result-group";
 import { Result } from "../result/result";
 import type { Search } from "../search";
@@ -6,7 +7,7 @@ import type { Search } from "../search";
 export class ResultGroupSessionDevices extends ResultGroup {
 	permissions = ["sessions"];
 	description = "Search your session devices.";
-	supportedBrowsers = ["chrome", "chromium", "edg"];
+	supportedBrowsers: BrowserName[] = ["chrome", "chromium", "edg"];
 	public prefix?: string | undefined = "sd";
 
 	public async getResults(): Promise<Result[]> {

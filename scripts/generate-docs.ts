@@ -19,7 +19,7 @@ function generateResultGroupsMarkdown() {
 		"| ---- | ----------- | ----- | ------------|------------------- |\n";
 
 	for (const group of RESULT_GROUPS) {
-		markdown += `| ${group.nameHumanReadable} | ${group.description} | ${group.prefix || ""} | ${group.permissions.join(", ")} | ${group.supportedBrowser.join(", ")} |\n`;
+		markdown += `| ${group.nameHumanReadable} | ${group.description} | ${group.prefix || ""} | ${group.permissions.join(", ")} | ${group.supportedBrowsers.join(", ")} |\n`;
 	}
 
 	writeFileSync(filePath, markdown);

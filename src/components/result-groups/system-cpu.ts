@@ -1,4 +1,5 @@
 import { iconCpu, iconFromString } from "../../icons";
+import type { BrowserName } from "../../platform";
 import { ResultGroup } from "../result-group";
 import { Result } from "../result/result";
 
@@ -6,7 +7,7 @@ export class ResultGroupSystemCpu extends ResultGroup {
 	permissions = ["system.cpu"];
 	public prefix?: string | undefined = "cpu";
 	description = "Information about your system cpu.";
-	supportedBrowsers = ["chromium", "chrome", "edg"];
+	supportedBrowsers: BrowserName[] = ["chromium", "chrome", "edg"];
 
 	public getResults(): Promise<Result[]> {
 		return new Promise((resolve) => {

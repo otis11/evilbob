@@ -7,7 +7,7 @@ export abstract class ResultGroup {
 	public nameHumanReadable = this.name.replace("ResultGroup", "");
 	public permissions: string[] = [];
 	public hostPermissions: string[] = [];
-	public supportedBrowser: BrowserName[] = [
+	public supportedBrowsers: BrowserName[] = [
 		"chromium",
 		"firefox",
 		"chrome",

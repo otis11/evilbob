@@ -13,7 +13,7 @@ export class ResultGroupTabAndGroupActions extends ResultGroup {
 	prefix = "tga";
 	description =
 		"Combined actions for tabs & groups, for instance group tabs by domain";
-	public supportedBrowser: BrowserName[] = ["chrome", "chromium", "edg"];
+	public supportedBrowsers: BrowserName[] = ["chrome", "chromium", "edg"];
 
 	public async getResults(): Promise<Result[]> {
 		return [new ResultGroupTabsByDomain(), new ResultUngroupTabs()];

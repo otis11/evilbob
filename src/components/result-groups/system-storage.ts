@@ -1,4 +1,5 @@
 import { iconFromString, iconNas } from "../../icons";
+import type { BrowserName } from "../../platform";
 import { formatBytes } from "../../util/format-bytes";
 import { ResultGroup } from "../result-group";
 import { Result } from "../result/result";
@@ -6,7 +7,7 @@ import { Result } from "../result/result";
 export class ResultGroupSystemStorage extends ResultGroup {
 	permissions = ["system.storage"];
 	description = "Information about your system storage.";
-	supportedBrowsers = ["chromium", "chrome", "edg"];
+	supportedBrowsers: BrowserName[] = ["chromium", "chrome", "edg"];
 	public prefix?: string | undefined = "sto";
 
 	public async getResults(): Promise<Result[]> {

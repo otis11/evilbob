@@ -8,7 +8,7 @@ export class ResultGroupCommands extends ResultGroup {
 	prefix = "c";
 	permissions = [];
 	description = "Available commands from extensions.";
-	public supportedBrowser: BrowserName[] = ["chrome", "chromium", "edg"];
+	public supportedBrowsers: BrowserName[] = ["chrome", "chromium", "edg"];
 
 	public async getResults(): Promise<Result[]> {
 		return (await chrome.commands.getAll()).map(

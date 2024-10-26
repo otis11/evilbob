@@ -1,3 +1,4 @@
+import type { BrowserName } from "../../platform";
 import { getLastActiveTab } from "../../util/last-active-tab";
 import { refocusLastActiveWindow } from "../../util/last-active-window";
 import { ResultGroup } from "../result-group";
@@ -9,7 +10,7 @@ export class ResultGroupContentSettings extends ResultGroup {
 	permissions = ["contentSettings"];
 	description =
 		"Settings that control whether websites can use features such as cookies, JavaScript, and plugins";
-	supportedBrowsers = ["chrome", "chromium", "edg"];
+	supportedBrowsers: BrowserName[] = ["chrome", "chromium", "edg"];
 	public async getResults(): Promise<Result[]> {
 		const tab = await getLastActiveTab();
 		const results: Result[] = [];

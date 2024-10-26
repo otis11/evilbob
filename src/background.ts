@@ -4,8 +4,8 @@ import type { Dimensions } from "./theme";
 console.log("bob.background.start");
 
 let bobCurrentWindowId = -1;
-let currentWindow: chrome.windows.Window;
-let windowDimensions: Dimensions;
+let currentWindow: chrome.windows.Window | undefined;
+let windowDimensions: Dimensions | undefined;
 
 chrome.runtime.onInstalled.addListener(async (details) => {
 	if (details.reason === "install") {
@@ -57,11 +57,13 @@ async function openBob() {
 	}
 
 	const left =
-		(currentWindow.left || 0) +
-		Math.floor(((currentWindow.width || 0) - windowDimensions.width) / 2);
+		(currentWindow?.left || 0) +
+		Math.floor(((currentWindow?.width || 0) - windowDimensions.width) / 2);
 	const top =
-		(currentWindow.top || 0) +
-		Math.floor(((currentWindow.height || 0) - windowDimensions.height) / 2);
+		(currentWindow?.top || 0) +
+		Math.floor(
+			((currentWindow?.height || 0) - windowDimensions.height) / 2,
+		);
 
 	let newBobWindow = await chrome.windows.create({
 		url: "views/search/index.html",
@@ -78,10 +80,10 @@ async function openBob() {
 		newBobWindow = await chrome.windows.create({
 			url: "views/search/index.html",
 			type: "popup",
-			width: currentWindow.width,
-			height: currentWindow.height,
-			left: currentWindow.left,
-			top: currentWindow.top,
+			width: currentWindow?.width || 400,
+			height: currentWindow?.height || 200,
+			left: currentWindow?.left || 0,
+			top: currentWindow?.top || 0,
 			focused: true,
 		});
 	}
@@ -89,6 +91,6 @@ async function openBob() {
 	bobCurrentWindowId = newBobWindow.id || -1;
 
 	await chrome.storage.sync.set({
-		lastFocusedWindowId: currentWindow.id,
+		lastFocusedWindowId: currentWindow?.id,
 	});
 }

@@ -11,7 +11,7 @@ export class ResultGroupTabGroups extends ResultGroup {
 	prefix = "tg";
 	public description = "List tab groups.";
 	public permissions: string[] = ["tabGroups"];
-	public supportedBrowser: BrowserName[] = ["chrome", "chromium", "edg"];
+	public supportedBrowsers: BrowserName[] = ["chrome", "chromium", "edg"];
 
 	public async getResults(): Promise<Result[]> {
 		const groups = await chrome.tabGroups.query({});

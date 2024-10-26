@@ -1,4 +1,5 @@
 import { iconCpu, iconFromString } from "../../icons";
+import type { BrowserName } from "../../platform";
 import { formatBytes } from "../../util/format-bytes";
 import { ResultGroup } from "../result-group";
 import { Result } from "../result/result";
@@ -6,7 +7,7 @@ import { Result } from "../result/result";
 export class ResultGroupSystemMemory extends ResultGroup {
 	permissions = ["system.memory"];
 	description = "Information about your system memory.";
-	supportedBrowsers = ["chromium", "chrome", "edg"];
+	supportedBrowsers: BrowserName[] = ["chromium", "chrome", "edg"];
 	public prefix?: string | undefined = "mem";
 
 	public async getResults(): Promise<Result[]> {

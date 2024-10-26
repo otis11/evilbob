@@ -64,24 +64,26 @@ async function openBob() {
 		Math.floor(
 			((currentWindow?.height || 0) - windowDimensions.height) / 2,
 		);
-
-	let newBobWindow = await chrome.windows.create({
-		url: "src/views/search/index.html",
-		type: "popup",
-		width: windowDimensions.width,
-		height: windowDimensions.height,
-		left: left,
-		top: top,
-		focused: true,
-	});
-
-	// failed to open bob window with dimensions set from config?
-	if (!newBobWindow) {
+	let newBobWindow: chrome.windows.Window;
+	try {
 		newBobWindow = await chrome.windows.create({
 			url: "src/views/search/index.html",
 			type: "popup",
-			width: currentWindow?.width || 400,
-			height: currentWindow?.height || 200,
+			width: windowDimensions.width,
+			height: windowDimensions.height,
+			left: left,
+			top: top,
+			focused: true,
+		});
+	} catch {
+		if (chrome.runtime.lastError) {
+			console.log("could not open bob window");
+		}
+		newBobWindow = await chrome.windows.create({
+			url: "src/views/search/index.html",
+			type: "popup",
+			width: currentWindow?.width || 600,
+			height: currentWindow?.height || 400,
 			left: currentWindow?.left || 0,
 			top: currentWindow?.top || 0,
 			focused: true,

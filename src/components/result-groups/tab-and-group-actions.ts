@@ -59,6 +59,8 @@ class ResultGroupTabsByDomain extends Result {
 				title: key,
 			});
 		}
+
+		await focusLastActiveWindow();
 	}
 }
 

@@ -1,3 +1,4 @@
+import type { BrowserName } from "../../platform";
 import { getLastActiveWindow } from "../../util/last-active-window";
 import { ResultGroup } from "../result-group";
 import { Result } from "../result/result";
@@ -7,6 +8,7 @@ export class ResultGroupTabGroups extends ResultGroup {
 	prefix = "tg";
 	public description = "List tab groups.";
 	public permissions: string[] = ["tabGroups"];
+	public supportedBrowser: BrowserName[] = ["chrome", "chromium", "edg"];
 
 	public async getResults(): Promise<Result[]> {
 		const groups = await chrome.tabGroups.query({});

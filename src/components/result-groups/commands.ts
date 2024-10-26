@@ -1,4 +1,5 @@
 import { iconConsoleLine, iconFromString } from "../../icons";
+import type { BrowserName } from "../../platform";
 import { ResultGroup } from "../result-group";
 import { Result } from "../result/result";
 import { Shortcut } from "../shortcut/shortcut";
@@ -7,6 +8,7 @@ export class ResultGroupCommands extends ResultGroup {
 	prefix = "c";
 	permissions = [];
 	description = "Available commands from extensions.";
+	public supportedBrowser: BrowserName[] = ["chrome", "chromium", "edg"];
 
 	public async getResults(): Promise<Result[]> {
 		return (await chrome.commands.getAll()).map(

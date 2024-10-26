@@ -1,5 +1,6 @@
 import type { BrowserName } from "../../platform";
 import {
+	focusLastActiveWindow,
 	getLastActiveWindow,
 	getLastActiveWindowTabs,
 } from "../../util/last-active-window";
@@ -74,5 +75,6 @@ class ResultUngroupTabs extends Result {
 		await chrome.tabs.ungroup(
 			tabs.map((tab) => tab.id).filter((id) => id !== undefined),
 		);
+		await focusLastActiveWindow();
 	}
 }

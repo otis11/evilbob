@@ -1,6 +1,6 @@
 import type { BrowserName } from "../../platform";
 import { getLastActiveTab } from "../../util/last-active-tab";
-import { refocusLastActiveWindow } from "../../util/last-active-window";
+import { focusLastActiveWindow } from "../../util/last-active-window";
 import { ResultGroup } from "../result-group";
 import { Result } from "../result/result";
 import type { Search } from "../search";
@@ -58,7 +58,7 @@ class ResultCSJavascript extends Result {
 					setting:
 						this.javascript.setting === "allow" ? "block" : "allow",
 				},
-				() => refocusLastActiveWindow(),
+				() => focusLastActiveWindow(),
 			);
 		}
 	}

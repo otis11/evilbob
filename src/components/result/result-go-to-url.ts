@@ -1,4 +1,4 @@
-import { refocusLastActiveWindow } from "../../util/last-active-window";
+import { focusLastActiveWindow } from "../../util/last-active-window";
 import type { Search } from "../search";
 import type { Tag } from "../tags/tags";
 import { Result } from "./result";
@@ -26,6 +26,6 @@ export class ResultGoToUrl extends Result {
 
 	async execute(search: Search): Promise<void> {
 		await chrome.tabs.create({ url: this.url });
-		refocusLastActiveWindow();
+		focusLastActiveWindow();
 	}
 }

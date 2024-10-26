@@ -8,7 +8,7 @@ import {
 	iconPin,
 	iconTab,
 } from "../../icons";
-import { refocusLastActiveWindow } from "../../util/last-active-window";
+import { focusLastActiveWindow } from "../../util/last-active-window";
 import { ResultGroup } from "../result-group";
 import { Result } from "../result/result";
 import type { Search } from "../search";
@@ -76,6 +76,6 @@ export class ResultTab extends Result {
 			tabs: [this.tab.index],
 			windowId: this.tab.windowId,
 		});
-		refocusLastActiveWindow();
+		focusLastActiveWindow();
 	}
 }

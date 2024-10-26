@@ -18,5 +18,8 @@ Result Groups provide results and actions inside the command palette.
 | ContentSettings | Settings that control whether websites can use features such as cookies, JavaScript, and plugins |  | contentSettings | chromium, firefox, chrome, edg |
 | TopSites | The top sites (i.e. most visited sites) that are displayed on the new tab page | top | topSites | chromium, firefox, chrome, edg |
 | Commands | Available commands from extensions. | c |  | chromium, firefox, chrome, edg |
-| TabsActions | Interact with browser tabs. Sort, merge, duplicate... | a | tabs | chromium, firefox, chrome, edg |
+| TabActions | Interact with browser tabs. Sort, merge, duplicate... | a | tabs | chromium, firefox, chrome, edg |
 | Window | Interact with chrome windows, for instance 'close other windows' |  |  | chromium, firefox, chrome, edg |
+| ChatGPT | Start a chat with chatgpt |  |  | chromium, firefox, chrome, edg |
+| Downloads | List and manage downloads. | d | downloads | chromium, firefox, chrome, edg |
+| GoogleNew | Create new google docs, sheets, slides ...  | gn |  | chromium, firefox, chrome, edg |

@@ -8,6 +8,7 @@ import { ResultGroupCommands } from "./commands";
 import { ResultGroupContentSettings } from "./content-settings";
 import { ResultGroupDownloads } from "./downloads";
 import { ResultGroupGoogle } from "./google";
+import { ResultGroupGoogleNew } from "./google-new";
 import { ResultGroupHistory } from "./history";
 import { ResultGroupManagement } from "./management";
 import { ResultGroupPrefixes } from "./prefixes";
@@ -41,6 +42,7 @@ export const RESULT_GROUPS = [
 	new ResultGroupWindow(),
 	new ResultGroupChatGPT(),
 	new ResultGroupDownloads(),
+	new ResultGroupGoogleNew(),
 ];
 
 export const RESULT_GROUPS_BROWSER_FILTERED = (() => {

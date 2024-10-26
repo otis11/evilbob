@@ -21,6 +21,9 @@ loadFreshData().then(() => {
 (isResultOptionsVisible() ? optionsSearchInput : searchInput).focus();
 window.addEventListener("focus", () => {
 	(isResultOptionsVisible() ? optionsSearchInput : searchInput).focus();
+	loadFreshData().then(() => {
+		filterResults();
+	});
 });
 
 renderFooter();

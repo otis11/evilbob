@@ -23,3 +23,6 @@ Result Groups provide results and actions inside the command palette.
 | ChatGPT | Start a chat with chatgpt |  |  | chromium, firefox, chrome, edg |
 | Downloads | List and manage downloads. | d | downloads | chromium, firefox, chrome, edg |
 | GoogleNew | Create new google docs, sheets, slides ...  | gn |  | chromium, firefox, chrome, edg |
+| TabAndGroupActions | Combined actions for tabs & groups, for instance group tabs by domain | tga | tabs, tabGroups | chromium, firefox, chrome, edg |
+| TabGroups | List tab groups. | tg | tabGroups | chromium, firefox, chrome, edg |
+| Sessions | List your recently closed sessions. | s | sessions | chromium, firefox, chrome, edg |

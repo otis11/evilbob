@@ -6,6 +6,8 @@ import type { Dimensions } from "./theme";
 import type { Theme } from "./theme/themes";
 import { deepMerge } from "./util/deep-merge";
 
+let configCache: BobConfig;
+
 export type ResultGroupConfig = {
 	enabled: boolean;
 };
@@ -68,5 +70,10 @@ export async function setConfig(newConfig: Partial<BobConfig>) {
 }
 
 export async function getConfig(): Promise<BobConfig> {
-	return (await chrome.storage.sync.get(["config"])).config || DEFAULT_CONFIG;
+	if (!configCache) {
+		configCache =
+			(await chrome.storage.sync.get(["config"])).config ||
+			DEFAULT_CONFIG;
+	}
+	return configCache;
 }

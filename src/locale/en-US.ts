@@ -1,5 +1,6 @@
 export default {
-	title: "hello world {count} wo wowow",
-	title2: "hello worldrld {count} wo wo {count2}",
-	title3: "wow",
+	"ResultGroupBob.description":
+		"Internal Bob commands like open settings, reset settings ...",
+	"ResultBobOpenOptions.title": "Bob Options",
+	"ResultBobOpenOptions.description": "Change me here! Settings",
 };

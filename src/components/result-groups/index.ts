@@ -52,7 +52,6 @@ export const RESULT_GROUPS = [
 ];
 
 export const RESULT_GROUPS_BROWSER_FILTERED = (() => {
-	console.log(browserName);
 	return RESULT_GROUPS.filter((group) => {
 		return group.supportedBrowsers.includes(browserName);
 	});

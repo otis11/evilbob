@@ -21,6 +21,11 @@ loadFreshData().then(() => {
 (isResultOptionsVisible() ? optionsSearchInput : searchInput).focus();
 window.addEventListener("focus", () => {
 	(isResultOptionsVisible() ? optionsSearchInput : searchInput).focus();
+
+	if (!config?.preserveInput.onWindowChange) {
+		searchInput.value = "";
+	}
+
 	loadFreshData().then(() => {
 		filterResults();
 	});

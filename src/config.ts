@@ -18,9 +18,15 @@ export type BobConfig = {
 	dimensions: Dimensions;
 	theme: Theme;
 	customTheme: string;
+	preserveInput: {
+		onWindowChange: boolean;
+	};
 };
 
 export const DEFAULT_CONFIG: BobConfig = {
+	preserveInput: {
+		onWindowChange: false,
+	},
 	groups: {
 		ResultGroupBob: {
 			enabled: true,

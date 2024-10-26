@@ -5,6 +5,7 @@ import { Result } from "../result/result";
 
 export class ResultGroupWindow extends ResultGroup {
 	permissions = [];
+	public prefix?: string | undefined = "win";
 	public description =
 		"Interact with chrome windows, for instance 'close other windows'";
 

@@ -5,6 +5,7 @@ import { Shortcut } from "../shortcut/shortcut";
 
 export class ResultGroupShortcuts extends ResultGroup {
 	description = "Search for browser shortcuts.";
+	public prefix?: string | undefined = "sc";
 
 	public async getResults(): Promise<Result[]> {
 		const shortcuts = [

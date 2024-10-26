@@ -5,6 +5,7 @@ import { Search } from "../search";
 
 export class ResultGroupChatGPT extends ResultGroup {
 	permissions = [];
+	public prefix?: string | undefined = "gpt";
 	description = "Start a chat with chatgpt";
 
 	public async getResults(): Promise<Result[]> {

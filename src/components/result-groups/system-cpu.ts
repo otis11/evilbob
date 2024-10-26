@@ -4,6 +4,7 @@ import { Result } from "../result/result";
 
 export class ResultGroupSystemCpu extends ResultGroup {
 	permissions = ["system.cpu"];
+	public prefix?: string | undefined = "cpu";
 	description = "Information about your system cpu.";
 	supportedBrowsers = ["chromium", "chrome", "edg"];
 

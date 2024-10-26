@@ -4,6 +4,7 @@ import { Result } from "../result/result";
 import type { Search } from "../search";
 
 export class ResultGroupContentSettings extends ResultGroup {
+	public prefix?: string | undefined = "cs";
 	permissions = ["contentSettings"];
 	description =
 		"Settings that control whether websites can use features such as cookies, JavaScript, and plugins";

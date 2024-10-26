@@ -7,6 +7,7 @@ export class ResultGroupSystemMemory extends ResultGroup {
 	permissions = ["system.memory"];
 	description = "Information about your system memory.";
 	supportedBrowsers = ["chromium", "chrome", "edg"];
+	public prefix?: string | undefined = "mem";
 
 	public async getResults(): Promise<Result[]> {
 		const memory = await chrome.system.memory.getInfo();

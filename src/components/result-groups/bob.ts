@@ -5,6 +5,7 @@ import { ResultGroup } from "../result-group";
 import { Result } from "../result/result";
 
 export class ResultGroupBob extends ResultGroup {
+	public prefix?: string | undefined = "bob";
 	permissions = [];
 	description =
 		"Internal Bob commands like open settings, reset settings ...";

@@ -1,5 +1,5 @@
 import { faviconFromUrl, iconFromString, iconHistory } from "../../icons";
-import { refocusLastActiveWindow } from "../../util/last-active-window";
+import { focusLastActiveWindow } from "../../util/last-active-window";
 import { ResultGroup } from "../result-group";
 import { Result } from "../result/result";
 import type { Search } from "../search";
@@ -40,7 +40,7 @@ export class ResultHistory extends Result {
 	async execute(): Promise<void> {
 		if (this.item.url) {
 			chrome.tabs.create({ url: this.item.url });
-			refocusLastActiveWindow();
+			focusLastActiveWindow();
 		} else {
 			console.error("history has no url", this);
 		}
@@ -68,7 +68,7 @@ class ResultRemoveHistory extends Result {
 	public async execute(search: Search, results: Result[]): Promise<void> {
 		if (this.item.url) {
 			await chrome.history.deleteUrl({ url: this.item.url });
-			refocusLastActiveWindow();
+			focusLastActiveWindow();
 		}
 	}
 }

@@ -12,9 +12,9 @@ import {
 } from "../../icons";
 import { getLastActiveTab } from "../../util/last-active-tab";
 import {
+	focusLastActiveWindow,
 	getLastActiveWindow,
 	getLastActiveWindowTabs,
-	refocusLastActiveWindow,
 } from "../../util/last-active-window";
 import { ResultGroup } from "../result-group";
 import { Result } from "../result/result";
@@ -55,7 +55,7 @@ class ResultTabDuplicate extends Result {
 		const lastActive = await getLastActiveTab();
 		if (lastActive?.id) {
 			await chrome.tabs.duplicate(lastActive.id);
-			refocusLastActiveWindow();
+			focusLastActiveWindow();
 		}
 	}
 }
@@ -73,7 +73,7 @@ class ResultTabMute extends Result {
 		const lastActive = await getLastActiveTab();
 		if (lastActive?.id) {
 			await chrome.tabs.update(lastActive.id, { muted: true });
-			refocusLastActiveWindow();
+			focusLastActiveWindow();
 		}
 	}
 }
@@ -91,7 +91,7 @@ class ResultTabUnmute extends Result {
 		const lastActive = await getLastActiveTab();
 		if (lastActive?.id) {
 			await chrome.tabs.update(lastActive.id, { muted: false });
-			refocusLastActiveWindow();
+			focusLastActiveWindow();
 		}
 	}
 }
@@ -109,7 +109,7 @@ class ResultTabPin extends Result {
 		const lastActive = await getLastActiveTab();
 		if (lastActive?.id) {
 			await chrome.tabs.update(lastActive.id, { pinned: true });
-			refocusLastActiveWindow();
+			focusLastActiveWindow();
 		}
 	}
 }
@@ -127,7 +127,7 @@ class ResultTabUnpin extends Result {
 		const lastActive = await getLastActiveTab();
 		if (lastActive?.id) {
 			await chrome.tabs.update(lastActive.id, { pinned: false });
-			refocusLastActiveWindow();
+			focusLastActiveWindow();
 		}
 	}
 }
@@ -179,7 +179,7 @@ export class ResultSortTabsByUrl extends Result {
 				chrome.tabs.move(tab.id, { index });
 			}
 		}
-		refocusLastActiveWindow();
+		focusLastActiveWindow();
 	}
 }
 
@@ -201,7 +201,7 @@ export class ResultMergeWindows extends Result {
 			windowId: lastWindow.id,
 			index: 999,
 		});
-		refocusLastActiveWindow();
+		focusLastActiveWindow();
 	}
 }
 
@@ -221,7 +221,7 @@ export class ResultSplitIntoWindows extends Result {
 			promises.push(chrome.windows.create({ tabId: tab.id }));
 		}
 		await Promise.all(promises);
-		refocusLastActiveWindow();
+		focusLastActiveWindow();
 	}
 }
 
@@ -244,7 +244,7 @@ export class ResultCloseOtherTabs extends Result {
 			}
 		}
 		await Promise.all(promises);
-		refocusLastActiveWindow();
+		focusLastActiveWindow();
 	}
 }
 
@@ -283,6 +283,6 @@ class ResultTabCloseBySearch extends ResultTab {
 				await chrome.tabs.remove(result.tab.id);
 			}
 		}
-		refocusLastActiveWindow();
+		focusLastActiveWindow();
 	}
 }

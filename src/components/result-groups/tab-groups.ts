@@ -1,7 +1,7 @@
 import type { BrowserName } from "../../platform";
 import {
+	focusLastActiveWindow,
 	getLastActiveWindow,
-	refocusLastActiveWindow,
 } from "../../util/last-active-window";
 import { ResultGroup } from "../result-group";
 import { Result } from "../result/result";
@@ -43,6 +43,6 @@ class ResultTabGroup extends Result {
 				windowId: lastActiveWindow.id,
 			});
 		}
-		refocusLastActiveWindow();
+		focusLastActiveWindow();
 	}
 }

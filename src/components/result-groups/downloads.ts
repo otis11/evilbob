@@ -5,7 +5,7 @@ import {
 	iconIncognito,
 } from "../../icons";
 import { formatBytes } from "../../util/format-bytes";
-import { refocusLastActiveWindow } from "../../util/last-active-window";
+import { focusLastActiveWindow } from "../../util/last-active-window";
 import { ResultGroup } from "../result-group";
 import { Result } from "../result/result";
 import type { Search } from "../search";
@@ -103,7 +103,7 @@ class ResultEraseDownload extends Result {
 
 	public async execute(search: Search, results: Result[]): Promise<void> {
 		await chrome.downloads.erase({ id: this.item.id });
-		refocusLastActiveWindow();
+		focusLastActiveWindow();
 	}
 }
 
@@ -118,6 +118,6 @@ class ResultRemoveDownload extends Result {
 
 	public async execute(search: Search, results: Result[]): Promise<void> {
 		await chrome.downloads.removeFile(this.item.id);
-		refocusLastActiveWindow();
+		focusLastActiveWindow();
 	}
 }

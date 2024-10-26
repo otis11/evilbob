@@ -1,7 +1,7 @@
 import { DEFAULT_CONFIG, setConfig } from "../../config";
 import { iconBob, iconFromString } from "../../icons";
 import { DEFAULT_USAGE, setUsage } from "../../usage";
-import { refocusLastActiveWindow } from "../../util/last-active-window";
+import { focusLastActiveWindow } from "../../util/last-active-window";
 import { ResultGroup } from "../result-group";
 import { Result } from "../result/result";
 
@@ -31,7 +31,7 @@ export class ResultBobOpenOptions extends Result {
 	}
 	async execute(): Promise<void> {
 		chrome.runtime.openOptionsPage();
-		refocusLastActiveWindow();
+		focusLastActiveWindow();
 	}
 }
 
@@ -45,7 +45,7 @@ export class ResultBobResetOptions extends Result {
 	}
 	async execute(): Promise<void> {
 		setConfig(DEFAULT_CONFIG);
-		refocusLastActiveWindow();
+		focusLastActiveWindow();
 	}
 }
 
@@ -59,7 +59,7 @@ export class ResultBobResetUsage extends Result {
 	}
 	async execute(): Promise<void> {
 		setUsage(DEFAULT_USAGE);
-		refocusLastActiveWindow();
+		focusLastActiveWindow();
 	}
 }
 
@@ -75,6 +75,6 @@ export class ResultBobShowUsage extends Result {
 		chrome.tabs.create({
 			url: "src/views/usage/index.html",
 		});
-		refocusLastActiveWindow();
+		focusLastActiveWindow();
 	}
 }

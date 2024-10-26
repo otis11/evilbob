@@ -26,6 +26,7 @@ export function sortResults(
 		// if (aa.description.score < bb.description.score) {
 		// 	return 1;
 		// }
+
 		// by recent usage
 		const aL = usage.results[a.id()]?.l || 0;
 		const bL = usage.results[b.id()]?.l || 0;
@@ -34,6 +35,16 @@ export function sortResults(
 		}
 		if (aL < bL) {
 			return 1;
+		}
+
+		// by length of title, shorter should be first as they have less text to match with
+		const aTL = a.title.length;
+		const bTL = b.title.length;
+		if (aTL > bTL) {
+			return 1;
+		}
+		if (aTL < bTL) {
+			return -1;
 		}
 
 		return 0;

@@ -1,6 +1,7 @@
 // @ts-expect-error typescript doesnt know dark.css?raw as a file
 import darkTheme from "./themes/dark.css?raw";
 
+import type { Locale } from "./locale";
 import type { Dimensions } from "./theme";
 import type { Theme } from "./theme/themes";
 import { deepMerge } from "./util/deep-merge";
@@ -14,6 +15,7 @@ export type ResultUsage = {
 	c: number;
 };
 export type BobConfig = {
+	locale: Locale;
 	groups: Record<string, ResultGroupConfig | undefined>;
 	dimensions: Dimensions;
 	theme: Theme;
@@ -26,6 +28,7 @@ export type BobConfig = {
 };
 
 export const DEFAULT_CONFIG: BobConfig = {
+	locale: "en-US",
 	onBobWindowLeave: {
 		closeWindow: false,
 		clearSearch: true,

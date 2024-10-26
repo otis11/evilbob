@@ -4,63 +4,80 @@ import { ResultGroup } from "../result-group";
 import { Result } from "../result/result";
 import { Search } from "../search";
 
-export class ResultGroupGoogle extends ResultGroup {
+export class Google extends ResultGroup {
 	prefix = "g";
-	description = "Google search & Google filters like intitle:youtube.";
+	public description(): string {
+		return "Google search & Google filters like intitle:youtube.";
+	}
+
+	public name(): string {
+		return "Google";
+	}
 
 	public getResults(): Promise<Result[]> {
 		return new Promise((resolve) => {
 			resolve([
-				new ResultGoogle(
+				new GoogleDork(
 					"intitle",
 					'intitle:"Youtube". Searches for pages with a specific keyword in the title',
 				),
-				new ResultGoogle(
+				new GoogleDork(
 					"inurl",
 					"inurl:python. Searches for URLs containing a specific keyword",
 				),
-				new ResultGoogle(
+				new GoogleDork(
 					"filetype",
 					"filetype:pdf. Searches for specific file types",
 				),
-				new ResultGoogle(
+				new GoogleDork(
 					"site",
 					"site:github.com. Limits search to a specific website.",
 				),
-				new ResultGoogle(
+				new GoogleDork(
 					"intext",
 					'intext:"Hello World".  Searches for pages with a specific keyword in the page content.',
 				),
-				new ResultGoogle(
+				new GoogleDork(
 					"before/after",
 					"before:2000-01-01 after:2001-01-01. Searches for a specific date range.",
 				),
-				new ResultGoogle(
+				new GoogleDork(
 					"|",
 					"site:facebook.com | site:twitter.com. Searches for a OR b.",
 				),
-				new ResultGoogle(
+				new GoogleDork(
 					"&",
 					"site:facebook.com & site:twitter.com. Searches for a AND b.",
 				),
-				new ResultGoogle("-", "-site:facebook.com. Exclude results."),
-				new ResultGoogleSearch(),
+				new GoogleDork("-", "-site:facebook.com. Exclude results."),
+				new GoogleSearch(),
 			]);
 		});
 	}
 }
 
-export class ResultGoogle extends Result {
+export class GoogleDork extends Result {
 	public id(): string {
-		return this.name() + this.title;
+		return this.name() + this.title();
 	}
 
-	constructor(title: string, description: string) {
-		super({
-			title,
-			description,
-			prepend: iconFromString(iconGoogle),
-		});
+	title(): string {
+		return this.titleText;
+	}
+
+	description(): string {
+		return this.descriptionText;
+	}
+
+	prepend(): HTMLElement | undefined {
+		return iconFromString(iconGoogle);
+	}
+
+	constructor(
+		private titleText: string,
+		private descriptionText: string,
+	) {
+		super();
 	}
 
 	public search(search: Search) {
@@ -69,7 +86,7 @@ export class ResultGoogle extends Result {
 				selectionStart: 0,
 				text: search.text,
 			}),
-			this.title.includes(search.words().at(-1) || "")
+			this.title().includes(search.words().at(-1) || "")
 				? search.minMatchScore() + 1
 				: 0,
 		);
@@ -83,9 +100,9 @@ export class ResultGoogle extends Result {
 	}
 }
 
-export class ResultGoogleSearch extends Result {
+export class GoogleSearch extends Result {
 	public id(): string {
-		return this.name() + this.title;
+		return this.name() + this.title();
 	}
 
 	public search(search: Search) {
@@ -98,12 +115,16 @@ export class ResultGoogleSearch extends Result {
 		);
 	}
 
-	constructor() {
-		super({
-			title: "Google",
-			description: "Search google",
-			prepend: iconFromString(iconGoogle),
-		});
+	title(): string {
+		return "Google";
+	}
+
+	description(): string {
+		return "Search Google";
+	}
+
+	prepend(): HTMLElement | undefined {
+		return iconFromString(iconGoogle);
 	}
 
 	async execute(search: Search): Promise<void> {

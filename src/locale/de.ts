@@ -1,3 +1,7 @@
 import type { Translations } from ".";
 
-export default {} satisfies Translations;
+export default {
+	"Bob.description": "",
+	"BobOpenOptions.description": "Bob Einstellungen",
+	"BobOpenOptions.title": "Einstellungen öffnen",
+} satisfies Translations;

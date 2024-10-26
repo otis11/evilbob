@@ -4,9 +4,15 @@ import { ResultGroup } from "../result-group";
 import { Result } from "../result/result";
 import type { Search } from "../search";
 
-export class ResultGroupPrefixes extends ResultGroup {
+export class Prefixes extends ResultGroup {
 	prefix = "?";
-	description = "Filter for a specific ResultGroup only.";
+	public description(): string {
+		return "Filter for a specific ResultGroup only.";
+	}
+
+	public name(): string {
+		return "Prefixes";
+	}
 
 	public async getResults(): Promise<Result[]> {
 		const groups = await getEnabledResultGroups();
@@ -14,10 +20,7 @@ export class ResultGroupPrefixes extends ResultGroup {
 		for (const group of groups) {
 			if (group.prefix) {
 				results.push(
-					new ResultPrefix(
-						group.prefix,
-						`Filter for ${group.nameHumanReadable}`,
-					),
+					new Prefix(group.prefix, `Filter for ${group.name()}`),
 				);
 			}
 		}
@@ -25,22 +28,32 @@ export class ResultGroupPrefixes extends ResultGroup {
 	}
 }
 
-export class ResultPrefix extends Result {
-	constructor(title: string, description: string) {
-		super({
-			title,
-			description,
-			prepend: iconFromString(iconFilter),
-		});
+export class Prefix extends Result {
+	title(): string {
+		return this.titleText;
+	}
+
+	description(): string {
+		return this.descriptionText;
+	}
+
+	prepend(): HTMLElement | undefined {
+		return iconFromString(iconFilter);
+	}
+	constructor(
+		private titleText: string,
+		private descriptionText: string,
+	) {
+		super();
 	}
 
 	public id(): string {
-		return this.name() + this.title;
+		return this.name() + this.title();
 	}
 
 	async execute(search: Search): Promise<void> {
 		if (search.inputElement) {
-			search.inputElement.value = this.title;
+			search.inputElement.value = this.title();
 			search.inputElement.scrollIntoView();
 			search.inputElement.focus();
 		}

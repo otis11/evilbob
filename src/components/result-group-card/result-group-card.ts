@@ -12,7 +12,7 @@ export function ResultGroupCard(group: ResultGroup, config: BobConfig) {
 
 	const checkbox = document.createElement("input");
 	checkbox.type = "checkbox";
-	checkbox.checked = !!config.groups[group.name]?.enabled;
+	checkbox.checked = !!config.groups[group.name()]?.enabled;
 	checkbox.addEventListener("change", async () => {
 		if (checkbox.checked) {
 			enableResultGroup(group);
@@ -21,11 +21,11 @@ export function ResultGroupCard(group: ResultGroup, config: BobConfig) {
 		}
 	});
 	const labelText = document.createElement("span");
-	labelText.innerText = group.nameHumanReadable;
+	labelText.innerText = group.name();
 	label.append(checkbox, labelText);
 	const description = document.createElement("div");
 	description.classList.add("result-group-description");
-	description.innerText = group.description;
+	description.innerText = group.description();
 	container.append(label, description);
 
 	return container;

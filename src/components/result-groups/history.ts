@@ -3,34 +3,53 @@ import { focusLastActiveWindow } from "../../util/last-active-window";
 import { ResultGroup } from "../result-group";
 import { Result } from "../result/result";
 import type { Search } from "../search";
+import type { Tag } from "../tags/tags";
 
-export class ResultGroupHistory extends ResultGroup {
+export class History extends ResultGroup {
 	permissions = ["history"];
 	prefix = "h";
-	description = "Search & interact with browser history.";
+	public description(): string {
+		return "Search & interact with browser history.";
+	}
+
+	public name(): string {
+		return "History";
+	}
 
 	public async getResults(): Promise<Result[]> {
 		const items = await chrome.history.search({ text: "" });
-		return items.map((item) => new ResultHistory(item));
+		return items.map((item) => new HistoryItem(item));
 	}
 }
 
-export class ResultHistory extends Result {
-	constructor(private item: chrome.history.HistoryItem) {
-		super({
-			description: `${item.url}`,
-			title: item.title || "",
-			tags: [
-				{
-					html: iconFromString(iconHistory, "12px").outerHTML,
-					type: "default",
-				},
-				{ text: `${item.visitCount} visits`, type: "default" },
-			],
-			prepend: item.url ? faviconFromUrl(item.url) : undefined,
-		});
+export class HistoryItem extends Result {
+	description(): string {
+		return this.item.url || "";
+	}
 
-		this.options = new ResultHistoryOptions(this.item);
+	title(): string {
+		return this.item.title || "";
+	}
+
+	tags(): Tag[] {
+		return [
+			{
+				html: iconFromString(iconHistory, "12px").outerHTML,
+				type: "default",
+			},
+			{ text: `${this.item.visitCount} visits`, type: "default" },
+		];
+	}
+
+	prepend(): HTMLElement | undefined {
+		return this.item.url ? faviconFromUrl(this.item.url) : undefined;
+	}
+
+	options(): ResultGroup | undefined {
+		return new HistoryItemOptions(this.item);
+	}
+	constructor(private item: chrome.history.HistoryItem) {
+		super();
 	}
 
 	public id(): string {
@@ -47,22 +66,29 @@ export class ResultHistory extends Result {
 	}
 }
 
-class ResultHistoryOptions extends ResultGroup {
+class HistoryItemOptions extends ResultGroup {
 	constructor(private item: chrome.history.HistoryItem) {
 		super();
 	}
 
 	public async getResults(): Promise<Result[]> {
-		return [new ResultRemoveHistory(this.item)];
+		return [new HistoryRemove(this.item)];
+	}
+
+	public name(): string {
+		return "History Item Options";
 	}
 }
 
-class ResultRemoveHistory extends Result {
+class HistoryRemove extends Result {
+	title(): string {
+		return "Remove url occurences";
+	}
+	description(): string {
+		return "Remove all url occurences from history. Delete";
+	}
 	constructor(private item: chrome.history.HistoryItem) {
-		super({
-			title: "Remove url occurences",
-			description: "Remove all url occurences from history. Delete",
-		});
+		super();
 	}
 
 	public async execute(search: Search, results: Result[]): Promise<void> {

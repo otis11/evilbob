@@ -1,9 +1,9 @@
 import { updateConfig } from "../../config";
-import { iconBob, iconFromString } from "../../icons";
 import { loadTheme } from "../../theme";
 import type { Theme } from "../../theme/themes";
 import { Result } from "../result/result";
 import type { Search } from "../search";
+import type { Tag } from "../tags/tags";
 import "./theme-card.css";
 
 export function ThemeCard(theme: Theme, isActiveTheme = false) {
@@ -37,23 +37,27 @@ export function ThemeCard(theme: Theme, isActiveTheme = false) {
 		cardColors.append(colorDiv);
 	}
 
-	const li = new ResultTheme().asHtmlElement();
+	const li = new ThemeMock().asHtmlElement();
 	li.style.width = "100%";
 	cardContainer.append(base, cardColors, li);
 	return cardContainer;
 }
 
-class ResultTheme extends Result {
-	constructor() {
-		super({
-			title: "title",
-			description: "description",
-			tags: [
-				{ text: "tag 1", type: "default" },
-				{ text: "tag error", type: "error" },
-			],
-			prepend: iconFromString(iconBob),
-		});
+class ThemeMock extends Result {
+	title(): string {
+		return "title";
+	}
+	description(): string {
+		return "description";
+	}
+	tags(): Tag[] {
+		return [
+			{ text: "tag 1", type: "default" },
+			{ text: "tag error", type: "error" },
+		];
+	}
+	prepend(): HTMLElement | undefined {
+		return;
 	}
 	async execute(search: Search): Promise<void> {}
 }

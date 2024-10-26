@@ -19,36 +19,41 @@ import {
 import { ResultGroup } from "../result-group";
 import { Result } from "../result/result";
 import type { Search } from "../search";
-import { ResultTab } from "./tabs";
+import { Tab } from "./tabs";
 
-export class ResultGroupTabActions extends ResultGroup {
+export class TabActions extends ResultGroup {
 	permissions = ["tabs"];
 	prefix = "a";
-	description = "Interact with browser tabs. Sort, merge, duplicate...";
+	public name(): string {
+		return "Tab Actions";
+	}
+	public description(): string {
+		return "Interact with browser tabs. Sort, merge, duplicate...";
+	}
 
 	public async getResults(): Promise<Result[]> {
 		return [
-			new ResultCloseOtherTabs(),
-			new ResultSortTabsByUrl(),
-			new ResultTabDuplicate(),
-			new ResultTabMute(),
-			new ResultTabUnmute(),
-			new ResultTabPin(),
-			new ResultTabUnpin(),
-			new ResultMergeWindows(),
-			new ResultCloseBySearch(),
-			new ResultSplitIntoWindows(),
+			new CloseOtherTabs(),
+			new SortTabsByUrl(),
+			new TabDuplicate(),
+			new TabMute(),
+			new TabUnmute(),
+			new TabPin(),
+			new TabUnpin(),
+			new MergeWindows(),
+			new CloseBySearch(),
+			new SplitIntoWindows(),
 		];
 	}
 }
 
-class ResultTabDuplicate extends Result {
-	constructor() {
-		super({
-			title: "Duplicate Tab",
-			description: "",
-			prepend: iconFromString(iconTabPlus),
-		});
+class TabDuplicate extends Result {
+	title(): string {
+		return "Duplicate Tab";
+	}
+
+	prepend(): HTMLElement | undefined {
+		return iconFromString(iconTabPlus);
 	}
 
 	async execute(search: Search): Promise<void> {
@@ -60,13 +65,12 @@ class ResultTabDuplicate extends Result {
 	}
 }
 
-class ResultTabMute extends Result {
-	constructor() {
-		super({
-			title: "Mute Tab",
-			description: "",
-			prepend: iconFromString(iconMusicOff),
-		});
+class TabMute extends Result {
+	title(): string {
+		return "Mute Tab";
+	}
+	prepend(): HTMLElement | undefined {
+		return iconFromString(iconMusicOff);
 	}
 
 	async execute(search: Search): Promise<void> {
@@ -78,13 +82,12 @@ class ResultTabMute extends Result {
 	}
 }
 
-class ResultTabUnmute extends Result {
-	constructor() {
-		super({
-			title: "Unmute Tab",
-			description: "",
-			prepend: iconFromString(iconMusic),
-		});
+class TabUnmute extends Result {
+	title(): string {
+		return "Unmute Tab";
+	}
+	prepend(): HTMLElement | undefined {
+		return iconFromString(iconMusic);
 	}
 
 	async execute(search: Search): Promise<void> {
@@ -96,13 +99,13 @@ class ResultTabUnmute extends Result {
 	}
 }
 
-class ResultTabPin extends Result {
-	constructor() {
-		super({
-			title: "Pin Tab",
-			description: "",
-			prepend: iconFromString(iconPin),
-		});
+class TabPin extends Result {
+	title(): string {
+		return "Pin Tab";
+	}
+
+	prepend(): HTMLElement | undefined {
+		return iconFromString(iconPin);
 	}
 
 	async execute(search: Search): Promise<void> {
@@ -114,13 +117,12 @@ class ResultTabPin extends Result {
 	}
 }
 
-class ResultTabUnpin extends Result {
-	constructor() {
-		super({
-			title: "Unpin Tab",
-			description: "",
-			prepend: iconFromString(iconPinOff),
-		});
+class TabUnpin extends Result {
+	title(): string {
+		return "Unpin Tab";
+	}
+	prepend(): HTMLElement | undefined {
+		return iconFromString(iconPinOff);
 	}
 
 	async execute(search: Search): Promise<void> {
@@ -132,13 +134,12 @@ class ResultTabUnpin extends Result {
 	}
 }
 
-export class ResultSortTabsByUrl extends Result {
-	constructor() {
-		super({
-			title: "Sort tabs by url",
-			description: "",
-			prepend: iconFromString(iconSortAlphabetically),
-		});
+export class SortTabsByUrl extends Result {
+	title(): string {
+		return "Sort tabs by url";
+	}
+	prepend(): HTMLElement | undefined {
+		return iconFromString(iconSortAlphabetically);
 	}
 	async execute(): Promise<void> {
 		const tabs = await getLastActiveWindowTabs();
@@ -183,13 +184,12 @@ export class ResultSortTabsByUrl extends Result {
 	}
 }
 
-export class ResultMergeWindows extends Result {
-	constructor() {
-		super({
-			title: "Merge windows",
-			description: "",
-			prepend: iconFromString(iconWindowRestore),
-		});
+export class MergeWindows extends Result {
+	title(): string {
+		return "Merge Windows";
+	}
+	prepend(): HTMLElement | undefined {
+		return iconFromString(iconWindowRestore);
 	}
 	async execute(): Promise<void> {
 		const lastWindow = await getLastActiveWindow();
@@ -205,13 +205,12 @@ export class ResultMergeWindows extends Result {
 	}
 }
 
-export class ResultSplitIntoWindows extends Result {
-	constructor() {
-		super({
-			title: "Split tabs into windows",
-			description: "",
-			prepend: iconFromString(iconArrowVerticalSplit),
-		});
+export class SplitIntoWindows extends Result {
+	title(): string {
+		return "Split tabs into windows";
+	}
+	prepend(): HTMLElement | undefined {
+		return iconFromString(iconArrowVerticalSplit);
 	}
 
 	async execute(): Promise<void> {
@@ -225,13 +224,12 @@ export class ResultSplitIntoWindows extends Result {
 	}
 }
 
-export class ResultCloseOtherTabs extends Result {
-	constructor() {
-		super({
-			title: "Close other tabs",
-			description: "",
-			prepend: iconFromString(iconTabRemove),
-		});
+export class CloseOtherTabs extends Result {
+	title(): string {
+		return "Close other tabs";
+	}
+	prepend(): HTMLElement | undefined {
+		return iconFromString(iconTabRemove);
 	}
 
 	async execute(): Promise<void> {
@@ -248,15 +246,19 @@ export class ResultCloseOtherTabs extends Result {
 	}
 }
 
-export class ResultCloseBySearch extends Result {
-	constructor() {
-		super({
-			options: new ResultOptionsCloseBySearch(),
-			title: "Close tabs by search",
-			description:
-				"Close the following tabs by search. Select any tab to close them.",
-			prepend: iconFromString(iconTabRemove),
-		});
+export class CloseBySearch extends Result {
+	options(): ResultGroup | undefined {
+		return new CloseBySearchOptions();
+	}
+	title(): string {
+		return "Close tabs by search";
+	}
+
+	description(): string {
+		return "Close the following tabs by search. Select any tab to close them.";
+	}
+	prepend(): HTMLElement | undefined {
+		return iconFromString(iconTabRemove);
 	}
 
 	async execute(search: Search): Promise<void> {
@@ -264,19 +266,22 @@ export class ResultCloseBySearch extends Result {
 	}
 }
 
-class ResultOptionsCloseBySearch extends ResultGroup {
+class CloseBySearchOptions extends ResultGroup {
+	public name(): string {
+		return "Close By Search Options";
+	}
 	public async getResults(): Promise<Result[]> {
 		const tabs = await chrome.tabs.query({});
-		return tabs.map((tab) => new ResultTabCloseBySearch(tab));
+		return tabs.map((tab) => new TabsCloseBySearch(tab));
 	}
 }
 
-class ResultTabCloseBySearch extends ResultTab {
+class TabsCloseBySearch extends Tab {
 	async execute(search: Search, results: Result[]): Promise<void> {
 		const currentWindow = await chrome.windows.getCurrent();
 		for (const result of results) {
 			if (
-				result instanceof ResultTab &&
+				result instanceof Tab &&
 				result.tab.id &&
 				result.tab.windowId !== currentWindow.id
 			) {

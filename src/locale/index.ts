@@ -34,7 +34,6 @@ type tParameters<K extends TranslationKey> = ExtractPlaceholdersUnion<
 		];
 
 export function t<K extends TranslationKey>(...tParameters: tParameters<K>) {
-	console.log(tParameters, locale);
 	if (!locale) {
 		return "NO CURRENT LOCALE";
 	}
@@ -50,6 +49,5 @@ export function t<K extends TranslationKey>(...tParameters: tParameters<K>) {
 }
 
 export function setLocale(newLocale: Locale) {
-	console.log(newLocale, "setlocale");
 	locale = newLocale;
 }

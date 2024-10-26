@@ -6,25 +6,29 @@ import {
 import { ResultGroup } from "../result-group";
 import { Result } from "../result/result";
 
-export class ResultGroupWindow extends ResultGroup {
+export class Window extends ResultGroup {
 	permissions = [];
 	public prefix?: string | undefined = "win";
-	public description =
-		"Interact with chrome windows, for instance 'close other windows'";
+	public description(): string {
+		return "Interact with chrome windows, for instance 'close other windows'";
+	}
+	public name(): string {
+		return "Window";
+	}
 
 	public async getResults(): Promise<Result[]> {
-		return [new ResultCloseOtherWindows()];
+		return [new CloseOtherWindows()];
 	}
 }
 
-export class ResultCloseOtherWindows extends Result {
-	constructor() {
-		super({
-			title: "Close other windows",
-			description: "",
-			prepend: iconFromString(iconWindowClose),
-		});
+export class CloseOtherWindows extends Result {
+	title(): string {
+		return "Close other windows";
 	}
+	prepend(): HTMLElement | undefined {
+		return iconFromString(iconWindowClose);
+	}
+
 	async execute(): Promise<void> {
 		const lastActiveWindow = await getLastActiveWindow();
 		const windows = await chrome.windows.getAll();

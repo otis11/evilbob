@@ -9,26 +9,26 @@ import { ResultGroup } from "../result-group";
 import { Result } from "../result/result";
 import type { Search } from "../search";
 
-export class ResultGroupTabAndGroupActions extends ResultGroup {
+export class TabGroupActions extends ResultGroup {
 	permissions = ["tabs", "tabGroups"];
 	prefix = "tga";
-	description =
-		"Combined actions for tabs & groups, for instance group tabs by domain";
+	public description(): string {
+		return "Combined actions for tabs & groups, for instance group tabs by domain";
+	}
+	public name(): string {
+		return "Tab Group Actions";
+	}
 	public supportedBrowsers: BrowserName[] = ["chrome", "chromium", "edg"];
 
 	public async getResults(): Promise<Result[]> {
-		return [new ResultGroupTabsByDomain(), new ResultUngroupTabs()];
+		return [new GroupTabsByDomain(), new UngroupTabs()];
 	}
 }
 
-class ResultGroupTabsByDomain extends Result {
-	constructor() {
-		super({
-			title: "Group tabs by domain",
-			description: "",
-		});
+class GroupTabsByDomain extends Result {
+	title(): string {
+		return "Group tabs by domain";
 	}
-
 	public async execute(search: Search, results: Result[]): Promise<void> {
 		const tabs = await getLastActiveWindowTabs();
 		const lastActiveWindow = await getLastActiveWindow();
@@ -64,12 +64,9 @@ class ResultGroupTabsByDomain extends Result {
 	}
 }
 
-class ResultUngroupTabs extends Result {
-	constructor() {
-		super({
-			title: "Ungroup Tabs",
-			description: "",
-		});
+class UngroupTabs extends Result {
+	title(): string {
+		return "Ungroup Tabs";
 	}
 
 	async execute(search: Search, results: Result[]): Promise<void> {

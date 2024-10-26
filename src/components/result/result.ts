@@ -24,9 +24,8 @@ export abstract class Result {
 		return undefined;
 	}
 
-	titleLower: string;
-	descriptionLower: string;
-	instanceId: string;
+	static lastInstanceId = 0
+	instanceId: number;
 	lastSearch?: {
 		textLower: string;
 		title: {
@@ -47,10 +46,7 @@ export abstract class Result {
 	static globalRegistry: Record<string, Result> = {};
 
 	constructor() {
-		this.instanceId = this.id();
-
-		this.titleLower = this.title().toLowerCase();
-		this.descriptionLower = this.description().toLowerCase();
+		this.instanceId = Result.lastInstanceId++;
 		Result.globalRegistry[this.instanceId] = this;
 	}
 
@@ -64,13 +60,13 @@ export abstract class Result {
 				search.text,
 				search.textLower,
 				this.title(),
-				this.titleLower,
+				this.title().toLowerCase(),
 			),
 			description: wordSplitMatch(
 				search.text,
 				search.textLower,
 				this.description(),
-				this.descriptionLower,
+				this.description().toLowerCase(),
 			),
 			textLower: search.textLower,
 		};
@@ -84,13 +80,13 @@ export abstract class Result {
 				search.text,
 				search.textLower,
 				this.title(),
-				this.titleLower,
+				this.title().toLowerCase(),
 			),
 			description: wordSplitMatch(
 				search.text,
 				search.textLower,
 				this.description(),
-				this.descriptionLower,
+				this.description().toLowerCase(),
 			),
 			textLower: search.textLower,
 		};
@@ -144,7 +140,7 @@ export abstract class Result {
 	public asHtmlElement() {
 		const li = document.createElement("li");
 		li.classList.add("result");
-		li.setAttribute("data-instance-id", this.instanceId);
+		li.setAttribute("data-instance-id", this.instanceId.toString());
 
 		const content = document.createElement("div");
 		content.classList.add("result-content");

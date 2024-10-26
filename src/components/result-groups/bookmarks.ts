@@ -3,11 +3,18 @@ import { focusLastActiveWindow } from "../../util/last-active-window";
 import { ResultGroup } from "../result-group";
 import { Result } from "../result/result";
 import type { Search } from "../search";
+import type { Tag } from "../tags/tags";
 
-export class ResultGroupBookmarks extends ResultGroup {
+export class Bookmarks extends ResultGroup {
 	permissions = ["bookmarks"];
 	prefix = "b";
-	description = "Search & interact with bookmarks.";
+	public description(): string {
+		return "Search & interact with bookmarks.";
+	}
+
+	public name(): string {
+		return "Bookmarks";
+	}
 
 	public async getResults(): Promise<Result[]> {
 		const tree = await chrome.bookmarks.getTree();
@@ -26,25 +33,41 @@ export class ResultGroupBookmarks extends ResultGroup {
 				continue;
 			}
 
-			results.push(new ResultBookmark(item));
+			results.push(new Bookmark(item));
 		}
 		return results;
 	}
 }
 
-export class ResultBookmark extends Result {
+export class Bookmark extends Result {
+	title(): string {
+		return this.bookmark.title;
+	}
+
+	description(): string {
+		return this.bookmark.url || "";
+	}
+
+	tags(): Tag[] {
+		return [
+			{
+				html: iconFromString(iconBookmark, "12px").outerHTML,
+			},
+		];
+	}
+
+	prepend(): HTMLElement | undefined {
+		return this.bookmark.url
+			? faviconFromUrl(this.bookmark.url)
+			: undefined;
+	}
+
+	options(): ResultGroup {
+		return new BookmarkOptions(this.bookmark);
+	}
+
 	constructor(private bookmark: chrome.bookmarks.BookmarkTreeNode) {
-		super({
-			title: bookmark.title,
-			description: bookmark.url || "",
-			tags: [
-				{
-					html: iconFromString(iconBookmark, "12px").outerHTML,
-				},
-			],
-			prepend: bookmark.url ? faviconFromUrl(bookmark.url) : undefined,
-		});
-		this.options = new ResultBookmarkOptions(this.bookmark);
+		super();
 	}
 
 	public id(): string {
@@ -62,22 +85,32 @@ export class ResultBookmark extends Result {
 	}
 }
 
-class ResultBookmarkOptions extends ResultGroup {
+class BookmarkOptions extends ResultGroup {
 	constructor(private bookmark: chrome.bookmarks.BookmarkTreeNode) {
 		super();
 	}
+	public description(): string {
+		return "";
+	}
+	public name(): string {
+		return "Bookmark Options";
+	}
 
 	public async getResults(): Promise<Result[]> {
-		return [new ResultRemoveBookmark(this.bookmark)];
+		return [new RemoveBookmark(this.bookmark)];
 	}
 }
 
-class ResultRemoveBookmark extends Result {
+class RemoveBookmark extends Result {
+	title(): string {
+		return "Remove";
+	}
+	description(): string {
+		return "Remove bookmark. Delete";
+	}
+
 	constructor(private bookmark: chrome.bookmarks.BookmarkTreeNode) {
-		super({
-			title: "Remove",
-			description: "Remove bookmark. Delete",
-		});
+		super();
 	}
 
 	public async execute(search: Search, results: Result[]): Promise<void> {

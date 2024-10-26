@@ -1,12 +1,12 @@
 import { getConfig, updateConfig } from "../../config";
 import { browserName } from "../../platform";
 import type { ResultGroup } from "../result-group";
-import { ResultGroupBob } from "./bob";
-import { ResultGroupBookmarks } from "./bookmarks";
-import { ResultGroupChatGPT } from "./chatgpt";
-import { ResultGroupCommands } from "./commands";
-import { ResultGroupContentSettings } from "./content-settings";
-import { ResultGroupDownloads } from "./downloads";
+import { Bob } from "./bob";
+import { Bookmarks } from "./bookmarks";
+import { ChatGPT } from "./chatgpt";
+import { Commands } from "./commands";
+import { ContentSettings } from "./content-settings";
+import { Downloads } from "./downloads";
 import { ResultGroupGoogle } from "./google";
 import { ResultGroupGoogleNew } from "./google-new";
 import { ResultGroupHistory } from "./history";
@@ -26,9 +26,9 @@ import { ResultGroupTopSites } from "./top-sites";
 import { ResultGroupWindow } from "./window";
 
 export const RESULT_GROUPS = [
-	new ResultGroupBookmarks(),
+	new Bookmarks(),
 	new ResultGroupShortcuts(),
-	new ResultGroupBob(),
+	new Bob(),
 	new ResultGroupHistory(),
 	new ResultGroupTabs(),
 	new ResultGroupGoogle(),
@@ -38,13 +38,13 @@ export const RESULT_GROUPS = [
 	new ResultGroupSystemCpu(),
 	new ResultGroupSystemMemory(),
 	new ResultGroupSystemStorage(),
-	new ResultGroupContentSettings(),
+	new ContentSettings(),
 	new ResultGroupTopSites(),
-	new ResultGroupCommands(),
+	new Commands(),
 	new ResultGroupTabActions(),
 	new ResultGroupWindow(),
-	new ResultGroupChatGPT(),
-	new ResultGroupDownloads(),
+	new ChatGPT(),
+	new Downloads(),
 	new ResultGroupGoogleNew(),
 	new ResultGroupTabAndGroupActions(),
 	new ResultGroupTabGroups(),

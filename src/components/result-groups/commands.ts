@@ -4,10 +4,15 @@ import { ResultGroup } from "../result-group";
 import { Result } from "../result/result";
 import { Shortcut } from "../shortcut/shortcut";
 
-export class ResultGroupCommands extends ResultGroup {
+export class Commands extends ResultGroup {
 	prefix = "c";
 	permissions = [];
-	description = "Available commands from extensions.";
+	public description(): string {
+		return "Available commands from extensions.";
+	}
+	public name(): string {
+		return "Commands";
+	}
 	public supportedBrowsers: BrowserName[] = ["chrome", "chromium", "edg"];
 
 	public async getResults(): Promise<Result[]> {
@@ -18,15 +23,25 @@ export class ResultGroupCommands extends ResultGroup {
 }
 
 export class ResultCommand extends Result {
+	title(): string {
+		return this.command.name || "";
+	}
+
+	description(): string {
+		return this.command.description || "";
+	}
+
+	prepend(): HTMLElement | undefined {
+		return iconFromString(iconConsoleLine);
+	}
+
+	append(): HTMLElement | undefined {
+		return new Shortcut(
+			(this.command.shortcut || "").split(""),
+		).asHtmlElement();
+	}
 	constructor(private command: chrome.commands.Command) {
-		super({
-			title: command.name || "",
-			description: command.description || "",
-			prepend: iconFromString(iconConsoleLine),
-			append: new Shortcut(
-				(command.shortcut || "").split(""),
-			).asHtmlElement(),
-		});
+		super();
 	}
 
 	public id(): string {

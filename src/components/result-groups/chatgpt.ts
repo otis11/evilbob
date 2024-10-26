@@ -4,38 +4,50 @@ import { ResultGroup } from "../result-group";
 import { Result } from "../result/result";
 import { Search } from "../search";
 
-export class ResultGroupChatGPT extends ResultGroup {
+export class ChatGPT extends ResultGroup {
 	permissions = [];
 	public prefix?: string | undefined = "gpt";
-	description = "Start a chat with chatgpt";
+	public description(): string {
+		return "Start a chat with chatgpt";
+	}
 
+	public name(): string {
+		return "ChatGPT";
+	}
 	public async getResults(): Promise<Result[]> {
-		return [new ResultChatGPTStartChat()];
+		return [new ChatGPTStartChat()];
 	}
 }
 
-export class ResultChatGPTStartChat extends Result {
-	options?: ResultGroup | undefined =
-		new ResultGroupChatGPTStartChatOptions();
-	constructor() {
-		super({
-			title: "ChatGPT start conversation",
-			description: "",
-			prepend: iconFromString(iconBrain),
-		});
+export class ChatGPTStartChat extends Result {
+	title(): string {
+		return "ChatGPT start conversation";
+	}
+
+	options(): ResultGroup | undefined {
+		return new ChatGPTStartChatOptions();
+	}
+	prepend(): HTMLElement | undefined {
+		return iconFromString(iconBrain);
 	}
 	async execute(search: Search): Promise<void> {
 		this.emitShowOptionsEvent();
 	}
 }
 
-export class ResultGroupChatGPTStartChatOptions extends ResultGroup {
+export class ChatGPTStartChatOptions extends ResultGroup {
+	public description(): string {
+		return "";
+	}
+	public name(): string {
+		return "";
+	}
 	public async getResults(): Promise<Result[]> {
-		return [new ResultChatGPTStartChatQuery()];
+		return [new ChatGPTStartChatQuery()];
 	}
 }
 
-export class ResultChatGPTStartChatQuery extends Result {
+export class ChatGPTStartChatQuery extends Result {
 	public search(search: Search) {
 		return this.makeFakeSearch(
 			new Search({
@@ -46,13 +58,14 @@ export class ResultChatGPTStartChatQuery extends Result {
 		);
 	}
 
-	constructor() {
-		super({
-			title: "Prompt ChatGPT.",
-			description: "",
-			prepend: iconFromString(iconBrain),
-		});
+	title(): string {
+		return "Prompt ChatGPT.";
 	}
+
+	prepend(): HTMLElement | undefined {
+		return iconFromString(iconBrain);
+	}
+
 	async execute(search: Search): Promise<void> {
 		const query = encodeURI(search.text);
 		await chrome.tabs.create({ url: `https://chatgpt.com?q=${query}` });

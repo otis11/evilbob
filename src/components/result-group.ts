@@ -3,8 +3,6 @@ import type { Result } from "./result/result";
 import type { Search } from "./search";
 
 export abstract class ResultGroup {
-	public name = this.constructor.name;
-	public nameHumanReadable = this.name.replace("ResultGroup", "");
 	public permissions: string[] = [];
 	public hostPermissions: string[] = [];
 	public supportedBrowsers: BrowserName[] = [
@@ -15,7 +13,10 @@ export abstract class ResultGroup {
 	];
 
 	public prefix?: string;
-	public description = "";
+	public description(): string {
+		return "";
+	}
+	public abstract name(): string;
 	public results: Result[] = [];
 
 	public async loadResults() {

@@ -1,5 +1,7 @@
 import { deepMerge } from "./util/deep-merge";
 
+let usageCache: BobUsage;
+
 export type ResultGroupConfig = {
 	enabled: boolean;
 };
@@ -31,5 +33,10 @@ export async function setUsage(newUsage: Partial<BobUsage>) {
 }
 
 export async function getUsage(): Promise<BobUsage> {
-	return (await chrome.storage.local.get(["usage"])).usage || DEFAULT_USAGE;
+	if (!usageCache) {
+		usageCache =
+			(await chrome.storage.local.get(["usage"])).usage || DEFAULT_USAGE;
+	}
+
+	return usageCache;
 }

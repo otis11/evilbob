@@ -3,7 +3,7 @@ import { translations } from "./translations";
 
 let locale: Locale;
 
-const locales = Object.keys(translations) as Locale[];
+export const LOCALES = Object.keys(translations) as Locale[];
 export type Translations = typeof enUS;
 type TranslationKey = keyof Translations;
 export type Locale = keyof typeof translations;
@@ -33,7 +33,8 @@ type tParameters<K extends TranslationKey> = ExtractPlaceholdersUnion<
 			>,
 		];
 
-function t<K extends TranslationKey>(...tParameters: tParameters<K>) {
+export function t<K extends TranslationKey>(...tParameters: tParameters<K>) {
+	console.log(tParameters, locale);
 	if (!locale) {
 		return "NO CURRENT LOCALE";
 	}
@@ -48,10 +49,7 @@ function t<K extends TranslationKey>(...tParameters: tParameters<K>) {
 	return text;
 }
 
-export function getLocales() {
-	return locales;
-}
-
 export function setLocale(newLocale: Locale) {
+	console.log(newLocale, "setlocale");
 	locale = newLocale;
 }

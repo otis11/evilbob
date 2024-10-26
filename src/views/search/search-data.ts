@@ -21,24 +21,3 @@ export async function loadFreshData() {
 		results.push(...group.results);
 	}
 }
-
-import { type BobConfig, getConfig } from "../../config";
-import { type BobUsage, getUsage } from "../../usage";
-
-let configCache: BobConfig;
-
-export async function getConfigCache() {
-	if (!configCache) {
-		configCache = await getConfig();
-	}
-	return configCache;
-}
-
-let usageCache: BobUsage;
-
-export async function getUsageCache() {
-	if (!usageCache) {
-		usageCache = await getUsage();
-	}
-	return usageCache;
-}

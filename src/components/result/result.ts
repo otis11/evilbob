@@ -6,25 +6,27 @@ import type { Search } from "../search";
 import { type Tag, Tags } from "../tags/tags";
 import "./result.css";
 
-export type ResultConfig = {
-	title: string;
-	description: string;
-	append?: HTMLElement;
-	prepend?: HTMLElement;
-	tags?: Tag[];
-	options?: ResultGroup;
-};
-
 export abstract class Result {
-	title: string;
+	abstract title(): string;
+	description(): string {
+		return "";
+	}
+	options(): ResultGroup | undefined {
+		return undefined;
+	}
+	tags(): Tag[] {
+		return [];
+	}
+	append(): HTMLElement | undefined {
+		return undefined;
+	}
+	prepend(): HTMLElement | undefined {
+		return undefined;
+	}
+
 	titleLower: string;
-	description: string;
 	descriptionLower: string;
-	append?: HTMLElement;
-	prepend?: HTMLElement;
 	instanceId: string;
-	tags: Tag[];
-	options?: ResultGroup;
 	lastSearch?: {
 		textLower: string;
 		title: {
@@ -44,17 +46,11 @@ export abstract class Result {
 
 	static globalRegistry: Record<string, Result> = {};
 
-	constructor(config: ResultConfig) {
-		this.title = config.title;
-		this.description = config.description;
-		this.titleLower = this.title.toLowerCase();
-		this.descriptionLower = this.description.toLowerCase();
-		this.instanceId = crypto.randomUUID();
-		this.append = config.append;
-		this.prepend = config.prepend;
-		this.tags = config.tags || [];
-		this.options = config.options;
+	constructor() {
+		this.instanceId = this.id();
 
+		this.titleLower = this.title().toLowerCase();
+		this.descriptionLower = this.description().toLowerCase();
 		Result.globalRegistry[this.instanceId] = this;
 	}
 
@@ -67,13 +63,13 @@ export abstract class Result {
 			title: wordSplitMatch(
 				search.text,
 				search.textLower,
-				this.title,
+				this.title(),
 				this.titleLower,
 			),
 			description: wordSplitMatch(
 				search.text,
 				search.textLower,
-				this.description,
+				this.description(),
 				this.descriptionLower,
 			),
 			textLower: search.textLower,
@@ -87,13 +83,13 @@ export abstract class Result {
 			title: wordSplitMatch(
 				search.text,
 				search.textLower,
-				this.title,
+				this.title(),
 				this.titleLower,
 			),
 			description: wordSplitMatch(
 				search.text,
 				search.textLower,
-				this.description,
+				this.description(),
 				this.descriptionLower,
 			),
 			textLower: search.textLower,
@@ -153,10 +149,11 @@ export abstract class Result {
 		const content = document.createElement("div");
 		content.classList.add("result-content");
 
-		if (this.prepend) {
+		const prepend = this.prepend();
+		if (prepend) {
 			const span = document.createElement("span");
 			span.classList.add("result-prepend");
-			span.append(this.prepend.cloneNode(true));
+			span.append(prepend.cloneNode(true));
 			li.append(span);
 		}
 
@@ -164,7 +161,7 @@ export abstract class Result {
 		content.append(title);
 
 		if (this.tags.length > 0) {
-			const tags = Tags(this.tags);
+			const tags = Tags(this.tags());
 			content.append(tags);
 		}
 
@@ -172,14 +169,15 @@ export abstract class Result {
 		content.append(description);
 		li.append(content);
 
-		if (this.append) {
+		const append = this.append();
+		if (append) {
 			const span = document.createElement("span");
 			span.classList.add("result-append");
-			span.append(this.append.cloneNode(true));
+			span.append(append.cloneNode(true));
 			li.append(span);
 		}
 
-		if (this.options) {
+		if (this.options()) {
 			const span = document.createElement("span");
 			span.classList.add("result-options");
 			span.append(iconFromString(iconDotsVertical));
@@ -198,15 +196,17 @@ export abstract class Result {
 		const description = document.createElement("div");
 		description.classList.add("result-description");
 		description.append(
-			...this.description.split("").map((char, index) => {
-				if (this.lastSearch?.description.matches[index]) {
-					const span = document.createElement("span");
-					span.classList.add("result-hit");
-					span.innerText = char;
-					return span;
-				}
-				return document.createTextNode(char);
-			}),
+			...this.description()
+				.split("")
+				.map((char, index) => {
+					if (this.lastSearch?.description.matches[index]) {
+						const span = document.createElement("span");
+						span.classList.add("result-hit");
+						span.innerText = char;
+						return span;
+					}
+					return document.createTextNode(char);
+				}),
 		);
 
 		return description;
@@ -217,15 +217,17 @@ export abstract class Result {
 		title.classList.add("result-title");
 		title.innerHTML = "";
 		title.append(
-			...this.title.split("").map((char, index) => {
-				if (this.lastSearch?.title.matches[index]) {
-					const span = document.createElement("span");
-					span.classList.add("result-hit");
-					span.innerText = char;
-					return span;
-				}
-				return document.createTextNode(char);
-			}),
+			...this.title()
+				.split("")
+				.map((char, index) => {
+					if (this.lastSearch?.title.matches[index]) {
+						const span = document.createElement("span");
+						span.classList.add("result-hit");
+						span.innerText = char;
+						return span;
+					}
+					return document.createTextNode(char);
+				}),
 		);
 		return title;
 	}

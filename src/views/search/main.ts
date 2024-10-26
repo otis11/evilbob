@@ -19,16 +19,26 @@ loadFreshData().then(() => {
 });
 
 (isResultOptionsVisible() ? optionsSearchInput : searchInput).focus();
-window.addEventListener("focus", () => {
-	(isResultOptionsVisible() ? optionsSearchInput : searchInput).focus();
 
-	if (!config?.preserveInput.onWindowChange) {
+window.addEventListener("blur", async () => {
+	if (config.onBobWindowLeave?.closeWindow) {
+		window.close();
+		return;
+	}
+
+	if (config.onBobWindowLeave?.clearSearch) {
 		searchInput.value = "";
 	}
 
-	loadFreshData().then(() => {
-		filterResults();
-	});
+	if (config.onBobWindowLeave?.refreshResults) {
+		await loadFreshData();
+	}
+
+	filterResults();
+});
+
+window.addEventListener("focus", () => {
+	(isResultOptionsVisible() ? optionsSearchInput : searchInput).focus();
 });
 
 renderFooter();

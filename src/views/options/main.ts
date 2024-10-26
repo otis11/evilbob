@@ -6,7 +6,7 @@ import { getConfig } from "../../config";
 import { renderBobDimensions } from "./dimensions";
 import { renderFooter } from "./footer";
 import { renderHeader } from "./header";
-import { renderPreserveInput } from "./preserve-input";
+import { renderOnBobWindowLeave } from "./on-bob-window-leave";
 import { renderResultGroups } from "./result-groups";
 import { renderThemes } from "./themes";
 
@@ -14,7 +14,7 @@ import { renderThemes } from "./themes";
 	const config = await getConfig();
 	renderHeader();
 	await renderResultGroups(config);
-	renderPreserveInput(config);
+	renderOnBobWindowLeave(config);
 	await renderBobDimensions(config);
 	renderThemes(config);
 	renderFooter();

@@ -18,14 +18,18 @@ export type BobConfig = {
 	dimensions: Dimensions;
 	theme: Theme;
 	customTheme: string;
-	preserveInput: {
-		onWindowChange: boolean;
+	onBobWindowLeave?: {
+		closeWindow?: boolean;
+		clearSearch?: boolean;
+		refreshResults?: boolean;
 	};
 };
 
 export const DEFAULT_CONFIG: BobConfig = {
-	preserveInput: {
-		onWindowChange: false,
+	onBobWindowLeave: {
+		closeWindow: false,
+		clearSearch: true,
+		refreshResults: true,
 	},
 	groups: {
 		ResultGroupBob: {

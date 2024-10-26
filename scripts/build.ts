@@ -14,46 +14,58 @@ if (existsSync(distFolder)) {
 	rmSync(distFolder, { recursive: true, force: true });
 	mkdirSync(distFolder);
 }
-
 const views = readdirSync(path.resolve(__dirname, "../src/views")).filter(
 	(file) =>
 		lstatSync(
 			path.resolve(__dirname, `../src/views/${file}`),
 		).isDirectory(),
 );
-await build({
-	plugins: [
-		{
-			name: "build-end-hook",
-			closeBundle: async () => {
-				await $`cp -r dist/chrome dist/firefox`;
-				await $`cp src/manifest-chrome.json dist/chrome/manifest.json`;
-				await $`cp src/manifest-firefox.json dist/firefox/manifest.json`;
+
+await Promise.all([
+	// service worker needs to separateed as they dont support "import" or "require" / code splitting bundles
+	build({
+		build: {
+			outDir: "dist/chrome",
+			emptyOutDir: false,
+			lib: {
+				name: "background",
+				entry: path.resolve(__dirname, "../src/background.ts"),
+				fileName: "background",
+				formats: ["es"],
 			},
+			watch,
 		},
-	],
-	base: "./",
-	build: {
-		rollupOptions: {
-			input: [
-				path.resolve(__dirname, "../src/background.ts"),
-				...views.map((view) =>
-					path.resolve(__dirname, `../src/views/${view}/index.html`),
-				),
-			],
-			output: {
-				format: 'es',
-				entryFileNames(chunkInfo) {
-					if (chunkInfo.name === "background") {
-						return "[name].js";
-					}
-					return "assets/[name]-[hash].js";
+	}),
+	build({
+		plugins: [
+			{
+				name: "build-end-hook",
+				closeBundle: async () => {
+					await $`cp -r dist/chrome dist/firefox`;
+					await $`cp src/manifest-chrome.json dist/chrome/manifest.json`;
+					await $`cp src/manifest-firefox.json dist/firefox/manifest.json`;
 				},
 			},
+		],
+		base: "./",
+		build: {
+			rollupOptions: {
+				input: views.map((view) =>
+					path.resolve(__dirname, `../src/views/${view}/index.html`),
+				),
+				output: {
+					entryFileNames(chunkInfo) {
+						if (chunkInfo.name === "background") {
+							return "[name].js";
+						}
+						return "assets/[name]-[hash].js";
+					},
+				},
+			},
+			outDir: "dist/chrome",
+			minify,
+			emptyOutDir: false,
+			watch,
 		},
-		outDir: "dist/chrome",
-		minify,
-		emptyOutDir: false,
-		watch,
-	},
-});
+	}),
+]);

@@ -63,6 +63,18 @@ export class ResultGoogle extends Result {
 		});
 	}
 
+	public search(search: Search) {
+		return this.makeFakeSearch(
+			new Search({
+				selectionStart: 0,
+				text: search.text,
+			}),
+			this.title.includes(search.words().at(-1) || "")
+				? search.minMatchScore() + 1
+				: 0,
+		);
+	}
+
 	async execute(search: Search): Promise<void> {
 		chrome.tabs.create({
 			url: `https://google.com/search?q=${search.text.replace("g", "").trim().replaceAll(" ", "+")}`,

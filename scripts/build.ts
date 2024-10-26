@@ -1,5 +1,6 @@
 import { existsSync, lstatSync, mkdirSync, readdirSync, rmSync } from "node:fs";
 import path from "node:path";
+import { $ } from "bun";
 import type { WatcherOptions } from "rollup";
 import { build } from "vite";
 
@@ -14,45 +15,45 @@ if (existsSync(distFolder)) {
 	mkdirSync(distFolder);
 }
 
-const browsers = ["chrome", "firefox"];
-
 const views = readdirSync(path.resolve(__dirname, "../src/views")).filter(
 	(file) =>
 		lstatSync(
 			path.resolve(__dirname, `../src/views/${file}`),
 		).isDirectory(),
 );
-for (const browser of browsers) {
-	await Promise.all([
-		// background
-		build({
-			publicDir: `public/${browser}`,
-			build: {
-				outDir: `dist/${browser}`,
-				minify,
-				emptyOutDir: false,
-				watch,
-				lib: {
-					entry: path.resolve(__dirname, "../src/background.ts"),
-					name: "background",
-					fileName: "background",
-					formats: ["es"],
+await build({
+	plugins: [
+		{
+			name: "build-end-hook",
+			closeBundle: async () => {
+				await $`cp -r dist/chrome dist/firefox`;
+				await $`cp src/manifest-chrome.json dist/chrome/manifest.json`;
+				await $`cp src/manifest-firefox.json dist/firefox/manifest.json`;
+			},
+		},
+	],
+	base: "./",
+	build: {
+		rollupOptions: {
+			input: [
+				path.resolve(__dirname, "../src/background.ts"),
+				...views.map((view) =>
+					path.resolve(__dirname, `../src/views/${view}/index.html`),
+				),
+			],
+			output: {
+				format: 'es',
+				entryFileNames(chunkInfo) {
+					if (chunkInfo.name === "background") {
+						return "[name].js";
+					}
+					return "assets/[name]-[hash].js";
 				},
 			},
-		}),
-		// views
-		...views.map((view) => {
-			return build({
-				publicDir: `public/${browser}`,
-				root: `./src/views/${view}`,
-				base: "./",
-				build: {
-					minify,
-					outDir: `../../../dist/${browser}/views/${view}`,
-					emptyOutDir: false,
-					watch,
-				},
-			});
-		}),
-	]);
-}
+		},
+		outDir: "dist/chrome",
+		minify,
+		emptyOutDir: false,
+		watch,
+	},
+});

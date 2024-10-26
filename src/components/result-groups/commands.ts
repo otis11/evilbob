@@ -2,7 +2,7 @@ import { iconConsoleLine, iconFromString } from "../../icons";
 import type { BrowserName } from "../../platform";
 import { ResultGroup } from "../result-group";
 import { Result } from "../result/result";
-import { Shortcut } from "../shortcut/shortcut";
+import { ShortcutElement } from "../shortcut/shortcut";
 
 export class Commands extends ResultGroup {
 	prefix = "c";
@@ -36,7 +36,7 @@ export class ResultCommand extends Result {
 	}
 
 	append(): HTMLElement | undefined {
-		return new Shortcut(
+		return new ShortcutElement(
 			(this.command.shortcut || "").split(""),
 		).asHtmlElement();
 	}

@@ -37,7 +37,7 @@ export const DEFAULT_CONFIG: BobConfig = {
 		refreshResults: true,
 	},
 	groups: {
-		ResultGroupBob: {
+		Bob: {
 			enabled: true,
 		},
 		ResultGroupPrefixes: {

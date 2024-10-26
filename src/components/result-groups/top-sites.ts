@@ -2,28 +2,40 @@ import { faviconFromUrl, iconArrowUpBold, iconFromString } from "../../icons";
 import { focusLastActiveWindow } from "../../util/last-active-window";
 import { ResultGroup } from "../result-group";
 import { Result } from "../result/result";
+import type { Tag } from "../tags/tags";
 
-export class ResultGroupTopSites extends ResultGroup {
+export class TopSites extends ResultGroup {
 	prefix = "top";
 	permissions = ["topSites"];
-	description =
-		"The top sites (i.e. most visited sites) that are displayed on the new tab page";
+	public description(): string {
+		return "The top sites (i.e. most visited sites) that are displayed on the new tab page";
+	}
+	public name(): string {
+		return "Top Sites";
+	}
 
 	public async getResults(): Promise<Result[]> {
 		return (await chrome.topSites.get()).map(
-			(site) => new ResultMostVisitedURL(site),
+			(site) => new MostVisitedURL(site),
 		);
 	}
 }
 
-export class ResultMostVisitedURL extends Result {
+export class MostVisitedURL extends Result {
+	title(): string {
+		return this.site.title;
+	}
+	description(): string {
+		return this.site.url;
+	}
+	prepend(): HTMLElement | undefined {
+		return faviconFromUrl(this.site.url);
+	}
+	tags(): Tag[] {
+		return [{ html: iconFromString(iconArrowUpBold, "12px").outerHTML }];
+	}
 	constructor(private site: chrome.topSites.MostVisitedURL) {
-		super({
-			title: site.title,
-			description: site.url,
-			prepend: faviconFromUrl(site.url),
-			tags: [{ html: iconFromString(iconArrowUpBold, "12px").outerHTML }],
-		});
+		super();
 	}
 	public id(): string {
 		return this.name() + this.site.url;

@@ -1,84 +1,89 @@
 import { isFirefox, isMac } from "../../platform";
 import { ResultGroup } from "../result-group";
 import { Result } from "../result/result";
-import { Shortcut } from "../shortcut/shortcut";
+import { ShortcutElement } from "../shortcut/shortcut";
 
-export class ResultGroupShortcuts extends ResultGroup {
-	description = "Search for browser shortcuts.";
+export class Shortcuts extends ResultGroup {
+	public description(): string {
+		return "Search for browser shortcuts.";
+	}
+	public name(): string {
+		return "Shortcuts";
+	}
 	public prefix?: string | undefined = "sc";
 
 	public async getResults(): Promise<Result[]> {
 		const shortcuts = [
-			new ResultShortcut({
+			new Shortcut({
 				title: "Open History",
 				description: "Open History",
 				shortcut: isMac
-					? new Shortcut(["⌘", "Y"])
-					: new Shortcut(["Ctrl", "H"]),
+					? new ShortcutElement(["⌘", "Y"])
+					: new ShortcutElement(["Ctrl", "H"]),
 			}),
 			// windows
-			new ResultShortcut({
+			new Shortcut({
 				title: "New Icognito Window",
 				description: "Open a new window in Incognito mode",
 				shortcut: isMac
-					? new Shortcut(["⌘", "Shift", "N"])
+					? new ShortcutElement(["⌘", "Shift", "N"])
 					: isFirefox
-						? new Shortcut(["Ctrl", "Shift", "P"])
-						: new Shortcut(["Ctrl", "Shift", "N"]),
+						? new ShortcutElement(["Ctrl", "Shift", "P"])
+						: new ShortcutElement(["Ctrl", "Shift", "N"]),
 			}),
 			// // tabs
-			new ResultShortcut({
+			new Shortcut({
 				title: "New Tab",
 				description: "Open a new tab",
 				shortcut: isMac
-					? new Shortcut(["⌘", "T"])
-					: new Shortcut(["Ctrl", "T"]),
+					? new ShortcutElement(["⌘", "T"])
+					: new ShortcutElement(["Ctrl", "T"]),
 			}),
-			new ResultShortcut({
+			new Shortcut({
 				title: "Close Tab",
 				description: "Close the current tab",
 				shortcut: isMac
-					? new Shortcut(["⌘", "W"])
-					: new Shortcut(["Ctrl", "W"]),
+					? new ShortcutElement(["⌘", "W"])
+					: new ShortcutElement(["Ctrl", "W"]),
 			}),
-			new ResultShortcut({
+			new Shortcut({
 				title: "Reopen Tabs",
 				description:
 					"Reopen previously closed tabs in the order that they were closed",
 				shortcut: isMac
-					? new Shortcut(["⌘", "Shift", "T"])
-					: new Shortcut(["Ctrl", "Shift", "T"]),
+					? new ShortcutElement(["⌘", "Shift", "T"])
+					: new ShortcutElement(["Ctrl", "Shift", "T"]),
 			}),
 			// bookmarks
-			new ResultShortcut({
+			new Shortcut({
 				title: "Save Bookmark",
 				description: "Save the current page as a bookmark",
 				shortcut: isMac
-					? new Shortcut(["⌘", "D"])
-					: new Shortcut(["Ctrl", "D"]),
+					? new ShortcutElement(["⌘", "D"])
+					: new ShortcutElement(["Ctrl", "D"]),
 			}),
-			new ResultShortcut({
+			new Shortcut({
 				title: "Open Bookmarks",
 				description: "Open Bookmarks",
 				shortcut: isMac
-					? new Shortcut(["⌘", "Option", "B"])
-					: new Shortcut(["Ctrl", "Shift", "O"]),
+					? new ShortcutElement(["⌘", "Option", "B"])
+					: new ShortcutElement(["Ctrl", "Shift", "O"]),
 			}),
 			// search bar
-			new ResultShortcut({
+			new Shortcut({
 				title: "Focus Search",
 				description: "Put a cursor in the search bar",
 				shortcut: isMac
-					? new Shortcut(["Ctrl", "I"])
-					: new Shortcut(["Ctrl", "L"]),
+					? new ShortcutElement(["Ctrl", "I"])
+					: new ShortcutElement(["Ctrl", "L"]),
 			}),
 		];
 		if (!isMac) {
 			shortcuts.push(
-				new ResultShortcut({
+				new Shortcut({
 					title: "Toggle Fullscreen",
 					description: "Turn on/off full-screen mode",
-					shortcut: new Shortcut(["F11"]),
+					shortcut: new ShortcutElement(["F11"]),
 				}),
 			);
 		}
@@ -89,20 +94,25 @@ export class ResultGroupShortcuts extends ResultGroup {
 export type ResultShortcutConfig = {
 	title: string;
 	description: string;
-	shortcut: Shortcut;
+	shortcut: ShortcutElement;
 };
 
-export class ResultShortcut extends Result {
-	constructor(config: ResultShortcutConfig) {
-		super({
-			title: config.title,
-			description: config.description,
-			append: config.shortcut.asHtmlElement(),
-		});
+export class Shortcut extends Result {
+	title(): string {
+		return this.config.title;
+	}
+	description(): string {
+		return this.config.description;
+	}
+	append(): HTMLElement | undefined {
+		return this.config.shortcut.asHtmlElement();
+	}
+	constructor(private config: ResultShortcutConfig) {
+		super();
 	}
 
 	public id(): string {
-		return this.name() + this.title;
+		return this.name() + this.title();
 	}
 
 	async execute(): Promise<void> {

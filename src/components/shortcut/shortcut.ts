@@ -1,6 +1,6 @@
 import "./shortcut.css";
 
-export class Shortcut {
+export class ShortcutElement {
 	constructor(public keys: string[]) {}
 
 	asHtmlElement() {

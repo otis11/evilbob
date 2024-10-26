@@ -7,48 +7,48 @@ import { ChatGPT } from "./chatgpt";
 import { Commands } from "./commands";
 import { ContentSettings } from "./content-settings";
 import { Downloads } from "./downloads";
-import { ResultGroupGoogle } from "./google";
-import { ResultGroupGoogleNew } from "./google-new";
-import { ResultGroupHistory } from "./history";
-import { ResultGroupManagement } from "./management";
-import { ResultGroupPrefixes } from "./prefixes";
-import { ResultGroupSessions } from "./sessions";
-import { ResultGroupSessionDevices } from "./sessions.devices";
-import { ResultGroupShortcuts } from "./shortcuts";
-import { ResultGroupSystemCpu } from "./system-cpu";
-import { ResultGroupSystemMemory } from "./system-memory";
-import { ResultGroupSystemStorage } from "./system-storage";
-import { ResultGroupTabActions } from "./tab-actions";
-import { ResultGroupTabAndGroupActions } from "./tab-and-group-actions";
-import { ResultGroupTabGroups } from "./tab-groups";
-import { ResultGroupTabs } from "./tabs";
-import { ResultGroupTopSites } from "./top-sites";
-import { ResultGroupWindow } from "./window";
+import { Google } from "./google";
+import { GoogleNew } from "./google-new";
+import { History } from "./history";
+import { Management } from "./management";
+import { Prefixes } from "./prefixes";
+import { Sessions } from "./sessions";
+import { SessionDevices } from "./sessions.devices";
+import { Shortcuts } from "./shortcuts";
+import { SystemCpu } from "./system-cpu";
+import { SystemMemory } from "./system-memory";
+import { SystemStorage } from "./system-storage";
+import { TabActions } from "./tab-actions";
+import { TabGroupActions } from "./tab-and-group-actions";
+import { TabGroups } from "./tab-groups";
+import { Tabs } from "./tabs";
+import { TopSites } from "./top-sites";
+import { Window } from "./window";
 
 export const RESULT_GROUPS = [
 	new Bookmarks(),
-	new ResultGroupShortcuts(),
+	new Shortcuts(),
 	new Bob(),
-	new ResultGroupHistory(),
-	new ResultGroupTabs(),
-	new ResultGroupGoogle(),
-	new ResultGroupPrefixes(),
-	new ResultGroupManagement(),
-	new ResultGroupSessionDevices(),
-	new ResultGroupSystemCpu(),
-	new ResultGroupSystemMemory(),
-	new ResultGroupSystemStorage(),
+	new History(),
+	new Tabs(),
+	new Google(),
+	new Prefixes(),
+	new Management(),
+	new SessionDevices(),
+	new SystemCpu(),
+	new SystemMemory(),
+	new SystemStorage(),
 	new ContentSettings(),
-	new ResultGroupTopSites(),
+	new TopSites(),
 	new Commands(),
-	new ResultGroupTabActions(),
-	new ResultGroupWindow(),
+	new TabActions(),
+	new Window(),
 	new ChatGPT(),
 	new Downloads(),
-	new ResultGroupGoogleNew(),
-	new ResultGroupTabAndGroupActions(),
-	new ResultGroupTabGroups(),
-	new ResultGroupSessions(),
+	new GoogleNew(),
+	new TabGroupActions(),
+	new TabGroups(),
+	new Sessions(),
 ];
 
 export const RESULT_GROUPS_BROWSER_FILTERED = (() => {
@@ -61,7 +61,7 @@ export async function getEnabledResultGroups() {
 	const config = await getConfig();
 	const groups = [];
 	for (const group of RESULT_GROUPS_BROWSER_FILTERED) {
-		if (config.groups[group.name]?.enabled) {
+		if (config.groups[group.name()]?.enabled) {
 			groups.push(group);
 		}
 	}
@@ -80,7 +80,7 @@ export async function enableResultGroup(group: ResultGroup) {
 			}
 			await updateConfig({
 				groups: {
-					[group.name]: {
+					[group.name()]: {
 						enabled: true,
 					},
 				},
@@ -101,7 +101,7 @@ export async function disableResultGroup(group: ResultGroup) {
 			}
 			await updateConfig({
 				groups: {
-					[group.name]: {
+					[group.name()]: {
 						enabled: false,
 					},
 				},

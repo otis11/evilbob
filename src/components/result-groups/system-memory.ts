@@ -2,28 +2,28 @@ import { iconCpu, iconFromString } from "../../icons";
 import type { BrowserName } from "../../platform";
 import { formatBytes } from "../../util/format-bytes";
 import { ResultGroup } from "../result-group";
-import { Result } from "../result/result";
+import { Info } from "../result/info";
+import type { Result } from "../result/result";
 
-export class ResultGroupSystemMemory extends ResultGroup {
+export class SystemMemory extends ResultGroup {
 	permissions = ["system.memory"];
-	description = "Information about your system memory.";
+	public description(): string {
+		return "Information about your system memory.";
+	}
+	public name(): string {
+		return "System Memory";
+	}
 	supportedBrowsers: BrowserName[] = ["chromium", "chrome", "edg"];
 	public prefix?: string | undefined = "mem";
 
 	public async getResults(): Promise<Result[]> {
 		const memory = await chrome.system.memory.getInfo();
 		return [
-			new ResultSystemMemory({
+			new Info({
 				title: "Memory",
 				description: `${formatBytes(memory.capacity - memory.availableCapacity)}/${formatBytes(memory.capacity)} GB`,
 				prepend: iconFromString(iconCpu),
 			}),
 		];
-	}
-}
-
-export class ResultSystemMemory extends Result {
-	async execute(): Promise<void> {
-		console.log("on select system Memory");
 	}
 }

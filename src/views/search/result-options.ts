@@ -43,7 +43,7 @@ export async function showResultOptions(searchResult: Result) {
 	optionsRoot.style.display = "flex";
 	resultOptionsContainer.innerHTML = "";
 	resultsContainer.innerHTML = selectedResult.asHtmlElement().outerHTML;
-	await selectedResult.options.loadResults();
+	await selectedResult.options()?.loadResults();
 	filterResultsOptions();
 	optionsSearchInput.focus();
 }
@@ -53,23 +53,26 @@ export async function filterResultsOptions() {
 	if (!selectedResult?.options) {
 		return;
 	}
-	const resultsFilteredAndSorted = searchResults(
-		selectedResult.options.results,
-		newSearch(optionsSearchInput),
-		usage,
-	);
+	const options = selectedResult.options();
+	if (options) {
+		const resultsFilteredAndSorted = searchResults(
+			options.results,
+			newSearch(optionsSearchInput),
+			usage,
+		);
 
-	const elements = resultsFilteredAndSorted.map((item) =>
-		item.asHtmlElement(),
-	);
+		const elements = resultsFilteredAndSorted.map((item) =>
+			item.asHtmlElement(),
+		);
 
-	setCurrentResults(resultsFilteredAndSorted);
+		setCurrentResults(resultsFilteredAndSorted);
 
-	resultOptionsContainer.innerHTML = "";
-	resultOptionsContainer.append(...elements);
+		resultOptionsContainer.innerHTML = "";
+		resultOptionsContainer.append(...elements);
 
-	updateSelectedIndex(0);
-	resultsCounter.innerHTML = `${resultOptionsContainer.children.length}/${resultOptionsContainer.children.length} results`;
+		updateSelectedIndex(0);
+		resultsCounter.innerHTML = `${resultOptionsContainer.children.length}/${resultOptionsContainer.children.length} results`;
+	}
 }
 
 optionsSearchInput?.addEventListener("input", () => {

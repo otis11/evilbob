@@ -10,7 +10,7 @@ export class Bob extends ResultGroup {
 	public prefix?: string | undefined = "bob";
 	permissions = [];
 	public description(): string {
-		return t("ResultGroupBob.description");
+		return t("Bob.description");
 	}
 
 	public name(): string {
@@ -29,11 +29,11 @@ export class Bob extends ResultGroup {
 
 export class BobOpenOptions extends Result {
 	title(): string {
-		return t("ResultBobOpenOptions.title");
+		return t("BobOpenOptions.title");
 	}
 
 	description(): string {
-		return t("ResultBobOpenOptions.description");
+		return t("BobOpenOptions.description");
 	}
 
 	prepend(): HTMLElement | undefined {

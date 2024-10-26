@@ -12,6 +12,7 @@ import { ResultGroupGoogleNew } from "./google-new";
 import { ResultGroupHistory } from "./history";
 import { ResultGroupManagement } from "./management";
 import { ResultGroupPrefixes } from "./prefixes";
+import { ResultGroupSessions } from "./sessions";
 import { ResultGroupSessionDevices } from "./sessions.devices";
 import { ResultGroupShortcuts } from "./shortcuts";
 import { ResultGroupSystemCpu } from "./system-cpu";
@@ -47,6 +48,7 @@ export const RESULT_GROUPS = [
 	new ResultGroupGoogleNew(),
 	new ResultGroupTabAndGroupActions(),
 	new ResultGroupTabGroups(),
+	new ResultGroupSessions(),
 ];
 
 export const RESULT_GROUPS_BROWSER_FILTERED = (() => {

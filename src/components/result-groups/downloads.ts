@@ -20,7 +20,6 @@ export class ResultGroupDownloads extends ResultGroup {
 		const results: Result[] = [];
 		for (const download of downloads) {
 			const icon = await chrome.downloads.getFileIcon(download.id);
-			console.log(icon);
 			results.push(new ResultDownload(download, icon));
 		}
 		return results;

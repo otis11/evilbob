@@ -28,7 +28,7 @@ export class ResultGroupTabActions extends ResultGroup {
 	public async getResults(): Promise<Result[]> {
 		return [
 			new ResultCloseOtherTabs(),
-			new ResultSortTabsAlphabetically(),
+			new ResultSortTabsByUrl(),
 			new ResultTabDuplicate(),
 			new ResultTabMute(),
 			new ResultTabUnmute(),
@@ -131,10 +131,10 @@ class ResultTabUnpin extends Result {
 	}
 }
 
-export class ResultSortTabsAlphabetically extends Result {
+export class ResultSortTabsByUrl extends Result {
 	constructor() {
 		super({
-			title: "Sort tabs alphabetically",
+			title: "Sort tabs by url",
 			description: "",
 			prepend: iconFromString(iconSortAlphabetically),
 		});
@@ -142,7 +142,7 @@ export class ResultSortTabsAlphabetically extends Result {
 	async execute(): Promise<void> {
 		const tabs = await getLastActiveWindowTabs();
 
-		const tabsSortedAlphabetically = tabs.sort((a, b) => {
+		const tabsSortedByUrl = tabs.sort((a, b) => {
 			if (!a.url || !b.url) {
 				// TODO use name instead of url?
 				return 0;
@@ -157,11 +157,11 @@ export class ResultSortTabsAlphabetically extends Result {
 		});
 
 		let isSortingNeeded = false;
-		for (const [index, _] of tabsSortedAlphabetically.entries()) {
+		for (const [index, _] of tabsSortedByUrl.entries()) {
 			// t1 t2 t3
 			// t3 t2 t1
 			// t1 t2 t3
-			if (tabsSortedAlphabetically[index].index !== index) {
+			if (tabsSortedByUrl[index].index !== index) {
 				isSortingNeeded = true;
 				break;
 			}
@@ -173,7 +173,7 @@ export class ResultSortTabsAlphabetically extends Result {
 			return;
 		}
 
-		for (const [index, tab] of tabsSortedAlphabetically.entries()) {
+		for (const [index, tab] of tabsSortedByUrl.entries()) {
 			if (tab.id) {
 				chrome.tabs.move(tab.id, { index });
 			}
@@ -272,8 +272,13 @@ class ResultOptionsCloseBySearch extends ResultGroup {
 
 class ResultTabCloseBySearch extends ResultTab {
 	async execute(search: Search, results: Result[]): Promise<void> {
+		const currentWindow = await chrome.windows.getCurrent();
 		for (const result of results) {
-			if (result instanceof ResultTab && result.tab.id) {
+			if (
+				result instanceof ResultTab &&
+				result.tab.id &&
+				result.tab.windowId !== currentWindow.id
+			) {
 				await chrome.tabs.remove(result.tab.id);
 			}
 		}

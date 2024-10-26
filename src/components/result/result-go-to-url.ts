@@ -2,17 +2,21 @@ import type { Search } from "../search";
 import type { Tag } from "../tags/tags";
 import { Result } from "./result";
 
+export type ResultGoToUrlConfig = {
+	title: string;
+	description: string;
+	url: string;
+	tags?: Tag[];
+	prepend?: HTMLElement;
+};
+
 export class ResultGoToUrl extends Result {
 	url: string;
 
-	constructor(title: string, description: string, url: string, tags?: Tag[]) {
-		super({
-			title,
-			description,
-			tags,
-		});
+	constructor(config: ResultGoToUrlConfig) {
+		super(config);
 
-		this.url = url;
+		this.url = config.url;
 	}
 
 	id(): string {

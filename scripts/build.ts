@@ -1,12 +1,4 @@
-import {
-	cpSync,
-	existsSync,
-	fstatSync,
-	lstatSync,
-	mkdirSync,
-	readdirSync,
-	rmSync,
-} from "node:fs";
+import { existsSync, lstatSync, mkdirSync, readdirSync, rmSync } from "node:fs";
 import path from "node:path";
 import type { WatcherOptions } from "rollup";
 import { build } from "vite";

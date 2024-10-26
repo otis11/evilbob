@@ -10,9 +10,9 @@
 		"128": "icons/bob-icon-128x128.png"
 	},
 	"background": {
-		"service_worker": "background.js"
+		"scripts": ["background.js"]
 	},
-	"options_page": "views/options/index.html",
+	"options_page": "src/views/options/index.html",
 	"action": {
 		"default_icon": {
 			"16": "icons/bob-icon-16x16.png",
@@ -26,26 +26,25 @@
 			"suggested_key": {
 				"default": "Ctrl+Shift+L"
 			},
-			"description": "Open bob",
-			"global": true
+			"description": "Open bob"
 		}
 	},
 	"permissions": ["storage"],
 	"optional_permissions": [
 		"bookmarks",
-		"system.cpu",
-		"system.memory",
-		"system.storage",
 		"history",
 		"tabs",
 		"scripting",
 		"management",
 		"sessions",
-		"contentSettings",
 		"topSites",
-		"commands",
-		"downloads",
-		"tabGroups"
+		"downloads"
 	],
-	"optional_host_permissions": ["https://*/*"]
+	"optional_host_permissions": ["https://*/*"],
+	"browser_specific_settings": {
+		"gecko": {
+			"id": "{b9b3ea58-ee1c-4d96-8b6e-9548ff99fa5b}",
+			"strict_min_version": "42.0"
+		}
+	}
 }

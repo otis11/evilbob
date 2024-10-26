@@ -1,8 +1,8 @@
 import { resolve } from "node:path";
 import { $ } from "bun";
 import packageJson from "../package.json";
-import chromeManifest from "../public/chrome/manifest.json";
-import firefoxManifest from "../public/firefox/manifest.json";
+import chromeManifest from "../src/manifest-chrome.json";
+import firefoxManifest from "../src/manifest-firefox.json";
 
 // check for uncommitted changes
 const status = await $`git status --porcelain`.quiet();

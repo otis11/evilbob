@@ -66,7 +66,7 @@ async function openBob() {
 		);
 
 	let newBobWindow = await chrome.windows.create({
-		url: "views/search/index.html",
+		url: "src/views/search/index.html",
 		type: "popup",
 		width: windowDimensions.width,
 		height: windowDimensions.height,
@@ -78,7 +78,7 @@ async function openBob() {
 	// failed to open bob window with dimensions set from config?
 	if (!newBobWindow) {
 		newBobWindow = await chrome.windows.create({
-			url: "views/search/index.html",
+			url: "src/views/search/index.html",
 			type: "popup",
 			width: currentWindow?.width || 400,
 			height: currentWindow?.height || 200,

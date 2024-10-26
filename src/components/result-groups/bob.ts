@@ -73,7 +73,7 @@ export class ResultBobShowUsage extends Result {
 	}
 	async execute(): Promise<void> {
 		chrome.tabs.create({
-			url: "views/usage/index.html",
+			url: "src/views/usage/index.html",
 		});
 		refocusLastActiveWindow();
 	}

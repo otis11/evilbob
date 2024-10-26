@@ -24,7 +24,7 @@ export abstract class Result {
 		return undefined;
 	}
 
-	static lastInstanceId = 0
+	static lastInstanceId = 0;
 	instanceId: number;
 	lastSearch?: {
 		textLower: string;

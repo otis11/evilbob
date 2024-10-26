@@ -1,6 +1,6 @@
 import { faviconFromUrl, iconFromString, iconHistory } from "../../icons";
 import { ResultGroup } from "../result-group";
-import { Result, type ResultConfig } from "../result/result";
+import { Result } from "../result/result";
 import type { Search } from "../search";
 
 export class ResultGroupHistory extends ResultGroup {

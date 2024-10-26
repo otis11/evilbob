@@ -39,7 +39,8 @@
 		"sessions",
 		"topSites",
 		"commands",
-		"downloads"
+		"downloads",
+		"tabGroups"
 	],
 	"optional_host_permissions": ["https://*/*"],
 	"browser_specific_settings": {

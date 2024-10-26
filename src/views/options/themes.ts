@@ -1,6 +1,6 @@
 import { GroupHeading } from "../../components/group-heading";
 import { ThemeCard } from "../../components/theme-card/theme-card";
-import { type BobConfig, getConfig } from "../../config";
+import type { BobConfig } from "../../config";
 import { iconFromString, iconPencil } from "../../icons";
 import { Themes } from "../../theme/themes";
 

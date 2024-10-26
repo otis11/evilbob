@@ -1,6 +1,5 @@
 import type { Result } from "../../components/result/result";
 import { Search } from "../../components/search";
-import type { BobConfig } from "../../config";
 import type { BobUsage } from "../../usage";
 
 export function sortResults(

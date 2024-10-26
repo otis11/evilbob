@@ -2,7 +2,6 @@ import { iconCpu, iconFromString } from "../../icons";
 import { formatBytes } from "../../util/format-bytes";
 import { ResultGroup } from "../result-group";
 import { Result } from "../result/result";
-import type { Search } from "../search";
 
 export class ResultGroupSystemMemory extends ResultGroup {
 	permissions = ["system.memory"];

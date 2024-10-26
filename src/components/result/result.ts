@@ -1,5 +1,4 @@
-import { getConfig, updateConfig } from "../../config";
-import { iconCog, iconDotsVertical, iconFromString } from "../../icons";
+import { iconDotsVertical, iconFromString } from "../../icons";
 import { getUsage, updateUsage } from "../../usage";
 import { wordSplitMatch } from "../../util/word-split-match";
 import type { ResultGroup } from "../result-group";

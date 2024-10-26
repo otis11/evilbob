@@ -1,4 +1,4 @@
-import { iconBob, iconConsoleLine, iconFromString } from "../../icons";
+import { iconConsoleLine, iconFromString } from "../../icons";
 import { ResultGroup } from "../result-group";
 import { Result } from "../result/result";
 import { Shortcut } from "../shortcut/shortcut";

@@ -1,4 +1,4 @@
-import { iconBob, iconFromString, iconWindowClose } from "../../icons";
+import { iconFromString, iconWindowClose } from "../../icons";
 import { getLastActiveWindow } from "../../util/last-active-window";
 import { ResultGroup } from "../result-group";
 import { Result } from "../result/result";

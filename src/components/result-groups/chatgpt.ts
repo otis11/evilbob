@@ -1,4 +1,4 @@
-import { iconBob, iconBrain, iconFromString } from "../../icons";
+import { iconBrain, iconFromString } from "../../icons";
 import { ResultGroup } from "../result-group";
 import { Result } from "../result/result";
 import { Search } from "../search";

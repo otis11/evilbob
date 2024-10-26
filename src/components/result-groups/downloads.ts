@@ -1,5 +1,4 @@
 import {
-	iconBob,
 	iconDownload,
 	iconFromString,
 	iconFromUrl,

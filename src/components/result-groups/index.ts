@@ -18,6 +18,8 @@ import { ResultGroupSystemCpu } from "./system-cpu";
 import { ResultGroupSystemMemory } from "./system-memory";
 import { ResultGroupSystemStorage } from "./system-storage";
 import { ResultGroupTabActions } from "./tab-actions";
+import { ResultGroupTabAndGroupActions } from "./tab-and-group-actions";
+import { ResultGroupTabGroups } from "./tab-groups";
 import { ResultGroupTabs } from "./tabs";
 import { ResultGroupTopSites } from "./top-sites";
 import { ResultGroupWindow } from "./window";
@@ -43,6 +45,8 @@ export const RESULT_GROUPS = [
 	new ResultGroupChatGPT(),
 	new ResultGroupDownloads(),
 	new ResultGroupGoogleNew(),
+	new ResultGroupTabAndGroupActions(),
+	new ResultGroupTabGroups(),
 ];
 
 export const RESULT_GROUPS_BROWSER_FILTERED = (() => {

@@ -1,4 +1,4 @@
-import { type BobConfig, updateConfig } from "../../config";
+import type { BobConfig } from "../../config";
 import type { ResultGroup } from "../result-group";
 import { disableResultGroup, enableResultGroup } from "../result-groups";
 import "./result-group-card.css";

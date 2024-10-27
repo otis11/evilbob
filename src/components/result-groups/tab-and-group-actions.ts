@@ -10,6 +10,9 @@ import { Result } from "../result/result";
 import type { Search } from "../search";
 
 export class TabGroupActions extends ResultGroup {
+	public id(): string {
+		return "tab-group-actions";
+	}
 	permissions = ["tabs", "tabGroups"];
 	prefix = "tga";
 	public description(): string {

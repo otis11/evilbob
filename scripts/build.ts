@@ -48,11 +48,6 @@ await Promise.all([
 			},
 		],
 		base: "./",
-		esbuild: {
-			// multiple classes use `this.constructor.name` to return a unique name.
-			// for instance ResultGroup & Result. Not optimal as it increases the bundle a little, but there is no need for an extra name to define.
-			keepNames: true,
-		},
 		build: {
 			rollupOptions: {
 				input: views.map((view) =>

@@ -5,6 +5,9 @@ import { Result } from "../result/result";
 import type { Tag } from "../tags/tags";
 
 export class Sessions extends ResultGroup {
+	public id(): string {
+		return "sessions";
+	}
 	public name(): string {
 		return "Sessions";
 	}

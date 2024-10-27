@@ -5,6 +5,9 @@ import { Result } from "../result/result";
 import type { Search } from "../search";
 
 export class Prefixes extends ResultGroup {
+	public id(): string {
+		return "prefixes";
+	}
 	prefix = "?";
 	public description(): string {
 		return "Filter for a specific ResultGroup only.";
@@ -20,7 +23,10 @@ export class Prefixes extends ResultGroup {
 		for (const group of groups) {
 			if (group.prefix) {
 				results.push(
-					new Prefix(group.prefix, `Filter for ${group.name()}`),
+					new Prefix(
+						group.prefix,
+						`Filter for ${group.name()} [${group.id()}]`,
+					),
 				);
 			}
 		}

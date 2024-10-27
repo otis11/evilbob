@@ -17,6 +17,7 @@ export abstract class ResultGroup {
 		return "";
 	}
 	public abstract name(): string;
+	public abstract id(): string;
 	public results: Result[] = [];
 
 	public async loadResults() {

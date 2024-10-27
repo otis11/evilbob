@@ -6,6 +6,9 @@ import { Info } from "../result/info";
 import type { Result } from "../result/result";
 
 export class SystemStorage extends ResultGroup {
+	public id(): string {
+		return "system-storage";
+	}
 	permissions = ["system.storage"];
 	public description(): string {
 		return "Information about your system storage.";

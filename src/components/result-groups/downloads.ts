@@ -12,6 +12,9 @@ import type { Search } from "../search";
 import type { Tag } from "../tags/tags";
 
 export class Downloads extends ResultGroup {
+	public id(): string {
+		return "downloads";
+	}
 	public prefix?: string | undefined = "d";
 	permissions = ["downloads"];
 	public description(): string {
@@ -82,6 +85,9 @@ export class Download extends Result {
 }
 
 class DownloadOptions extends ResultGroup {
+	public id(): string {
+		return "download-options";
+	}
 	public name(): string {
 		return "DownloadOptions";
 	}

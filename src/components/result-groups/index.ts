@@ -13,7 +13,7 @@ import { History } from "./history";
 import { Management } from "./management";
 import { Prefixes } from "./prefixes";
 import { Sessions } from "./sessions";
-import { SessionDevices } from "./sessions.devices";
+import { SessionDevices } from "./sessions-devices";
 import { Shortcuts } from "./shortcuts";
 import { SystemCpu } from "./system-cpu";
 import { SystemMemory } from "./system-memory";
@@ -61,7 +61,7 @@ export async function getEnabledResultGroups() {
 	const config = await getConfig();
 	const groups = [];
 	for (const group of RESULT_GROUPS_BROWSER_FILTERED) {
-		if (config.groups[group.name()]?.enabled) {
+		if (config.groups[group.id()]?.enabled) {
 			groups.push(group);
 		}
 	}
@@ -80,7 +80,7 @@ export async function enableResultGroup(group: ResultGroup) {
 			}
 			await updateConfig({
 				groups: {
-					[group.name()]: {
+					[group.id()]: {
 						enabled: true,
 					},
 				},
@@ -101,7 +101,7 @@ export async function disableResultGroup(group: ResultGroup) {
 			}
 			await updateConfig({
 				groups: {
-					[group.name()]: {
+					[group.id()]: {
 						enabled: false,
 					},
 				},

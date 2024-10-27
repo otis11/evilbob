@@ -5,6 +5,9 @@ import { Result } from "../result/result";
 import type { Tag } from "../tags/tags";
 
 export class TopSites extends ResultGroup {
+	public id(): string {
+		return "top-sites";
+	}
 	prefix = "top";
 	permissions = ["topSites"];
 	public description(): string {

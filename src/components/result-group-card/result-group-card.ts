@@ -12,7 +12,7 @@ export function ResultGroupCard(group: ResultGroup, config: BobConfig) {
 
 	const checkbox = document.createElement("input");
 	checkbox.type = "checkbox";
-	checkbox.checked = !!config.groups[group.name()]?.enabled;
+	checkbox.checked = !!config.groups[group.id()]?.enabled;
 	checkbox.addEventListener("change", async () => {
 		if (checkbox.checked) {
 			enableResultGroup(group);

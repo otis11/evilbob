@@ -4,6 +4,9 @@ import { Result } from "../result/result";
 import { ShortcutElement } from "../shortcut/shortcut";
 
 export class Shortcuts extends ResultGroup {
+	public id(): string {
+		return "shortcuts";
+	}
 	public description(): string {
 		return "Search for browser shortcuts.";
 	}

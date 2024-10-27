@@ -8,6 +8,9 @@ import { Result } from "../result/result";
 import type { Search } from "../search";
 
 export class TabGroups extends ResultGroup {
+	public id(): string {
+		return "tab-groups";
+	}
 	prefix = "tg";
 	public description(): string {
 		return "List tab groups.";

@@ -6,6 +6,9 @@ import type { Result } from "../result/result";
 
 export class SystemCpu extends ResultGroup {
 	permissions = ["system.cpu"];
+	public id(): string {
+		return "system-cpu";
+	}
 	public prefix?: string | undefined = "cpu";
 	public description(): string {
 		return "Information about your system cpu.";

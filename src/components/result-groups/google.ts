@@ -6,6 +6,9 @@ import { Search } from "../search";
 
 export class Google extends ResultGroup {
 	prefix = "g";
+	public id(): string {
+		return "google";
+	}
 	public description(): string {
 		return "Google search & Google filters like intitle:youtube.";
 	}

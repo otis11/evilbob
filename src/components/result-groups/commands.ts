@@ -7,6 +7,9 @@ import { ShortcutElement } from "../shortcut/shortcut";
 export class Commands extends ResultGroup {
 	prefix = "c";
 	permissions = [];
+	public id(): string {
+		return "commands";
+	}
 	public description(): string {
 		return "Available commands from extensions.";
 	}

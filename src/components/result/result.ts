@@ -108,12 +108,9 @@ export abstract class Result {
 		return this.name();
 	}
 
+	// TODO make abstract and each result should implement it.
 	public name() {
 		return this.constructor.name;
-	}
-
-	public nameHumandReadable() {
-		return this.name().replace("Result", "");
 	}
 
 	public async onSelect(search: Search, results: Result[]) {

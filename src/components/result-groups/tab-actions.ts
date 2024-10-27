@@ -22,6 +22,9 @@ import type { Search } from "../search";
 import { Tab } from "./tabs";
 
 export class TabActions extends ResultGroup {
+	public id(): string {
+		return "tab-actions";
+	}
 	permissions = ["tabs"];
 	prefix = "a";
 	public name(): string {
@@ -267,6 +270,9 @@ export class CloseBySearch extends Result {
 }
 
 class CloseBySearchOptions extends ResultGroup {
+	public id(): string {
+		return "close-by-search-options";
+	}
 	public name(): string {
 		return "Close By Search Options";
 	}

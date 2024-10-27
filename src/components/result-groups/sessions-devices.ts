@@ -6,6 +6,9 @@ import type { Tag } from "../tags/tags";
 
 // separated from sessions because only chrome has .getDevices
 export class SessionDevices extends ResultGroup {
+	public id(): string {
+		return "session-devices";
+	}
 	permissions = ["sessions"];
 	public description(): string {
 		return "Search your session devices.";

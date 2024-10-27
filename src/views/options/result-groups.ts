@@ -20,12 +20,12 @@ export async function renderResultGroups(config: BobConfig) {
 	checkbox.checked =
 		RESULT_GROUPS_BROWSER_FILTERED.length ===
 		RESULT_GROUPS_BROWSER_FILTERED.filter(
-			(g) => config.groups[g.name()]?.enabled,
+			(g) => config.groups[g.id()]?.enabled,
 		).length;
 	checkbox.addEventListener("change", async () => {
 		const groupConfig: Record<string, ResultGroupConfig> = {};
 		for (const group of RESULT_GROUPS_BROWSER_FILTERED) {
-			groupConfig[group.name()] = {
+			groupConfig[group.id()] = {
 				enabled: checkbox.checked,
 			};
 		}

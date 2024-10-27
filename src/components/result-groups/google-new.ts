@@ -8,6 +8,10 @@ export class GoogleNew extends ResultGroup {
 		return "Create new google docs, sheets, slides ... ";
 	}
 
+	public id(): string {
+		return "google-new";
+	}
+
 	public name(): string {
 		return "Google New";
 	}

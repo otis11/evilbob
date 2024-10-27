@@ -7,6 +7,9 @@ import type { Tag } from "../tags/tags";
 
 export class History extends ResultGroup {
 	permissions = ["history"];
+	public id(): string {
+		return "history";
+	}
 	prefix = "h";
 	public description(): string {
 		return "Search & interact with browser history.";
@@ -67,6 +70,9 @@ export class HistoryItem extends Result {
 }
 
 class HistoryItemOptions extends ResultGroup {
+	public id(): string {
+		return "history-item-options";
+	}
 	constructor(private item: chrome.history.HistoryItem) {
 		super();
 	}

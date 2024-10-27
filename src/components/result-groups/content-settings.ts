@@ -9,6 +9,9 @@ import type { Tag } from "../tags/tags";
 export class ContentSettings extends ResultGroup {
 	public prefix?: string | undefined = "cs";
 	permissions = ["contentSettings"];
+	public id(): string {
+		return "content-settings";
+	}
 	public description(): string {
 		return "Settings that control whether websites can use features such as cookies, JavaScript, and plugins";
 	}

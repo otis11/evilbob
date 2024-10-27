@@ -15,6 +15,9 @@ import type { Search } from "../search";
 import type { Tag } from "../tags/tags";
 
 export class Tabs extends ResultGroup {
+	public id(): string {
+		return "tabs";
+	}
 	permissions = ["tabs"];
 	prefix = "t";
 	public name(): string {

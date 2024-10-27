@@ -7,6 +7,9 @@ import { ResultGroup } from "../result-group";
 import { Result } from "../result/result";
 
 export class Bob extends ResultGroup {
+	public id(): string {
+		return "bob";
+	}
 	public prefix?: string | undefined = "bob";
 	permissions = [];
 	public description(): string {

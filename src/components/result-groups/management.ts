@@ -6,6 +6,9 @@ import type { Tag } from "../tags/tags";
 
 export class Management extends ResultGroup {
 	permissions = ["management"];
+	public id(): string {
+		return "management";
+	}
 	prefix = "e";
 	public description(): string {
 		return "Search & interact with installed extensions.";
@@ -68,6 +71,9 @@ export class Extension extends Result {
 }
 
 export class ExtensionOptions extends ResultGroup {
+	public id(): string {
+		return "extension-options";
+	}
 	constructor(private extension: chrome.management.ExtensionInfo) {
 		super();
 	}

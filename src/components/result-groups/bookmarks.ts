@@ -11,6 +11,9 @@ export class Bookmarks extends ResultGroup {
 	public description(): string {
 		return "Search & interact with bookmarks.";
 	}
+	public id(): string {
+		return "bookmarks";
+	}
 
 	public name(): string {
 		return "Bookmarks";
@@ -86,6 +89,9 @@ export class Bookmark extends Result {
 }
 
 class BookmarkOptions extends ResultGroup {
+	public id(): string {
+		return "bookmark-options";
+	}
 	constructor(private bookmark: chrome.bookmarks.BookmarkTreeNode) {
 		super();
 	}

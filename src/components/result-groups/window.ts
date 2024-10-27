@@ -7,6 +7,9 @@ import { ResultGroup } from "../result-group";
 import { Result } from "../result/result";
 
 export class Window extends ResultGroup {
+	public id(): string {
+		return "window";
+	}
 	permissions = [];
 	public prefix?: string | undefined = "win";
 	public description(): string {

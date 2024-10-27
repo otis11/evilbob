@@ -6,6 +6,9 @@ import { Search } from "../search";
 
 export class ChatGPT extends ResultGroup {
 	permissions = [];
+	public id(): string {
+		return "chatgpt";
+	}
 	public prefix?: string | undefined = "gpt";
 	public description(): string {
 		return "Start a chat with chatgpt";
@@ -36,6 +39,9 @@ export class ChatGPTStartChat extends Result {
 }
 
 export class ChatGPTStartChatOptions extends ResultGroup {
+	public id(): string {
+		return "chatgpt-options";
+	}
 	public description(): string {
 		return "";
 	}

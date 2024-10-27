@@ -40,10 +40,10 @@ export const DEFAULT_CONFIG: BobConfig = {
 		Bob: {
 			enabled: true,
 		},
-		ResultGroupPrefixes: {
+		Prefixes: {
 			enabled: true,
 		},
-		ResultGroupWindow: {
+		Window: {
 			enabled: true,
 		},
 	},

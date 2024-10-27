@@ -24,7 +24,7 @@ export async function renderThemes(config: BobConfig) {
 			editButton.append(icon, editText);
 			editButton.addEventListener("click", () => {
 				chrome.tabs.create({
-					url: "src/views/custom-theme/index.html",
+					url: "/src/views/custom-theme/index.html",
 				});
 			});
 			card.append(editButton);

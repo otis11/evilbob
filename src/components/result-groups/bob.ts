@@ -94,7 +94,7 @@ export class BobShowUsage extends Result {
 
 	async execute(): Promise<void> {
 		chrome.tabs.create({
-			url: "src/views/usage/index.html",
+			url: "/src/views/usage/index.html",
 		});
 		focusLastActiveWindow();
 	}

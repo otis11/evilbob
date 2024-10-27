@@ -34,6 +34,9 @@ chrome.action.onClicked.addListener(() => {
 	chrome.runtime.openOptionsPage();
 });
 
+chrome.windows.getCurrent().then((w) => {
+	currentWindow = w;
+});
 chrome.windows.onFocusChanged.addListener(async (windowId) => {
 	currentWindow = await chrome.windows.getCurrent();
 });
@@ -67,7 +70,7 @@ async function openBob() {
 	let newBobWindow: chrome.windows.Window;
 	try {
 		newBobWindow = await chrome.windows.create({
-			url: "src/views/search/index.html",
+			url: "/src/views/search/index.html",
 			type: "popup",
 			width: windowDimensions.width,
 			height: windowDimensions.height,
@@ -80,7 +83,7 @@ async function openBob() {
 			console.log("could not open bob window");
 		}
 		newBobWindow = await chrome.windows.create({
-			url: "src/views/search/index.html",
+			url: "/src/views/search/index.html",
 			type: "popup",
 			width: currentWindow?.width || 600,
 			height: currentWindow?.height || 400,

@@ -1,3 +1,5 @@
+import { getConfig } from "../../config";
+import { setLocale } from "../../locale";
 import "../../theme";
 import { getUsage } from "../../usage";
 import { unixTimeToHumanReadable } from "../../util/time";
@@ -5,6 +7,8 @@ import "../global.css";
 import "./main.css";
 
 async function renderUsage() {
+	const config = await getConfig();
+	setLocale(config.locale);
 	const usage = await getUsage();
 
 	const resultKeys = Object.keys(usage.results).sort((keyA, keyB) => {

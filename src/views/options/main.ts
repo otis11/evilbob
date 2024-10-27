@@ -9,7 +9,7 @@ import { LOCALES, type Locale, setLocale } from "../../locale";
 import { renderBobDimensions } from "./dimensions";
 import { renderFooter } from "./footer";
 import { renderHeader } from "./header";
-import { renderOnBobWindowLeave } from "./on-bob-window-leave";
+import { renderOnBobWindowEvents } from "./on-bob-window-events";
 import { renderResultGroups } from "./result-groups";
 import { renderThemes } from "./themes";
 
@@ -18,7 +18,7 @@ import { renderThemes } from "./themes";
 	setLocale(config.locale);
 	renderHeader();
 	await renderResultGroups(config);
-	renderOnBobWindowLeave(config);
+	renderOnBobWindowEvents(config);
 	await renderBobDimensions(config);
 	renderLocales(config);
 	renderThemes(config);

@@ -38,6 +38,9 @@ export abstract class Result {
 		};
 	};
 	cachedHtmlElement?: HTMLLIElement;
+	cachedTitle?: HTMLElement;
+	cachedDescription?: HTMLElement;
+	resultHitElement: HTMLElement;
 
 	static instanceFromId(id: string): Result | undefined {
 		return Result.globalRegistry[id];
@@ -48,6 +51,9 @@ export abstract class Result {
 	constructor() {
 		this.instanceId = Result.lastInstanceId++;
 		Result.globalRegistry[this.instanceId] = this;
+
+		this.resultHitElement = document.createElement("span");
+		this.resultHitElement.classList.add("result-hit");
 	}
 
 	public search(search: Search) {
@@ -135,9 +141,35 @@ export abstract class Result {
 	abstract execute(search: Search, results: Result[]): Promise<void>;
 
 	public asHtmlElement() {
-		const li = document.createElement("li");
-		li.classList.add("result");
-		li.setAttribute("data-instance-id", this.instanceId.toString());
+		if (this.cachedHtmlElement) {
+			if (this.cachedDescription) {
+				this.cachedDescription.innerHTML = "";
+				this.cachedDescription.append(
+					this.createMatchesElement(
+						this.description(),
+						this.lastSearch?.description.matches,
+					),
+				);
+			}
+			if (this.cachedTitle) {
+				this.cachedTitle.innerHTML = "";
+				this.cachedTitle.append(
+					this.createMatchesElement(
+						this.title(),
+						this.lastSearch?.title.matches,
+					),
+				);
+			}
+
+			return this.cachedHtmlElement;
+		}
+
+		this.cachedHtmlElement = document.createElement("li");
+		this.cachedHtmlElement.classList.add("result");
+		this.cachedHtmlElement.setAttribute(
+			"data-instance-id",
+			this.instanceId.toString(),
+		);
 
 		const content = document.createElement("div");
 		content.classList.add("result-content");
@@ -147,27 +179,27 @@ export abstract class Result {
 			const span = document.createElement("span");
 			span.classList.add("result-prepend");
 			span.append(prepend.cloneNode(true));
-			li.append(span);
+			this.cachedHtmlElement.append(span);
 		}
 
-		const title = this.makeTitleElement();
-		content.append(title);
+		this.cachedTitle = this.makeTitleElement();
+		content.append(this.cachedTitle);
 
 		if (this.tags.length > 0) {
 			const tags = Tags(this.tags());
 			content.append(tags);
 		}
 
-		const description = this.makeDescriptionElement();
-		content.append(description);
-		li.append(content);
+		this.cachedDescription = this.makeDescriptionElement();
+		content.append(this.cachedDescription);
+		this.cachedHtmlElement.append(content);
 
 		const append = this.append();
 		if (append) {
 			const span = document.createElement("span");
 			span.classList.add("result-append");
 			span.append(append.cloneNode(true));
-			li.append(span);
+			this.cachedHtmlElement.append(span);
 		}
 
 		if (this.options()) {
@@ -179,48 +211,48 @@ export abstract class Result {
 				event.stopImmediatePropagation();
 				this.emitShowOptionsEvent();
 			});
-			li.append(span);
+			this.cachedHtmlElement.append(span);
 		}
 
-		return li;
+		return this.cachedHtmlElement;
 	}
 
 	makeDescriptionElement() {
 		const description = document.createElement("div");
 		description.classList.add("result-description");
 		description.append(
-			...this.description()
-				.split("")
-				.map((char, index) => {
-					if (this.lastSearch?.description.matches[index]) {
-						const span = document.createElement("span");
-						span.classList.add("result-hit");
-						span.innerText = char;
-						return span;
-					}
-					return document.createTextNode(char);
-				}),
+			this.createMatchesElement(
+				this.description(),
+				this.lastSearch?.description.matches,
+			),
 		);
-
 		return description;
+	}
+
+	private createMatchesElement(str: string, matches?: boolean[]) {
+		const fragment = document.createDocumentFragment();
+		const l = str.length;
+		const hasMatches = !!matches;
+		for (let i = 0; i < l; i++) {
+			if (hasMatches && matches[i]) {
+				const result = this.resultHitElement.cloneNode() as HTMLElement;
+				result.innerText = str[i];
+				fragment.appendChild(result);
+			} else {
+				fragment.appendChild(document.createTextNode(str[i]));
+			}
+		}
+		return fragment;
 	}
 
 	makeTitleElement() {
 		const title = document.createElement("div");
 		title.classList.add("result-title");
-		title.innerHTML = "";
 		title.append(
-			...this.title()
-				.split("")
-				.map((char, index) => {
-					if (this.lastSearch?.title.matches[index]) {
-						const span = document.createElement("span");
-						span.classList.add("result-hit");
-						span.innerText = char;
-						return span;
-					}
-					return document.createTextNode(char);
-				}),
+			this.createMatchesElement(
+				this.title(),
+				this.lastSearch?.title.matches,
+			),
 		);
 		return title;
 	}

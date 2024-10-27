@@ -45,10 +45,12 @@ export async function filterResults() {
 		currentResults = searchResults(getResults(), search, usage);
 	}
 
-	const elements = currentResults.map((item) => item.asHtmlElement());
-
+	const fragment = document.createDocumentFragment();
+	for (const result of currentResults) {
+		fragment.appendChild(result.asHtmlElement());
+	}
 	resultsContainer.innerHTML = "";
-	resultsContainer.append(...elements);
+	resultsContainer.append(fragment);
 
 	updateSelectedIndex(0);
 	resultsCounter.innerHTML = `${resultsContainer.children.length}/${getResults().length} results`;

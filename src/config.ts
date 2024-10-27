@@ -25,6 +25,8 @@ export type BobConfig = {
 	onBobWindowLeave?: {
 		closeWindow?: boolean;
 		clearSearch?: boolean;
+	};
+	onBobWindowFocus?: {
 		refreshResults?: boolean;
 	};
 };
@@ -34,6 +36,8 @@ export const DEFAULT_CONFIG: BobConfig = {
 	onBobWindowLeave: {
 		closeWindow: false,
 		clearSearch: true,
+	},
+	onBobWindowFocus: {
 		refreshResults: true,
 	},
 	groups: {

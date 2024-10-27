@@ -32,14 +32,13 @@ window.addEventListener("blur", async () => {
 	if (config.onBobWindowLeave?.clearSearch) {
 		searchInput.value = "";
 	}
+});
 
-	if (config.onBobWindowLeave?.refreshResults) {
+window.addEventListener("focus", async () => {
+	(isResultOptionsVisible() ? optionsSearchInput : searchInput).focus();
+	if (config.onBobWindowFocus?.refreshResults) {
 		await loadFreshData();
 	}
 
 	filterResults();
-});
-
-window.addEventListener("focus", () => {
-	(isResultOptionsVisible() ? optionsSearchInput : searchInput).focus();
 });

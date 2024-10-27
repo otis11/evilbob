@@ -1,4 +1,5 @@
 import type { Result } from "../../components/result/result";
+import { getConfig } from "../../config";
 import { getUsage } from "../../usage";
 import {
 	optionsSearchInput,
@@ -22,7 +23,10 @@ export function setCurrentResults(newResults: Result[]) {
 }
 
 export async function filterResults() {
+	let latest = performance.now();
+	console.log("filter start");
 	const usage = await getUsage();
+	const config = await getConfig();
 	const search = newSearch(
 		isResultOptionsVisible() ? optionsSearchInput : searchInput,
 	);
@@ -44,10 +48,16 @@ export async function filterResults() {
 	} else {
 		currentResults = searchResults(getResults(), search, usage);
 	}
+	console.log("after js serach", (performance.now() - latest).toFixed(1));
+	latest = performance.now();
 
 	const fragment = document.createDocumentFragment();
-	for (const result of currentResults) {
-		fragment.appendChild(result.asHtmlElement());
+	const threshold = config.search?.maxRenderedItems || 35;
+	for (let i = 0; i < currentResults.length; i++) {
+		if (i > threshold) {
+			break;
+		}
+		fragment.appendChild(currentResults[i].asHtmlElement());
 	}
 
 	requestAnimationFrame(() => {
@@ -56,6 +66,12 @@ export async function filterResults() {
 
 		updateSelectedIndex(0);
 		resultsCounter.innerHTML = `${resultsContainer.children.length}/${getResults().length} results`;
+		requestAnimationFrame(() => {
+			console.log(
+				"after render",
+				(performance.now() - latest).toFixed(1),
+			);
+		});
 	});
 }
 

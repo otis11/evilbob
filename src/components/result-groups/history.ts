@@ -1,3 +1,4 @@
+import { getConfig } from "../../config";
 import { faviconFromUrl, iconFromString, iconHistory } from "../../icons";
 import { focusLastActiveWindow } from "../../util/last-active-window";
 import { ResultGroup } from "../result-group";
@@ -20,7 +21,11 @@ export class History extends ResultGroup {
 	}
 
 	public async getResults(): Promise<Result[]> {
-		const items = await chrome.history.search({ text: "" });
+		const config = await getConfig();
+		const items = await chrome.history.search({
+			text: "",
+			maxResults: config.search?.maxHistoryItems || 100,
+		});
 		return items.map((item) => new HistoryItem(item));
 	}
 }

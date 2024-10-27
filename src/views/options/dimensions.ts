@@ -34,8 +34,6 @@ export async function renderBobDimensions(config: BobConfig) {
 		});
 	});
 
-	labelHeight.style.marginBottom = "8px";
-	labelWidth.style.marginBottom = "8px";
 	container.append(labelWidth, labelHeight);
 	document.body.append(container);
 }

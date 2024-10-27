@@ -24,6 +24,26 @@ export abstract class Result {
 		return undefined;
 	}
 
+	static LiTemplate = (() => {
+		const el = document.createElement("li");
+		el.classList.add("result");
+		return el;
+	})();
+
+	static HitTemplate = (() => {
+		const el = document.createElement("span");
+		el.classList.add("result-hit");
+		return el;
+	})();
+
+	static OptionsTemplate = (() => {
+		const span = document.createElement("span");
+		span.classList.add("result-options");
+		span.append(iconFromString(iconDotsVertical));
+		span.title = "Shift Enter";
+		return span;
+	})();
+
 	static lastInstanceId = 0;
 	instanceId: number;
 	lastSearch?: {
@@ -37,10 +57,9 @@ export abstract class Result {
 			matches: boolean[];
 		};
 	};
-	cachedHtmlElement?: HTMLLIElement;
-	cachedTitle?: HTMLElement;
-	cachedDescription?: HTMLElement;
-	resultHitElement: HTMLElement;
+	rootEl?: HTMLLIElement;
+	titleEl?: HTMLElement;
+	descriptionEl?: HTMLElement;
 
 	static instanceFromId(id: string): Result | undefined {
 		return Result.globalRegistry[id];
@@ -51,9 +70,6 @@ export abstract class Result {
 	constructor() {
 		this.instanceId = Result.lastInstanceId++;
 		Result.globalRegistry[this.instanceId] = this;
-
-		this.resultHitElement = document.createElement("span");
-		this.resultHitElement.classList.add("result-hit");
 	}
 
 	public search(search: Search) {
@@ -141,32 +157,30 @@ export abstract class Result {
 	abstract execute(search: Search, results: Result[]): Promise<void>;
 
 	public asHtmlElement() {
-		if (this.cachedHtmlElement) {
-			if (this.cachedDescription) {
-				this.cachedDescription.innerHTML = "";
-				this.cachedDescription.append(
+		if (this.rootEl) {
+			if (this.descriptionEl) {
+				this.descriptionEl.innerHTML = "";
+				this.descriptionEl.append(
 					this.createMatchesElement(
 						this.description(),
 						this.lastSearch?.description.matches,
 					),
 				);
 			}
-			if (this.cachedTitle) {
-				this.cachedTitle.innerHTML = "";
-				this.cachedTitle.append(
+			if (this.titleEl) {
+				this.titleEl.innerHTML = "";
+				this.titleEl.append(
 					this.createMatchesElement(
 						this.title(),
 						this.lastSearch?.title.matches,
 					),
 				);
 			}
-
-			return this.cachedHtmlElement;
+			return this.rootEl;
 		}
 
-		this.cachedHtmlElement = document.createElement("li");
-		this.cachedHtmlElement.classList.add("result");
-		this.cachedHtmlElement.setAttribute(
+		this.rootEl = Result.LiTemplate.cloneNode(true) as HTMLLIElement;
+		this.rootEl.setAttribute(
 			"data-instance-id",
 			this.instanceId.toString(),
 		);
@@ -179,42 +193,38 @@ export abstract class Result {
 			const span = document.createElement("span");
 			span.classList.add("result-prepend");
 			span.append(prepend.cloneNode(true));
-			this.cachedHtmlElement.append(span);
+			this.rootEl.append(span);
 		}
 
-		this.cachedTitle = this.makeTitleElement();
-		content.append(this.cachedTitle);
+		this.titleEl = this.makeTitleElement();
+		content.append(this.titleEl);
 
 		if (this.tags.length > 0) {
 			const tags = Tags(this.tags());
 			content.append(tags);
 		}
 
-		this.cachedDescription = this.makeDescriptionElement();
-		content.append(this.cachedDescription);
-		this.cachedHtmlElement.append(content);
+		this.descriptionEl = this.makeDescriptionElement();
+		content.append(this.descriptionEl);
+		this.rootEl.append(content);
 
 		const append = this.append();
 		if (append) {
 			const span = document.createElement("span");
 			span.classList.add("result-append");
 			span.append(append.cloneNode(true));
-			this.cachedHtmlElement.append(span);
+			this.rootEl.append(span);
 		}
 
 		if (this.options()) {
-			const span = document.createElement("span");
-			span.classList.add("result-options");
-			span.append(iconFromString(iconDotsVertical));
-			span.title = "Shift Enter";
+			const span = Result.OptionsTemplate.cloneNode(true);
 			span.addEventListener("click", (event) => {
 				event.stopImmediatePropagation();
 				this.emitShowOptionsEvent();
 			});
-			this.cachedHtmlElement.append(span);
+			this.rootEl.append(span);
 		}
-
-		return this.cachedHtmlElement;
+		return this.rootEl;
 	}
 
 	makeDescriptionElement() {
@@ -235,7 +245,7 @@ export abstract class Result {
 		const hasMatches = !!matches;
 		for (let i = 0; i < l; i++) {
 			if (hasMatches && matches[i]) {
-				const result = this.resultHitElement.cloneNode() as HTMLElement;
+				const result = Result.HitTemplate.cloneNode() as HTMLElement;
 				result.innerText = str[i];
 				fragment.appendChild(result);
 			} else {

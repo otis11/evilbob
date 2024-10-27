@@ -29,6 +29,10 @@ export type BobConfig = {
 	onBobWindowFocus?: {
 		refreshResults?: boolean;
 	};
+	search?: {
+		maxRenderedItems?: number;
+		maxHistoryItems?: number;
+	};
 };
 
 export const DEFAULT_CONFIG: BobConfig = {
@@ -39,6 +43,10 @@ export const DEFAULT_CONFIG: BobConfig = {
 	},
 	onBobWindowFocus: {
 		refreshResults: true,
+	},
+	search: {
+		maxRenderedItems: 25,
+		maxHistoryItems: 100,
 	},
 	groups: {
 		Bob: {

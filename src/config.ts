@@ -1,14 +1,14 @@
 // @ts-expect-error typescript doesnt know dark.css?raw as a file
 import darkTheme from "./themes/dark.css?raw";
 
-import type { Locale } from "./locale";
+import type { Locale } from "./locales/new-locales";
 import type { Dimensions } from "./theme";
 import type { Theme } from "./theme/themes";
 import { deepMerge } from "./util/deep-merge";
 
 let configCache: BobConfig;
 
-export type ResultGroupConfig = {
+export type PluginConfig = {
 	enabled: boolean;
 };
 
@@ -18,7 +18,7 @@ export type ResultUsage = {
 };
 export type BobConfig = {
 	locale: Locale;
-	groups: Record<string, ResultGroupConfig | undefined>;
+	plugins: Record<string, PluginConfig | undefined>;
 	dimensions: Dimensions;
 	theme: Theme;
 	customTheme: string;
@@ -48,17 +48,7 @@ export const DEFAULT_CONFIG: BobConfig = {
 		maxRenderedItems: 25,
 		maxHistoryItems: 100,
 	},
-	groups: {
-		Bob: {
-			enabled: true,
-		},
-		Prefixes: {
-			enabled: true,
-		},
-		Window: {
-			enabled: true,
-		},
-	},
+	plugins: {},
 	dimensions: { width: 900, height: 600 },
 	theme: "dark",
 	customTheme: darkTheme.replace(

@@ -7,7 +7,7 @@ import { filterResults } from "./results";
 import { loadFreshData } from "./search-data";
 import "./keyboard";
 import "./mouse";
-import { setLocale } from "../../locale";
+import { setLocale } from "../../locales/locales";
 import { optionsSearchInput, searchInput } from "./dom";
 import { isResultOptionsVisible } from "./result-options";
 

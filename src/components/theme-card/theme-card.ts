@@ -1,5 +1,5 @@
 import { updateConfig } from "../../config";
-import { t } from "../../locale";
+import { t } from "../../locales/locales";
 import { loadTheme } from "../../theme";
 import type { Theme } from "../../theme/themes";
 import { Result } from "../result/result";

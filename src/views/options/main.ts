@@ -6,19 +6,19 @@ import { FlexContainer } from "../../components/flex-container";
 import { GroupHeading } from "../../components/group-heading";
 import { NumberInput } from "../../components/number-input";
 import { type BobConfig, getConfig, updateConfig } from "../../config";
-import { LOCALES, type Locale, setLocale } from "../../locale";
+import { LOCALES, type Locale, setLocale } from "../../locales/locales";
 import { renderBobDimensions } from "./dimensions";
 import { renderFooter } from "./footer";
 import { renderHeader } from "./header";
 import { renderOnBobWindowEvents } from "./on-bob-window-events";
-import { renderResultGroups } from "./result-groups";
+import { renderPlugins } from "./result-groups";
 import { renderThemes } from "./themes";
 
 (async () => {
 	const config = await getConfig();
 	setLocale(config.locale);
 	renderHeader();
-	await renderResultGroups(config);
+	await renderPlugins(config);
 	renderSearchOptions(config);
 	renderOnBobWindowEvents(config);
 	await renderBobDimensions(config);

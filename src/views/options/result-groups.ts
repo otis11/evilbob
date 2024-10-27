@@ -1,14 +1,10 @@
 import { GroupHeading } from "../../components/group-heading";
-import { ResultGroupCard } from "../../components/result-group-card/result-group-card";
-import { RESULT_GROUPS_BROWSER_FILTERED } from "../../components/result-groups";
-import {
-	type BobConfig,
-	type ResultGroupConfig,
-	updateConfig,
-} from "../../config";
-import { t } from "../../locale";
+import { PluginCard } from "../../components/plugin-card/plugin-card";
+import { type BobConfig, type PluginConfig, updateConfig } from "../../config";
+import { t } from "../../locales/locales";
+import { PLUGINS_BROWSER_FILTERED } from "../../plugins";
 
-export async function renderResultGroups(config: BobConfig) {
+export async function renderPlugins(config: BobConfig) {
 	const resultGroups = document.createElement("div");
 
 	resultGroups.append(GroupHeading(t("Result Groups")));
@@ -19,21 +15,20 @@ export async function renderResultGroups(config: BobConfig) {
 	const checkbox = document.createElement("input");
 	checkbox.type = "checkbox";
 	checkbox.checked =
-		RESULT_GROUPS_BROWSER_FILTERED.length ===
-		RESULT_GROUPS_BROWSER_FILTERED.filter(
-			(g) => config.groups[g.id()]?.enabled,
-		).length;
+		PLUGINS_BROWSER_FILTERED.length ===
+		PLUGINS_BROWSER_FILTERED.filter((g) => config.plugins[g.id()]?.enabled)
+			.length;
 	checkbox.addEventListener("change", async () => {
-		const groupConfig: Record<string, ResultGroupConfig> = {};
-		for (const group of RESULT_GROUPS_BROWSER_FILTERED) {
+		const groupConfig: Record<string, PluginConfig> = {};
+		for (const group of PLUGINS_BROWSER_FILTERED) {
 			groupConfig[group.id()] = {
 				enabled: checkbox.checked,
 			};
 		}
-		const permissions = RESULT_GROUPS_BROWSER_FILTERED.flatMap(
+		const permissions = PLUGINS_BROWSER_FILTERED.flatMap(
 			(g) => g.permissions,
 		);
-		const hostPermissions = RESULT_GROUPS_BROWSER_FILTERED.flatMap(
+		const hostPermissions = PLUGINS_BROWSER_FILTERED.flatMap(
 			(g) => g.hostPermissions,
 		);
 
@@ -80,7 +75,7 @@ export async function renderResultGroups(config: BobConfig) {
 
 	const resultGroupsContainer = document.createElement("div");
 	resultGroupsContainer.classList.add("result-groups-container");
-	const sortedResultGroups = RESULT_GROUPS_BROWSER_FILTERED.sort((a, b) => {
+	const sortedResultGroups = PLUGINS_BROWSER_FILTERED.sort((a, b) => {
 		if (a.name > b.name) {
 			return 1;
 		}
@@ -90,7 +85,7 @@ export async function renderResultGroups(config: BobConfig) {
 		return 0;
 	});
 	for (const group of sortedResultGroups) {
-		resultGroupsContainer.append(ResultGroupCard(group, config));
+		resultGroupsContainer.append(PluginCard(group, config));
 	}
 	resultGroups.append(labelAllGroups, resultGroupsContainer);
 	document.body.append(resultGroups);

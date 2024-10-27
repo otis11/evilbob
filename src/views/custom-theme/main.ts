@@ -1,6 +1,6 @@
 import { ThemeCard } from "../../components/theme-card/theme-card";
 import { getConfig, updateConfig } from "../../config";
-import { setLocale } from "../../locale";
+import { setLocale } from "../../locales/locales";
 import "../../theme";
 import { loadCustomTheme } from "../../theme";
 import { debounce } from "../../util/debounce";

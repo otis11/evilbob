@@ -1,5 +1,5 @@
 import type { Result } from "../../components/result/result";
-import { t } from "../../locale";
+import { t } from "../../locales/locales";
 import { getUsage } from "../../usage";
 import {
 	optionsRoot,

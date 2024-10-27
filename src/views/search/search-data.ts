@@ -1,23 +1,24 @@
-import type { ResultGroup } from "../../components/result-group";
-import { getEnabledResultGroups } from "../../components/result-groups";
 import type { Result } from "../../components/result/result";
+import { getEnabledPlugins } from "../../plugins";
+import type { Plugin } from "../../plugins/Plugin";
 
 let results: Result[] = [];
-let resultGroups: ResultGroup[] = [];
+let plugins: Plugin[] = [];
 export function getResults() {
 	return results;
 }
 
-export function getResultGroups() {
-	return resultGroups;
+export function getPlugins() {
+	return plugins;
 }
 
 export async function loadFreshData() {
-	resultGroups = await getEnabledResultGroups();
-	const promises = resultGroups.map((group) => group.loadResults());
+	plugins = await getEnabledPlugins();
+	const promises = plugins.map((plugin) => plugin.loadResults());
 	await Promise.all(promises);
 	results = [];
-	for (const group of resultGroups) {
-		results.push(...group.results);
+	for (const plugin of plugins) {
+		results.push(...plugin.results);
 	}
+	console.log(plugins);
 }

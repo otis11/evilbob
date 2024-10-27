@@ -1,8 +1,8 @@
+import type { Result } from "../components/result/result";
+import type { Search } from "../components/search";
 import type { BrowserName } from "../platform";
-import type { Result } from "./result/result";
-import type { Search } from "./search";
 
-export abstract class ResultGroup {
+export abstract class Plugin {
 	public permissions: string[] = [];
 	public hostPermissions: string[] = [];
 	public supportedBrowsers: BrowserName[] = [

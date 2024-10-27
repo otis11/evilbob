@@ -60,7 +60,7 @@ export class ChatGPTStartChatQuery extends Result {
 				text: "",
 				selectionStart: 0,
 			}),
-			search.minMatchScore() + 1,
+			search.minMatchScore + 1,
 		);
 	}
 

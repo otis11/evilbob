@@ -49,11 +49,14 @@ export async function filterResults() {
 	for (const result of currentResults) {
 		fragment.appendChild(result.asHtmlElement());
 	}
-	resultsContainer.innerHTML = "";
-	resultsContainer.append(fragment);
 
-	updateSelectedIndex(0);
-	resultsCounter.innerHTML = `${resultsContainer.children.length}/${getResults().length} results`;
+	requestAnimationFrame(() => {
+		resultsContainer.innerHTML = "";
+		resultsContainer.append(fragment);
+
+		updateSelectedIndex(0);
+		resultsCounter.innerHTML = `${resultsContainer.children.length}/${getResults().length} results`;
+	});
 }
 
 searchInput?.addEventListener("input", () => {

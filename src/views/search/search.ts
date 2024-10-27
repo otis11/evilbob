@@ -58,8 +58,8 @@ export function searchResults(
 	const filtered = results.filter((result) => {
 		const r = result.search(search);
 		return search.textLower.length
-			? r.title.score > search.minMatchScore() ||
-					r.description.score > search.minMatchScore()
+			? r.title.score > search.minMatchScore ||
+					r.description.score > search.minMatchScore
 			: true;
 	});
 	return sortResults(filtered, search, usage);

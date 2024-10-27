@@ -90,7 +90,7 @@ export class GoogleDork extends Result {
 				text: search.text,
 			}),
 			this.title().includes(search.words().at(-1) || "")
-				? search.minMatchScore() + 1
+				? search.minMatchScore + 1
 				: 0,
 		);
 	}
@@ -114,7 +114,7 @@ export class GoogleSearch extends Result {
 				selectionStart: 0,
 				text: "",
 			}),
-			search.text.length > 0 ? search.minMatchScore() + 1 : 0,
+			search.text.length > 0 ? search.minMatchScore + 1 : 0,
 		);
 	}
 

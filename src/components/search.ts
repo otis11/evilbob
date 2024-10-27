@@ -9,12 +9,14 @@ export class Search {
 	textLower: string;
 	selectionStart: number | null;
 	inputElement?: HTMLInputElement;
+	minMatchScore: number;
 
 	constructor(config: SearchConfig) {
 		this.text = config.text;
 		this.textLower = config.text.toLowerCase();
 		this.selectionStart = config.selectionStart;
 		this.inputElement = config.inputElement;
+		this.minMatchScore = Math.floor(this.text.length / 2);
 	}
 
 	currentWord() {
@@ -34,9 +36,5 @@ export class Search {
 
 	words() {
 		return this.text.split(" ");
-	}
-
-	minMatchScore() {
-		return Math.floor(this.text.length / 2);
 	}
 }

@@ -1,13 +1,18 @@
+import { Result } from "../../components/result/result";
 import { iconFromString, iconWindowClose } from "../../icons";
-import { t } from "../../locale";
+import { NewLocales } from "../../locales/new-locales";
 import {
 	focusLastActiveWindow,
 	getLastActiveWindow,
 } from "../../util/last-active-window";
-import { ResultGroup } from "../result-group";
-import { Result } from "../result/result";
+import { Plugin } from "../Plugin";
+import enUS from "./locales/en-US";
 
-export class Window extends ResultGroup {
+const { t } = NewLocales({
+	"en-US": enUS,
+});
+
+export class WindowPlugin extends Plugin {
 	public id(): string {
 		return "window";
 	}

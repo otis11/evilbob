@@ -1,12 +1,17 @@
+import { Result } from "../../components/result/result";
 import { DEFAULT_CONFIG, setConfig } from "../../config";
 import { iconBob, iconFromString } from "../../icons";
-import { t } from "../../locale";
+import { NewLocales } from "../../locales/new-locales";
 import { DEFAULT_USAGE, setUsage } from "../../usage";
 import { focusLastActiveWindow } from "../../util/last-active-window";
-import { ResultGroup } from "../result-group";
-import { Result } from "../result/result";
+import { Plugin } from "../Plugin";
+import enUS from "./locales/en-US";
 
-export class Bob extends ResultGroup {
+const { t } = NewLocales({
+	"en-US": enUS,
+});
+
+export class BobPlugin extends Plugin {
 	public id(): string {
 		return "bob";
 	}
@@ -30,7 +35,7 @@ export class Bob extends ResultGroup {
 	}
 }
 
-export class BobOpenOptions extends Result {
+class BobOpenOptions extends Result {
 	title(): string {
 		return t("BobOpenOptions.title");
 	}
@@ -48,7 +53,7 @@ export class BobOpenOptions extends Result {
 	}
 }
 
-export class BobResetOptions extends Result {
+class BobResetOptions extends Result {
 	title(): string {
 		return t("BobResetOptions.title");
 	}
@@ -65,7 +70,7 @@ export class BobResetOptions extends Result {
 	}
 }
 
-export class BobResetUsage extends Result {
+class BobResetUsage extends Result {
 	title(): string {
 		return t("BobResetUsage.title");
 	}
@@ -81,7 +86,7 @@ export class BobResetUsage extends Result {
 	}
 }
 
-export class BobShowUsage extends Result {
+class BobShowUsage extends Result {
 	title(): string {
 		return t("BobShowUsage.title");
 	}

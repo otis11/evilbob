@@ -2,7 +2,7 @@ import { FlexContainer } from "../../components/flex-container";
 import { GroupHeading } from "../../components/group-heading";
 import { NumberInput } from "../../components/number-input";
 import { type BobConfig, updateConfig } from "../../config";
-import { t } from "../../locale";
+import { t } from "../../locales/locales";
 
 export async function renderBobDimensions(config: BobConfig) {
 	const container = FlexContainer({ flexDirection: "column" });

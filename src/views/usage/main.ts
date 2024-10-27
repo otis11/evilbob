@@ -1,5 +1,4 @@
 import { getConfig } from "../../config";
-import { setLocale, t } from "../../locale";
 import "../../theme";
 import { getUsage } from "../../usage";
 import { unixTimeToHumanReadable } from "../../util/time";

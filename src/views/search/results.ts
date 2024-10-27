@@ -1,6 +1,6 @@
 import type { Result } from "../../components/result/result";
 import { getConfig } from "../../config";
-import { t } from "../../locale";
+import { t } from "../../locales/locales";
 import { getUsage } from "../../usage";
 import {
 	optionsSearchInput,
@@ -10,7 +10,7 @@ import {
 } from "./dom";
 import { isResultOptionsVisible } from "./result-options";
 import { newSearch, searchResults } from "./search";
-import { getResultGroups, getResults } from "./search-data";
+import { getPlugins, getResults } from "./search-data";
 import { updateSelectedIndex } from "./selected";
 
 let currentResults: Result[] = [];
@@ -29,7 +29,7 @@ export async function filterResults() {
 	const search = newSearch(
 		isResultOptionsVisible() ? optionsSearchInput : searchInput,
 	);
-	const groupAlone = getResultGroups().find((group) =>
+	const groupAlone = getPlugins().find((group) =>
 		group.shouldRenderAlone(search),
 	);
 

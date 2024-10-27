@@ -2,7 +2,7 @@ import { GroupHeading } from "../../components/group-heading";
 import { ThemeCard } from "../../components/theme-card/theme-card";
 import type { BobConfig } from "../../config";
 import { iconFromString, iconPencil } from "../../icons";
-import { t } from "../../locale";
+import { t } from "../../locales/locales";
 import { Themes } from "../../theme/themes";
 
 export async function renderThemes(config: BobConfig) {

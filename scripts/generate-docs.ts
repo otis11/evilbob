@@ -1,6 +1,6 @@
 import { writeFileSync } from "node:fs";
 import path from "node:path";
-import { RESULT_GROUPS } from "../src/components/result-groups";
+import { RESULT_GROUPS } from "../src/plugins";
 import { Themes } from "../src/theme/themes";
 
 generateResultGroupsMarkdown();

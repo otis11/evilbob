@@ -2,28 +2,28 @@ import { Checkbox } from "../../components/checkbox";
 import { FlexContainer } from "../../components/flex-container";
 import { GroupHeading } from "../../components/group-heading";
 import { type BobConfig, updateConfig } from "../../config";
+import { t } from "../../locale";
 
 export async function renderOnBobWindowEvents(config: BobConfig) {
 	const container = FlexContainer({
 		flexDirection: "column",
 		gap: "8px",
 	});
-	container.append(GroupHeading("On Bob window leave"));
+	container.append(GroupHeading(t("onBobWindowLeave.title")));
 	const [clearSearch, clearSearchCheckbox] = Checkbox(
-		"Clear Search",
+		t("Clear Search"),
 		config.onBobWindowLeave?.clearSearch,
-		"Clears the search text.",
+		t("onBobWindowLeave.clearSearch"),
 	);
 	const [closeWindow, closeWindowCheckbox] = Checkbox(
-		"Close Window",
+		t("Close Window"),
 		config.onBobWindowLeave?.closeWindow,
-		"Closes the bob window. This is not recommend, as it takes longer to open than just refocusing the window.",
+		t("onBobWindowLeave.closeWindow"),
 	);
 
 	const [refreshResults, refreshResultsCheckbox] = Checkbox(
-		"Refresh Results",
+		t("Refresh Results"),
 		config.onBobWindowFocus?.refreshResults,
-		"Refreshes the results.",
 	);
 
 	clearSearchCheckbox.addEventListener("change", async () => {
@@ -51,7 +51,7 @@ export async function renderOnBobWindowEvents(config: BobConfig) {
 	});
 
 	container.append(clearSearch, closeWindow);
-	container.append(GroupHeading("On Bob window focus"));
+	container.append(GroupHeading(t("onBobWindowFocus.title")));
 	container.append(refreshResults);
 
 	document.body.append(container);

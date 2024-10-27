@@ -1,4 +1,5 @@
 import { faviconFromUrl, iconBookmark, iconFromString } from "../../icons";
+import { t } from "../../locale";
 import { focusLastActiveWindow } from "../../util/last-active-window";
 import { ResultGroup } from "../result-group";
 import { Result } from "../result/result";
@@ -9,14 +10,14 @@ export class Bookmarks extends ResultGroup {
 	permissions = ["bookmarks"];
 	prefix = "b";
 	public description(): string {
-		return "Search & interact with bookmarks.";
+		return t("Bookmarks.description");
 	}
 	public id(): string {
 		return "bookmarks";
 	}
 
 	public name(): string {
-		return "Bookmarks";
+		return t("Bookmarks");
 	}
 
 	public async getResults(): Promise<Result[]> {
@@ -109,10 +110,10 @@ class BookmarkOptions extends ResultGroup {
 
 class RemoveBookmark extends Result {
 	title(): string {
-		return "Remove";
+		return t("RemoveBookmark.title");
 	}
 	description(): string {
-		return "Remove bookmark. Delete";
+		return t("RemoveBookmark.description");
 	}
 
 	constructor(private bookmark: chrome.bookmarks.BookmarkTreeNode) {

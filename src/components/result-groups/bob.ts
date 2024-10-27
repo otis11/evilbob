@@ -50,10 +50,10 @@ export class BobOpenOptions extends Result {
 
 export class BobResetOptions extends Result {
 	title(): string {
-		return "Bob Reset Options";
+		return t("BobResetOptions.title");
 	}
 	description(): string {
-		return "Reset my options to default. Settings";
+		return t("BobResetOptions.description");
 	}
 	prepend(): HTMLElement | undefined {
 		return iconFromString(iconBob);
@@ -67,10 +67,10 @@ export class BobResetOptions extends Result {
 
 export class BobResetUsage extends Result {
 	title(): string {
-		return "Bob Reset Usage";
+		return t("BobResetUsage.title");
 	}
 	description(): string {
-		return "Reset my usage to default";
+		return t("BobResetUsage.description");
 	}
 	prepend(): HTMLElement | undefined {
 		return iconFromString(iconBob);
@@ -83,10 +83,10 @@ export class BobResetUsage extends Result {
 
 export class BobShowUsage extends Result {
 	title(): string {
-		return "Bob Show Usage";
+		return t("BobShowUsage.title");
 	}
 	description(): string {
-		return "Show my bob usage.";
+		return t("BobShowUsage.description");
 	}
 	prepend(): HTMLElement | undefined {
 		return iconFromString(iconBob);

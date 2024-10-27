@@ -1,4 +1,5 @@
 import { faviconFromUrl, iconArrowUpBold, iconFromString } from "../../icons";
+import { t } from "../../locale";
 import { focusLastActiveWindow } from "../../util/last-active-window";
 import { ResultGroup } from "../result-group";
 import { Result } from "../result/result";
@@ -11,10 +12,10 @@ export class TopSites extends ResultGroup {
 	prefix = "top";
 	permissions = ["topSites"];
 	public description(): string {
-		return "The top sites (i.e. most visited sites) that are displayed on the new tab page";
+		return t("TopSites.description");
 	}
 	public name(): string {
-		return "Top Sites";
+		return t("TopSites");
 	}
 
 	public async getResults(): Promise<Result[]> {

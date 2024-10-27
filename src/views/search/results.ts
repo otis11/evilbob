@@ -1,5 +1,6 @@
 import type { Result } from "../../components/result/result";
 import { getConfig } from "../../config";
+import { t } from "../../locale";
 import { getUsage } from "../../usage";
 import {
 	optionsSearchInput,
@@ -61,7 +62,7 @@ export async function filterResults() {
 		resultsContainer.append(fragment);
 
 		updateSelectedIndex(0);
-		resultsCounter.innerHTML = `${resultsContainer.children.length}/${getResults().length} results`;
+		resultsCounter.innerText = `${resultsContainer.children.length}/${getResults().length} ${t("Results")}`;
 	});
 }
 

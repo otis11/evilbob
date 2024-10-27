@@ -37,7 +37,9 @@ export function t<K extends TranslationKey>(...tParameters: tParameters<K>) {
 	if (!locale) {
 		return "NO CURRENT LOCALE";
 	}
-	let text = translations[locale][tParameters[0]];
+	// @ts-expect-error translations can have missing keys os its fine as we have a fallback local en-US
+	const tryTranslation = translations[locale][tParameters[0]];
+	let text = tryTranslation || translations["en-US"][tParameters[0]];
 	const parameters = tParameters[1] as Translations;
 	if (parameters) {
 		const keys = Object.keys(parameters) as TranslationKey[];

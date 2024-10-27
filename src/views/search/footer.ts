@@ -3,6 +3,7 @@ import {
 	getEnabledResultGroups,
 } from "../../components/result-groups";
 import { iconCog, iconFromString, iconReload } from "../../icons";
+import { t } from "../../locale";
 import { browserName, browserVersion } from "../../platform";
 import { resultsCounter } from "./dom";
 import { loadFreshData } from "./search-data";
@@ -32,7 +33,7 @@ export async function renderFooter() {
 	const total = RESULT_GROUPS_BROWSER_FILTERED.length;
 	const enabled = (await getEnabledResultGroups()).length;
 	const enabledGroups = document.createElement("span");
-	enabledGroups.innerText = `${enabled}/${total} result groups enabled`;
+	enabledGroups.innerText = `${enabled}/${total} ${t("Result groups enabled")}`;
 
 	footer?.append(
 		resultsCounter,

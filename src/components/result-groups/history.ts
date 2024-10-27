@@ -1,5 +1,6 @@
 import { getConfig } from "../../config";
 import { faviconFromUrl, iconFromString, iconHistory } from "../../icons";
+import { t } from "../../locale";
 import { focusLastActiveWindow } from "../../util/last-active-window";
 import { ResultGroup } from "../result-group";
 import { Result } from "../result/result";
@@ -13,11 +14,11 @@ export class History extends ResultGroup {
 	}
 	prefix = "h";
 	public description(): string {
-		return "Search & interact with browser history.";
+		return t("History.description");
 	}
 
 	public name(): string {
-		return "History";
+		return t("History");
 	}
 
 	public async getResults(): Promise<Result[]> {
@@ -93,10 +94,10 @@ class HistoryItemOptions extends ResultGroup {
 
 class HistoryRemove extends Result {
 	title(): string {
-		return "Remove url occurences";
+		return t("HistoryRemove.title");
 	}
 	description(): string {
-		return "Remove all url occurences from history. Delete";
+		return t("HistoryRemove.description");
 	}
 	constructor(private item: chrome.history.HistoryItem) {
 		super();

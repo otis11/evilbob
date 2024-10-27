@@ -1,4 +1,5 @@
 import { iconCpu, iconFromString } from "../../icons";
+import { t } from "../../locale";
 import type { BrowserName } from "../../platform";
 import { ResultGroup } from "../result-group";
 import { Info } from "../result/info";
@@ -11,10 +12,10 @@ export class SystemCpu extends ResultGroup {
 	}
 	public prefix?: string | undefined = "cpu";
 	public description(): string {
-		return "Information about your system cpu.";
+		return t("SystemCpu.description");
 	}
 	public name(): string {
-		return "System Cpu";
+		return t("SystemCpu");
 	}
 	supportedBrowsers: BrowserName[] = ["chromium", "chrome", "edg"];
 
@@ -23,22 +24,22 @@ export class SystemCpu extends ResultGroup {
 			chrome.system.cpu.getInfo((cpu) => {
 				resolve([
 					new Info({
-						title: "Cpu Modal Name",
+						title: t("CPU Modal Name"),
 						description: cpu.modelName,
 						prepend: iconFromString(iconCpu),
 					}),
 					new Info({
-						title: "Architecture",
+						title: t("Architecture"),
 						description: cpu.archName,
 						prepend: iconFromString(iconCpu),
 					}),
 					new Info({
-						title: "Number of Processors",
+						title: t("Number of Processors"),
 						description: cpu.numOfProcessors.toString(),
 						prepend: iconFromString(iconCpu),
 					}),
 					new Info({
-						title: "Cpu Features",
+						title: t("CPU Features"),
 						description: cpu.features.join(", "),
 						prepend: iconFromString(iconCpu),
 					}),

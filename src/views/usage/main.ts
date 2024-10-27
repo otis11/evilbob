@@ -1,5 +1,5 @@
 import { getConfig } from "../../config";
-import { setLocale } from "../../locale";
+import { setLocale, t } from "../../locale";
 import "../../theme";
 import { getUsage } from "../../usage";
 import { unixTimeToHumanReadable } from "../../util/time";
@@ -23,7 +23,7 @@ async function renderUsage() {
 		return 0;
 	});
 
-	const header = ResultUsageRow("Id", "Count", "Last used");
+	const header = ResultUsageRow(t("Id"), t("Count"), t("Last used"));
 	header.style.fontWeight = "bold";
 	document.body.append(header);
 	for (const key of resultKeys) {

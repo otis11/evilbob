@@ -1,4 +1,5 @@
 import { iconBrain, iconFromString } from "../../icons";
+import { t } from "../../locale";
 import { focusLastActiveWindow } from "../../util/last-active-window";
 import { ResultGroup } from "../result-group";
 import { Result } from "../result/result";
@@ -11,11 +12,11 @@ export class ChatGPT extends ResultGroup {
 	}
 	public prefix?: string | undefined = "gpt";
 	public description(): string {
-		return "Start a chat with chatgpt";
+		return t("ChatGPT.description");
 	}
 
 	public name(): string {
-		return "ChatGPT";
+		return t("ChatGPT");
 	}
 	public async getResults(): Promise<Result[]> {
 		return [new ChatGPTStartChat()];
@@ -24,7 +25,7 @@ export class ChatGPT extends ResultGroup {
 
 export class ChatGPTStartChat extends Result {
 	title(): string {
-		return "ChatGPT start conversation";
+		return t("ChatGPTStartChat.title");
 	}
 
 	options(): ResultGroup | undefined {
@@ -65,7 +66,7 @@ export class ChatGPTStartChatQuery extends Result {
 	}
 
 	title(): string {
-		return "Prompt ChatGPT.";
+		return t("ChatGPTStartChatQuery.title");
 	}
 
 	prepend(): HTMLElement | undefined {

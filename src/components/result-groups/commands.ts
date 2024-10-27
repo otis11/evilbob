@@ -1,4 +1,5 @@
 import { iconConsoleLine, iconFromString } from "../../icons";
+import { t } from "../../locale";
 import type { BrowserName } from "../../platform";
 import { ResultGroup } from "../result-group";
 import { Result } from "../result/result";
@@ -11,10 +12,10 @@ export class Commands extends ResultGroup {
 		return "commands";
 	}
 	public description(): string {
-		return "Available commands from extensions.";
+		return t("Commands.description");
 	}
 	public name(): string {
-		return "Commands";
+		return t("Commands");
 	}
 	public supportedBrowsers: BrowserName[] = ["chrome", "chromium", "edg"];
 

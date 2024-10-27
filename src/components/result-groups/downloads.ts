@@ -4,6 +4,7 @@ import {
 	iconFromUrl,
 	iconIncognito,
 } from "../../icons";
+import { t } from "../../locale";
 import { formatBytes } from "../../util/format-bytes";
 import { focusLastActiveWindow } from "../../util/last-active-window";
 import { ResultGroup } from "../result-group";
@@ -18,11 +19,11 @@ export class Downloads extends ResultGroup {
 	public prefix?: string | undefined = "d";
 	permissions = ["downloads"];
 	public description(): string {
-		return "List and manage downloads.";
+		return t("Downloads.description");
 	}
 
 	public name(): string {
-		return "Downloads";
+		return t("Downloads");
 	}
 
 	public async getResults(): Promise<Result[]> {
@@ -43,9 +44,9 @@ export class Download extends Result {
 		if (this.item.state === "complete") {
 			//
 		} else if (this.item.state === "interrupted") {
-			tags.push({ text: "interrupted", type: "error" });
+			tags.push({ text: t("Interrupted"), type: "error" });
 		} else if (this.item.state === "in_progress") {
-			tags.push({ text: "in progress" });
+			tags.push({ text: t("In Progress") });
 		}
 
 		if (this.item.incognito) {
@@ -106,10 +107,10 @@ class DownloadOptions extends ResultGroup {
 
 class ShowDownload extends Result {
 	title(): string {
-		return "Show in file explorer";
+		return t("ShowDownload.title");
 	}
 	description(): string {
-		return "Opens the platform's file manager application to show the downloaded file in its containing folder.";
+		return t("ShowDownload.description");
 	}
 	constructor(private item: chrome.downloads.DownloadItem) {
 		super();
@@ -122,10 +123,10 @@ class ShowDownload extends Result {
 
 class EraseDownload extends Result {
 	title(): string {
-		return "Erase download from browser";
+		return t("EraseDownload.title");
 	}
 	description(): string {
-		return "Erases matching DownloadItems from the browser's download history, without deleting the downloaded files from disk.";
+		return t("EraseDownload.description");
 	}
 	constructor(private item: chrome.downloads.DownloadItem) {
 		super();
@@ -139,10 +140,10 @@ class EraseDownload extends Result {
 
 class RemoveDownload extends Result {
 	title(): string {
-		return "Remove download from disk";
+		return t("RemoveDownload.title");
 	}
 	description(): string {
-		return "Removes a downloaded file from disk, but not from the browser's download history.";
+		return t("RemoveDownload.description");
 	}
 	constructor(private item: chrome.downloads.DownloadItem) {
 		super();

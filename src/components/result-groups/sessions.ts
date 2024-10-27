@@ -1,3 +1,4 @@
+import { t } from "../../locale";
 import { isChromium } from "../../platform";
 import { unixTimeToHumanReadable } from "../../util/time";
 import { ResultGroup } from "../result-group";
@@ -9,12 +10,12 @@ export class Sessions extends ResultGroup {
 		return "sessions";
 	}
 	public name(): string {
-		return "Sessions";
+		return t("Sessions");
 	}
 	permissions = ["sessions"];
 	public prefix?: string | undefined = "s";
 	public description(): string {
-		return "List your recently closed sessions.";
+		return t("Sessions.description");
 	}
 
 	public async getResults(): Promise<Result[]> {
@@ -27,11 +28,13 @@ export class Session extends Result {
 	tags(): Tag[] {
 		const tags: Tag[] = [];
 		if (this.session.tab) {
-			tags.push({ text: "1 tab" });
+			tags.push({ text: t("1 tab") });
 		}
 		if (this.session.window) {
 			tags.push({
-				text: `${this.session.window.tabs?.length || 0} tabs`,
+				text: t("TabsCount", {
+					count: this.session.window.tabs?.length || 0,
+				}),
 			});
 		}
 		return tags;

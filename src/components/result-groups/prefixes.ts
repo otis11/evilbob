@@ -1,5 +1,6 @@
 import { getEnabledResultGroups } from ".";
 import { iconFilter, iconFromString } from "../../icons";
+import { t } from "../../locale";
 import { ResultGroup } from "../result-group";
 import { Result } from "../result/result";
 import type { Search } from "../search";
@@ -10,11 +11,11 @@ export class Prefixes extends ResultGroup {
 	}
 	prefix = "?";
 	public description(): string {
-		return "Filter for a specific ResultGroup only.";
+		return t("Prefixes.description");
 	}
 
 	public name(): string {
-		return "Prefixes";
+		return t("Prefixes");
 	}
 
 	public async getResults(): Promise<Result[]> {

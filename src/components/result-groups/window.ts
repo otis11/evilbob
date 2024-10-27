@@ -1,4 +1,5 @@
 import { iconFromString, iconWindowClose } from "../../icons";
+import { t } from "../../locale";
 import {
 	focusLastActiveWindow,
 	getLastActiveWindow,
@@ -13,10 +14,10 @@ export class Window extends ResultGroup {
 	permissions = [];
 	public prefix?: string | undefined = "win";
 	public description(): string {
-		return "Interact with chrome windows, for instance 'close other windows'";
+		return t("Window.description");
 	}
 	public name(): string {
-		return "Window";
+		return t("Window");
 	}
 
 	public async getResults(): Promise<Result[]> {
@@ -26,7 +27,7 @@ export class Window extends ResultGroup {
 
 export class CloseOtherWindows extends Result {
 	title(): string {
-		return "Close other windows";
+		return t("CloseOtherWindows");
 	}
 	prepend(): HTMLElement | undefined {
 		return iconFromString(iconWindowClose);

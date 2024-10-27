@@ -1,3 +1,4 @@
+import { t } from "../../locale";
 import type { BrowserName } from "../../platform";
 import {
 	focusLastActiveWindow,
@@ -13,10 +14,10 @@ export class TabGroups extends ResultGroup {
 	}
 	prefix = "tg";
 	public description(): string {
-		return "List tab groups.";
+		return t("TabGroups.description");
 	}
 	public name(): string {
-		return "Tab Groups";
+		return t("TabGroups");
 	}
 	public permissions: string[] = ["tabGroups"];
 	public supportedBrowsers: BrowserName[] = ["chrome", "chromium", "edg"];

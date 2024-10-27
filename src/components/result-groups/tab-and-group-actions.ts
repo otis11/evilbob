@@ -1,3 +1,4 @@
+import { t } from "../../locale";
 import type { BrowserName } from "../../platform";
 import {
 	focusLastActiveWindow,
@@ -16,10 +17,10 @@ export class TabGroupActions extends ResultGroup {
 	permissions = ["tabs", "tabGroups"];
 	prefix = "tga";
 	public description(): string {
-		return "Combined actions for tabs & groups, for instance group tabs by domain";
+		return t("TabGroupActions.description");
 	}
 	public name(): string {
-		return "Tab Group Actions";
+		return t("TabGroupActions");
 	}
 	public supportedBrowsers: BrowserName[] = ["chrome", "chromium", "edg"];
 
@@ -30,7 +31,7 @@ export class TabGroupActions extends ResultGroup {
 
 class GroupTabsByDomain extends Result {
 	title(): string {
-		return "Group tabs by domain";
+		return t("GroupTabsByDomain");
 	}
 	public async execute(search: Search, results: Result[]): Promise<void> {
 		const tabs = await getLastActiveWindowTabs();
@@ -69,7 +70,7 @@ class GroupTabsByDomain extends Result {
 
 class UngroupTabs extends Result {
 	title(): string {
-		return "Ungroup Tabs";
+		return t("Ungroup Tabs");
 	}
 
 	async execute(search: Search, results: Result[]): Promise<void> {

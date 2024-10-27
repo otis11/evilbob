@@ -10,6 +10,7 @@ import {
 	iconTabRemove,
 	iconWindowRestore,
 } from "../../icons";
+import { t } from "../../locale";
 import { getLastActiveTab } from "../../util/last-active-tab";
 import {
 	focusLastActiveWindow,
@@ -28,10 +29,10 @@ export class TabActions extends ResultGroup {
 	permissions = ["tabs"];
 	prefix = "a";
 	public name(): string {
-		return "Tab Actions";
+		return t("TabActions");
 	}
 	public description(): string {
-		return "Interact with browser tabs. Sort, merge, duplicate...";
+		return t("TabActions.description");
 	}
 
 	public async getResults(): Promise<Result[]> {
@@ -52,7 +53,7 @@ export class TabActions extends ResultGroup {
 
 class TabDuplicate extends Result {
 	title(): string {
-		return "Duplicate Tab";
+		return t("Duplicate Tab");
 	}
 
 	prepend(): HTMLElement | undefined {
@@ -70,7 +71,7 @@ class TabDuplicate extends Result {
 
 class TabMute extends Result {
 	title(): string {
-		return "Mute Tab";
+		return t("Mute Tab");
 	}
 	prepend(): HTMLElement | undefined {
 		return iconFromString(iconMusicOff);
@@ -87,7 +88,7 @@ class TabMute extends Result {
 
 class TabUnmute extends Result {
 	title(): string {
-		return "Unmute Tab";
+		return t("Unmute Tab");
 	}
 	prepend(): HTMLElement | undefined {
 		return iconFromString(iconMusic);
@@ -104,7 +105,7 @@ class TabUnmute extends Result {
 
 class TabPin extends Result {
 	title(): string {
-		return "Pin Tab";
+		return t("Pin Tab");
 	}
 
 	prepend(): HTMLElement | undefined {
@@ -122,7 +123,7 @@ class TabPin extends Result {
 
 class TabUnpin extends Result {
 	title(): string {
-		return "Unpin Tab";
+		return t("Unpin Tab");
 	}
 	prepend(): HTMLElement | undefined {
 		return iconFromString(iconPinOff);
@@ -139,7 +140,7 @@ class TabUnpin extends Result {
 
 export class SortTabsByUrl extends Result {
 	title(): string {
-		return "Sort tabs by url";
+		return t("Sort tabs by url");
 	}
 	prepend(): HTMLElement | undefined {
 		return iconFromString(iconSortAlphabetically);
@@ -174,7 +175,7 @@ export class SortTabsByUrl extends Result {
 
 		if (!isSortingNeeded) {
 			// TODO replace with notifcation or sonner
-			alert("already ordered");
+			alert(t("Already Sorted"));
 			return;
 		}
 
@@ -189,7 +190,7 @@ export class SortTabsByUrl extends Result {
 
 export class MergeWindows extends Result {
 	title(): string {
-		return "Merge Windows";
+		return t("Merge Windows");
 	}
 	prepend(): HTMLElement | undefined {
 		return iconFromString(iconWindowRestore);
@@ -210,7 +211,7 @@ export class MergeWindows extends Result {
 
 export class SplitIntoWindows extends Result {
 	title(): string {
-		return "Split tabs into windows";
+		return t("SplitIntoWindows");
 	}
 	prepend(): HTMLElement | undefined {
 		return iconFromString(iconArrowVerticalSplit);
@@ -229,7 +230,7 @@ export class SplitIntoWindows extends Result {
 
 export class CloseOtherTabs extends Result {
 	title(): string {
-		return "Close other tabs";
+		return t("CloseOtherTabs");
 	}
 	prepend(): HTMLElement | undefined {
 		return iconFromString(iconTabRemove);
@@ -254,11 +255,11 @@ export class CloseBySearch extends Result {
 		return new CloseBySearchOptions();
 	}
 	title(): string {
-		return "Close tabs by search";
+		return t("CloseBySearch");
 	}
 
 	description(): string {
-		return "Close the following tabs by search. Select any tab to close them.";
+		return t("CloseBySearch.description");
 	}
 	prepend(): HTMLElement | undefined {
 		return iconFromString(iconTabRemove);

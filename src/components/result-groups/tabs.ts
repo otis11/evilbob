@@ -8,6 +8,7 @@ import {
 	iconPin,
 	iconTab,
 } from "../../icons";
+import { t } from "../../locale";
 import { focusLastActiveWindow } from "../../util/last-active-window";
 import { ResultGroup } from "../result-group";
 import { Result } from "../result/result";
@@ -21,10 +22,10 @@ export class Tabs extends ResultGroup {
 	permissions = ["tabs"];
 	prefix = "t";
 	public name(): string {
-		return "Tabs";
+		return t("Tabs");
 	}
 	public description(): string {
-		return "Search browser tabs.";
+		return t("Tabs.description");
 	}
 
 	public async getResults(): Promise<Result[]> {
@@ -60,7 +61,7 @@ export class Tab extends Result {
 		}
 		if (this.tab.highlighted) {
 			tags.push({
-				text: "active",
+				text: t("Active"),
 				type: "success",
 			});
 		}

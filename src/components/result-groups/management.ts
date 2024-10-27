@@ -1,4 +1,5 @@
 import { iconFromString, iconFromUrl, iconPuzzleOutline } from "../../icons";
+import { t } from "../../locale";
 import { ResultGroup } from "../result-group";
 import { Info } from "../result/info";
 import { Result } from "../result/result";
@@ -11,11 +12,11 @@ export class Management extends ResultGroup {
 	}
 	prefix = "e";
 	public description(): string {
-		return "Search & interact with installed extensions.";
+		return t("Management.description");
 	}
 
 	public name(): string {
-		return "Management";
+		return t("Management");
 	}
 
 	public async getResults(): Promise<Result[]> {
@@ -31,8 +32,8 @@ export class Extension extends Result {
 		return [
 			{ html: iconFromString(iconPuzzleOutline, "12px").outerHTML },
 			this.extension.enabled
-				? { text: "enabled", type: "success" }
-				: { text: "disabled", type: "error" },
+				? { text: t("Enabled"), type: "success" }
+				: { text: t("Disabled"), type: "error" },
 			{ text: this.extension.installType },
 			{ text: this.extension.version },
 		];
@@ -84,37 +85,39 @@ export class ExtensionOptions extends ResultGroup {
 
 	public async getResults(): Promise<Result[]> {
 		const results = [
-			new Info({ title: "Version", description: this.extension.version }),
-			new Info({ title: "Id", description: this.extension.id }),
 			new Info({
-				title: "Short name",
+				title: t("Version"),
+				description: this.extension.version,
+			}),
+			new Info({ title: t("Id"), description: this.extension.id }),
+			new Info({
+				title: t("Short name"),
 				description: this.extension.shortName,
 			}),
 			new Info({
-				title: "Offline enabled",
-				description: "Is offline enabled?",
+				title: t("OfflineEnabled"),
+				description: t("OfflineEnabled.description"),
 				tags: [
 					this.extension.offlineEnabled
-						? { text: "yes", type: "success" }
-						: { text: "no", type: "error" },
+						? { text: t("Yes"), type: "success" }
+						: { text: t("No"), type: "error" },
 				],
 			}),
 			new Info({
-				title: "May disable",
-				description: "Can be disabled by the user?",
+				title: t("MayDisable"),
+				description: t("MayDisable.description"),
 				tags: [
 					this.extension.mayDisable
-						? { text: "yes", type: "success" }
-						: { text: "no", type: "error" },
+						? { text: t("Yes"), type: "success" }
+						: { text: t("No"), type: "error" },
 				],
 			}),
 		];
 		if (this.extension.hostPermissions) {
 			results.push(
 				new Info({
-					title: "Host Permissions",
-					description:
-						"Host permissions allow extensions to interact with the URL's matching patterns.",
+					title: t("Host Permissions"),
+					description: t("HostPermissions.description"),
 					tags: this.extension.hostPermissions.map((perm) => ({
 						text: perm,
 					})),
@@ -125,9 +128,8 @@ export class ExtensionOptions extends ResultGroup {
 		if (this.extension.permissions) {
 			results.push(
 				new Info({
-					title: "Permissions",
-					description:
-						"To access most extension APIs and features, you must declare permissions in your extension's manifest. Some permissions trigger warnings that users must allow to continue using the extension.",
+					title: t("Permissions"),
+					description: t("Permissions.description"),
 					tags: this.extension.permissions.map((perm) => ({
 						text: perm,
 					})),

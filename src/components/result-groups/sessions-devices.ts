@@ -1,3 +1,4 @@
+import { t } from "../../locale";
 import type { BrowserName } from "../../platform";
 import { ResultGroup } from "../result-group";
 import { Result } from "../result/result";
@@ -11,10 +12,10 @@ export class SessionDevices extends ResultGroup {
 	}
 	permissions = ["sessions"];
 	public description(): string {
-		return "Search your session devices.";
+		return t("SessionDevices.description");
 	}
 	public name(): string {
-		return "Session Devices";
+		return t("SessionDevices.name");
 	}
 	supportedBrowsers: BrowserName[] = ["chrome", "chromium", "edg"];
 	public prefix?: string | undefined = "sd";
@@ -33,7 +34,9 @@ export class SessionDevice extends Result {
 	tags(): Tag[] {
 		return [
 			{
-				text: `${this.device.sessions.length} sessions`,
+				text: t("SessionsCount", {
+					count: this.device.sessions.length,
+				}),
 				type: "default",
 			},
 		];

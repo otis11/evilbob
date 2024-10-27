@@ -1,4 +1,5 @@
 import type { Result } from "../../components/result/result";
+import { t } from "../../locale";
 import { getUsage } from "../../usage";
 import {
 	optionsRoot,
@@ -71,7 +72,7 @@ export async function filterResultsOptions() {
 		resultOptionsContainer.append(...elements);
 
 		updateSelectedIndex(0);
-		resultsCounter.innerHTML = `${resultOptionsContainer.children.length}/${resultOptionsContainer.children.length} results`;
+		resultsCounter.innerText = `${resultOptionsContainer.children.length}/${resultOptionsContainer.children.length} ${t("Results")}`;
 	}
 }
 

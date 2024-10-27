@@ -1,4 +1,5 @@
 import { iconFromString, iconGoogle } from "../../icons";
+import { t } from "../../locale";
 import { focusLastActiveWindow } from "../../util/last-active-window";
 import { ResultGroup } from "../result-group";
 import { Result } from "../result/result";
@@ -10,49 +11,25 @@ export class Google extends ResultGroup {
 		return "google";
 	}
 	public description(): string {
-		return "Google search & Google filters like intitle:youtube.";
+		return t("Google.description");
 	}
 
 	public name(): string {
-		return "Google";
+		return t("Google");
 	}
 
 	public getResults(): Promise<Result[]> {
 		return new Promise((resolve) => {
 			resolve([
-				new GoogleDork(
-					"intitle",
-					'intitle:"Youtube". Searches for pages with a specific keyword in the title',
-				),
-				new GoogleDork(
-					"inurl",
-					"inurl:python. Searches for URLs containing a specific keyword",
-				),
-				new GoogleDork(
-					"filetype",
-					"filetype:pdf. Searches for specific file types",
-				),
-				new GoogleDork(
-					"site",
-					"site:github.com. Limits search to a specific website.",
-				),
-				new GoogleDork(
-					"intext",
-					'intext:"Hello World".  Searches for pages with a specific keyword in the page content.',
-				),
-				new GoogleDork(
-					"before/after",
-					"before:2000-01-01 after:2001-01-01. Searches for a specific date range.",
-				),
-				new GoogleDork(
-					"|",
-					"site:facebook.com | site:twitter.com. Searches for a OR b.",
-				),
-				new GoogleDork(
-					"&",
-					"site:facebook.com & site:twitter.com. Searches for a AND b.",
-				),
-				new GoogleDork("-", "-site:facebook.com. Exclude results."),
+				new GoogleDork("intitle", t("GoogleDork.intitle")),
+				new GoogleDork("inurl", t("GoogleDork.inurl")),
+				new GoogleDork("filetype", t("GoogleDork.filetype")),
+				new GoogleDork("site", t("GoogleDork.site")),
+				new GoogleDork("intext", t("GoogleDork.intext")),
+				new GoogleDork("before/after", t("GoogleDork.before")),
+				new GoogleDork("|", t("GoogleDork.or")),
+				new GoogleDork("&", t("GoogleDork.and")),
+				new GoogleDork("-", t("GoogleDork.exclude")),
 				new GoogleSearch(),
 			]);
 		});
@@ -119,11 +96,11 @@ export class GoogleSearch extends Result {
 	}
 
 	title(): string {
-		return "Google";
+		return t("GoogleSearch");
 	}
 
 	description(): string {
-		return "Search Google";
+		return t("GoogleSearch.description");
 	}
 
 	prepend(): HTMLElement | undefined {

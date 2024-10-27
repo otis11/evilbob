@@ -1,3 +1,4 @@
+import { t } from "../../locale";
 import type { BrowserName } from "../../platform";
 import { getLastActiveTab } from "../../util/last-active-tab";
 import { focusLastActiveWindow } from "../../util/last-active-window";
@@ -13,11 +14,11 @@ export class ContentSettings extends ResultGroup {
 		return "content-settings";
 	}
 	public description(): string {
-		return "Settings that control whether websites can use features such as cookies, JavaScript, and plugins";
+		return t("ContentSettings.description");
 	}
 
 	public name(): string {
-		return "Content Settings";
+		return t("ContentSettings");
 	}
 	supportedBrowsers: BrowserName[] = ["chrome", "chromium", "edg"];
 	public async getResults(): Promise<Result[]> {
@@ -40,19 +41,25 @@ export class ContentSettings extends ResultGroup {
 
 class CSJavascript extends Result {
 	title(): string {
-		return `${
-			this.javascript.setting === "allow" ? "Disable" : "Enable"
-		} JavaScript`;
+		return t("CSJavascript.title", {
+			enableDisable:
+				this.javascript.setting === "allow"
+					? t("Disable")
+					: t("Enable"),
+		});
 	}
 
 	description(): string {
-		return "Enable/disable javascript for the current tab";
+		return t("CSJavascript.description");
 	}
 
 	tags(): Tag[] {
 		return [
 			{
-				text: `${this.javascript.setting}ed`,
+				text:
+					this.javascript.setting === "allow"
+						? t("Enabled")
+						: t("Disabled"),
 				type: this.javascript.setting === "allow" ? "success" : "error",
 			},
 		];

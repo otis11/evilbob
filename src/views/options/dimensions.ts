@@ -2,18 +2,19 @@ import { FlexContainer } from "../../components/flex-container";
 import { GroupHeading } from "../../components/group-heading";
 import { NumberInput } from "../../components/number-input";
 import { type BobConfig, updateConfig } from "../../config";
+import { t } from "../../locale";
 
 export async function renderBobDimensions(config: BobConfig) {
 	const container = FlexContainer({ flexDirection: "column" });
-	container.append(GroupHeading("Window Dimensions"));
+	container.append(GroupHeading(t("Window Dimensions")));
 
 	const [labelWidth, inputWidth] = NumberInput({
 		value: config.dimensions.width.toString(),
-		label: "Width",
+		label: t("Width"),
 	});
 	const [labelHeight, inputHeight] = NumberInput({
 		value: config.dimensions.height.toString(),
-		label: "Height",
+		label: t("Height"),
 	});
 
 	inputWidth.addEventListener("input", () => {

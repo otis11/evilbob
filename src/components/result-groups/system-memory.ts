@@ -1,4 +1,5 @@
 import { iconCpu, iconFromString } from "../../icons";
+import { t } from "../../locale";
 import type { BrowserName } from "../../platform";
 import { formatBytes } from "../../util/format-bytes";
 import { ResultGroup } from "../result-group";
@@ -11,10 +12,10 @@ export class SystemMemory extends ResultGroup {
 	}
 	permissions = ["system.memory"];
 	public description(): string {
-		return "Information about your system memory.";
+		return t("SystemMemory.description");
 	}
 	public name(): string {
-		return "System Memory";
+		return t("SystemMemory");
 	}
 	supportedBrowsers: BrowserName[] = ["chromium", "chrome", "edg"];
 	public prefix?: string | undefined = "mem";
@@ -23,7 +24,7 @@ export class SystemMemory extends ResultGroup {
 		const memory = await chrome.system.memory.getInfo();
 		return [
 			new Info({
-				title: "Memory",
+				title: t("Memory"),
 				description: `${formatBytes(memory.capacity - memory.availableCapacity)}/${formatBytes(memory.capacity)} GB`,
 				prepend: iconFromString(iconCpu),
 			}),

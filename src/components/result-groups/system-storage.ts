@@ -1,4 +1,5 @@
 import { iconFromString, iconNas } from "../../icons";
+import { t } from "../../locale";
 import type { BrowserName } from "../../platform";
 import { formatBytes } from "../../util/format-bytes";
 import { ResultGroup } from "../result-group";
@@ -11,11 +12,11 @@ export class SystemStorage extends ResultGroup {
 	}
 	permissions = ["system.storage"];
 	public description(): string {
-		return "Information about your system storage.";
+		return t("SystemStorage.description");
 	}
 
 	public name(): string {
-		return "System Storage";
+		return t("SystemStorage");
 	}
 	supportedBrowsers: BrowserName[] = ["chromium", "chrome", "edg"];
 	public prefix?: string | undefined = "sto";

@@ -1,4 +1,5 @@
 import { updateConfig } from "../../config";
+import { t } from "../../locale";
 import { loadTheme } from "../../theme";
 import type { Theme } from "../../theme/themes";
 import { Result } from "../result/result";
@@ -45,10 +46,10 @@ export function ThemeCard(theme: Theme, isActiveTheme = false) {
 
 class ThemeMock extends Result {
 	title(): string {
-		return "title";
+		return t("Title");
 	}
 	description(): string {
-		return "description";
+		return t("Description");
 	}
 	tags(): Tag[] {
 		return [

@@ -1,3 +1,4 @@
+import { t } from "../../locale";
 import { isFirefox, isMac } from "../../platform";
 import { ResultGroup } from "../result-group";
 import { Result } from "../result/result";
@@ -8,26 +9,24 @@ export class Shortcuts extends ResultGroup {
 		return "shortcuts";
 	}
 	public description(): string {
-		return "Search for browser shortcuts.";
+		return t("Shortcuts.description");
 	}
 	public name(): string {
-		return "Shortcuts";
+		return t("Shortcuts");
 	}
 	public prefix?: string | undefined = "sc";
 
 	public async getResults(): Promise<Result[]> {
 		const shortcuts = [
 			new Shortcut({
-				title: "Open History",
-				description: "Open History",
+				title: t("Open History"),
 				shortcut: isMac
 					? new ShortcutElement(["⌘", "Y"])
 					: new ShortcutElement(["Ctrl", "H"]),
 			}),
 			// windows
 			new Shortcut({
-				title: "New Icognito Window",
-				description: "Open a new window in Incognito mode",
+				title: t("New Icognito Window"),
 				shortcut: isMac
 					? new ShortcutElement(["⌘", "Shift", "N"])
 					: isFirefox
@@ -36,46 +35,39 @@ export class Shortcuts extends ResultGroup {
 			}),
 			// // tabs
 			new Shortcut({
-				title: "New Tab",
-				description: "Open a new tab",
+				title: t("New Tab"),
 				shortcut: isMac
 					? new ShortcutElement(["⌘", "T"])
 					: new ShortcutElement(["Ctrl", "T"]),
 			}),
 			new Shortcut({
-				title: "Close Tab",
-				description: "Close the current tab",
+				title: t("Close Tab"),
 				shortcut: isMac
 					? new ShortcutElement(["⌘", "W"])
 					: new ShortcutElement(["Ctrl", "W"]),
 			}),
 			new Shortcut({
-				title: "Reopen Tabs",
-				description:
-					"Reopen previously closed tabs in the order that they were closed",
+				title: t("Reopen Tabs"),
 				shortcut: isMac
 					? new ShortcutElement(["⌘", "Shift", "T"])
 					: new ShortcutElement(["Ctrl", "Shift", "T"]),
 			}),
 			// bookmarks
 			new Shortcut({
-				title: "Save Bookmark",
-				description: "Save the current page as a bookmark",
+				title: t("Save Bookmark"),
 				shortcut: isMac
 					? new ShortcutElement(["⌘", "D"])
 					: new ShortcutElement(["Ctrl", "D"]),
 			}),
 			new Shortcut({
-				title: "Open Bookmarks",
-				description: "Open Bookmarks",
+				title: t("Open Bookmarks"),
 				shortcut: isMac
 					? new ShortcutElement(["⌘", "Option", "B"])
 					: new ShortcutElement(["Ctrl", "Shift", "O"]),
 			}),
 			// search bar
 			new Shortcut({
-				title: "Focus Search",
-				description: "Put a cursor in the search bar",
+				title: t("Focus Search"),
 				shortcut: isMac
 					? new ShortcutElement(["Ctrl", "I"])
 					: new ShortcutElement(["Ctrl", "L"]),
@@ -84,8 +76,7 @@ export class Shortcuts extends ResultGroup {
 		if (!isMac) {
 			shortcuts.push(
 				new Shortcut({
-					title: "Toggle Fullscreen",
-					description: "Turn on/off full-screen mode",
+					title: t("Toggle Fullscreen"),
 					shortcut: new ShortcutElement(["F11"]),
 				}),
 			);
@@ -96,7 +87,7 @@ export class Shortcuts extends ResultGroup {
 
 export type ResultShortcutConfig = {
 	title: string;
-	description: string;
+	description?: string;
 	shortcut: ShortcutElement;
 };
 
@@ -105,7 +96,7 @@ export class Shortcut extends Result {
 		return this.config.title;
 	}
 	description(): string {
-		return this.config.description;
+		return this.config.description || "";
 	}
 	append(): HTMLElement | undefined {
 		return this.config.shortcut.asHtmlElement();

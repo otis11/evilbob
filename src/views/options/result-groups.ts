@@ -6,11 +6,12 @@ import {
 	type ResultGroupConfig,
 	updateConfig,
 } from "../../config";
+import { t } from "../../locale";
 
 export async function renderResultGroups(config: BobConfig) {
 	const resultGroups = document.createElement("div");
 
-	resultGroups.append(GroupHeading("Result Groups"));
+	resultGroups.append(GroupHeading(t("Result Groups")));
 
 	const labelAllGroups = document.createElement("label");
 	labelAllGroups.classList.add("result-group-title");
@@ -74,7 +75,7 @@ export async function renderResultGroups(config: BobConfig) {
 	});
 
 	const labelText = document.createElement("span");
-	labelText.innerText = "All";
+	labelText.innerText = t("All");
 	labelAllGroups.append(checkbox, labelText);
 
 	const resultGroupsContainer = document.createElement("div");

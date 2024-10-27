@@ -1,8 +1,6 @@
 import { getConfig } from "./config";
 import type { Dimensions } from "./theme";
 
-console.log("bob.background.start");
-
 let bobCurrentWindowId = -1;
 let currentWindow: chrome.windows.Window | undefined;
 let windowDimensions: Dimensions | undefined;
@@ -18,10 +16,6 @@ chrome.runtime.onInstalled.addListener(async (details) => {
 
 	// TODO uninstall url?
 	// chrome.runtime.setUninstallURL();
-});
-
-chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
-	console.log("bob.background.message.received", message, sender);
 });
 
 chrome.commands.onCommand.addListener((command) => {
@@ -80,7 +74,7 @@ async function openBob() {
 		});
 	} catch {
 		if (chrome.runtime.lastError) {
-			console.log("could not open bob window");
+			console.error("could not open bob window");
 		}
 		newBobWindow = await chrome.windows.create({
 			url: "/src/views/search/index.html",

@@ -62,8 +62,22 @@ export const DEFAULT_CONFIG: BobConfig = {
 export async function updateConfig(newConfig: Partial<BobConfig>) {
 	const currentConfig = await getConfig();
 
+	const newMergedConfig = deepMerge(currentConfig, newConfig);
 	await chrome.storage.sync.set({
-		config: deepMerge(currentConfig, newConfig),
+		config: newMergedConfig,
+	});
+
+	chrome.runtime.sendMessage(chrome.runtime.id, {
+		type: "bob.config.change",
+		data: newMergedConfig,
+	});
+}
+
+export function onConfigUpdate(callback: (config: BobConfig) => void) {
+	chrome.runtime.onMessage.addListener((msg) => {
+		if (msg.type === "bob.config.change") {
+			callback(msg.data);
+		}
 	});
 }
 

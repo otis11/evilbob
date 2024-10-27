@@ -1,4 +1,4 @@
-import { type BobConfig, getConfig } from "../../config";
+import { type BobConfig, getConfig, onConfigUpdate } from "../../config";
 import "../../theme";
 import "../global.css";
 import { renderFooter } from "./footer";
@@ -20,6 +20,14 @@ getConfig().then((cfg) => {
 	});
 
 	renderFooter();
+});
+
+onConfigUpdate((cfg) => {
+	config = cfg;
+	console.log("config update", cfg);
+	loadFreshData().then(() => {
+		filterResults();
+	});
 });
 
 (isResultOptionsVisible() ? optionsSearchInput : searchInput).focus();

@@ -48,9 +48,9 @@ export async function filterResults() {
 	}
 
 	const fragment = document.createDocumentFragment();
-	const threshold = config.search?.maxRenderedItems || 35;
+	const threshold = config.search?.maxRenderedItems || 25;
 	for (let i = 0; i < currentResults.length; i++) {
-		if (i > threshold) {
+		if (i >= threshold) {
 			break;
 		}
 		fragment.appendChild(currentResults[i].asHtmlElement());

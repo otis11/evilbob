@@ -118,7 +118,5 @@ export class Shortcut extends Result {
 		return this.name() + this.title();
 	}
 
-	async execute(): Promise<void> {
-		console.log("shortcut selected", this);
-	}
+	async execute(): Promise<void> {}
 }

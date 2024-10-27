@@ -24,7 +24,6 @@ getConfig().then((cfg) => {
 
 onConfigUpdate((cfg) => {
 	config = cfg;
-	console.log("config update", cfg);
 	loadFreshData().then(() => {
 		filterResults();
 	});

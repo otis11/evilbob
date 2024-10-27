@@ -23,8 +23,6 @@ export function setCurrentResults(newResults: Result[]) {
 }
 
 export async function filterResults() {
-	let latest = performance.now();
-	console.log("filter start");
 	const usage = await getUsage();
 	const config = await getConfig();
 	const search = newSearch(
@@ -48,8 +46,6 @@ export async function filterResults() {
 	} else {
 		currentResults = searchResults(getResults(), search, usage);
 	}
-	console.log("after js serach", (performance.now() - latest).toFixed(1));
-	latest = performance.now();
 
 	const fragment = document.createDocumentFragment();
 	const threshold = config.search?.maxRenderedItems || 35;
@@ -66,12 +62,6 @@ export async function filterResults() {
 
 		updateSelectedIndex(0);
 		resultsCounter.innerHTML = `${resultsContainer.children.length}/${getResults().length} results`;
-		requestAnimationFrame(() => {
-			console.log(
-				"after render",
-				(performance.now() - latest).toFixed(1),
-			);
-		});
 	});
 }
 

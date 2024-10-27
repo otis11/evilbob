@@ -41,7 +41,5 @@ export class SessionDevice extends Result {
 	constructor(private device: chrome.sessions.Device) {
 		super();
 	}
-	async execute(search: Search, results: Result[]): Promise<void> {
-		console.log("session device selected");
-	}
+	async execute(search: Search, results: Result[]): Promise<void> {}
 }

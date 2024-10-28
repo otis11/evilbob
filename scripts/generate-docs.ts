@@ -17,7 +17,7 @@ function generateResultGroupsMarkdown() {
 		"| ---- | ----------- | ----- | ------------|------------------- |\n";
 
 	for (const plugin of PLUGIN_LIST) {
-		markdown += `| ${plugin.name} | ${plugin.description} | ${plugin.prefix || ""} | ${plugin.permissions?.join(", ")} | ${plugin.supportedBrowsers?.join(", ")} |\n`;
+		markdown += `| ${plugin.name} | ${plugin.description} | ${plugin.prefix || ""} | ${plugin.permissions?.join(", ") || ""} | ${plugin.supportedBrowsers?.join(", ") || ""} |\n`;
 	}
 
 	writeFileSync(filePath, markdown);

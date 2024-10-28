@@ -1,13 +1,16 @@
 import { getConfig } from "../../config";
-import "../../theme";
 import { getUsage } from "../../usage";
 import { unixTimeToHumanReadable } from "../../util/time";
 import "../../global.css";
 import "./main.css";
 import { coreI18n } from "../../locales";
+import { loadPlugins } from "../../plugins";
+import { loadTheme } from "../../theme";
 
 async function renderUsage() {
 	const config = await getConfig();
+	await loadPlugins();
+	await loadTheme();
 	coreI18n.setLocale(config.locale);
 	const usage = await getUsage();
 

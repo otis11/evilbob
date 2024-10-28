@@ -1,4 +1,4 @@
-import { existsSync, lstatSync, mkdirSync, readdirSync, rmSync } from "node:fs";
+import { existsSync, readdirSync, rmSync } from "node:fs";
 import path from "node:path";
 import { $ } from "bun";
 import type { WatcherOptions } from "rollup";
@@ -12,24 +12,24 @@ const distFolder = path.resolve(__dirname, "../dist");
 
 if (existsSync(distFolder)) {
 	rmSync(distFolder, { recursive: true, force: true });
-	mkdirSync(distFolder);
 }
-const views = readdirSync(path.resolve(__dirname, "../src/views")).filter(
-	(file) =>
-		lstatSync(
-			path.resolve(__dirname, `../src/views/${file}`),
-		).isDirectory(),
-);
+const views = readdirSync(path.resolve(__dirname, "../src/core/views"));
+const plugins = readdirSync(path.resolve(__dirname, "../src/plugins"));
 
 await Promise.all([
 	// service worker needs to separateed as they dont support "import" or "require" / code splitting bundles
 	build({
+		resolve: {
+			alias: {
+				"@core": path.resolve(__dirname, "../src/core"),
+			},
+		},
 		build: {
 			outDir: "dist/chrome",
 			emptyOutDir: false,
 			lib: {
 				name: "background",
-				entry: path.resolve(__dirname, "../src/background.ts"),
+				entry: path.resolve(__dirname, "../src/core/background.ts"),
 				fileName: "background",
 				formats: ["es"],
 			},
@@ -37,6 +37,11 @@ await Promise.all([
 		},
 	}),
 	build({
+		resolve: {
+			alias: {
+				"@core": path.resolve(__dirname, "../src/core"),
+			},
+		},
 		plugins: [
 			{
 				name: "build-end-hook",
@@ -50,13 +55,32 @@ await Promise.all([
 		base: "./",
 		build: {
 			rollupOptions: {
-				input: views.map((view) =>
-					path.resolve(__dirname, `../src/views/${view}/index.html`),
-				),
+				input: [
+					...views.map((view) =>
+						path.resolve(
+							__dirname,
+							`../src/core/views/${view}/index.html`,
+						),
+					),
+					...plugins.map((plugin) =>
+						path.resolve(
+							__dirname,
+							`../src/plugins/${plugin}/index.ts`,
+						),
+					),
+				],
+				preserveEntrySignatures: "allow-extension",
 				output: {
 					entryFileNames(chunkInfo) {
-						if (chunkInfo.name === "background") {
-							return "[name].js";
+						if (
+							chunkInfo.facadeModuleId?.includes(
+								"Bob/src/plugins",
+							)
+						) {
+							const name = chunkInfo.facadeModuleId
+								.split("/")
+								.at(-2);
+							return `plugins/${name}.js`;
 						}
 						return "assets/[name]-[hash].js";
 					},

@@ -1,0 +1,48 @@
+:root {
+	/* colors */
+	--bob-color-primary: #ffda58;
+	--bob-color-accent: #c47f7e;
+	--bob-color-success: green;
+	--bob-color-error: red;
+	--bob-color-base-100: #c5cbdd;
+	--bob-color-base-200: #c0c4cf;
+	--bob-color-base-300: #c0c4cf;
+	--bob-color-base-content-100: #1c1e24;
+	--bob-color-base-content-200: #353333;
+	--bob-color-base-content-300: rgba(112, 116, 124, 0.2);
+
+	/* general */
+	--bob-font-family: sans-serif;
+	--bob-search-font-size: 1.5rem;
+
+	/* tag */
+	--bob-tag-border-radius: 8px;
+	--bob-tag-padding: 3px 6px;
+	--bob-tag-spacing: 4px;
+	--bob-tag-font-size: 12px;
+
+	/* input */
+	--bob-input-border-radius: 4px;
+	--bob-input-min-height: 36px;
+	--bob-input-padding: 4px 16px;
+	--bob-input-border: none;
+
+	/* shortcut */
+	--bob-shortcut-font-size: 13px;
+
+	/* button */
+	--bob-button-padding: 0 16px;
+	--bob-button-border: none;
+
+	/* search results */
+	--bob-result-spacing: 12px;
+	--bob-result-title-spacing: 0 0 4px 0;
+	--bob-result-title-font-size: 1.125rem;
+	--bob-result-description-font-size: 0.875rem;
+	--bob-result-description-opacity: 0.7;
+	--bob-result-description-spacing: 4px 0 0 0;
+	--bob-result-prepend-spacing: 0 12px 0 0;
+	--bob-result-append-spacing: 0 0 0 12px;
+	--bob-result-hit-color: var(--bob-color-primary);
+	--bob-result-hit-font-weight: bold;
+}

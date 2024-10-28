@@ -1,34 +1,32 @@
-import { Result } from "../../components/result/result";
-import { iconFromString, iconWindowClose } from "../../icons";
-import { NewLocales } from "../../locales/new-locales";
+import { defineBobPlugin } from "../../core/BobPlugin";
+import { Result } from "../../core/components/result/result";
+import { iconFromString, iconWindowClose } from "../../core/icons";
+import { NewLocales } from "../../core/locales/new-locales";
 import {
 	focusLastActiveWindow,
 	getLastActiveWindow,
-} from "../../util/last-active-window";
-import { Plugin } from "../Plugin";
+} from "../../core/util/last-active-window";
 import enUS from "./locales/en-US";
 
-const { t } = NewLocales({
+const { t, setLocale } = NewLocales({
 	"en-US": enUS,
 });
 
-export class WindowPlugin extends Plugin {
-	public id(): string {
-		return "window";
-	}
-	permissions = [];
-	public prefix?: string | undefined = "win";
-	public description(): string {
+export default defineBobPlugin({
+	prefix: "win",
+	description() {
 		return t("Window.description");
-	}
-	public name(): string {
+	},
+	name() {
 		return t("Window");
-	}
-
-	public async getResults(): Promise<Result[]> {
+	},
+	async provideResults() {
 		return [new CloseOtherWindows()];
-	}
-}
+	},
+	onLocalChange(state) {
+		setLocale(state.locale);
+	},
+});
 
 export class CloseOtherWindows extends Result {
 	title(): string {

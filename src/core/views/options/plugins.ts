@@ -72,7 +72,7 @@ export async function renderPlugins(config: BobConfig) {
 
 	const resultGroupsContainer = document.createElement("div");
 	resultGroupsContainer.classList.add("result-groups-container");
-	const sortedResultGroups = PLUGIN_LIST.sort((a, b) => {
+	const sortedPlugins = PLUGIN_LIST.sort((a, b) => {
 		if (a.name > b.name) {
 			return 1;
 		}
@@ -81,8 +81,8 @@ export async function renderPlugins(config: BobConfig) {
 		}
 		return 0;
 	});
-	for (const group of sortedResultGroups) {
-		resultGroupsContainer.append(PluginCard(group, config));
+	for (const plugin of sortedPlugins) {
+		resultGroupsContainer.append(PluginCard(plugin, config));
 	}
 	resultGroups.append(labelAllGroups, resultGroupsContainer);
 	document.body.append(resultGroups);

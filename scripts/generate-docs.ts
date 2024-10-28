@@ -8,7 +8,7 @@ generateResultGroupsMarkdown();
 function generateResultGroupsMarkdown() {
 	const filePath = path.resolve(__dirname, "../docs/plugins.md");
 	let markdown = "# Plugins\n";
-	markdown += "Plugins can provide results, a theme and more.";
+	markdown += "Plugins can provide results, themes and more.";
 
 	markdown += "\n\n";
 	markdown +=

@@ -28,9 +28,9 @@ for (const pluginFolder of pluginFolders) {
 		name: pluginInstance.name(),
 		description: pluginInstance.description?.(),
 		supportedBrowsers: pluginInstance.supportedBrowsers,
-		providesTheme: pluginInstance.provideTheme,
-		providesResults: pluginInstance.provideResults,
-		providesConfig: pluginInstance.provideConfig,
+		providesTheme: !!pluginInstance.provideTheme,
+		providesResults: !!pluginInstance.provideResults,
+		providesConfig: !!pluginInstance.provideConfig,
 		file: `/plugins/${pluginFolder}.js`,
 	});
 }

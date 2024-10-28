@@ -7,6 +7,9 @@ export const PLUGIN_LIST = [
 		prefix: "t",
 		name: "Tabs",
 		description: "Search browser tabs.",
+		providesTheme: false,
+		providesResults: true,
+		providesConfig: false,
 		file: "/plugins/tabs.js",
 	},
 	{
@@ -16,6 +19,9 @@ export const PLUGIN_LIST = [
 		name: "Session Devices",
 		description: "Search your session devices.",
 		supportedBrowsers: ["chrome", "chromium", "edg"],
+		providesTheme: false,
+		providesResults: true,
+		providesConfig: false,
 		file: "/plugins/session-devices.js",
 	},
 	{
@@ -23,6 +29,9 @@ export const PLUGIN_LIST = [
 		prefix: "?",
 		name: "Prefixes",
 		description: "Filter for a specific ResultGroup only.",
+		providesTheme: false,
+		providesResults: true,
+		providesConfig: false,
 		file: "/plugins/prefixes.js",
 	},
 	{
@@ -32,6 +41,9 @@ export const PLUGIN_LIST = [
 		name: "Tab Groups",
 		description: "List tab groups.",
 		supportedBrowsers: ["chrome", "chromium", "edg"],
+		providesTheme: false,
+		providesResults: true,
+		providesConfig: false,
 		file: "/plugins/tab-groups.js",
 	},
 	{
@@ -39,11 +51,17 @@ export const PLUGIN_LIST = [
 		prefix: "g",
 		name: "Google",
 		description: "Google search & Google filters like intitle:youtube.",
+		providesTheme: false,
+		providesResults: true,
+		providesConfig: false,
 		file: "/plugins/google.js",
 	},
 	{
 		id: "focus-active-input",
 		name: "Focus Input",
+		providesTheme: false,
+		providesResults: false,
+		providesConfig: false,
 		file: "/plugins/focus-active-input.js",
 	},
 	{
@@ -52,16 +70,25 @@ export const PLUGIN_LIST = [
 		prefix: "e",
 		name: "Management",
 		description: "Search & interact with installed extensions.",
+		providesTheme: false,
+		providesResults: true,
+		providesConfig: false,
 		file: "/plugins/management.js",
 	},
 	{
 		id: "on-blur-close-window",
 		name: "On blur close bob window",
+		providesTheme: false,
+		providesResults: false,
+		providesConfig: false,
 		file: "/plugins/on-blur-close-window.js",
 	},
 	{
 		id: "bob-dark-theme",
 		name: "Bob dark theme",
+		providesTheme: true,
+		providesResults: false,
+		providesConfig: false,
 		file: "/plugins/bob-dark-theme.js",
 	},
 	{
@@ -72,6 +99,9 @@ export const PLUGIN_LIST = [
 		description:
 			"Settings that control whether websites can use features such as cookies, JavaScript, and plugins",
 		supportedBrowsers: ["chrome", "chromium", "edg"],
+		providesTheme: false,
+		providesResults: true,
+		providesConfig: false,
 		file: "/plugins/content-settings.js",
 	},
 	{
@@ -80,6 +110,9 @@ export const PLUGIN_LIST = [
 		prefix: "s",
 		name: "Sessions",
 		description: "List your recently closed sessions.",
+		providesTheme: false,
+		providesResults: true,
+		providesConfig: false,
 		file: "/plugins/sessions.js",
 	},
 	{
@@ -88,6 +121,9 @@ export const PLUGIN_LIST = [
 		prefix: "b",
 		name: "Bookmarks",
 		description: "Search & interact with bookmarks.",
+		providesTheme: false,
+		providesResults: true,
+		providesConfig: false,
 		file: "/plugins/bookmarks.js",
 	},
 	{
@@ -97,6 +133,9 @@ export const PLUGIN_LIST = [
 		name: "System Storage",
 		description: "Information about your system storage.",
 		supportedBrowsers: ["chromium", "chrome", "edg"],
+		providesTheme: false,
+		providesResults: true,
+		providesConfig: false,
 		file: "/plugins/system-storage.js",
 	},
 	{
@@ -105,6 +144,9 @@ export const PLUGIN_LIST = [
 		name: "Window",
 		description:
 			"Interact with chrome windows, for instance 'close other windows'",
+		providesTheme: false,
+		providesResults: true,
+		providesConfig: false,
 		file: "/plugins/window.js",
 	},
 	{
@@ -113,6 +155,9 @@ export const PLUGIN_LIST = [
 		prefix: "h",
 		name: "History",
 		description: "Search & interact with browser history.",
+		providesTheme: false,
+		providesResults: true,
+		providesConfig: true,
 		file: "/plugins/history.js",
 	},
 	{
@@ -120,6 +165,9 @@ export const PLUGIN_LIST = [
 		prefix: "sc",
 		name: "Shortcuts",
 		description: "Search for browser shortcuts.",
+		providesTheme: false,
+		providesResults: true,
+		providesConfig: false,
 		file: "/plugins/shortcuts.js",
 	},
 	{
@@ -130,11 +178,17 @@ export const PLUGIN_LIST = [
 		description:
 			"Combined actions for tabs & groups, for instance group tabs by domain",
 		supportedBrowsers: ["chrome", "chromium", "edg"],
+		providesTheme: false,
+		providesResults: true,
+		providesConfig: false,
 		file: "/plugins/tab-and-group-actions.js",
 	},
 	{
 		id: "bob-light-theme",
 		name: "Bob light theme",
+		providesTheme: true,
+		providesResults: false,
+		providesConfig: false,
 		file: "/plugins/bob-light-theme.js",
 	},
 	{
@@ -143,6 +197,9 @@ export const PLUGIN_LIST = [
 		name: "Bob",
 		description:
 			"Internal Bob commands like open settings, reset settings ...",
+		providesTheme: false,
+		providesResults: true,
+		providesConfig: false,
 		file: "/plugins/bob-results.js",
 	},
 	{
@@ -151,6 +208,9 @@ export const PLUGIN_LIST = [
 		name: "Commands",
 		description: "Available commands from extensions.",
 		supportedBrowsers: ["chrome", "chromium", "edg"],
+		providesTheme: false,
+		providesResults: true,
+		providesConfig: false,
 		file: "/plugins/commands.js",
 	},
 	{
@@ -158,6 +218,9 @@ export const PLUGIN_LIST = [
 		prefix: "gpt",
 		name: "ChatGPT",
 		description: "Start a chat with chatgpt",
+		providesTheme: false,
+		providesResults: true,
+		providesConfig: false,
 		file: "/plugins/chatgpt.js",
 	},
 	{
@@ -167,6 +230,9 @@ export const PLUGIN_LIST = [
 		name: "Top Sites",
 		description:
 			"The top sites (i.e. most visited sites) that are displayed on the new tab page",
+		providesTheme: false,
+		providesResults: true,
+		providesConfig: false,
 		file: "/plugins/top-sites.js",
 	},
 	{
@@ -176,6 +242,9 @@ export const PLUGIN_LIST = [
 		name: "System CPU",
 		description: "Information about your system CPU.",
 		supportedBrowsers: ["chromium", "chrome", "edg"],
+		providesTheme: false,
+		providesResults: true,
+		providesConfig: false,
 		file: "/plugins/system-cpu.js",
 	},
 	{
@@ -184,6 +253,9 @@ export const PLUGIN_LIST = [
 		prefix: "d",
 		name: "Downloads",
 		description: "List and manage downloads.",
+		providesTheme: false,
+		providesResults: true,
+		providesConfig: false,
 		file: "/plugins/downloads.js",
 	},
 	{
@@ -193,6 +265,9 @@ export const PLUGIN_LIST = [
 		name: "System Memory",
 		description: "Information about your system memory.",
 		supportedBrowsers: ["chromium", "chrome", "edg"],
+		providesTheme: false,
+		providesResults: true,
+		providesConfig: false,
 		file: "/plugins/system-memory.js",
 	},
 	{
@@ -200,6 +275,9 @@ export const PLUGIN_LIST = [
 		prefix: "gn",
 		name: "Google New",
 		description: "Create new google docs, sheets, slides ...",
+		providesTheme: false,
+		providesResults: true,
+		providesConfig: false,
 		file: "/plugins/google-new.js",
 	},
 	{
@@ -208,6 +286,9 @@ export const PLUGIN_LIST = [
 		prefix: "a",
 		name: "Tab Actions",
 		description: "Interact with browser tabs. Sort, merge, duplicate...",
+		providesTheme: false,
+		providesResults: true,
+		providesConfig: false,
 		file: "/plugins/tab-actions.js",
 	},
 ] as BobPluginMeta[];

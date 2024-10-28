@@ -1,6 +1,7 @@
 import type { BobConfig } from "../../config";
 import type { BobPluginMeta } from "../../plugin-list";
 import { disablePlugin, enablePlugin } from "../../plugins";
+import { type Tag, Tags } from "../tags/tags";
 import "./plugin-card.css";
 
 export function PluginCard(plugin: BobPluginMeta, config: BobConfig) {
@@ -26,7 +27,20 @@ export function PluginCard(plugin: BobPluginMeta, config: BobConfig) {
 	const description = document.createElement("div");
 	description.classList.add("result-plugin-description");
 	description.innerText = plugin.description || "";
-	container.append(label, description);
+	container.append(label);
+
+	const tags: Tag[] = [];
+	if (plugin.providesTheme) {
+		tags.push({ text: "Theme" });
+	}
+	if (plugin.providesResults) {
+		tags.push({ text: "Results" });
+	}
+
+	const tag = Tags(tags);
+	container.append(tag);
+
+	container.append(description);
 
 	return container;
 }

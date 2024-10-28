@@ -37,7 +37,6 @@ getConfig().then(async (cfg) => {
 	coreI18n.setLocale(config.locale);
 
 	for (const plugin of PLUGINS_LOADED) {
-		console.log(plugin);
 		plugin.onBobWindowOpen?.(windowState());
 	}
 

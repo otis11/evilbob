@@ -7,4 +7,4 @@ export const locales = {
 
 export const LOCALES = Object.keys(locales) as Locale[];
 export type Locale = keyof typeof locales;
-export const { setLocale, t } = NewLocales(locales);
+export const coreI18n = NewLocales(locales);

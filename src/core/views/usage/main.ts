@@ -4,11 +4,11 @@ import { getUsage } from "../../usage";
 import { unixTimeToHumanReadable } from "../../util/time";
 import "../../global.css";
 import "./main.css";
-import { setLocale, t } from "../../locales";
+import { coreI18n } from "../../locales";
 
 async function renderUsage() {
 	const config = await getConfig();
-	setLocale(config.locale);
+	coreI18n.setLocale(config.locale);
 	const usage = await getUsage();
 
 	const resultKeys = Object.keys(usage.results).sort((keyA, keyB) => {
@@ -23,7 +23,11 @@ async function renderUsage() {
 		return 0;
 	});
 
-	const header = ResultUsageRow(t("Id"), t("Count"), t("Last used"));
+	const header = ResultUsageRow(
+		coreI18n.t("Id"),
+		coreI18n.t("Count"),
+		coreI18n.t("Last used"),
+	);
 	header.style.fontWeight = "bold";
 	document.body.append(header);
 	for (const key of resultKeys) {

@@ -1,13 +1,13 @@
 import { GroupHeading } from "../../components/group-heading";
 import { PluginCard } from "../../components/plugin-card/plugin-card";
 import { type BobConfig, updateConfig } from "../../config";
-import { t } from "../../locales";
+import { coreI18n } from "../../locales";
 import { PLUGIN_LIST } from "../../plugin-list";
 
 export async function renderPlugins(config: BobConfig) {
 	const resultGroups = document.createElement("div");
 
-	resultGroups.append(GroupHeading(t("Plugins")));
+	resultGroups.append(GroupHeading(coreI18n.t("Plugins")));
 
 	const labelAllGroups = document.createElement("label");
 	labelAllGroups.classList.add("result-group-title");
@@ -67,7 +67,7 @@ export async function renderPlugins(config: BobConfig) {
 	});
 
 	const labelText = document.createElement("span");
-	labelText.innerText = t("All");
+	labelText.innerText = coreI18n.t("All");
 	labelAllGroups.append(checkbox, labelText);
 
 	const resultGroupsContainer = document.createElement("div");

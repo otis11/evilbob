@@ -1,6 +1,6 @@
 import type { Result } from "../../components/result/result";
 import { getConfig } from "../../config";
-import { t } from "../../locales";
+import { coreI18n } from "../../locales";
 import { PLUGINS_LOADED_PROVIDE_RESULTS } from "../../plugins";
 import { getUsage } from "../../usage";
 import {
@@ -67,7 +67,7 @@ export async function filterResults() {
 		resultsContainer.append(fragment);
 
 		updateSelectedIndex(0);
-		resultsCounter.innerText = `${resultsContainer.children.length}/${getPluginResults().flat().length} ${t("Results")}`;
+		resultsCounter.innerText = `${resultsContainer.children.length}/${getPluginResults().flat().length} ${coreI18n.t("Results")}`;
 	});
 }
 

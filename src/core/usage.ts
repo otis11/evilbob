@@ -2,10 +2,6 @@ import { deepMerge } from "./util/deep-merge";
 
 let usageCache: BobUsage;
 
-export type ResultGroupConfig = {
-	enabled: boolean;
-};
-
 export type ResultUsage = {
 	l: number;
 	c: number;

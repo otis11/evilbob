@@ -7,7 +7,7 @@ import { filterResults } from "./results";
 import { loadFreshData } from "./search-data";
 import "./keyboard";
 import "./mouse";
-import { type Locale, setLocale } from "../../locales";
+import { type Locale, coreI18n } from "../../locales";
 import { PLUGINS_LOADED, loadPlugins } from "../../plugins";
 import { loadTheme } from "../../theme";
 import { optionsSearchInput, searchInput } from "./dom";
@@ -34,7 +34,7 @@ getConfig().then(async (cfg) => {
 	await loadTheme();
 
 	config = cfg;
-	setLocale(config.locale);
+	coreI18n.setLocale(config.locale);
 
 	for (const plugin of PLUGINS_LOADED) {
 		console.log(plugin);

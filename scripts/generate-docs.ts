@@ -1,16 +1,14 @@
 import { writeFileSync } from "node:fs";
 import path from "node:path";
-import { RESULT_GROUPS } from "../src/plugins";
-import { Themes } from "../src/theme/themes";
+import { PLUGIN_LIST } from "../src/core/plugin-list";
 
 generateResultGroupsMarkdown();
-generateThemesMarkdown();
+// generateThemesMarkdown();
 
 function generateResultGroupsMarkdown() {
-	const filePath = path.resolve(__dirname, "../docs/result-groups.md");
-	let markdown = "# Result Groups\n";
-	markdown +=
-		"Result Groups provide results and actions inside the command palette.";
+	const filePath = path.resolve(__dirname, "../docs/plugins.md");
+	let markdown = "# Plugins\n";
+	markdown += "Plugins can provide results, a theme and more.";
 
 	markdown += "\n\n";
 	markdown +=
@@ -18,22 +16,22 @@ function generateResultGroupsMarkdown() {
 	markdown +=
 		"| ---- | ----------- | ----- | ------------|------------------- |\n";
 
-	for (const group of RESULT_GROUPS) {
-		markdown += `| ${group.name()} | ${group.description} | ${group.prefix || ""} | ${group.permissions.join(", ")} | ${group.supportedBrowsers.join(", ")} |\n`;
+	for (const plugin of PLUGIN_LIST) {
+		markdown += `| ${plugin.name} | ${plugin.description} | ${plugin.prefix || ""} | ${plugin.permissions?.join(", ")} | ${plugin.supportedBrowsers?.join(", ")} |\n`;
 	}
 
 	writeFileSync(filePath, markdown);
 }
 
-function generateThemesMarkdown() {
-	const filePath = path.resolve(__dirname, "../docs/themes.md");
-	let markdown = "# Themes";
-	markdown += "\n\n";
+// function generateThemesMarkdown() {
+// 	const filePath = path.resolve(__dirname, "../docs/themes.md");
+// 	let markdown = "# Themes";
+// 	markdown += "\n\n";
 
-	for (const theme of Themes) {
-		markdown += `### ${theme}\n`;
-		markdown += `![${theme}](../src/assets/themes/${theme}.png)\n`;
-	}
+// 	for (const theme of Themes) {
+// 		markdown += `### ${theme}\n`;
+// 		markdown += `![${theme}](../src/assets/themes/${theme}.png)\n`;
+// 	}
 
-	writeFileSync(filePath, markdown);
-}
+// 	writeFileSync(filePath, markdown);
+// }

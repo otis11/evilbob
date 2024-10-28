@@ -1,6 +1,6 @@
 import type { BobPlugin } from "./BobPlugin";
 import { getConfig, updateConfig } from "./config";
-import { type BobPluginMeta, PLUGIN_LIST } from "./plugin-list";
+import { type BobPluginMeta, PLUGIN_LIST_SUPPORTED } from "./plugin-list";
 
 export const PLUGINS_LOADED: BobPlugin[] = [];
 export const PLUGINS_LOADED_PROVIDE_RESULTS: BobPlugin[] = [];
@@ -8,7 +8,7 @@ export const PLUGINS_LOADED_PROVIDE_RESULTS: BobPlugin[] = [];
 export async function loadPlugins() {
 	const config = await getConfig();
 	const promises = [];
-	for (const plugin of PLUGIN_LIST) {
+	for (const plugin of PLUGIN_LIST_SUPPORTED) {
 		if (config.pluginsEnabled[plugin.id]) {
 			promises.push(
 				import(plugin.file).then((value) => ({

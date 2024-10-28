@@ -2,7 +2,7 @@ import { GroupHeading } from "../../components/group-heading";
 import { PluginCard } from "../../components/plugin-card/plugin-card";
 import { type BobConfig, updateConfig } from "../../config";
 import { coreI18n } from "../../locales";
-import { PLUGIN_LIST } from "../../plugin-list";
+import { PLUGIN_LIST_SUPPORTED } from "../../plugin-list";
 
 export async function renderPlugins(config: BobConfig) {
 	const resultGroups = document.createElement("div");
@@ -15,17 +15,17 @@ export async function renderPlugins(config: BobConfig) {
 	const checkbox = document.createElement("input");
 	checkbox.type = "checkbox";
 	checkbox.checked =
-		PLUGIN_LIST.length ===
-		PLUGIN_LIST.filter((g) => config.pluginsEnabled[g.id]).length;
+		PLUGIN_LIST_SUPPORTED.length ===
+		PLUGIN_LIST_SUPPORTED.filter((g) => config.pluginsEnabled[g.id]).length;
 	checkbox.addEventListener("change", async () => {
 		const pluginsEnabled: Record<string, boolean> = {};
-		for (const plugin of PLUGIN_LIST) {
+		for (const plugin of PLUGIN_LIST_SUPPORTED) {
 			pluginsEnabled[plugin.id] = checkbox.checked;
 		}
-		const permissions = PLUGIN_LIST.flatMap((g) => g.permissions).filter(
-			(perm) => perm !== undefined,
-		);
-		const hostPermissions = PLUGIN_LIST.flatMap(
+		const permissions = PLUGIN_LIST_SUPPORTED.flatMap(
+			(g) => g.permissions,
+		).filter((perm) => perm !== undefined);
+		const hostPermissions = PLUGIN_LIST_SUPPORTED.flatMap(
 			(g) => g.hostPermissions,
 		).filter((perm) => perm !== undefined);
 
@@ -72,7 +72,7 @@ export async function renderPlugins(config: BobConfig) {
 
 	const resultGroupsContainer = document.createElement("div");
 	resultGroupsContainer.classList.add("result-groups-container");
-	const sortedPlugins = PLUGIN_LIST.sort((a, b) => {
+	const sortedPlugins = PLUGIN_LIST_SUPPORTED.sort((a, b) => {
 		if (a.name > b.name) {
 			return 1;
 		}

@@ -5,8 +5,15 @@
 }
 
 h1 {
-	font-size: 2rem;
+	font-size: 48px;
 	text-align: center;
+	padding-bottom: 4px;
+}
+
+h2 {
+	text-align: center;
+	font-size: 24px;
+	font-weight: normal;
 }
 
 body {
@@ -22,12 +29,9 @@ body {
 	width: 100%;
 }
 
-.links {
-	padding: 32px;
-}
-
 .links a {
 	color: var(--bob-color-primary);
+	text-decoration: none;
 }
 
 .thumb {
@@ -41,8 +45,8 @@ body {
 
 .links {
 	display: flex;
-	gap: 20px;
-	font-size: 1.125rem;
+	gap: 32px;
 	justify-content: center;
 	align-items: center;
+	padding: 24px 24px 96px;
 }

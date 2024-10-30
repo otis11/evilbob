@@ -25,6 +25,7 @@ export default defineBobPlugin({
 	onLocalChange(state) {
 		setLocale(state.locale);
 	},
+	icon: iconBrain,
 });
 
 export class ChatGPTStartChat extends Result {

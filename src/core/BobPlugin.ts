@@ -16,6 +16,7 @@ export type BobPlugin = {
 	hostPermissions?: string[];
 	supportedBrowsers?: BrowserName[];
 	prefix?: string;
+	icon?: string;
 	description?(): string;
 	provideResults?(): Promise<Result[]>;
 	provideTheme?(): Promise<string>;

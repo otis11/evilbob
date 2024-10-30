@@ -37,6 +37,7 @@ for (const pluginFolder of pluginFolders) {
 		providesResults: !!pluginInstance.provideResults,
 		providesConfig: !!pluginInstance.provideConfig,
 		file: `/plugins/${pluginFolder}.js`,
+		icon: pluginInstance.icon,
 	});
 }
 
@@ -79,6 +80,7 @@ pluginContent += `export type BobPluginMeta = {
 	providesTheme: boolean;
 	providesResults: boolean;
 	providesConfig: boolean;
+	icon?: string;
 }`;
 writeFileSync(resolve(__dirname, "../src/core/plugin-list.ts"), pluginContent);
 

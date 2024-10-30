@@ -1,7 +1,7 @@
 import { Checkbox } from "../../components/checkbox";
 import { FlexContainer } from "../../components/flex-container";
 import { GroupHeading } from "../../components/group-heading";
-import { PluginCard } from "../../components/plugin-card/plugin-card";
+import { PluginMetaResult } from "../../components/plugin-meta-result";
 import { type BobConfig, updateConfig } from "../../config";
 import { coreI18n } from "../../locales";
 import { type BobPluginMeta, PLUGIN_LIST_SUPPORTED } from "../../plugin-list";
@@ -11,10 +11,15 @@ export async function renderPlugins(config: BobConfig) {
 	plugins.append(GroupHeading(coreI18n.t("Plugins")));
 
 	const pluginsContainer = document.createElement("div");
-	pluginsContainer.classList.add("result-groups-container");
+	pluginsContainer.classList.add("plugins-container");
 	const sortedPlugins = sortPlugins(PLUGIN_LIST_SUPPORTED);
 	for (const plugin of sortedPlugins) {
-		pluginsContainer.append(PluginCard(plugin, config));
+		pluginsContainer.append(
+			new PluginMetaResult(
+				plugin,
+				!!config.pluginsEnabled[plugin.id],
+			).asHtmlElement(),
+		);
 	}
 	plugins.append(
 		makeAllPluginsCheckbox(config),
@@ -51,7 +56,14 @@ function makeFilterPluginsCheckboxes(target: HTMLElement, config: BobConfig) {
 			return true;
 		});
 		target.innerHTML = "";
-		target.append(...plugins.map((plugin) => PluginCard(plugin, config)));
+		target.append(
+			...plugins.map((plugin) =>
+				new PluginMetaResult(
+					plugin,
+					!!config.pluginsEnabled[plugin.id],
+				).asHtmlElement(),
+			),
+		);
 	};
 
 	checkboxThemes.addEventListener("change", onFilterChange);

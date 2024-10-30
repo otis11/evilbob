@@ -15,6 +15,7 @@ const { t, setLocale } = NewLocales({
 	"en-US": enUS,
 });
 export default defineBobPlugin({
+	icon: iconPuzzleOutline,
 	permissions: ["management"],
 	prefix: "e",
 	description() {

@@ -156,6 +156,8 @@ export abstract class Result {
 
 	abstract execute(state: BobWindowState): Promise<void>;
 
+	protected afterElementCreation() {}
+
 	public asHtmlElement() {
 		if (this.rootEl) {
 			if (this.descriptionEl) {
@@ -225,6 +227,8 @@ export abstract class Result {
 			});
 			this.rootEl.append(span);
 		}
+
+		this.afterElementCreation();
 		return this.rootEl;
 	}
 

@@ -27,6 +27,7 @@ export default defineBobPlugin({
 			new BobShowUsage(),
 		];
 	},
+	icon: iconBob,
 });
 
 class BobOpenOptions extends Result {

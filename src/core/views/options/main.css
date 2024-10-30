@@ -48,8 +48,20 @@ footer a {
 	color: var(--bob-color-base-content-100);
 }
 
-.result-groups-container {
+.plugins-container {
 	display: flex;
 	gap: 8px;
 	flex-wrap: wrap;
+}
+
+.plugins-container li {
+	min-width: 400px;
+	max-width: 400px;
+	margin: 4px;
+	padding: 8px;
+}
+
+.plugins-container li.plugin-active {
+	outline: 2px solid var(--bob-color-success);
+	border-radius: var(--bob-plugin-active-border-radius);
 }

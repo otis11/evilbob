@@ -32,6 +32,7 @@ export default defineBobPlugin({
 		const tabs = await chrome.tabs.query({});
 		return tabs.map((tab) => new Tab(tab));
 	},
+	icon: iconTab,
 });
 
 export class Tab extends Result {

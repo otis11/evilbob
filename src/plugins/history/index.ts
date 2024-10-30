@@ -10,6 +10,7 @@ import enUS from "./locales/en-US";
 const { t } = NewLocales({ "en-US": enUS });
 
 export default defineBobPlugin({
+	icon: iconHistory,
 	permissions: ["history"],
 	prefix: "h",
 	name() {

@@ -1,4 +1,5 @@
 import { defineBobPlugin } from "../../core/BobPlugin";
+import { iconBob } from "../../core/icons";
 
 export default defineBobPlugin({
 	name() {
@@ -7,4 +8,5 @@ export default defineBobPlugin({
 	async provideTheme() {
 		return await import("./dark.css");
 	},
+	icon: iconBob,
 });

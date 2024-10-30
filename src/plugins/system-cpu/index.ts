@@ -10,6 +10,7 @@ const { t, setLocale } = NewLocales({
 });
 
 export default defineBobPlugin({
+	icon: iconCpu,
 	permissions: ["system.cpu"],
 	prefix: "cpu",
 	description() {

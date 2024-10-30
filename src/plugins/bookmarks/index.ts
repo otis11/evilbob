@@ -28,6 +28,7 @@ export default defineBobPlugin({
 	onLocalChange(state) {
 		setLocale(state.locale);
 	},
+	icon: iconBookmark,
 });
 
 function flattenBookmarksTree(tree: chrome.bookmarks.BookmarkTreeNode[]) {

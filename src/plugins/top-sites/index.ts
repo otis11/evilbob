@@ -29,6 +29,7 @@ export default defineBobPlugin({
 			(site) => new MostVisitedURL(site),
 		);
 	},
+	icon: iconArrowUpBold,
 });
 
 export class MostVisitedURL extends Result {

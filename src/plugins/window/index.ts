@@ -1,6 +1,10 @@
 import { defineBobPlugin } from "../../core/BobPlugin";
 import { Result } from "../../core/components/result/result";
-import { iconFromString, iconWindowClose } from "../../core/icons";
+import {
+	iconFromString,
+	iconWindowClose,
+	iconWindowRestore,
+} from "../../core/icons";
 import { NewLocales } from "../../core/locales/new-locales";
 import {
 	focusLastActiveWindow,
@@ -26,6 +30,7 @@ export default defineBobPlugin({
 	onLocalChange(state) {
 		setLocale(state.locale);
 	},
+	icon: iconWindowRestore,
 });
 
 export class CloseOtherWindows extends Result {

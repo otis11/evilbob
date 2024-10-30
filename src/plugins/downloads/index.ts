@@ -23,7 +23,7 @@ export default defineBobPlugin({
 	description() {
 		return t("Downloads.description");
 	},
-
+	icon: iconDownload,
 	name() {
 		return t("Downloads");
 	},

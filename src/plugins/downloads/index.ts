@@ -1,6 +1,5 @@
 import { defineBobPlugin } from "../../core/BobPlugin";
 import { Result } from "../../core/components/result/result";
-import type { Search } from "../../core/components/search";
 import type { Tag } from "../../core/components/tags/tags";
 import {
 	iconDownload,
@@ -102,7 +101,7 @@ class ShowDownload extends Result {
 		super();
 	}
 
-	public async execute(search: Search, results: Result[]): Promise<void> {
+	public async execute(): Promise<void> {
 		chrome.downloads.show(this.item.id);
 	}
 }
@@ -118,7 +117,7 @@ class EraseDownload extends Result {
 		super();
 	}
 
-	public async execute(search: Search, results: Result[]): Promise<void> {
+	public async execute(): Promise<void> {
 		await chrome.downloads.erase({ id: this.item.id });
 		focusLastActiveWindow();
 	}
@@ -135,7 +134,7 @@ class RemoveDownload extends Result {
 		super();
 	}
 
-	public async execute(search: Search, results: Result[]): Promise<void> {
+	public async execute(): Promise<void> {
 		await chrome.downloads.removeFile(this.item.id);
 		focusLastActiveWindow();
 	}

@@ -1,6 +1,5 @@
-import { defineBobPlugin } from "../../core/BobPlugin";
+import { type BobWindowState, defineBobPlugin } from "../../core/BobPlugin";
 import { Result } from "../../core/components/result/result";
-import type { Search } from "../../core/components/search";
 import { iconFilter, iconFromString } from "../../core/icons";
 import { NewLocales } from "../../core/locales/new-locales";
 import { PLUGINS_LOADED } from "../../core/plugins";
@@ -60,11 +59,11 @@ export class Prefix extends Result {
 		return this.name() + this.title();
 	}
 
-	async execute(search: Search): Promise<void> {
-		if (search.inputElement) {
-			search.inputElement.value = this.title();
-			search.inputElement.scrollIntoView();
-			search.inputElement.focus();
+	async execute(state: BobWindowState): Promise<void> {
+		if (state.currentSearch.inputElement) {
+			state.currentSearch.inputElement.value = this.title();
+			state.currentSearch.inputElement.scrollIntoView();
+			state.currentSearch.inputElement.focus();
 		}
 	}
 }

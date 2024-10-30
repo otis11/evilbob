@@ -1,4 +1,4 @@
-import { defineBobPlugin } from "../../core/BobPlugin";
+import { type BobWindowState, defineBobPlugin } from "../../core/BobPlugin";
 import { Result } from "../../core/components/result/result";
 import { Search } from "../../core/components/search";
 import { iconFromString, iconGoogle } from "../../core/icons";
@@ -72,9 +72,9 @@ export class GoogleDork extends Result {
 		);
 	}
 
-	async execute(search: Search): Promise<void> {
+	async execute(state: BobWindowState): Promise<void> {
 		chrome.tabs.create({
-			url: `https://google.com/search?q=${search.text.replace("g", "").trim().replaceAll(" ", "+")}`,
+			url: `https://google.com/search?q=${state.currentSearch.text.replace("g", "").trim().replaceAll(" ", "+")}`,
 		});
 		focusLastActiveWindow();
 	}
@@ -107,11 +107,11 @@ export class GoogleSearch extends Result {
 		return iconFromString(iconGoogle);
 	}
 
-	async execute(search: Search): Promise<void> {
+	async execute(state: BobWindowState): Promise<void> {
 		const query =
-			search.words()[0] === "g"
-				? search.text.slice(1).trim()
-				: search.text;
+			state.currentSearch.words()[0] === "g"
+				? state.currentSearch.text.slice(1).trim()
+				: state.currentSearch.text;
 		chrome.tabs.create({
 			url: `https://google.com/search?q=${query.replaceAll(" ", "+")}`,
 		});

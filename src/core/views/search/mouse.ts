@@ -1,14 +1,8 @@
 import { Result } from "../../components/result/result";
 import { getLiFromEvent } from "../../util/li-from-event";
-import {
-	optionsSearchInput,
-	resultOptionsContainer,
-	resultsContainer,
-	searchInput,
-} from "./dom";
+import { resultOptionsContainer, resultsContainer } from "./dom";
+import { bobWindowState } from "./main";
 import { isResultOptionsVisible } from "./result-options";
-import { getCurrentResults } from "./results";
-import { newSearch } from "./search";
 import { updateSelectedIndex } from "./selected";
 
 let lastMousePosition = {
@@ -22,10 +16,7 @@ window.addEventListener("click", (event) => {
 		const searchResult = Result.instanceFromId(
 			target?.getAttribute("data-instance-id") || "",
 		);
-		const search = newSearch(
-			isResultOptionsVisible() ? optionsSearchInput : searchInput,
-		);
-		searchResult?.onSelect(search, getCurrentResults());
+		searchResult?.onSelect(bobWindowState());
 	}
 });
 

@@ -1,4 +1,4 @@
-import type { Locale } from ".";
+import type { Locale } from "../locales";
 
 // Typescript Magic
 // ${string}                                matches anything before a placeholder

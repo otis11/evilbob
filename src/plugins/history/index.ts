@@ -1,6 +1,5 @@
-import { defineBobPlugin } from "../../core/BobPlugin";
+import { type BobWindowState, defineBobPlugin } from "../../core/BobPlugin";
 import { Result } from "../../core/components/result/result";
-import type { Search } from "../../core/components/search";
 import type { Tag } from "../../core/components/tags/tags";
 import { getConfig } from "../../core/config";
 import { faviconFromUrl, iconFromString, iconHistory } from "../../core/icons";
@@ -33,7 +32,7 @@ export default defineBobPlugin({
 				Number.parseInt(
 					config.pluginsConfig[
 						this.id || ""
-					]?.maxHistoryItems.value?.toString() || "100",
+					]?.maxResults.value?.toString() || "100",
 				) || 100,
 		});
 		return items.map((item) => new HistoryItem(item));
@@ -98,9 +97,10 @@ class HistoryRemove extends Result {
 		super();
 	}
 
-	public async execute(search: Search, results: Result[]): Promise<void> {
+	public async execute(state: BobWindowState): Promise<void> {
 		if (this.item.url) {
 			await chrome.history.deleteUrl({ url: this.item.url });
+			state.closeResultOptions();
 			focusLastActiveWindow();
 		}
 	}

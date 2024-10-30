@@ -1,6 +1,5 @@
-import { defineBobPlugin } from "../../core/BobPlugin";
+import { type BobWindowState, defineBobPlugin } from "../../core/BobPlugin";
 import { Result } from "../../core/components/result/result";
-import type { Search } from "../../core/components/search";
 import type { Tag } from "../../core/components/tags/tags";
 import { faviconFromUrl, iconBookmark, iconFromString } from "../../core/icons";
 import { NewLocales } from "../../core/locales/new-locales";
@@ -106,8 +105,9 @@ class RemoveBookmark extends Result {
 		super();
 	}
 
-	public async execute(search: Search, results: Result[]): Promise<void> {
+	public async execute(state: BobWindowState): Promise<void> {
 		await chrome.bookmarks.remove(this.bookmark.id);
+		state.closeResultOptions();
 		focusLastActiveWindow();
 	}
 }

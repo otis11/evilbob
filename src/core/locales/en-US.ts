@@ -25,6 +25,7 @@ export default {
 	Themes: "Themes",
 	Edit: "Edit",
 	Id: "Id",
+	"Disable/Enabled all plugins": "Disable/Enabled all plugins",
 	"Close Window": "Close Window",
 	"Clear Search": "Clear Search",
 	"Refresh Results": "Refresh Results",

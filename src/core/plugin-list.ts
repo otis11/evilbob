@@ -214,6 +214,14 @@ export const PLUGIN_LIST = [
 		file: "/plugins/commands.js",
 	},
 	{
+		id: "clear-search-on-focus",
+		name: "Clear search on window focus",
+		providesTheme: false,
+		providesResults: false,
+		providesConfig: false,
+		file: "/plugins/clear-search-on-focus.js",
+	},
+	{
 		id: "chatgpt",
 		prefix: "gpt",
 		name: "ChatGPT",

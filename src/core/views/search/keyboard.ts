@@ -1,21 +1,17 @@
 import { Result } from "../../components/result/result";
 import { focusLastActiveWindow } from "../../util/last-active-window";
-import {
-	optionsSearchInput,
-	resultOptionsContainer,
-	resultsContainer,
-	searchInput,
-} from "./dom";
+import { resultOptionsContainer, resultsContainer, searchInput } from "./dom";
+import { bobWindowState } from "./main";
 import {
 	closeResultOptions,
 	isResultOptionsVisible,
 	showResultOptions,
 } from "./result-options";
-import { getCurrentResults } from "./results";
-import { newSearch } from "./search";
 import {
 	getLastSelectedResultIndex,
 	getSelectedResultIndex,
+	selectNextResult,
+	selectPrevResult,
 	updateSelectedIndex,
 } from "./selected";
 
@@ -25,7 +21,6 @@ const ARROW_KEY_HELD_DOWN_INITIAL_MS = 300;
 const ARROW_KEY_HELD_DOWN_BETWEEN_MS = 100;
 
 function onKeyUp(event: KeyboardEvent) {
-	let newIndex = getSelectedResultIndex();
 	const container = isResultOptionsVisible()
 		? resultOptionsContainer
 		: resultsContainer;
@@ -33,60 +28,33 @@ function onKeyUp(event: KeyboardEvent) {
 	if (event.key === "ArrowDown") {
 		clearTimeout(arrowKeyHeldDownTimeout);
 		arrowKeyHeldDownTimeout = 0;
-		if (newIndex === container.children.length - 1) {
-			newIndex = 0;
-		} else {
-			newIndex += 1;
-		}
-		updateSelectedIndex(newIndex, true);
+		selectNextResult();
 	}
 	if (event.key === "ArrowUp") {
 		clearTimeout(arrowKeyHeldDownTimeout);
 		arrowKeyHeldDownTimeout = 0;
-		if (newIndex === 0 || newIndex === -1) {
-			newIndex = container.children.length - 1;
-		} else {
-			newIndex -= 1;
-		}
-		updateSelectedIndex(newIndex, true);
+		selectPrevResult();
 	}
 	if (event.key === "Enter") {
 		const target = container.children[getSelectedResultIndex()];
 		const searchResult = Result.instanceFromId(
 			target?.getAttribute("data-instance-id") || "",
 		);
-		const search = newSearch(
-			isResultOptionsVisible() ? optionsSearchInput : searchInput,
-		);
 
 		if (event.shiftKey && !isResultOptionsVisible() && searchResult) {
 			showResultOptions(searchResult);
 		} else {
-			searchResult?.onSelect(search, getCurrentResults());
+			searchResult?.onSelect(bobWindowState());
 		}
 	}
 }
 
 function onArrowKeyHeldDown() {
-	let newIndex = getSelectedResultIndex();
-	const container = isResultOptionsVisible()
-		? resultOptionsContainer
-		: resultsContainer;
 	if (arrowKeyHeldDownCurrent === "ArrowDown") {
-		if (newIndex === container.children.length - 1) {
-			newIndex = 0;
-		} else {
-			newIndex += 1;
-		}
-		updateSelectedIndex(newIndex, true);
+		selectNextResult();
 	}
 	if (arrowKeyHeldDownCurrent === "ArrowUp") {
-		if (newIndex === 0 || newIndex === -1) {
-			newIndex = container.children.length - 1;
-		} else {
-			newIndex -= 1;
-		}
-		updateSelectedIndex(newIndex, true);
+		selectPrevResult();
 	}
 	arrowKeyHeldDownTimeout = setTimeout(
 		onArrowKeyHeldDown,

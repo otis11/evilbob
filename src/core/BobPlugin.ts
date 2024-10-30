@@ -1,4 +1,5 @@
 import type { Result } from "./components/result/result";
+import type { Search } from "./components/search";
 import type { Locale } from "./locales";
 import type { BrowserName } from "./platform";
 
@@ -33,15 +34,18 @@ export type BobPlugin = {
 export type BobWindowState = {
 	win: Window & typeof globalThis;
 	input: HTMLInputElement;
+	currentSearch: Search;
 	optionsInput: HTMLInputElement;
 	isOptionsVisible: boolean;
 	optionsSelectedResult: Result;
 	locale: Locale;
+	closeResultOptions: () => void;
+	results: Result[];
 };
 
 export type BobPluginConfig = {
 	[key: string]: {
 		value: number | string | string[] | number[];
-		description: string;
+		description?: string;
 	};
 };

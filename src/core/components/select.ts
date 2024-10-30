@@ -6,7 +6,7 @@ export function Select(
 		const optionEl = document.createElement("option");
 		optionEl.innerText = option.title;
 		optionEl.value = option.value;
-		select.style.width = "120px";
+		select.style.width = "160px";
 		if (option.selected) {
 			optionEl.selected = true;
 		}

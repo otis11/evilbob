@@ -18,15 +18,10 @@ h2 {
 
 body {
 	padding: 24px;
+	padding-top: 94px;
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
-}
-
-html,
-body {
-	height: 100%;
-	width: 100%;
 }
 
 .links a {

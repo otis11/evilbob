@@ -3,7 +3,7 @@ import "../../theme";
 import "../../global.css";
 import { renderFooter } from "./footer";
 import "./main.css";
-import { filterResults } from "./results";
+import { filterResults, getCurrentResults } from "./results";
 import { loadFreshData } from "./search-data";
 import "./keyboard";
 import "./mouse";
@@ -12,20 +12,27 @@ import { PLUGINS_LOADED, loadPlugins } from "../../plugins";
 import { loadTheme } from "../../theme";
 import { optionsSearchInput, searchInput } from "./dom";
 import {
+	closeResultOptions,
 	getOptionsSelectedResult,
 	isResultOptionsVisible,
 } from "./result-options";
+import { newSearch } from "./search";
 
 let config: BobConfig;
 
-function windowState() {
+export function bobWindowState() {
 	return {
 		win: window,
 		input: searchInput,
+		currentSearch: newSearch(
+			isResultOptionsVisible() ? optionsSearchInput : searchInput,
+		),
 		optionsInput: optionsSearchInput,
 		isOptionsVisible: isResultOptionsVisible(),
 		optionsSelectedResult: getOptionsSelectedResult(),
 		locale: "en-US" as Locale,
+		closeResultOptions,
+		results: getCurrentResults(),
 	};
 }
 
@@ -37,7 +44,7 @@ getConfig().then(async (cfg) => {
 	coreI18n.setLocale(config.locale);
 
 	for (const plugin of PLUGINS_LOADED) {
-		plugin.onBobWindowOpen?.(windowState());
+		plugin.onBobWindowOpen?.(bobWindowState());
 	}
 
 	loadFreshData().then(() => {
@@ -54,13 +61,13 @@ onConfigUpdate((cfg) => {
 
 window.addEventListener("blur", async () => {
 	for (const plugin of PLUGINS_LOADED) {
-		plugin.onBobWindowBlur?.(windowState());
+		plugin.onBobWindowBlur?.(bobWindowState());
 	}
 });
 
 window.addEventListener("focus", async () => {
 	for (const plugin of PLUGINS_LOADED) {
-		plugin.onBobWindowFocus?.(windowState());
+		plugin.onBobWindowFocus?.(bobWindowState());
 	}
 	// TOOD
 	// if (config.onBobWindowFocus?.refreshResults) {

@@ -1,6 +1,5 @@
 import { defineBobPlugin } from "../../core/BobPlugin";
 import { Result } from "../../core/components/result/result";
-import type { Search } from "../../core/components/search";
 import { NewLocales } from "../../core/locales/new-locales";
 import {
 	focusLastActiveWindow,
@@ -33,7 +32,7 @@ class GroupTabsByDomain extends Result {
 	title(): string {
 		return t("GroupTabsByDomain");
 	}
-	public async execute(search: Search, results: Result[]): Promise<void> {
+	public async execute(): Promise<void> {
 		const tabs = await getLastActiveWindowTabs();
 		const lastActiveWindow = await getLastActiveWindow();
 
@@ -73,7 +72,7 @@ class UngroupTabs extends Result {
 		return t("Ungroup Tabs");
 	}
 
-	async execute(search: Search, results: Result[]): Promise<void> {
+	async execute(): Promise<void> {
 		const tabs = await getLastActiveWindowTabs();
 		await chrome.tabs.ungroup(
 			tabs.map((tab) => tab.id).filter((id) => id !== undefined),

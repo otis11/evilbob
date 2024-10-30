@@ -21,18 +21,19 @@ import { renderPlugins } from "./plugins";
 	const config = await getConfig();
 	coreI18n.setLocale(config.locale);
 	renderHeader();
-	await renderPlugins(config);
-	renderSearchOptions(config);
+	renderLocale(config);
+	renderTheme(config);
 	await renderBobDimensions(config);
+	renderSearchOptions(config);
+	await renderPlugins(config);
+	renderPluginOptions(config);
 
-	const container = FlexContainer({ gap: "20px" });
-	const locales = Select(
-		LOCALES.map((locale) => ({
-			title: locale,
-			value: locale,
-			selected: locale === config.locale,
-		})),
-	);
+	renderFooter();
+})();
+
+function renderTheme(config: BobConfig) {
+	const container = FlexContainer({});
+
 	const themes = Select(
 		PLUGINS_LOADED.filter((loaded) => !!loaded.provideTheme).map(
 			(plugin) => ({
@@ -43,24 +44,36 @@ import { renderPlugins } from "./plugins";
 		),
 	);
 
-	locales.addEventListener("change", () => {
-		updateConfig({
-			locale: locales.value as Locale,
-		});
-	});
-
 	themes.addEventListener("change", () => {
 		updateConfig({
 			theme: themes.value as Locale,
 		});
 	});
-	container.append(locales, themes);
+	container.append(themes);
+	document.body.append(GroupHeading("Theme"));
 	document.body.append(container);
+}
 
-	renderPluginOptions(config);
+function renderLocale(config: BobConfig) {
+	const container = FlexContainer({});
 
-	renderFooter();
-})();
+	const locales = Select(
+		LOCALES.map((locale) => ({
+			title: locale,
+			value: locale,
+			selected: locale === config.locale,
+		})),
+	);
+
+	locales.addEventListener("change", () => {
+		updateConfig({
+			locale: locales.value as Locale,
+		});
+	});
+	container.append(locales);
+	document.body.append(GroupHeading("Locale"));
+	document.body.append(container);
+}
 
 function renderSearchOptions(config: BobConfig) {
 	const container = FlexContainer({ flexDirection: "column" });
@@ -87,6 +100,7 @@ function renderSearchOptions(config: BobConfig) {
 
 function renderPluginOptions(config: BobConfig) {
 	const container = document.createElement("div");
+	container.append(GroupHeading("Plugin Options"));
 	for (const plugin of PLUGINS_LOADED) {
 		const pluginConfig = plugin.provideConfig?.();
 		if (pluginConfig) {
@@ -94,7 +108,7 @@ function renderPluginOptions(config: BobConfig) {
 				const obj = pluginConfig[key];
 				if (typeof obj.value === "boolean") {
 					const [checkbox] = Checkbox(
-						obj.value,
+						`${plugin.name()}: ${obj.value}`,
 						false,
 						obj.description,
 					);
@@ -103,7 +117,20 @@ function renderPluginOptions(config: BobConfig) {
 					const [label, input] = NumberInput({
 						value: obj.value.toString(),
 						description: obj.description,
-						label: key,
+						label: `${plugin.name()}: ${key}`,
+					});
+					input.addEventListener("input", () => {
+						if (plugin.id) {
+							updateConfig({
+								pluginsConfig: {
+									[plugin.id]: {
+										[key]: {
+											value: Number.parseInt(input.value),
+										},
+									},
+								},
+							});
+						}
 					});
 					container.append(label);
 				}

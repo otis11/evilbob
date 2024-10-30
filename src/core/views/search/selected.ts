@@ -21,6 +21,32 @@ export function setSelectedResultIndex(n: number) {
 	selectedResultIndex = n;
 }
 
+export function selectNextResult() {
+	let newIndex = getSelectedResultIndex();
+	const container = isResultOptionsVisible()
+		? resultOptionsContainer
+		: resultsContainer;
+	if (newIndex === container.children.length - 1) {
+		newIndex = 0;
+	} else {
+		newIndex += 1;
+	}
+	updateSelectedIndex(newIndex, true);
+}
+
+export function selectPrevResult() {
+	let newIndex = getSelectedResultIndex();
+	const container = isResultOptionsVisible()
+		? resultOptionsContainer
+		: resultsContainer;
+	if (newIndex === 0 || newIndex === -1) {
+		newIndex = container.children.length - 1;
+	} else {
+		newIndex -= 1;
+	}
+	updateSelectedIndex(newIndex, true);
+}
+
 export function updateSelectedIndex(newIndex?: number, scrollTo = false) {
 	if (typeof newIndex === "number") {
 		selectedResultIndex = newIndex;

@@ -1,4 +1,4 @@
-import { defineBobPlugin } from "../../core/BobPlugin";
+import { type BobWindowState, defineBobPlugin } from "../../core/BobPlugin";
 import { Result } from "../../core/components/result/result";
 import { Search } from "../../core/components/search";
 import { iconBrain, iconFromString } from "../../core/icons";
@@ -38,7 +38,7 @@ export class ChatGPTStartChat extends Result {
 	prepend(): HTMLElement | undefined {
 		return iconFromString(iconBrain);
 	}
-	async execute(search: Search): Promise<void> {
+	async execute(): Promise<void> {
 		this.emitShowOptionsEvent();
 	}
 }
@@ -62,8 +62,8 @@ export class ChatGPTStartChatQuery extends Result {
 		return iconFromString(iconBrain);
 	}
 
-	async execute(search: Search): Promise<void> {
-		const query = encodeURI(search.text);
+	async execute(state: BobWindowState): Promise<void> {
+		const query = encodeURI(state.currentSearch.text);
 		await chrome.tabs.create({ url: `https://chatgpt.com?q=${query}` });
 		focusLastActiveWindow();
 	}

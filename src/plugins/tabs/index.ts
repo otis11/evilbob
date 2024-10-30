@@ -1,6 +1,5 @@
-import { defineBobPlugin } from "../../core/BobPlugin";
+import { type BobWindowState, defineBobPlugin } from "../../core/BobPlugin";
 import { Result } from "../../core/components/result/result";
-import type { Search } from "../../core/components/search";
 import type { Tag } from "../../core/components/tags/tags";
 import {
 	faviconFromUrl,
@@ -89,7 +88,7 @@ export class Tab extends Result {
 		return this.name() + this.tab.id;
 	}
 
-	async execute(search: Search, results: Result[]): Promise<void> {
+	async execute(state: BobWindowState): Promise<void> {
 		await chrome.tabs.highlight({
 			tabs: [this.tab.index],
 			windowId: this.tab.windowId,

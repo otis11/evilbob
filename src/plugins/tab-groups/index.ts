@@ -1,6 +1,5 @@
 import { defineBobPlugin } from "../../core/BobPlugin";
 import { Result } from "../../core/components/result/result";
-import type { Search } from "../../core/components/search";
 import { NewLocales } from "../../core/locales/new-locales";
 import {
 	focusLastActiveWindow,
@@ -45,7 +44,7 @@ class TabGroup extends Result {
 		super();
 	}
 
-	async execute(search: Search, results: Result[]): Promise<void> {
+	async execute(): Promise<void> {
 		const tabs = await chrome.tabs.query({ groupId: this.group.id });
 		const lastActiveWindow = await getLastActiveWindow();
 		if (tabs[0]?.id) {

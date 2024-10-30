@@ -1,6 +1,5 @@
 import { defineBobPlugin } from "../../core/BobPlugin";
 import { Result } from "../../core/components/result/result";
-import type { Search } from "../../core/components/search";
 import type { Tag } from "../../core/components/tags/tags";
 import { coreI18n } from "../../core/locales";
 import { NewLocales } from "../../core/locales/new-locales";
@@ -71,7 +70,7 @@ class CSJavascript extends Result {
 		super();
 	}
 
-	async execute(search: Search): Promise<void> {
+	async execute(): Promise<void> {
 		const tab = await getLastActiveTab();
 		if (tab?.url) {
 			const url = new URL(tab.url);

@@ -20,6 +20,11 @@ for (const pluginFolder of pluginFolders) {
 	const plugin = await import(`../src/plugins/${pluginFolder}/index.ts`);
 	const pluginInstance = plugin.default as BobPlugin;
 
+	if (!pluginInstance) {
+		console.error("Plugin instance not found for folder: ", pluginFolder);
+		continue;
+	}
+
 	plugins.push({
 		id: pluginFolder,
 		permissions: pluginInstance.permissions,

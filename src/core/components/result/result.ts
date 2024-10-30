@@ -1,3 +1,4 @@
+import type { BobWindowState } from "../../BobPlugin";
 import { iconDotsVertical, iconFromString } from "../../icons";
 import { getUsage, updateUsage } from "../../usage";
 import { wordSplitMatch } from "../../util/word-split-match";
@@ -134,7 +135,7 @@ export abstract class Result {
 		return this.constructor.name;
 	}
 
-	public async onSelect(search: Search, results: Result[]) {
+	public async onSelect(state: BobWindowState) {
 		const currentUsage = await getUsage();
 		let usage = currentUsage.results[this.id()];
 		if (!usage) {
@@ -150,10 +151,10 @@ export abstract class Result {
 				[this.id()]: usage,
 			},
 		});
-		await this.execute(search, results);
+		await this.execute(state);
 	}
 
-	abstract execute(search: Search, results: Result[]): Promise<void>;
+	abstract execute(state: BobWindowState): Promise<void>;
 
 	public asHtmlElement() {
 		if (this.rootEl) {

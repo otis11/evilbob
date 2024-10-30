@@ -1,6 +1,5 @@
-import { defineBobPlugin } from "../../core/BobPlugin";
+import { type BobWindowState, defineBobPlugin } from "../../core/BobPlugin";
 import { Result } from "../../core/components/result/result";
-import type { Search } from "../../core/components/search";
 import {
 	iconArrowVerticalSplit,
 	iconFromString,
@@ -62,7 +61,7 @@ class TabDuplicate extends Result {
 		return iconFromString(iconTabPlus);
 	}
 
-	async execute(search: Search): Promise<void> {
+	async execute(): Promise<void> {
 		const lastActive = await getLastActiveTab();
 		if (lastActive?.id) {
 			await chrome.tabs.duplicate(lastActive.id);
@@ -79,7 +78,7 @@ class TabMute extends Result {
 		return iconFromString(iconMusicOff);
 	}
 
-	async execute(search: Search): Promise<void> {
+	async execute(): Promise<void> {
 		const lastActive = await getLastActiveTab();
 		if (lastActive?.id) {
 			await chrome.tabs.update(lastActive.id, { muted: true });
@@ -96,7 +95,7 @@ class TabUnmute extends Result {
 		return iconFromString(iconMusic);
 	}
 
-	async execute(search: Search): Promise<void> {
+	async execute(): Promise<void> {
 		const lastActive = await getLastActiveTab();
 		if (lastActive?.id) {
 			await chrome.tabs.update(lastActive.id, { muted: false });
@@ -114,7 +113,7 @@ class TabPin extends Result {
 		return iconFromString(iconPin);
 	}
 
-	async execute(search: Search): Promise<void> {
+	async execute(): Promise<void> {
 		const lastActive = await getLastActiveTab();
 		if (lastActive?.id) {
 			await chrome.tabs.update(lastActive.id, { pinned: true });
@@ -131,7 +130,7 @@ class TabUnpin extends Result {
 		return iconFromString(iconPinOff);
 	}
 
-	async execute(search: Search): Promise<void> {
+	async execute(): Promise<void> {
 		const lastActive = await getLastActiveTab();
 		if (lastActive?.id) {
 			await chrome.tabs.update(lastActive.id, { pinned: false });
@@ -273,15 +272,15 @@ export class CloseBySearch extends Result {
 		return iconFromString(iconTabRemove);
 	}
 
-	async execute(search: Search): Promise<void> {
+	async execute(): Promise<void> {
 		this.emitShowOptionsEvent();
 	}
 }
 
 class TabsCloseBySearch extends Tab {
-	async execute(search: Search, results: Result[]): Promise<void> {
+	async execute(state: BobWindowState): Promise<void> {
 		const currentWindow = await chrome.windows.getCurrent();
-		for (const result of results) {
+		for (const result of state.results) {
 			if (
 				result instanceof Tab &&
 				result.tab.id &&

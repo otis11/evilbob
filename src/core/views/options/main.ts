@@ -105,7 +105,9 @@ function renderPluginOptions(config: BobConfig) {
 		const pluginConfig = plugin.provideConfig?.();
 		if (pluginConfig) {
 			for (const key of Object.keys(pluginConfig)) {
-				const obj = pluginConfig[key];
+				const obj =
+					config.pluginsConfig[plugin.id || ""]?.[key] ||
+					pluginConfig[key];
 				if (typeof obj.value === "boolean") {
 					const [checkbox] = Checkbox(
 						`${plugin.name()}: ${obj.value}`,

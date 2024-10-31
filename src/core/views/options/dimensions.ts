@@ -1,6 +1,6 @@
 import { FlexContainer } from "../../components/flex-container";
 import { GroupHeading } from "../../components/group-heading";
-import { NumberInput } from "../../components/number-input";
+import { NumberInput } from "../../components/number-input/number-input";
 import { type BobConfig, updateConfig } from "../../config";
 import { coreI18n } from "../../locales";
 

@@ -1,3 +1,6 @@
+import { FlexContainer } from "../../components/flex-container";
+import { Span } from "../../components/span";
+import { iconFromString, iconOpenInNew } from "../../icons";
 import { isChromium } from "../../platform";
 
 export function renderHeader() {
@@ -12,5 +15,13 @@ export function renderHeader() {
 		: 'Click the settings icon in the right corner. Choose "Manage Extension Shortcuts"';
 	shortcutText.innerHTML = `Hi! Go to <strong style="color: var(--bob-color-primary)">${shortcutLink}</strong> to set a shortcut to open Bob. ${specificNotice}`;
 	header.append(shortcutText);
-	document.body.append(header);
+	const pluginHeading = FlexContainer({ gap: "4px", alignItems: "center" });
+	pluginHeading.append(iconFromString(iconOpenInNew), Span("Plugins"));
+	pluginHeading.style.paddingTop = "20px";
+	pluginHeading.style.cursor = "pointer";
+	pluginHeading.addEventListener("click", () => {
+		chrome.tabs.create({ url: "/src/core/views/plugins/index.html" });
+	});
+	pluginHeading.style.color = "var(--bob-color-primary)";
+	document.body.append(header, pluginHeading);
 }

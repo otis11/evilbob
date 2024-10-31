@@ -1,26 +1,27 @@
+import "./number-input.css";
+
 export function NumberInput(config: {
 	value: string;
 	label: string;
 	description?: string;
 }): [HTMLLabelElement, HTMLInputElement] {
 	const label = document.createElement("label");
+	label.classList.add("number-input");
 	const input = document.createElement("input");
-	const labelText = document.createElement("span");
+	const labelText = document.createElement("div");
+	labelText.classList.add("number-input-title");
 	labelText.innerText = config.label;
-	labelText.style.minWidth = "170px";
-	labelText.style.display = "inline-block";
 	input.type = "number";
 	input.value = config.value;
-	label.append(labelText, input);
-	label.style.marginBottom = "16px";
-	label.style.display = "block";
+	label.append(labelText);
+
 	if (config.description) {
-		const description = document.createElement("span");
-		description.style.display = "block";
-		description.style.fontSize = "0.75rem";
+		const description = document.createElement("div");
 		description.innerText = config.description;
+		description.classList.add("number-input-description");
 		label.append(description);
 	}
+	label.append(input);
 
 	return [label, input];
 }

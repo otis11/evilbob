@@ -1,9 +1,12 @@
 export function Checkbox(title: string, checked = false, description?: string) {
 	const label = document.createElement("label");
+	label.style.display = "inline-flex";
+	label.style.alignItems = "center";
 
 	const checkbox = document.createElement("input");
 	checkbox.type = "checkbox";
 	checkbox.checked = checked;
+	checkbox.style.marginRight = "4px";
 
 	const labelText = document.createElement("span");
 	labelText.innerText = title;

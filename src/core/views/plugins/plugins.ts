@@ -1,15 +1,14 @@
 import { Checkbox } from "../../components/checkbox";
 import { FlexContainer } from "../../components/flex-container";
-import { GroupHeading } from "../../components/group-heading";
 import { PluginMetaResult } from "../../components/plugin-meta-result";
+import { Span } from "../../components/span";
 import { type BobConfig, updateConfig } from "../../config";
+import { iconFromString, iconOpenInNew } from "../../icons";
 import { coreI18n } from "../../locales";
 import { type BobPluginMeta, PLUGIN_LIST_SUPPORTED } from "../../plugin-list";
 
 export async function renderPlugins(config: BobConfig) {
 	const plugins = document.createElement("div");
-	plugins.append(GroupHeading(coreI18n.t("Plugins")));
-
 	const pluginsContainer = document.createElement("div");
 	pluginsContainer.classList.add("plugins-container");
 	const sortedPlugins = sortPlugins(PLUGIN_LIST_SUPPORTED);
@@ -22,7 +21,6 @@ export async function renderPlugins(config: BobConfig) {
 		);
 	}
 	plugins.append(
-		makeAllPluginsCheckbox(config),
 		makeFilterPluginsCheckboxes(pluginsContainer, config),
 		pluginsContainer,
 	);
@@ -42,9 +40,14 @@ function sortPlugins(plugins: BobPluginMeta[]) {
 }
 
 function makeFilterPluginsCheckboxes(target: HTMLElement, config: BobConfig) {
-	const container = FlexContainer({});
+	const container = FlexContainer({
+		gap: "32px",
+		alignItems: "center",
+		flexWrap: "wrap",
+	});
+	container.style.padding = "8px 0";
 	const [labelThemes, checkboxThemes] = Checkbox("Themes");
-	const [labelResults, checkboxResults] = Checkbox("Resutls");
+	const [labelResults, checkboxResults] = Checkbox("Results");
 	const onFilterChange = () => {
 		const plugins = PLUGIN_LIST_SUPPORTED.filter((plugin) => {
 			if (checkboxResults.checked && !plugin.providesResults) {
@@ -69,19 +72,35 @@ function makeFilterPluginsCheckboxes(target: HTMLElement, config: BobConfig) {
 	checkboxThemes.addEventListener("change", onFilterChange);
 	checkboxResults.addEventListener("change", onFilterChange);
 
-	container.append(labelThemes, labelResults);
+	const settingsLink = FlexContainer({
+		gap: "4px",
+		alignItems: "center",
+		justifyContent: "center",
+	});
+	settingsLink.append(iconFromString(iconOpenInNew), Span("Settings"));
+	settingsLink.style.cursor = "pointer";
+	settingsLink.addEventListener("click", () => {
+		chrome.tabs.create({ url: "/src/core/views/options/index.html" });
+	});
+	settingsLink.style.color = "var(--bob-color-primary)";
+	document.body.append(settingsLink);
+	container.append(
+		settingsLink,
+		labelThemes,
+		labelResults,
+		makeAllPluginsCheckbox(config),
+	);
 	return container;
 }
 
 function makeAllPluginsCheckbox(config: BobConfig) {
-	const labelAllPlugins = document.createElement("label");
-	labelAllPlugins.classList.add("result-group-title");
-
-	const checkbox = document.createElement("input");
-	checkbox.type = "checkbox";
-	checkbox.checked =
+	const [label, checkbox] = Checkbox(
+		coreI18n.t("Disable/Enabled all plugins"),
 		PLUGIN_LIST_SUPPORTED.length ===
-		PLUGIN_LIST_SUPPORTED.filter((g) => config.pluginsEnabled[g.id]).length;
+			PLUGIN_LIST_SUPPORTED.filter((g) => config.pluginsEnabled[g.id])
+				.length,
+	);
+
 	checkbox.addEventListener("change", async () => {
 		const pluginsEnabled: Record<string, boolean> = {};
 		for (const plugin of PLUGIN_LIST_SUPPORTED) {
@@ -131,8 +150,5 @@ function makeAllPluginsCheckbox(config: BobConfig) {
 		}
 	});
 
-	const labelText = document.createElement("span");
-	labelText.innerText = coreI18n.t("Disable/Enabled all plugins");
-	labelAllPlugins.append(checkbox, labelText);
-	return labelAllPlugins;
+	return label;
 }

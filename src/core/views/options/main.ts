@@ -1,11 +1,10 @@
 import { loadTheme } from "../../theme";
-import "../../theme";
 import "../../global.css";
 import "./main.css";
 import { Checkbox } from "../../components/checkbox";
 import { FlexContainer } from "../../components/flex-container";
 import { GroupHeading } from "../../components/group-heading";
-import { NumberInput } from "../../components/number-input";
+import { NumberInput } from "../../components/number-input/number-input";
 import { Select } from "../../components/select";
 import { type BobConfig, getConfig, updateConfig } from "../../config";
 import { LOCALES, type Locale, coreI18n } from "../../locales";
@@ -13,7 +12,6 @@ import { PLUGINS_LOADED, loadPlugins } from "../../plugins";
 import { renderBobDimensions } from "./dimensions";
 import { renderFooter } from "./footer";
 import { renderHeader } from "./header";
-import { renderPlugins } from "./plugins";
 
 (async () => {
 	await loadPlugins();
@@ -25,7 +23,6 @@ import { renderPlugins } from "./plugins";
 	renderTheme(config);
 	await renderBobDimensions(config);
 	renderSearchOptions(config);
-	await renderPlugins(config);
 	renderPluginOptions(config);
 
 	renderFooter();

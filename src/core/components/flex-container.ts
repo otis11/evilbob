@@ -3,6 +3,7 @@ export type FlexContainerConfig = {
 	flexWrap?: string;
 	alignItems?: string;
 	flexDirection?: string;
+	justifyContent?: string;
 	children?: (HTMLElement | DocumentFragment)[];
 };
 
@@ -17,6 +18,9 @@ export function FlexContainer(config: FlexContainerConfig) {
 	}
 	if (config.flexDirection) {
 		container.style.flexDirection = config.flexDirection;
+	}
+	if (config.justifyContent) {
+		container.style.justifyContent = config.justifyContent;
 	}
 	if (config.alignItems) {
 		container.style.alignItems = config.alignItems;

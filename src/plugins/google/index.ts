@@ -67,7 +67,8 @@ export class GoogleDork extends Result {
 				selectionStart: 0,
 				text: search.text,
 			}),
-			this.title().includes(search.words().at(-1) || "")
+			this.title().includes(search.words().at(-1) || "") &&
+				search.text.length > 0
 				? search.minMatchScore + 1
 				: 0,
 		);

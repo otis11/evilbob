@@ -1,11 +1,14 @@
 # Bob
 Hi! This is Bob, a command palette for your browser.
 
-To keep things minimal, Bob is divided into plugins with the majority disabled at start. Pick the ones you love!
+- **Plugin based**: Choose which results you need. History? Bookmarks? Tabs? 25 plugins and growing...
+- **Optional Permissions**: Each plugin has its own required permissions to function. Permissions are only asked on plugin activation.
+- **Prefixes**: A quick way to filter for specific plugin results. Search History only? `h [SEARCH]`. Search Bookmarks only? `b [SEARCH]`
+- **Themes**: Choose your favorite color theme plugin.
 
 # Documentation
-- [Plugins](./docs/plugins.md)
-- [Contributing](./docs/contributing.md)
+- [Plugins](https://otis11.github.io/bob-command-palette/#pluginsh)
+- [Contributing](./CONTRIBUTING.md)
 - [Code of Conduct](./CODE_OF_CONDUCT.md)
 
 ![Bob Screenshot](./src/core/assets/bob-screenshot-browser.png)

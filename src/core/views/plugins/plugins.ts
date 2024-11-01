@@ -44,6 +44,7 @@ function makeFilterPluginsCheckboxes(target: HTMLElement, config: BobConfig) {
 		gap: "32px",
 		alignItems: "center",
 		flexWrap: "wrap",
+		justifyContent: "center",
 	});
 	container.style.padding = "8px 0";
 	const [labelThemes, checkboxThemes] = Checkbox("Themes");

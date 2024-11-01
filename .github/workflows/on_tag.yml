@@ -25,6 +25,7 @@ jobs:
 
           git fetch --all
           git checkout gh-pages
+          rm -rf ./website
           mv ./dist/website ./website
 
           git add website

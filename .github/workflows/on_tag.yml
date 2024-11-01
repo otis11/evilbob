@@ -23,13 +23,11 @@ jobs:
 
           gh release create "$GITHUB_REF_NAME" --title "$GITHUB_REF_NAME" ./dist/*.zip
 
-          git fetch --all
-          git checkout gh-pages
-          rm -rf ./website
-          mv ./dist/website ./website
+          rm -rf ./website-dist
+          mv ./dist/website ./website-dist
 
-          git add website
-          git commit -m "$GITHUB_REF_NAME: website update from on_tag.yml"
+          git add website-dist
+          git commit -m "$GITHUB_REF_NAME: website-dist update from on_tag.yml"
           git push
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}

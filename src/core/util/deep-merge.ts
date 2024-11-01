@@ -7,6 +7,7 @@ export function deepMerge(
 	for (const key in source) {
 		if (Object.hasOwn(source, key)) {
 			if (isJsObject(source[key])) {
+				if (!Object.hasOwn(source, key)) continue;
 				if (
 					!target[key] ||
 					typeof target[key] !== "object" ||

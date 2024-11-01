@@ -29,15 +29,66 @@ Thanks in advance for making Bob a better extension :)!
 - Click **Load Temporary Add-on**.
 - Open the `dist/firefox/manifest.json` file.
 
-## New theme
-This would create a theme with the name `example`.
-1. Create a new `example.css` inside `src/themes` to get started. 
-2. Copy the contents of `src/themes/dark.css` to include all available variables. 
-3. Change `[data-theme="dark"]` to `[data-theme="example"]` and adjust the variables to your liking.
-4. Run `bun scripts/generate-themes.ts` to update `themes.ts`.
-
 ## Update generated docs
 4. Run `bun scripts/generate-docs.ts`.
+
+## New plugin?
+1. New folder `src/plugins/example`
+2. New entry file for your plugin `src/plugins/example/index.ts`
+```js
+import { defineBobPlugin } from "../../core/BobPlugin";
+
+export default defineBobPlugin({
+  name() {
+    return 'Example'
+  }
+})
+```
+
+#### Theme
+Example: [Bob dark theme](./src/plugins/bob-dark-theme/index.ts)
+
+#### Results
+```js
+export default defineBobPlugin({
+	name() {
+		return "Example";
+	},
+	async provideResults() {
+		return [new Example()];
+	},
+});
+
+export class ExampleResult extends Result {
+	title(): string {
+		return 'Hello World!';
+	}
+
+	async execute(): Promise<void> {
+		alert('Result is selected!')
+	}
+}
+
+```
+
+#### Locale support (typesafe)
+```js
+import { NewLocales } from "../../core/locales/new-locales";
+import enUS from "./locales/en-US";
+
+const { t, setLocale } = NewLocales({
+	"en-US": enUS,
+});
+
+export default defineBobPlugin({
+  name() {
+    return t('Example')
+  },
+  onLocalChange(state) {
+		setLocale(state.locale);
+	},
+})
+```
 
 ## References
 - [Chrome Extension Api Docs](https://developer.chrome.com/docs/extensions/reference/api)

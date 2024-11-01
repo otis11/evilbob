@@ -4,24 +4,20 @@
 	box-sizing: border-box;
 }
 
-h1 {
-	font-size: 48px;
-	text-align: center;
-	padding-bottom: 4px;
-}
-
 h2 {
 	text-align: center;
 	font-size: 24px;
 	font-weight: normal;
 }
 
+html {
+	scroll-behavior: smooth;
+}
+
 body {
 	padding: 24px;
-	padding-top: 94px;
-	display: flex;
-	flex-direction: column;
-	justify-content: center;
+	max-width: 1300px;
+	margin: auto;
 }
 
 .links a {
@@ -44,4 +40,39 @@ body {
 	justify-content: center;
 	align-items: center;
 	padding: 24px 24px 96px;
+}
+
+main {
+	padding-top: 96px;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+}
+
+.plugins {
+	padding-top: 120px;
+}
+
+#pluginsh {
+	scroll-margin-top: 96px;
+}
+
+.plugins-container {
+	display: flex;
+	gap: 8px;
+	flex-wrap: wrap;
+}
+
+.plugins-container li {
+	min-width: 400px;
+	max-width: 400px;
+	margin: 4px;
+	padding: 8px;
+}
+
+.heading {
+	font-size: 48px;
+	text-align: center;
+	padding-bottom: 4px;
+	font-weight: bold;
 }

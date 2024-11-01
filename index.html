@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en" data-theme="dark">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,16 +11,25 @@
     <link rel="icon" href="./public/chrome/icons/bob-icon-32x32.png">
     <meta title="description" content="Hi! This is Bob, a command palette for your browser.">
 </head>
+
 <body>
-    <h1>Hi! This is Bob,</h1>
-    <h2>a command palette for your browser.</h2>
-    <div class="links">
-        <a href="#">Chrome</a>
-        <a href="#">Firefox</a>
-        <a href="#">Edge</a>
-        <a href="https://github.com/otis11/bob-command-palette">GitHub</a>
+    <main>
+        <h1 class="heading">Hi! This is Bob,</h1>
+        <h2>a command palette for your browser.</h2>
+        <div class="links">
+            <a href="#">Chrome</a>
+            <a href="#">Firefox</a>
+            <a href="#">Edge</a>
+            <a href="https://github.com/otis11/bob-command-palette">GitHub</a>
+            <a href="?plugins">GitHub</a>
+        </div>
+        <img src="./src/core/assets/bob-screenshot.png" class="thumb" alt="Screenshot of Bob">
+    </main>
+    <div class="plugins">
+        <h2 id="pluginsh" class="heading">Bob Plugins</h2>
+        <div id="plugins"></div>
     </div>
-    <img src="./src/core/assets/bob-screenshot.png" class="thumb" alt="Screenshot of Bob">
     <script type="module" src="./src/core/website.ts"></script>
 </body>
+
 </html>

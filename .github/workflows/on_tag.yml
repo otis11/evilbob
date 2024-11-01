@@ -26,11 +26,11 @@ jobs:
           git fetch --all
           git checkout main
           git pull
-          rm -rf ./website-dist
-          mv ./dist/website ./website-dist
+          rm -rf ./docs
+          mv ./dist/website ./docs
 
-          git add website-dist
-          git commit -m "$GITHUB_REF_NAME: website-dist update from on_tag.yml"
+          git add docs
+          git commit -m "$GITHUB_REF_NAME: docs update from on_tag.yml"
           git push
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}

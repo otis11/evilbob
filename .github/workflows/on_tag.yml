@@ -23,6 +23,8 @@ jobs:
 
           gh release create "$GITHUB_REF_NAME" --title "$GITHUB_REF_NAME" ./dist/*.zip
 
+          git checkout main
+          git pull
           rm -rf ./website-dist
           mv ./dist/website ./website-dist
 

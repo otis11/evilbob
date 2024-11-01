@@ -64,10 +64,6 @@ await Bun.write(
 	JSON.stringify(firefoxManifest, null, 4),
 );
 
-// make sure generated things are up to date
-await $`bun run scripts/generate-docs.ts`;
-await $`bun run scripts/generate-themes.ts`;
-
 await $`bun run lint`;
 
 await $`git add .`;

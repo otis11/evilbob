@@ -13,7 +13,6 @@ jobs:
         run: |
           bun i
           bun run build
-          bun run build:website
           zip -r ./dist/chrome.zip ./dist/chrome
           zip -r ./dist/firefox.zip ./dist/firefox
       - name: Release
@@ -22,15 +21,5 @@ jobs:
           git config --global user.name "on_tag_yml_release"
 
           gh release create "$GITHUB_REF_NAME" --title "$GITHUB_REF_NAME" ./dist/*.zip
-
-          git fetch --all
-          git checkout main
-          git pull
-          rm -rf ./docs
-          mv ./dist/website ./docs
-
-          git add docs
-          git commit -m "$GITHUB_REF_NAME: docs update from on_tag.yml"
-          git push
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}

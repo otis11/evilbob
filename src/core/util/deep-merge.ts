@@ -8,6 +8,8 @@ export function deepMerge(
 		if (Object.hasOwn(source, key)) {
 			if (isJsObject(source[key])) {
 				if (!Object.hasOwn(source, key)) continue;
+				// https://github.com/otis11/bob-command-palette/security/code-scanning/1
+				if (key === "__proto__" || key === "constructor") continue;
 				if (
 					!target[key] ||
 					typeof target[key] !== "object" ||

@@ -105,7 +105,9 @@ function makeAllPluginsCheckbox(config: BobConfig) {
 	checkbox.addEventListener("change", async () => {
 		const pluginsEnabled: Record<string, boolean> = {};
 		for (const plugin of PLUGIN_LIST_SUPPORTED) {
-			pluginsEnabled[plugin.id] = checkbox.checked;
+			if (plugin.canBeDisabled) {
+				pluginsEnabled[plugin.id] = checkbox.checked;
+			}
 		}
 		const permissions = PLUGIN_LIST_SUPPORTED.flatMap(
 			(g) => g.permissions,

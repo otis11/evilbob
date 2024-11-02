@@ -72,11 +72,7 @@ await Promise.all([
 				preserveEntrySignatures: "allow-extension",
 				output: {
 					entryFileNames(chunkInfo) {
-						if (
-							chunkInfo.facadeModuleId?.includes(
-								"Bob/src/plugins",
-							)
-						) {
+						if (chunkInfo.facadeModuleId?.includes("src/plugins")) {
 							const name = chunkInfo.facadeModuleId
 								.split("/")
 								.at(-2);

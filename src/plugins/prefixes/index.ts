@@ -1,6 +1,6 @@
 import { type BobWindowState, defineBobPlugin } from "../../core/BobPlugin";
 import { Result } from "../../core/components/result/result";
-import { iconFilter, iconFromString } from "../../core/icons";
+import { iconChevronDoubleRight, iconFromString } from "../../core/icons";
 import { NewLocales } from "../../core/locales/new-locales";
 import { PLUGINS_LOADED } from "../../core/plugins";
 import enUS from "./locales/en-US";
@@ -11,6 +11,7 @@ const { t, setLocale } = NewLocales({
 
 export default defineBobPlugin({
 	prefix: "?",
+	icon: iconChevronDoubleRight,
 	description() {
 		return t("Prefixes.description");
 	},
@@ -46,7 +47,7 @@ export class Prefix extends Result {
 	}
 
 	prepend(): HTMLElement | undefined {
-		return iconFromString(iconFilter);
+		return iconFromString(iconChevronDoubleRight);
 	}
 	constructor(
 		private titleText: string,

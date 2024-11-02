@@ -20,6 +20,7 @@ export default defineBobPlugin({
 	},
 	supportedBrowsers: ["chromium", "chrome", "edg"],
 	prefix: "mem",
+	icon: iconCpu,
 
 	async provideResults(): Promise<Result[]> {
 		const memory = await chrome.system.memory.getInfo();

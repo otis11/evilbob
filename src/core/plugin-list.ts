@@ -24,6 +24,7 @@ export const PLUGIN_LIST = [
 		providesResults: true,
 		providesConfig: false,
 		file: "/plugins/session-devices.js",
+		icon: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>devices</title><path d="M3 6H21V4H3C1.9 4 1 4.9 1 6V18C1 19.1 1.9 20 3 20H7V18H3V6M13 12H9V13.78C8.39 14.33 8 15.11 8 16C8 16.89 8.39 17.67 9 18.22V20H13V18.22C13.61 17.67 14 16.88 14 16S13.61 14.33 13 13.78V12M11 17.5C10.17 17.5 9.5 16.83 9.5 16S10.17 14.5 11 14.5 12.5 15.17 12.5 16 11.83 17.5 11 17.5M22 8H16C15.5 8 15 8.5 15 9V19C15 19.5 15.5 20 16 20H22C22.5 20 23 19.5 23 19V9C23 8.5 22.5 8 22 8M21 18H17V10H21V18Z" /></svg>',
 	},
 	{
 		id: "prefixes",
@@ -34,6 +35,7 @@ export const PLUGIN_LIST = [
 		providesResults: true,
 		providesConfig: false,
 		file: "/plugins/prefixes.js",
+		icon: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>chevron-double-right</title><path d="M5.59,7.41L7,6L13,12L7,18L5.59,16.59L10.17,12L5.59,7.41M11.59,7.41L13,6L19,12L13,18L11.59,16.59L16.17,12L11.59,7.41Z" /></svg>',
 	},
 	{
 		id: "tab-groups",
@@ -46,6 +48,7 @@ export const PLUGIN_LIST = [
 		providesResults: true,
 		providesConfig: false,
 		file: "/plugins/tab-groups.js",
+		icon: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>group</title><path d="M1,1V5H2V19H1V23H5V22H19V23H23V19H22V5H23V1H19V2H5V1M5,4H19V5H20V19H19V20H5V19H4V5H5M6,6V14H9V18H18V9H14V6M8,8H12V12H8M14,11H16V16H11V14H14" /></svg>',
 	},
 	{
 		id: "google",
@@ -60,7 +63,9 @@ export const PLUGIN_LIST = [
 	},
 	{
 		id: "focus-active-input",
-		name: "Focus Input",
+		name: "Focus active search field",
+		description:
+			"When opening/switching to the bob command palette, focus the active search field to directly type into it.",
 		providesTheme: false,
 		providesResults: false,
 		providesConfig: false,
@@ -80,7 +85,9 @@ export const PLUGIN_LIST = [
 	},
 	{
 		id: "on-blur-close-window",
-		name: "On blur close bob window",
+		name: "On bob leave close window",
+		description:
+			"When leaving the bob command palette, for instance focusing another window, fully close the command palette window.",
 		providesTheme: false,
 		providesResults: false,
 		providesConfig: false,
@@ -107,6 +114,7 @@ export const PLUGIN_LIST = [
 		providesResults: true,
 		providesConfig: false,
 		file: "/plugins/content-settings.js",
+		icon: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>wrench-cog</title><path d="M19.94 17.94C19.96 17.79 19.97 17.65 19.97 17.5S19.96 17.2 19.94 17.05L20.91 16.32C21 16.25 21.03 16.13 20.97 16.03L20.05 14.47C20 14.37 19.86 14.33 19.76 14.37L18.61 14.82C18.37 14.65 18.12 14.5 17.83 14.38L17.66 13.19C17.64 13.08 17.54 13 17.43 13H15.58C15.46 13 15.36 13.08 15.34 13.19L15.17 14.38C14.88 14.5 14.63 14.65 14.39 14.82L13.24 14.37C13.14 14.33 13 14.37 12.96 14.47L12.03 16.03C11.97 16.13 12 16.25 12.09 16.32L13.06 17.05C13.05 17.2 13.03 17.35 13.03 17.5S13.05 17.79 13.06 17.94L12.09 18.68C12 18.75 11.97 18.87 12.03 18.97L12.96 20.53C13 20.63 13.14 20.66 13.24 20.63L14.39 20.17C14.63 20.35 14.88 20.5 15.17 20.62L15.34 21.81C15.36 21.92 15.46 22 15.58 22H17.43C17.54 22 17.64 21.92 17.66 21.81L17.83 20.62C18.12 20.5 18.37 20.35 18.61 20.17L19.76 20.63C19.86 20.66 20 20.63 20.05 20.53L20.97 18.97C21.03 18.87 21 18.75 20.91 18.68L19.94 17.94M16.5 19C15.67 19 15 18.33 15 17.5S15.67 16 16.5 16 18 16.67 18 17.5 17.33 19 16.5 19M9 2C10.8 2.6 12 4.3 12 6.2C12 8.2 10.8 9.9 9 10.5V21.5C9 21.8 8.8 22 8.5 22H6.5C6.2 22 6 21.8 6 21.4V10.4C4.2 9.8 3 8.1 3 6.2S4.2 2.6 6 2V5.7H9V2Z" /></svg>',
 	},
 	{
 		id: "sessions",
@@ -142,6 +150,7 @@ export const PLUGIN_LIST = [
 		providesResults: true,
 		providesConfig: false,
 		file: "/plugins/system-storage.js",
+		icon: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>nas</title><path d="M4,5C2.89,5 2,5.89 2,7V17C2,18.11 2.89,19 4,19H20C21.11,19 22,18.11 22,17V7C22,5.89 21.11,5 20,5H4M4.5,7A1,1 0 0,1 5.5,8A1,1 0 0,1 4.5,9A1,1 0 0,1 3.5,8A1,1 0 0,1 4.5,7M7,7H20V17H7V7M8,8V16H11V8H8M12,8V16H15V8H12M16,8V16H19V8H16M9,9H10V10H9V9M13,9H14V10H13V9M17,9H18V10H17V9Z" /></svg>',
 	},
 	{
 		id: "window",
@@ -157,12 +166,14 @@ export const PLUGIN_LIST = [
 	},
 	{
 		id: "browsing-data",
-		permissions: ["browsingData"],
+		permissions: ["browsingData", "tabs"],
 		name: "Browsing Data",
+		description: "Manage your browsing data.",
 		providesTheme: false,
-		providesResults: false,
+		providesResults: true,
 		providesConfig: false,
 		file: "/plugins/browsing-data.js",
+		icon: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>delete</title><path d="M19,4H15.5L14.5,3H9.5L8.5,4H5V6H19M6,19A2,2 0 0,0 8,21H16A2,2 0 0,0 18,19V7H6V19Z" /></svg>',
 	},
 	{
 		id: "history",
@@ -185,6 +196,7 @@ export const PLUGIN_LIST = [
 		providesResults: true,
 		providesConfig: false,
 		file: "/plugins/shortcuts.js",
+		icon: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>keyboard-variant</title><path d="M6,16H18V18H6V16M6,13V15H2V13H6M7,15V13H10V15H7M11,15V13H13V15H11M14,15V13H17V15H14M18,15V13H22V15H18M2,10H5V12H2V10M19,12V10H22V12H19M18,12H16V10H18V12M8,12H6V10H8V12M12,12H9V10H12V12M15,12H13V10H15V12M2,9V7H4V9H2M5,9V7H7V9H5M8,9V7H10V9H8M11,9V7H13V9H11M14,9V7H16V9H14M17,9V7H22V9H17Z" /></svg>',
 	},
 	{
 		id: "tab-and-group-actions",
@@ -234,6 +246,7 @@ export const PLUGIN_LIST = [
 	{
 		id: "clear-search-on-focus",
 		name: "Clear search on window focus",
+		description: "Clears the search field when focusing/opening bob.",
 		providesTheme: false,
 		providesResults: false,
 		providesConfig: false,
@@ -299,6 +312,7 @@ export const PLUGIN_LIST = [
 		providesResults: true,
 		providesConfig: false,
 		file: "/plugins/system-memory.js",
+		icon: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>cpu-64-bit</title><path d="M9,3V5H7A2,2 0 0,0 5,7V9H3V11H5V13H3V15H5V17A2,2 0 0,0 7,19H9V21H11V19H13V21H15V19H17A2,2 0 0,0 19,17V15H21V13H19V11H21V9H19V7A2,2 0 0,0 17,5H15V3H13V5H11V3M8,9H11.5V10.5H8.5V11.25H10.5A1,1 0 0,1 11.5,12.25V14A1,1 0 0,1 10.5,15H8A1,1 0 0,1 7,14V10A1,1 0 0,1 8,9M12.5,9H14V11H15.5V9H17V15H15.5V12.5H12.5M8.5,12.75V13.5H10V12.75" /></svg>',
 	},
 	{
 		id: "google-new",
@@ -309,6 +323,7 @@ export const PLUGIN_LIST = [
 		providesResults: true,
 		providesConfig: false,
 		file: "/plugins/google-new.js",
+		icon: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>google</title><path d="M21.35,11.1H12.18V13.83H18.69C18.36,17.64 15.19,19.27 12.19,19.27C8.36,19.27 5,16.25 5,12C5,7.9 8.2,4.73 12.2,4.73C15.29,4.73 17.1,6.7 17.1,6.7L19,4.72C19,4.72 16.56,2 12.1,2C6.42,2 2.03,6.8 2.03,12C2.03,17.05 6.16,22 12.25,22C17.6,22 21.5,18.33 21.5,12.91C21.5,11.76 21.35,11.1 21.35,11.1V11.1Z" /></svg>',
 	},
 	{
 		id: "tab-actions",
@@ -320,6 +335,7 @@ export const PLUGIN_LIST = [
 		providesResults: true,
 		providesConfig: false,
 		file: "/plugins/tab-actions.js",
+		icon: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>gesture-tap-button</title><path d="M13 5C15.21 5 17 6.79 17 9C17 10.5 16.2 11.77 15 12.46V11.24C15.61 10.69 16 9.89 16 9C16 7.34 14.66 6 13 6S10 7.34 10 9C10 9.89 10.39 10.69 11 11.24V12.46C9.8 11.77 9 10.5 9 9C9 6.79 10.79 5 13 5M20 20.5C19.97 21.32 19.32 21.97 18.5 22H13C12.62 22 12.26 21.85 12 21.57L8 17.37L8.74 16.6C8.93 16.39 9.2 16.28 9.5 16.28H9.7L12 18V9C12 8.45 12.45 8 13 8S14 8.45 14 9V13.47L15.21 13.6L19.15 15.79C19.68 16.03 20 16.56 20 17.14V20.5M20 2H4C2.9 2 2 2.9 2 4V12C2 13.11 2.9 14 4 14H8V12L4 12L4 4H20L20 12H18V14H20V13.96L20.04 14C21.13 14 22 13.09 22 12V4C22 2.9 21.11 2 20 2Z" /></svg>',
 	},
 ] as BobPluginMeta[];
 export const PLUGIN_LIST_SUPPORTED = (() => {

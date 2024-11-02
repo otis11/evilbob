@@ -1,6 +1,7 @@
 import { defineBobPlugin } from "../../core/BobPlugin";
 import { Result } from "../../core/components/result/result";
 import type { Tag } from "../../core/components/tags/tags";
+import { iconDevices, iconFromString } from "../../core/icons";
 import { NewLocales } from "../../core/locales/new-locales";
 import enUS from "./locales/en-US";
 
@@ -9,6 +10,7 @@ const { t, setLocale } = NewLocales({
 });
 
 export default defineBobPlugin({
+	icon: iconDevices,
 	permissions: ["sessions"],
 	description(): string {
 		return t("SessionDevices.description");
@@ -39,6 +41,9 @@ export class SessionDevice extends Result {
 				type: "default",
 			},
 		];
+	}
+	prepend(): HTMLElement | undefined {
+		return iconFromString(iconDevices);
 	}
 	constructor(private device: chrome.sessions.Device) {
 		super();

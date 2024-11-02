@@ -1,5 +1,6 @@
 import { defineBobPlugin } from "../../core/BobPlugin";
 import { Result } from "../../core/components/result/result";
+import { iconGroup } from "../../core/icons";
 import { NewLocales } from "../../core/locales/new-locales";
 import {
 	focusLastActiveWindow,
@@ -20,7 +21,7 @@ export default defineBobPlugin({
 	},
 	permissions: ["tabGroups"],
 	supportedBrowsers: ["chrome", "chromium", "edg"],
-
+	icon: iconGroup,
 	async provideResults(): Promise<Result[]> {
 		const groups = await chrome.tabGroups.query({});
 		return groups.map((group) => new TabGroup(group));

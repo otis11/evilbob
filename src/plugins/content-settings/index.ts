@@ -1,6 +1,7 @@
 import { defineBobPlugin } from "../../core/BobPlugin";
 import { Result } from "../../core/components/result/result";
 import type { Tag } from "../../core/components/tags/tags";
+import { iconWrenchCog } from "../../core/icons";
 import { coreI18n } from "../../core/locales";
 import { NewLocales } from "../../core/locales/new-locales";
 import { getLastActiveTab } from "../../core/util/last-active-tab";
@@ -12,6 +13,7 @@ const { t, setLocale } = NewLocales({
 });
 
 export default defineBobPlugin({
+	icon: iconWrenchCog,
 	prefix: "cs",
 	permissions: ["contentSettings"],
 	description() {

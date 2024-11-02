@@ -9,6 +9,7 @@ const { t, setLocale } = NewLocales({
 	"en-US": enUS,
 });
 export default defineBobPlugin({
+	icon: iconGoogle,
 	prefix: "gn",
 	description() {
 		return t("GoogleNew.description");

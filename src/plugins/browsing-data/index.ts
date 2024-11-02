@@ -9,8 +9,11 @@ export default defineBobPlugin({
 	name() {
 		return "Browsing Data";
 	},
+	description() {
+		return "Manage your browsing data.";
+	},
 	async provideResults() {
-		return [new ResetPage(), new ClearAllData()];
+		return [new ResetPage(), new ClearAllDataSince()];
 	},
 	icon: iconDelete,
 });
@@ -71,7 +74,7 @@ async function clearAllDataSince(since: number) {
 	);
 }
 
-class ClearAllData extends Result {
+class ClearAllDataSince extends Result {
 	title(): string {
 		return "Clear all data since...";
 	}

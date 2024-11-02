@@ -20,6 +20,7 @@ export default defineBobPlugin({
 	},
 	supportedBrowsers: ["chromium", "chrome", "edg"],
 	prefix: "sto",
+	icon: iconNas,
 
 	async provideResults(): Promise<Result[]> {
 		const devices = await chrome.system.storage.getInfo();

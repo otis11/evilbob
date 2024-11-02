@@ -1,6 +1,7 @@
 import { defineBobPlugin } from "../../core/BobPlugin";
 import { Result } from "../../core/components/result/result";
 import { ShortcutElement } from "../../core/components/shortcut/shortcut";
+import { iconFromString, iconKeyboardVariant } from "../../core/icons";
 import { NewLocales } from "../../core/locales/new-locales";
 import { isFirefox, isMac } from "../../core/platform";
 import enUS from "./locales/en-US";
@@ -17,6 +18,7 @@ export default defineBobPlugin({
 		return t("Shortcuts");
 	},
 	prefix: "sc",
+	icon: iconKeyboardVariant,
 
 	async provideResults(): Promise<Result[]> {
 		const shortcuts = [
@@ -109,6 +111,10 @@ export class Shortcut extends Result {
 
 	public id(): string {
 		return this.name() + this.title();
+	}
+
+	prepend(): HTMLElement | undefined {
+		return iconFromString(iconKeyboardVariant);
 	}
 
 	async execute(): Promise<void> {}

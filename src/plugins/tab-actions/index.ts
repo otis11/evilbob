@@ -3,6 +3,7 @@ import { Result } from "../../core/components/result/result";
 import {
 	iconArrowVerticalSplit,
 	iconFromString,
+	iconGestureTapButton,
 	iconMusic,
 	iconMusicOff,
 	iconPin,
@@ -28,6 +29,7 @@ const { t, setLocale } = NewLocales({
 export default defineBobPlugin({
 	permissions: ["tabs"],
 	prefix: "a",
+	icon: iconGestureTapButton,
 	name() {
 		return t("TabActions");
 	},

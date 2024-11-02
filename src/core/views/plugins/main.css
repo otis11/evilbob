@@ -32,6 +32,11 @@ body {
 	border-radius: var(--bob-plugin-active-border-radius);
 }
 
+.plugin-cant-disable {
+	opacity: 0.5;
+	pointer-events: none;
+}
+
 h1 {
 	text-align: center;
 	margin-bottom: 24px;

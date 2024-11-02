@@ -31,6 +31,10 @@ export class PluginMetaResult extends Result {
 		if (this.enabled) {
 			this.rootEl?.classList.add("plugin-active");
 		}
+
+		if (!this.plugin.canBeDisabled) {
+			this.rootEl?.classList.add("plugin-cant-disable");
+		}
 	}
 
 	tags(): Tag[] {
@@ -40,6 +44,10 @@ export class PluginMetaResult extends Result {
 		}
 		if (this.plugin.providesResults) {
 			tags.push({ text: "Results" });
+		}
+
+		if (!this.plugin.canBeDisabled) {
+			tags.push({ text: "Required", type: "error" });
 		}
 
 		return tags;

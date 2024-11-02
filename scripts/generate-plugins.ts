@@ -38,6 +38,7 @@ for (const pluginFolder of pluginFolders) {
 		providesConfig: !!pluginInstance.provideConfig,
 		file: `/plugins/${pluginFolder}.js`,
 		icon: pluginInstance.icon,
+		canBeDisabled: !["bob-dark-theme"].includes(pluginFolder),
 	});
 }
 
@@ -81,6 +82,7 @@ pluginContent += `export type BobPluginMeta = {
 	providesResults: boolean;
 	providesConfig: boolean;
 	icon?: string;
+	canBeDisabled: boolean;
 }`;
 writeFileSync(resolve(__dirname, "../src/core/plugin-list.ts"), pluginContent);
 

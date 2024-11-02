@@ -1,6 +1,7 @@
 import { Result } from "../../components/result/result";
 import { focusLastActiveWindow } from "../../util/last-active-window";
 import { resultOptionsContainer, resultsContainer, searchInput } from "./dom";
+import { setLoading } from "./loading";
 import { bobWindowState } from "./main";
 import {
 	closeResultOptions,
@@ -20,7 +21,7 @@ let arrowKeyHeldDownTimeout: Timer | number = 0;
 const ARROW_KEY_HELD_DOWN_INITIAL_MS = 300;
 const ARROW_KEY_HELD_DOWN_BETWEEN_MS = 100;
 
-function onKeyUp(event: KeyboardEvent) {
+async function onKeyUp(event: KeyboardEvent) {
 	const container = isResultOptionsVisible()
 		? resultOptionsContainer
 		: resultsContainer;
@@ -44,7 +45,9 @@ function onKeyUp(event: KeyboardEvent) {
 		if (event.shiftKey && !isResultOptionsVisible() && searchResult) {
 			showResultOptions(searchResult);
 		} else {
-			searchResult?.onSelect(bobWindowState());
+			setLoading(true);
+			await searchResult?.onSelect(bobWindowState());
+			setLoading(false);
 		}
 	}
 }

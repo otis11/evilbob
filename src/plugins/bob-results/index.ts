@@ -23,6 +23,7 @@ export default defineBobPlugin({
 		return [
 			new BobOpenOptions(),
 			new BobResetOptions(),
+			new BobOpenPlugins(),
 			new BobResetUsage(),
 			new BobShowUsage(),
 		];
@@ -80,7 +81,6 @@ class BobResetUsage extends Result {
 		focusLastActiveWindow();
 	}
 }
-
 class BobShowUsage extends Result {
 	title(): string {
 		return t("BobShowUsage.title");
@@ -96,6 +96,23 @@ class BobShowUsage extends Result {
 		chrome.tabs.create({
 			url: "/src/core/views/usage/index.html",
 		});
+		focusLastActiveWindow();
+	}
+}
+
+class BobOpenPlugins extends Result {
+	title(): string {
+		return t("BobOpenPlugins.title");
+	}
+	description(): string {
+		return t("BobOpenPlugins.description");
+	}
+	prepend(): HTMLElement | undefined {
+		return iconFromString(iconBob);
+	}
+
+	async execute(): Promise<void> {
+		chrome.tabs.create({ url: "/src/core/views/plugins/index.html" });
 		focusLastActiveWindow();
 	}
 }

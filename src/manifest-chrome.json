@@ -45,7 +45,8 @@
 		"topSites",
 		"commands",
 		"downloads",
-		"tabGroups"
+		"tabGroups",
+		"browsingData"
 	],
 	"optional_host_permissions": ["https://*/*"]
 }

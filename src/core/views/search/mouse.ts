@@ -1,6 +1,7 @@
 import { Result } from "../../components/result/result";
 import { getLiFromEvent } from "../../util/li-from-event";
 import { resultOptionsContainer, resultsContainer } from "./dom";
+import { setLoading } from "./loading";
 import { bobWindowState } from "./main";
 import { isResultOptionsVisible } from "./result-options";
 import { updateSelectedIndex } from "./selected";
@@ -10,13 +11,15 @@ let lastMousePosition = {
 	y: 0,
 };
 
-window.addEventListener("click", (event) => {
+window.addEventListener("click", async (event) => {
 	const target = getLiFromEvent(event);
 	if (target) {
 		const searchResult = Result.instanceFromId(
 			target?.getAttribute("data-instance-id") || "",
 		);
-		searchResult?.onSelect(bobWindowState());
+		setLoading(true);
+		await searchResult?.onSelect(bobWindowState());
+		setLoading(false);
 	}
 });
 

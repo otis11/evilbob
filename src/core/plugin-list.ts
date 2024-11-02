@@ -156,6 +156,15 @@ export const PLUGIN_LIST = [
 		icon: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>window-restore</title><path d="M4,8H8V4H20V16H16V20H4V8M16,8V14H18V6H10V8H16M6,12V18H14V12H6Z" /></svg>',
 	},
 	{
+		id: "browsing-data",
+		permissions: ["browsingData"],
+		name: "Browsing Data",
+		providesTheme: false,
+		providesResults: false,
+		providesConfig: false,
+		file: "/plugins/browsing-data.js",
+	},
+	{
 		id: "history",
 		permissions: ["history"],
 		prefix: "h",

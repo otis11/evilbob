@@ -38,7 +38,8 @@
 		"management",
 		"sessions",
 		"topSites",
-		"downloads"
+		"downloads",
+		"browsingData"
 	],
 	"optional_host_permissions": ["https://*/*"],
 	"browser_specific_settings": {

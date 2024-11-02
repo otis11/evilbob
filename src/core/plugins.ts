@@ -2,10 +2,11 @@ import type { BobPlugin } from "./BobPlugin";
 import { getConfig, updateConfig } from "./config";
 import { type BobPluginMeta, PLUGIN_LIST_SUPPORTED } from "./plugin-list";
 
-export const PLUGINS_LOADED: BobPlugin[] = [];
+export let PLUGINS_LOADED: BobPlugin[] = [];
 export const PLUGINS_LOADED_PROVIDE_RESULTS: BobPlugin[] = [];
 
 export async function loadPlugins() {
+	PLUGINS_LOADED = [];
 	const config = await getConfig();
 	const promises = [];
 	for (const plugin of PLUGIN_LIST_SUPPORTED) {
@@ -47,9 +48,19 @@ export async function enablePlugin(plugin: BobPluginMeta) {
 }
 
 export async function disablePlugin(plugin: BobPluginMeta) {
+	await loadPlugins();
+	const permissionsCanRemove: string[] = [];
+	const permissionsWithoutPlugin = PLUGINS_LOADED.filter(
+		(pl) => pl.id !== plugin.id,
+	).flatMap((pl) => pl.permissions);
+	for (const permission of plugin.permissions || []) {
+		if (!permissionsWithoutPlugin.includes(permission)) {
+			permissionsCanRemove.push(permission);
+		}
+	}
 	chrome.permissions.remove(
 		{
-			permissions: plugin.permissions,
+			permissions: permissionsCanRemove,
 			origins: plugin.hostPermissions,
 		},
 		async (removed) => {

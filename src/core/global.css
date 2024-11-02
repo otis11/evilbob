@@ -78,3 +78,7 @@ footer {
 footer a {
 	color: var(--bob-color-base-content-100);
 }
+
+.hidden {
+	display: none;
+}

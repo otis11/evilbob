@@ -65,3 +65,43 @@ footer .icon svg {
 #options-results {
 	overflow-y: auto;
 }
+
+.loading-bar {
+	width: 100%;
+	position: relative;
+	height: 6px;
+}
+
+.loading-bar-piece {
+	position: absolute;
+	background-color: var(--bob-color-primary);
+	top: 0;
+	bottom: 0;
+	left: 0;
+	width: 0;
+	transition: 0.2s ease;
+	animation: loadingBarPiece 1s linear infinite;
+}
+
+@keyframes loadingBarPiece {
+	0% {
+		left: 0%;
+		right: 100%;
+		width: 0%;
+	}
+	10% {
+		left: 0%;
+		right: 75%;
+		width: 50%;
+	}
+	90% {
+		right: 0%;
+		left: 75%;
+		width: 15%;
+	}
+	100% {
+		left: 100%;
+		right: 0%;
+		width: 0%;
+	}
+}

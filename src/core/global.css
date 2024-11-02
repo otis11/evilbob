@@ -97,7 +97,7 @@ footer a {
 }
 
 .shortcut {
-	display: flex;
+	display: inline-flex;
 	align-items: center;
 	gap: 4px;
 	font-size: var(--bob-shortcut-font-size);

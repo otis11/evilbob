@@ -15,19 +15,84 @@
 <body>
     <main>
         <h1 class="heading">Hi! This is Bob,</h1>
-        <h2>a command palette for your browser.</h2>
-        <div class="links">
+        <h2 style="text-align: center; padding: 0 0 4px 0; font-weight: normal">a command palette for your browser.</h2>
+        <div class="links" id="browser-links">
             <a target="_blank" href="#">Chrome</a>
             <a target="_blank" href="#">Firefox</a>
             <a target="_blank" href="#">Edge</a>
             <a target="_blank" href="https://github.com/otis11/bob-command-palette">GitHub</a>
             <a href="#pluginsh">Plugins</a>
+            <a href="#faq">FAQ</a>
         </div>
         <img src="./src/core/assets/bob-screenshot.png" class="thumb" alt="Screenshot of Bob">
     </main>
     <div class="plugins">
         <h2 id="pluginsh" class="heading">Bob Plugins</h2>
         <div id="plugins"></div>
+    </div>
+    <div class="faq">
+        <h2 id="faq" class="heading">FAQ</h2>
+        <h2 id="what-is-bob">What is Bob?</h2>
+        <div>Bob is a command palette for your browser. It aims to provide all interfaces of a browser, like bookmarks,
+            history and more advanced features through a command palette.</div>
+        <h2 id="how-to-install">How to install Bob?</h2>
+        <div>Install Bob as an extension for your browser. <a href="#browser-links">Links ^</a></div>
+        <h2 id="how-to-open">How to open Bob?</h2>
+        <div>Bob uses browser keyboard shortcuts to open the command palette. Make sure to set a shortcut for "Open Bob"
+            here:</div>
+        <h3>Chrome</h3>
+        <ol>
+            <li>
+                <div class="shortcut"><kbd>Ctrl</kbd><kbd>Shift</kbd><kbd>L</kbd></div>
+            </li>
+            <li>Not working? Set it yourself:</li>
+            <li>Type <kbd>chrome://extensions/shortcuts</kbd> into your search bar.</li>
+        </ol>
+        <h3>Firefox</h3>
+        <ol>
+            <li>
+                <div class="shortcut"><kbd>Ctrl</kbd><kbd>Shift</kbd><kbd>L</kbd></div>
+            </li>
+            <li>Not working? Set it yourself:</li>
+            <li>Type <kbd>about:addons</kbd> into your search bar.</li>
+            <li>Click on the right cog wheel</li>
+            <li>Click on "Manage Extension Shortcuts"</li>
+        </ol>
+        <h3>Edge</h3>
+        <ol>
+            <li>
+                <div class="shortcut"><kbd>Ctrl</kbd><kbd>Shift</kbd><kbd>L</kbd></div>
+            </li>
+            <li>Not working? Set it yourself:</li>
+            <li>Type <kbd>edge://extensions/shortcuts</kbd> into your search bar.</li>
+        </ol>
+        <h2>What are prefixes?</h2>
+        <div>Prefixes are used to show results for 1 plugin only. They are the first few characters typed in the search
+            field. Type <kbd>?</kbd> to list all available prefixes. Prefixes are only avaiable if the corresponding
+            plugin is enabled. For instance, use <kbd>h Test</kbd> to search for "Test" in your browsing history, when
+            the History plugin is enabled.</div>
+        <h2>How to change Settings?</h2>
+        <ol>
+            <li>Open Bob</li>
+            <li>Search for "bob Settings" and select</li>
+            <li>Change your settings. They will be saved automatically.</li>
+        </ol>
+        <h2>How to enable/disable Plugins?</h2>
+        <ol>
+            <li>Open Bob</li>
+            <li>Search for "bob Open Plugins" and select</li>
+            <li>Click on any plugin to disable or enable it</li>
+        </ol>
+        <h2>How to navigate results?</h2>
+        <div>Press <div class="shortcut"><kbd>ArrowDown</kbd></div> to select the next result or change the keybind in
+            Bob Settings.</div>
+        <div>Press <div class="shortcut"><kbd>ArrowUp</kbd></div> to select the previous result or change the keybind in
+            Bob Settings.</div>
+        <h2>How to select a result?</h2>
+        <div>Press <div class="shortcut"><kbd>Enter</kbd></div> or change the keybind in Bob Settings.</div>
+        <h2>How to show result options?</h2>
+        <div>Press <div class="shortcut"><kbd>Shift</kbd><kbd>Enter</kbd></div> or change the keybind in Bob Settings.
+        </div>
     </div>
     <script type="module" src="./src/core/website.ts"></script>
 </body>

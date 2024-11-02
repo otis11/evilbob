@@ -5,9 +5,15 @@
 }
 
 h2 {
-	text-align: center;
 	font-size: 24px;
+	font-weight: bold;
+	padding: 16px 0 4px;
+}
+
+h3 {
+	font-size: 18px;
 	font-weight: normal;
+	padding: 20px 0 4px;
 }
 
 html {
@@ -20,9 +26,18 @@ body {
 	margin: auto;
 }
 
-.links a {
+a {
 	color: var(--bob-color-primary);
 	text-decoration: none;
+}
+
+li {
+	padding-top: 12px;
+	padding-left: 12px;
+}
+
+.faq {
+	padding-top: 120px;
 }
 
 .thumb {

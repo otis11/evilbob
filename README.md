@@ -8,6 +8,7 @@ Hi! This is Bob, a command palette for your browser.
 
 # Documentation
 - [Plugins](https://otis11.github.io/bob-command-palette/#pluginsh)
+- [FAQ](https://otis11.github.io/bob-command-palette/#faq)
 - [Contributing](./CONTRIBUTING.md)
 - [Code of Conduct](./CODE_OF_CONDUCT.md)
 

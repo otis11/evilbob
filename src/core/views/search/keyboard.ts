@@ -1,4 +1,6 @@
+import { registerKeysListener } from "../../components/keys";
 import { Result } from "../../components/result/result";
+import { getConfig } from "../../config";
 import { focusLastActiveWindow } from "../../util/last-active-window";
 import { resultOptionsContainer, resultsContainer, searchInput } from "./dom";
 import { setLoading } from "./loading";
@@ -16,71 +18,41 @@ import {
 	updateSelectedIndex,
 } from "./selected";
 
-let arrowKeyHeldDownCurrent: "ArrowDown" | "ArrowUp";
-let arrowKeyHeldDownTimeout: Timer | number = 0;
-const ARROW_KEY_HELD_DOWN_INITIAL_MS = 300;
-const ARROW_KEY_HELD_DOWN_BETWEEN_MS = 100;
-
-async function onKeyUp(event: KeyboardEvent) {
-	const container = isResultOptionsVisible()
-		? resultOptionsContainer
-		: resultsContainer;
-
-	if (event.key === "ArrowDown") {
-		clearTimeout(arrowKeyHeldDownTimeout);
-		arrowKeyHeldDownTimeout = 0;
+(async () => {
+	const config = await getConfig();
+	registerKeysListener(config.keybinds.nextResult?.keys || [], () => {
 		selectNextResult();
-	}
-	if (event.key === "ArrowUp") {
-		clearTimeout(arrowKeyHeldDownTimeout);
-		arrowKeyHeldDownTimeout = 0;
+	});
+	registerKeysListener(config.keybinds.previousResult?.keys || [], () => {
 		selectPrevResult();
-	}
-	if (event.key === "Enter") {
+	});
+	registerKeysListener(config.keybinds.selectResult?.keys || [], async () => {
+		const container = isResultOptionsVisible()
+			? resultOptionsContainer
+			: resultsContainer;
 		const target = container.children[getSelectedResultIndex()];
 		const searchResult = Result.instanceFromId(
 			target?.getAttribute("data-instance-id") || "",
 		);
+		setLoading(true);
+		await searchResult?.onSelect(bobWindowState());
+		setLoading(false);
+	});
 
-		if (event.shiftKey && !isResultOptionsVisible() && searchResult) {
+	registerKeysListener(config.keybinds.openResultOptions?.keys || [], () => {
+		const container = isResultOptionsVisible()
+			? resultOptionsContainer
+			: resultsContainer;
+		const target = container.children[getSelectedResultIndex()];
+		const searchResult = Result.instanceFromId(
+			target?.getAttribute("data-instance-id") || "",
+		);
+		if (searchResult) {
 			showResultOptions(searchResult);
-		} else {
-			setLoading(true);
-			await searchResult?.onSelect(bobWindowState());
-			setLoading(false);
 		}
-	}
-}
+	});
 
-function onArrowKeyHeldDown() {
-	if (arrowKeyHeldDownCurrent === "ArrowDown") {
-		selectNextResult();
-	}
-	if (arrowKeyHeldDownCurrent === "ArrowUp") {
-		selectPrevResult();
-	}
-	arrowKeyHeldDownTimeout = setTimeout(
-		onArrowKeyHeldDown,
-		ARROW_KEY_HELD_DOWN_BETWEEN_MS,
-	);
-}
-
-function onKeyDown(event: KeyboardEvent) {
-	if (event.key === "ArrowDown" || event.key === "ArrowUp") {
-		event.preventDefault();
-		if (!arrowKeyHeldDownTimeout) {
-			arrowKeyHeldDownCurrent = event.key;
-			arrowKeyHeldDownTimeout = setTimeout(
-				onArrowKeyHeldDown,
-				ARROW_KEY_HELD_DOWN_INITIAL_MS,
-			);
-		}
-	}
-}
-window.addEventListener("keydown", onKeyDown);
-window.addEventListener("keyup", onKeyUp);
-window.addEventListener("keydown", (event) => {
-	if (event.key === "Escape") {
+	registerKeysListener(config.keybinds.close?.keys || [], () => {
 		if (isResultOptionsVisible()) {
 			closeResultOptions();
 			updateSelectedIndex(getLastSelectedResultIndex());
@@ -89,5 +61,12 @@ window.addEventListener("keydown", (event) => {
 		} else {
 			focusLastActiveWindow();
 		}
+	});
+})();
+
+function onKeyDown(event: KeyboardEvent) {
+	if (event.key === "ArrowDown" || event.key === "ArrowUp") {
+		event.preventDefault();
 	}
-});
+}
+window.addEventListener("keydown", onKeyDown);

@@ -9,6 +9,37 @@ export type ResultUsage = {
 	l: number;
 	c: number;
 };
+
+export type KeybindKey = keyof typeof defaultKeybinds;
+
+const defaultKeybinds = {
+	selectResult: {
+		keys: ["Enter"],
+		description: "When selecting a result",
+		title: "Select result",
+	},
+	openResultOptions: {
+		keys: ["Shift", "Enter"],
+		description: "When opening the result options",
+		title: "Open result options",
+	},
+	nextResult: {
+		keys: ["ArrowDown"],
+		description: "",
+		title: "Next result",
+	},
+	previousResult: {
+		keys: ["ArrowUp"],
+		description: "",
+		title: "Previous result",
+	},
+	close: {
+		keys: ["Escape"],
+		description: "",
+		title: "Close bob or options",
+	},
+};
+
 export type BobConfig = {
 	locale: Locale;
 	theme: string;
@@ -19,6 +50,12 @@ export type BobConfig = {
 	search?: {
 		maxRenderedItems?: number;
 	};
+	keybinds: Partial<
+		Record<
+			KeybindKey,
+			{ keys: string[]; description?: string; title?: string }
+		>
+	>;
 };
 
 export const DEFAULT_CONFIG: BobConfig = {
@@ -37,6 +74,7 @@ export const DEFAULT_CONFIG: BobConfig = {
 		google: true,
 	},
 	dimensions: { width: 900, height: 600 },
+	keybinds: defaultKeybinds,
 	theme: "dark",
 	customTheme: "",
 };

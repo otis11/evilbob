@@ -6,7 +6,13 @@ import { FlexContainer } from "../../components/flex-container";
 import { GroupHeading } from "../../components/group-heading";
 import { NumberInput } from "../../components/number-input/number-input";
 import { Select } from "../../components/select";
-import { type BobConfig, getConfig, updateConfig } from "../../config";
+import { ShortcutInput } from "../../components/shortcut-input/shortcut-input";
+import {
+	type BobConfig,
+	type KeybindKey,
+	getConfig,
+	updateConfig,
+} from "../../config";
 import { LOCALES, type Locale, coreI18n } from "../../locales";
 import { PLUGINS_LOADED, loadPlugins } from "../../plugins";
 import { renderBobDimensions } from "./dimensions";
@@ -22,6 +28,7 @@ import { renderHeader } from "./header";
 	renderLocale(config);
 	renderTheme(config);
 	await renderBobDimensions(config);
+	renderKeybinds(config);
 	renderSearchOptions(config);
 	renderPluginOptions(config);
 
@@ -136,5 +143,37 @@ function renderPluginOptions(config: BobConfig) {
 			}
 		}
 	}
+	document.body.append(container);
+}
+
+function renderKeybinds(config: BobConfig) {
+	const keys = Object.keys(config.keybinds) as KeybindKey[];
+	const container = FlexContainer({ gap: "8px", flexDirection: "column" });
+	container.append(GroupHeading("Keybinds"));
+
+	for (const key of keys) {
+		const [inputContainer, input, getKeys] = ShortcutInput(
+			config.keybinds[key]?.keys || [],
+		);
+		input.addEventListener("blur", () => {
+			updateConfig({
+				keybinds: {
+					[key]: {
+						keys: getKeys(),
+					},
+				},
+			});
+		});
+		const title = document.createElement("div");
+		title.innerText = config.keybinds[key]?.title || "";
+		title.style.fontSize = "1rem";
+		title.style.lineHeight = "1";
+
+		const description = document.createElement("div");
+		description.innerText = config.keybinds[key]?.title || "";
+		description.style.fontSize = "0.75rem";
+		container.append(title, description, inputContainer);
+	}
+
 	document.body.append(container);
 }

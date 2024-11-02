@@ -1,6 +1,6 @@
 import { defineBobPlugin } from "../../core/BobPlugin";
 import { Result } from "../../core/components/result/result";
-import { ShortcutElement } from "../../core/components/shortcut/shortcut";
+import { ShortcutElement } from "../../core/components/shortcut";
 import { iconFromString, iconKeyboardVariant } from "../../core/icons";
 import { NewLocales } from "../../core/locales/new-locales";
 import { isFirefox, isMac } from "../../core/platform";

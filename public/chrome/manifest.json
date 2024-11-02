@@ -2,7 +2,7 @@
 	"manifest_version": 3,
 	"name": "Bob",
 	"description": "Hi! This is Bob, a command palette for your browser.",
-	"version": "0.2.6",
+	"version": "0.3.0",
 	"icons": {
 		"16": "icons/bob-icon-16x16.png",
 		"32": "icons/bob-icon-32x32.png",
@@ -24,10 +24,13 @@
 	"commands": {
 		"bob.open": {
 			"suggested_key": {
-				"default": "Ctrl+Shift+L"
+				"default": "Ctrl+Shift+L",
+				"windows": "Ctrl+Shift+L",
+				"mac": "Command+Shift+L",
+				"chromeos": "Ctrl+Shift+L",
+				"linux": "Ctrl+Shift+L"
 			},
-			"description": "Open bob",
-			"global": true
+			"description": "Open Bob"
 		}
 	},
 	"permissions": ["storage"],
@@ -45,7 +48,8 @@
 		"topSites",
 		"commands",
 		"downloads",
-		"tabGroups"
+		"tabGroups",
+		"browsingData"
 	],
 	"optional_host_permissions": ["https://*/*"]
 }

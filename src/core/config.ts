@@ -24,12 +24,20 @@ export type BobConfig = {
 export const DEFAULT_CONFIG: BobConfig = {
 	locale: "en-US",
 	search: {
-		maxRenderedItems: 25,
+		maxRenderedItems: 40,
 	},
 	pluginsConfig: {},
-	pluginsEnabled: {},
+	pluginsEnabled: {
+		"bob-dark-theme": true,
+		"bob-light-theme": true,
+		"bob-results": true,
+		prefixes: true,
+		"focus-active-input": true,
+		"clear-search-on-focus": true,
+		google: true,
+	},
 	dimensions: { width: 900, height: 600 },
-	theme: "light",
+	theme: "dark",
 	customTheme: "",
 };
 

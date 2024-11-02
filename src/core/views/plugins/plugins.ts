@@ -1,7 +1,7 @@
 import { Checkbox } from "../../components/checkbox";
+import { Span } from "../../components/elements";
 import { FlexContainer } from "../../components/flex-container";
 import { PluginMetaResult } from "../../components/plugin-meta-result";
-import { Span } from "../../components/span";
 import { type BobConfig, updateConfig } from "../../config";
 import { iconFromString, iconOpenInNew } from "../../icons";
 import { coreI18n } from "../../locales";

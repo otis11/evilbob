@@ -15,17 +15,13 @@
 	display: none;
 }
 
-.no-results {
+.no-results-container {
 	display: flex;
 	justify-content: center;
-	padding: 20px 12px;
+	padding: 64px 12px;
 	align-items: center;
+	flex-direction: column;
 	font-weight: bold;
-}
-
-.no-results span {
-	margin-right: 16px;
-	font-size: 1.125rem;
 }
 
 .results {

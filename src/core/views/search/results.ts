@@ -1,8 +1,11 @@
+import { H2 } from "../../components/elements";
+import { PluginsLink } from "../../components/plugins-link";
 import type { Result } from "../../components/result/result";
 import { getConfig } from "../../config";
 import { coreI18n } from "../../locales";
 import { PLUGINS_LOADED_PROVIDE_RESULTS } from "../../plugins";
 import { getUsage } from "../../usage";
+import { focusLastActiveWindow } from "../../util/last-active-window";
 import {
 	optionsSearchInput,
 	resultsContainer,
@@ -27,6 +30,20 @@ export function setCurrentResults(newResults: Result[]) {
 export async function filterResults() {
 	const usage = await getUsage();
 	const config = await getConfig();
+	if (PLUGINS_LOADED_PROVIDE_RESULTS.length === 0) {
+		resultsContainer.innerHTML = "";
+		const noResultsContainer = document.createElement("div");
+		noResultsContainer.classList.add("no-results-container");
+		noResultsContainer.append(
+			H2("There are no plugins enabled that provide results."),
+			PluginsLink(() => {
+				focusLastActiveWindow();
+			}),
+		);
+		resultsContainer.append(noResultsContainer);
+		return;
+	}
+
 	const search = newSearch(
 		isResultOptionsVisible() ? optionsSearchInput : searchInput,
 	);

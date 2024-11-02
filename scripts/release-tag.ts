@@ -56,11 +56,11 @@ await Bun.write(
 	JSON.stringify(packageJson, null, 4),
 );
 await Bun.write(
-	resolve(__dirname, "../public/chrome/manifest.json"),
+	resolve(__dirname, "../src/manifest-chrome.json"),
 	JSON.stringify(chromeManifest, null, 4),
 );
 await Bun.write(
-	resolve(__dirname, "../public/firefox/manifest.json"),
+	resolve(__dirname, "../src/manifest-firefox.json"),
 	JSON.stringify(firefoxManifest, null, 4),
 );
 

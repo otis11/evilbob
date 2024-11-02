@@ -1,4 +1,4 @@
-import { defineBobPlugin } from "../../core/BobPlugin";
+import { type BobWindowState, defineBobPlugin } from "../../core/BobPlugin";
 import { Result } from "../../core/components/result/result";
 import { DEFAULT_CONFIG, setConfig } from "../../core/config";
 import { iconBob, iconFromString } from "../../core/icons";
@@ -26,6 +26,7 @@ export default defineBobPlugin({
 			new BobOpenPlugins(),
 			new BobResetUsage(),
 			new BobShowUsage(),
+			new BobHelp(),
 		];
 	},
 	icon: iconBob,
@@ -113,6 +114,24 @@ class BobOpenPlugins extends Result {
 
 	async execute(): Promise<void> {
 		chrome.tabs.create({ url: "/src/core/views/plugins/index.html" });
+		focusLastActiveWindow();
+	}
+}
+
+class BobHelp extends Result {
+	title(): string {
+		return "Bob Help";
+	}
+	description(): string {
+		return "Help & FAQ";
+	}
+	prepend(): HTMLElement | undefined {
+		return iconFromString(iconBob);
+	}
+	async execute(state: BobWindowState): Promise<void> {
+		chrome.tabs.create({
+			url: "https://otis11.github.io/bob-command-palette/#faq",
+		});
 		focusLastActiveWindow();
 	}
 }

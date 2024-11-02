@@ -18,13 +18,19 @@ export class PluginMetaResult extends Result {
 	protected afterElementCreation(): void {
 		this.rootEl?.addEventListener("click", async () => {
 			if (this.enabled) {
-				await disablePlugin(this.plugin);
-				this.enabled = false;
-				this.rootEl?.classList.remove("plugin-active");
+				if (await disablePlugin(this.plugin)) {
+					this.enabled = false;
+					this.rootEl?.classList.remove("plugin-active");
+				} else {
+					alert("Plugin could not be disabled.");
+				}
 			} else {
-				await enablePlugin(this.plugin);
-				this.enabled = true;
-				this.rootEl?.classList.add("plugin-active");
+				if (await enablePlugin(this.plugin)) {
+					this.enabled = true;
+					this.rootEl?.classList.add("plugin-active");
+				} else {
+					alert("Plugin could not be enabled.");
+				}
 			}
 		});
 

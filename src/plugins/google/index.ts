@@ -39,7 +39,7 @@ export default defineBobPlugin({
 
 export class GoogleDork extends Result {
 	public id(): string {
-		return this.name() + this.title();
+		return this.className() + this.title();
 	}
 
 	title(): string {
@@ -84,7 +84,7 @@ export class GoogleDork extends Result {
 
 export class GoogleSearch extends Result {
 	public id(): string {
-		return this.name() + this.title();
+		return this.className() + this.title();
 	}
 
 	public search(search: Search) {

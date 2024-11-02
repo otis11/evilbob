@@ -1,3 +1,5 @@
+// @ts-expect-error TODO add ?raw to types in global.d.ts as well, fine for now.
+import darkTheme from "../plugins/bob-dark-theme/dark.css?raw";
 import type { BobPluginConfig } from "./BobPlugin";
 import type { Locale } from "./locales";
 import type { Dimensions } from "./theme";
@@ -76,7 +78,7 @@ export const DEFAULT_CONFIG: BobConfig = {
 	dimensions: { width: 900, height: 600 },
 	keybinds: defaultKeybinds,
 	theme: "dark",
-	customTheme: "",
+	customTheme: darkTheme,
 };
 
 export async function updateConfig(newConfig: Partial<BobConfig>) {

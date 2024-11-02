@@ -57,7 +57,7 @@ export class Prefix extends Result {
 	}
 
 	public id(): string {
-		return this.name() + this.title();
+		return this.className() + this.title();
 	}
 
 	async execute(state: BobWindowState): Promise<void> {

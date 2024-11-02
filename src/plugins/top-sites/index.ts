@@ -49,7 +49,7 @@ export class MostVisitedURL extends Result {
 		super();
 	}
 	public id(): string {
-		return this.name() + this.site.url;
+		return this.className() + this.site.url;
 	}
 
 	async execute(): Promise<void> {

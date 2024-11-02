@@ -26,11 +26,6 @@ body {
 	margin: auto;
 }
 
-a {
-	color: var(--bob-color-primary);
-	text-decoration: none;
-}
-
 li {
 	padding-top: 12px;
 	padding-left: 12px;
@@ -83,11 +78,4 @@ main {
 	max-width: 400px;
 	margin: 4px;
 	padding: 8px;
-}
-
-.heading {
-	font-size: 48px;
-	text-align: center;
-	padding-bottom: 4px;
-	font-weight: bold;
 }

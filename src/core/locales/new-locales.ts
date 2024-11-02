@@ -46,8 +46,10 @@ export function NewLocales<T extends Record<string, string>>(
 		if (parameters) {
 			const keys = Object.keys(parameters) as TranslationKey[];
 			for (const param of keys) {
-				// @ts-expect-error TODO, type completion outside this works good
-				text = text.replace(`{${String(param)}}`, parameters[param]);
+				text = text.replace(
+					`{${String(param)}}`,
+					parameters[param],
+				) as T[K];
 			}
 		}
 		return text;

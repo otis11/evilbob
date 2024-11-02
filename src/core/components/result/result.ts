@@ -127,11 +127,11 @@ export abstract class Result {
 	}
 
 	public id() {
-		return this.name();
+		return this.className();
 	}
 
-	// TODO make abstract and each result should implement it.
-	public name() {
+	// This will be minified, so not a reference to "Result"
+	public className() {
 		return this.constructor.name;
 	}
 

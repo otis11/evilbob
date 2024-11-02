@@ -4,6 +4,11 @@ import "./main.css";
 import { Checkbox } from "../../components/checkbox";
 import { FlexContainer } from "../../components/flex-container";
 import { GroupHeading } from "../../components/group-heading";
+import {
+	CustomThemeLink,
+	PluginsLink,
+	WelcomeLink,
+} from "../../components/internal-links";
 import { NumberInput } from "../../components/number-input/number-input";
 import { Select } from "../../components/select";
 import { ShortcutInput } from "../../components/shortcut-input/shortcut-input";
@@ -17,14 +22,15 @@ import { LOCALES, type Locale, coreI18n } from "../../locales";
 import { PLUGINS_LOADED, loadPlugins } from "../../plugins";
 import { renderBobDimensions } from "./dimensions";
 import { renderFooter } from "./footer";
-import { renderHeader } from "./header";
 
 (async () => {
 	await loadPlugins();
 	await loadTheme();
 	const config = await getConfig();
 	coreI18n.setLocale(config.locale);
-	renderHeader();
+	const container = FlexContainer({ gap: "24px" });
+	container.append(PluginsLink(), WelcomeLink());
+	document.body.append(container);
 	renderLocale(config);
 	renderTheme(config);
 	await renderBobDimensions(config);
@@ -36,24 +42,31 @@ import { renderHeader } from "./header";
 })();
 
 function renderTheme(config: BobConfig) {
-	const container = FlexContainer({});
+	const container = FlexContainer({ gap: "24px", alignItems: "center" });
 
-	const themes = Select(
-		PLUGINS_LOADED.filter((loaded) => !!loaded.provideTheme).map(
+	const themes = Select([
+		...PLUGINS_LOADED.filter((loaded) => !!loaded.provideTheme).map(
 			(plugin) => ({
 				title: plugin.name(),
 				value: plugin.id || "",
 				selected: plugin.id === config.theme,
 			}),
 		),
-	);
+		{
+			title: "Custom",
+			value: "custom",
+			selected: config.theme === "custom",
+		},
+	]);
 
-	themes.addEventListener("change", () => {
-		updateConfig({
+	themes.addEventListener("change", async () => {
+		await updateConfig({
 			theme: themes.value as Locale,
 		});
+		window.location.reload();
 	});
-	container.append(themes);
+
+	container.append(themes, CustomThemeLink());
 	document.body.append(GroupHeading("Theme"));
 	document.body.append(container);
 }

@@ -74,7 +74,7 @@ export class HistoryItem extends Result {
 	}
 
 	public id(): string {
-		return this.name() + this.item.id;
+		return this.className() + this.item.id;
 	}
 
 	async execute(): Promise<void> {

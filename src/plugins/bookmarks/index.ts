@@ -34,7 +34,7 @@ export default defineBobPlugin({
 function flattenBookmarksTree(tree: chrome.bookmarks.BookmarkTreeNode[]) {
 	const results: Result[] = [];
 	for (const item of tree) {
-		// is item a folder? TODO i dont think folders are relevant, maybe for ui information
+		// is item a folder?
 		// if(item.dateGroupModified) {
 		//     continue
 		// }
@@ -80,7 +80,7 @@ export class Bookmark extends Result {
 	}
 
 	public id(): string {
-		return this.name() + this.bookmark.id;
+		return this.className() + this.bookmark.id;
 	}
 
 	async execute(): Promise<void> {
@@ -88,7 +88,6 @@ export class Bookmark extends Result {
 			chrome.tabs.create({ url: this.bookmark.url });
 			focusLastActiveWindow();
 		} else {
-			// TODO handle bookmarks with no url?
 			console.error("bookmark has no url", this);
 		}
 	}

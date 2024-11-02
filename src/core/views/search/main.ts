@@ -69,10 +69,6 @@ window.addEventListener("focus", async () => {
 	for (const plugin of PLUGINS_LOADED) {
 		plugin.onBobWindowFocus?.(bobWindowState());
 	}
-	// TOOD
-	// if (config.onBobWindowFocus?.refreshResults) {
-	// 	await loadFreshData();
-	// }
-
+	await loadFreshData();
 	filterResults();
 });

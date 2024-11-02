@@ -24,7 +24,11 @@
 	"commands": {
 		"bob.open": {
 			"suggested_key": {
-				"default": "Ctrl+Shift+L"
+				"default": "Ctrl+Shift+L",
+				"windows": "Ctrl+Shift+L",
+				"mac": "Command+Shift+L",
+				"chromeos": "Ctrl+Shift+L",
+				"linux": "Ctrl+Shift+L"
 			},
 			"description": "Open Bob"
 		}

@@ -86,7 +86,7 @@ export class Tab extends Result {
 	}
 
 	public id(): string {
-		return this.name() + this.tab.id;
+		return this.className() + this.tab.id;
 	}
 
 	async execute(state: BobWindowState): Promise<void> {

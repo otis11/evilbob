@@ -29,21 +29,25 @@ export async function loadPlugins() {
 }
 
 export async function enablePlugin(plugin: BobPluginMeta) {
-	chrome.permissions.request(
-		{
-			permissions: plugin.permissions,
-			origins: plugin.hostPermissions,
-		},
-		async (granted) => {
-			if (!granted) {
-				console.error("could not grant permission for plugin?", plugin);
-			}
-			await updateConfig({
-				pluginsEnabled: {
-					[plugin.id]: true,
-				},
-			});
-		},
+	return await new Promise((resolve) =>
+		chrome.permissions.request(
+			{
+				permissions: plugin.permissions,
+				origins: plugin.hostPermissions,
+			},
+			async (granted) => {
+				if (!granted) {
+					resolve(false);
+					return;
+				}
+				await updateConfig({
+					pluginsEnabled: {
+						[plugin.id]: true,
+					},
+				});
+				resolve(true);
+			},
+		),
 	);
 }
 
@@ -58,23 +62,24 @@ export async function disablePlugin(plugin: BobPluginMeta) {
 			permissionsCanRemove.push(permission);
 		}
 	}
-	chrome.permissions.remove(
-		{
-			permissions: permissionsCanRemove,
-			origins: plugin.hostPermissions,
-		},
-		async (removed) => {
-			if (!removed) {
-				console.error(
-					"could not remove permission for plugin?",
-					plugin,
-				);
-			}
-			await updateConfig({
-				pluginsEnabled: {
-					[plugin.id]: false,
-				},
-			});
-		},
+	return await new Promise((resolve) =>
+		chrome.permissions.remove(
+			{
+				permissions: permissionsCanRemove,
+				origins: plugin.hostPermissions,
+			},
+			async (removed) => {
+				if (!removed) {
+					resolve(false);
+					return;
+				}
+				await updateConfig({
+					pluginsEnabled: {
+						[plugin.id]: false,
+					},
+				});
+				resolve(true);
+			},
+		),
 	);
 }

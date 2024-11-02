@@ -49,7 +49,7 @@ export class ResultCommand extends Result {
 	}
 
 	public id(): string {
-		return this.name() + this.command.name;
+		return this.className() + this.command.name;
 	}
 	async execute(): Promise<void> {}
 }

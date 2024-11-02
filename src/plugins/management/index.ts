@@ -129,6 +129,6 @@ export class Extension extends Result {
 	}
 
 	public id(): string {
-		return this.name() + this.extension.id;
+		return this.className() + this.extension.id;
 	}
 }

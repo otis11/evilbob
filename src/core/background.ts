@@ -7,14 +7,14 @@ let windowDimensions: Dimensions | undefined;
 
 chrome.runtime.onInstalled.addListener(async (details) => {
 	if (details.reason === "install") {
-		chrome.runtime.openOptionsPage();
+		chrome.tabs.create({ url: "/src/core/views/welcome/index.html" });
 	}
 
 	if (details.reason === "update") {
-		// TODO on update show changelog? probably to annoying on each update
+		// on update
 	}
 
-	// TODO uninstall url?
+	// set uninstall url
 	// chrome.runtime.setUninstallURL();
 });
 

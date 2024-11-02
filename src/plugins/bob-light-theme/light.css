@@ -1,12 +1,12 @@
 :root {
 	/* colors */
-	--bob-color-primary: #ffda58;
+	--bob-color-primary: #be8335;
 	--bob-color-accent: #c47f7e;
 	--bob-color-success: green;
 	--bob-color-error: red;
-	--bob-color-base-100: #c5cbdd;
-	--bob-color-base-200: #c0c4cf;
-	--bob-color-base-300: #c0c4cf;
+	--bob-color-base-100: #fff;
+	--bob-color-base-200: #edeff2;
+	--bob-color-base-300: #d9dee7;
 	--bob-color-base-content-100: #1c1e24;
 	--bob-color-base-content-200: #353333;
 	--bob-color-base-content-300: rgba(112, 116, 124, 0.2);

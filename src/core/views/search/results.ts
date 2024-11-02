@@ -1,5 +1,5 @@
 import { H2 } from "../../components/elements";
-import { PluginsLink } from "../../components/plugins-link";
+import { PluginsLink } from "../../components/internal-links";
 import type { Result } from "../../components/result/result";
 import { getConfig } from "../../config";
 import { coreI18n } from "../../locales";

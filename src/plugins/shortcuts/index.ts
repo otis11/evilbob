@@ -110,7 +110,7 @@ export class Shortcut extends Result {
 	}
 
 	public id(): string {
-		return this.name() + this.title();
+		return this.className() + this.title();
 	}
 
 	prepend(): HTMLElement | undefined {

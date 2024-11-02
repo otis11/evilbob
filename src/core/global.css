@@ -102,3 +102,15 @@ footer a {
 	gap: 4px;
 	font-size: var(--bob-shortcut-font-size);
 }
+
+.heading {
+	font-size: 48px;
+	text-align: center;
+	padding-bottom: 4px;
+	font-weight: bold;
+}
+
+a {
+	color: var(--bob-color-primary);
+	text-decoration: none;
+}

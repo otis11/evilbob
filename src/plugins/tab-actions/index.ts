@@ -153,7 +153,6 @@ export class SortTabsByUrl extends Result {
 
 		const tabsSortedByUrl = tabs.sort((a, b) => {
 			if (!a.url || !b.url) {
-				// TODO use name instead of url?
 				return 0;
 			}
 			if (a.url > b.url) {
@@ -177,7 +176,6 @@ export class SortTabsByUrl extends Result {
 		}
 
 		if (!isSortingNeeded) {
-			// TODO replace with notifcation or sonner
 			alert(t("Already Sorted"));
 			return;
 		}

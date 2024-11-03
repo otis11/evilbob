@@ -9,6 +9,7 @@
 	"type": "module",
 	"devDependencies": {
 		"@biomejs/biome": "1.9.3",
+		"@playwright/test": "^1.48.2",
 		"@types/bun": "latest",
 		"@types/chrome": "^0.0.275",
 		"vite": "^5.4.8"
@@ -23,6 +24,7 @@
 		"build": "bun scripts/build.ts --minify",
 		"watch": "bun scripts/build.ts --watch",
 		"preview": "vite preview",
-		"lint": "biome check --write . && tsc"
+		"lint": "biome check --write . && tsc",
+		"test": "playwright test"
 	}
 }

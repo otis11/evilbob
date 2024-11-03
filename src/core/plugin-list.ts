@@ -375,24 +375,6 @@ export const PLUGIN_LIST_SUPPORTED = (() => {
 	});
 })();
 
-export const PLUGIN_LIST_THEMES = (() => {
-	return PLUGIN_LIST_SUPPORTED.filter((plugin) => {
-		return plugin.providesTheme;
-	});
-})();
-
-export const PLUGIN_LIST_RESULTS = (() => {
-	return PLUGIN_LIST_SUPPORTED.filter((plugin) => {
-		return plugin.providesResults;
-	});
-})();
-
-export const PLUGIN_LIST_CONFIGS = (() => {
-	return PLUGIN_LIST_SUPPORTED.filter((plugin) => {
-		return plugin.providesConfig;
-	});
-})();
-
 export type BobPluginMeta = {
 	id: string;
 	name: string;

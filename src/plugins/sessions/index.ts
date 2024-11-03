@@ -1,6 +1,7 @@
 import { defineBobPlugin } from "../../core/BobPlugin";
 import { Result } from "../../core/components/result/result";
 import type { Tag } from "../../core/components/tags/tags";
+import type { Locale } from "../../core/locales";
 import { NewLocales } from "../../core/locales/new-locales";
 import { isChromium } from "../../core/platform";
 import { unixTimeToHumanReadable } from "../../core/util/time";
@@ -18,7 +19,9 @@ export default defineBobPlugin({
 	description() {
 		return t("Sessions.description");
 	},
-
+	onLocalChange(locale: Locale) {
+		setLocale(locale);
+	},
 	async provideResults(): Promise<Result[]> {
 		const sessions = await chrome.sessions.getRecentlyClosed();
 		return sessions.map((session) => new Session(session));

@@ -7,14 +7,9 @@ import { deepMerge } from "./util/deep-merge";
 
 let configCache: BobConfig;
 
-export type ResultUsage = {
-	l: number;
-	c: number;
-};
+export type KeybindingKey = keyof typeof defaultKeybindings;
 
-export type KeybindKey = keyof typeof defaultKeybinds;
-
-const defaultKeybinds = {
+const defaultKeybindings = {
 	selectResult: {
 		keys: ["Enter"],
 		description: "When selecting a result",
@@ -52,9 +47,9 @@ export type BobConfig = {
 	search?: {
 		maxRenderedItems?: number;
 	};
-	keybinds: Partial<
+	keybindings: Partial<
 		Record<
-			KeybindKey,
+			KeybindingKey,
 			{ keys: string[]; description?: string; title?: string }
 		>
 	>;
@@ -76,7 +71,7 @@ export const DEFAULT_CONFIG: BobConfig = {
 		google: true,
 	},
 	dimensions: { width: 900, height: 600 },
-	keybinds: defaultKeybinds,
+	keybindings: defaultKeybindings,
 	theme: "dark",
 	customTheme: darkTheme,
 };
@@ -89,10 +84,14 @@ export async function updateConfig(newConfig: Partial<BobConfig>) {
 		config: newMergedConfig,
 	});
 
-	chrome.runtime.sendMessage(chrome.runtime.id, {
-		type: "bob.config.change",
-		data: newMergedConfig,
-	});
+	try {
+		await chrome.runtime.sendMessage(chrome.runtime.id, {
+			type: "bob.config.change",
+			data: newMergedConfig,
+		});
+	} catch (e) {
+		console.error(e);
+	}
 }
 
 export function onConfigUpdate(callback: (config: BobConfig) => void) {

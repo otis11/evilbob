@@ -2,6 +2,7 @@ import { defineBobPlugin } from "../../core/BobPlugin";
 import { Info } from "../../core/components/result/info";
 import type { Result } from "../../core/components/result/result";
 import { iconCpu, iconFromString } from "../../core/icons";
+import type { Locale } from "../../core/locales";
 import { NewLocales } from "../../core/locales/new-locales";
 import { formatBytes } from "../../core/util/format-bytes";
 import enUS from "./locales/en-US";
@@ -14,6 +15,9 @@ export default defineBobPlugin({
 	permissions: ["system.memory"],
 	description(): string {
 		return t("SystemMemory.description");
+	},
+	onLocalChange(locale: Locale) {
+		setLocale(locale);
 	},
 	name(): string {
 		return t("SystemMemory");

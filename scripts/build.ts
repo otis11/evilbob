@@ -17,7 +17,7 @@ const views = readdirSync(path.resolve(__dirname, "../src/core/views"));
 const plugins = readdirSync(path.resolve(__dirname, "../src/plugins"));
 
 await Promise.all([
-	// service worker needs to separateed as they dont support "import" or "require" / code splitting bundles
+	// service worker needs to separated as they don't support "import" or "require" / code splitting bundles
 	build({
 		resolve: {
 			alias: {

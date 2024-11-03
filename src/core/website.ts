@@ -1,9 +1,10 @@
 import bobDarkTheme from "../plugins/bob-dark-theme";
 import { PluginMetaResult } from "./components/plugin-meta-result";
 import { type BobPluginMeta, PLUGIN_LIST_SUPPORTED } from "./plugin-list";
-
-bobDarkTheme.provideTheme?.();
-renderPlugins();
+(async () => {
+	await bobDarkTheme.provideTheme?.();
+	await renderPlugins();
+})();
 
 export async function renderPlugins() {
 	const pluginsContainer = document.createElement("div");

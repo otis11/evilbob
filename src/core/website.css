@@ -50,6 +50,7 @@ li {
 	justify-content: center;
 	align-items: center;
 	padding: 24px 24px 96px;
+	flex-wrap: wrap;
 }
 
 main {

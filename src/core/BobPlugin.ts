@@ -26,9 +26,9 @@ export type BobPlugin = {
 	onBobWindowBlur?(state: BobWindowState): void;
 	onBobWindowFocus?(state: BobWindowState): void;
 	onBobWindowOpen?(state: BobWindowState): void;
-	onLocalChange?(state: BobWindowState): void;
+	onLocalChange?(locale: Locale): void;
 
-	// set from extension on load. dont set yourself, will get overwritten
+	// set from extension on load. don't set yourself, will get overwritten
 	id?: string;
 };
 

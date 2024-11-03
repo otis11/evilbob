@@ -7,7 +7,7 @@ let windowDimensions: Dimensions | undefined;
 
 chrome.runtime.onInstalled.addListener(async (details) => {
 	if (details.reason === "install") {
-		chrome.tabs.create({ url: "/src/core/views/welcome/index.html" });
+		await chrome.tabs.create({ url: "/src/core/views/welcome/index.html" });
 	}
 
 	if (details.reason === "update") {
@@ -18,20 +18,20 @@ chrome.runtime.onInstalled.addListener(async (details) => {
 	// chrome.runtime.setUninstallURL();
 });
 
-chrome.commands.onCommand.addListener((command) => {
+chrome.commands.onCommand.addListener(async (command) => {
 	if (command === "bob.open") {
-		openBob();
+		await openBob();
 	}
 });
 
-chrome.action.onClicked.addListener(() => {
-	chrome.runtime.openOptionsPage();
+chrome.action.onClicked.addListener(async () => {
+	await chrome.runtime.openOptionsPage();
 });
 
 chrome.windows.getCurrent().then((w) => {
 	currentWindow = w;
 });
-chrome.windows.onFocusChanged.addListener(async (windowId) => {
+chrome.windows.onFocusChanged.addListener(async () => {
 	currentWindow = await chrome.windows.getCurrent();
 });
 

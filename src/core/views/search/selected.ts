@@ -17,10 +17,6 @@ export function getSelectedResultIndex() {
 	return selectedResultIndex;
 }
 
-export function setSelectedResultIndex(n: number) {
-	selectedResultIndex = n;
-}
-
 export function selectNextResult() {
 	let newIndex = getSelectedResultIndex();
 	const container = isResultOptionsVisible()

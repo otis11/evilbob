@@ -19,21 +19,6 @@ export class Search {
 		this.minMatchScore = Math.floor(this.text.length / 2);
 	}
 
-	currentWord() {
-		if (this.selectionStart === null) {
-			return null;
-		}
-		const words = this.words();
-		let wordsLengthGoneThrough = 0;
-		for (const word of words) {
-			wordsLengthGoneThrough += word.length;
-			if (wordsLengthGoneThrough >= this.selectionStart) {
-				return word;
-			}
-		}
-		return words.at(-1);
-	}
-
 	words() {
 		return this.text.split(" ");
 	}

@@ -13,6 +13,7 @@ import {
 	iconTabRemove,
 	iconWindowRestore,
 } from "../../core/icons";
+import type { Locale } from "../../core/locales";
 import { NewLocales } from "../../core/locales/new-locales";
 import { getLastActiveTab } from "../../core/util/last-active-tab";
 import {
@@ -35,6 +36,10 @@ export default defineBobPlugin({
 	},
 	description() {
 		return t("TabActions.description");
+	},
+
+	onLocalChange(locale: Locale) {
+		setLocale(locale);
 	},
 
 	async provideResults(): Promise<Result[]> {
@@ -67,7 +72,7 @@ class TabDuplicate extends Result {
 		const lastActive = await getLastActiveTab();
 		if (lastActive?.id) {
 			await chrome.tabs.duplicate(lastActive.id);
-			focusLastActiveWindow();
+			await focusLastActiveWindow();
 		}
 	}
 }
@@ -84,7 +89,7 @@ class TabMute extends Result {
 		const lastActive = await getLastActiveTab();
 		if (lastActive?.id) {
 			await chrome.tabs.update(lastActive.id, { muted: true });
-			focusLastActiveWindow();
+			await focusLastActiveWindow();
 		}
 	}
 }
@@ -101,7 +106,7 @@ class TabUnmute extends Result {
 		const lastActive = await getLastActiveTab();
 		if (lastActive?.id) {
 			await chrome.tabs.update(lastActive.id, { muted: false });
-			focusLastActiveWindow();
+			await focusLastActiveWindow();
 		}
 	}
 }
@@ -119,7 +124,7 @@ class TabPin extends Result {
 		const lastActive = await getLastActiveTab();
 		if (lastActive?.id) {
 			await chrome.tabs.update(lastActive.id, { pinned: true });
-			focusLastActiveWindow();
+			await focusLastActiveWindow();
 		}
 	}
 }
@@ -136,7 +141,7 @@ class TabUnpin extends Result {
 		const lastActive = await getLastActiveTab();
 		if (lastActive?.id) {
 			await chrome.tabs.update(lastActive.id, { pinned: false });
-			focusLastActiveWindow();
+			await focusLastActiveWindow();
 		}
 	}
 }
@@ -180,12 +185,14 @@ export class SortTabsByUrl extends Result {
 			return;
 		}
 
+		const promises = [];
 		for (const [index, tab] of tabsSortedByUrl.entries()) {
 			if (tab.id) {
-				chrome.tabs.move(tab.id, { index });
+				promises.push(chrome.tabs.move(tab.id, { index }));
 			}
 		}
-		focusLastActiveWindow();
+		await Promise.all(promises);
+		await focusLastActiveWindow();
 	}
 }
 
@@ -206,7 +213,7 @@ export class MergeWindows extends Result {
 			windowId: lastWindow.id,
 			index: 999,
 		});
-		focusLastActiveWindow();
+		await focusLastActiveWindow();
 	}
 }
 
@@ -225,7 +232,7 @@ export class SplitIntoWindows extends Result {
 			promises.push(chrome.windows.create({ tabId: tab.id }));
 		}
 		await Promise.all(promises);
-		focusLastActiveWindow();
+		await focusLastActiveWindow();
 	}
 }
 
@@ -247,7 +254,7 @@ export class CloseOtherTabs extends Result {
 			}
 		}
 		await Promise.all(promises);
-		focusLastActiveWindow();
+		await focusLastActiveWindow();
 	}
 }
 
@@ -289,6 +296,6 @@ class TabsCloseBySearch extends Tab {
 				await chrome.tabs.remove(result.tab.id);
 			}
 		}
-		focusLastActiveWindow();
+		await focusLastActiveWindow();
 	}
 }

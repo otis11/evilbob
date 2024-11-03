@@ -27,8 +27,8 @@ export default defineBobPlugin({
 	async provideResults() {
 		return [new CloseOtherWindows()];
 	},
-	onLocalChange(state) {
-		setLocale(state.locale);
+	onLocalChange(locale) {
+		setLocale(locale);
 	},
 	icon: iconWindowRestore,
 });
@@ -49,6 +49,6 @@ export class CloseOtherWindows extends Result {
 				await chrome.windows.remove(w.id);
 			}
 		}
-		focusLastActiveWindow();
+		await focusLastActiveWindow();
 	}
 }

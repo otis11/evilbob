@@ -2,7 +2,7 @@ import { defineBobPlugin } from "../../core/BobPlugin";
 import { Result } from "../../core/components/result/result";
 import type { Tag } from "../../core/components/tags/tags";
 import { iconWrenchCog } from "../../core/icons";
-import { coreI18n } from "../../core/locales";
+import { type Locale, coreI18n } from "../../core/locales";
 import { NewLocales } from "../../core/locales/new-locales";
 import { getLastActiveTab } from "../../core/util/last-active-tab";
 import { focusLastActiveWindow } from "../../core/util/last-active-window";
@@ -22,6 +22,9 @@ export default defineBobPlugin({
 
 	name() {
 		return t("ContentSettings");
+	},
+	onLocalChange(locale: Locale) {
+		setLocale(locale);
 	},
 	supportedBrowsers: ["chrome", "chromium", "edg"],
 	async provideResults(): Promise<Result[]> {

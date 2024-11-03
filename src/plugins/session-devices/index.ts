@@ -2,6 +2,7 @@ import { defineBobPlugin } from "../../core/BobPlugin";
 import { Result } from "../../core/components/result/result";
 import type { Tag } from "../../core/components/tags/tags";
 import { iconDevices, iconFromString } from "../../core/icons";
+import type { Locale } from "../../core/locales";
 import { NewLocales } from "../../core/locales/new-locales";
 import enUS from "./locales/en-US";
 
@@ -20,6 +21,9 @@ export default defineBobPlugin({
 	},
 	supportedBrowsers: ["chrome", "chromium", "edg"],
 	prefix: "sd",
+	onLocalChange(locale: Locale) {
+		setLocale(locale);
+	},
 
 	async provideResults(): Promise<Result[]> {
 		const devices = await chrome.sessions.getDevices();

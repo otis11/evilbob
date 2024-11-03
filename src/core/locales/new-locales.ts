@@ -2,7 +2,7 @@ import type { Locale } from "../locales";
 
 // Typescript Magic
 // ${string}                                matches anything before a placeholder
-// {${infer Param}}                         matches the string betwewen { }
+// {${infer Param}}                         matches the string between { }
 // ${infer Rest}                            matches the rest of the string
 // Param | ExtractPlaceholders<Rest>        creates a union type and recursively searches for another placeholder, until no placeholder is left.
 // examples

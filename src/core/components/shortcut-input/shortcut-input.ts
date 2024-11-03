@@ -22,9 +22,9 @@ export function ShortcutInput(defaultKeys: string[]) {
 		).asHtmlElement().outerHTML;
 	});
 	input.addEventListener("keyup", (keyboardEvent) => {
-		// this only needs to be tracked because of macos and metakey. Metakey does not trigger keyup event for keys while its pressed.
+		// this only needs to be tracked because of macOS and the Meta key. The Meta key does not trigger a keyup event for keys while its pressed.
 		// if key not held down emulate the key up event for that specific key.
-		// this is not perfect, as holding mutliple keys down at once triggers only 1 keydown event for the last key pressed.
+		// this is not perfect, as holding multiple keys down at once triggers only 1 keydown event for the last key pressed.
 		// https://github.com/electron/electron/issues/5188
 		if (keyboardEvent.key === "Meta") {
 			keysPressedDown = {};

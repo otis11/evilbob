@@ -7,7 +7,7 @@
 html {
 	background-color: var(--bob-color-base-200, #333);
 	color: var(--bob-color-base-content-100);
-	font-family: var(--bob-font-family);
+	font-family: var(--bob-font-family), sans-serif;
 }
 
 img::before {
@@ -52,19 +52,6 @@ img {
 
 .spacer {
 	flex: 1;
-}
-
-.rotate-animation {
-	animation: rotateAnimation 1s infinite ease;
-}
-
-@keyframes rotateAnimation {
-	from {
-		transform: rotateZ(0);
-	}
-	to {
-		transform: rotateZ(360deg);
-	}
 }
 
 footer {

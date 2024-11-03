@@ -43,33 +43,15 @@ for (const pluginFolder of pluginFolders) {
 }
 
 pluginContent += `export const PLUGIN_LIST = ${JSON.stringify(plugins)} as BobPluginMeta[]
-export const PLUGIN_LIST_SUPPORTED = (() => {	
+export const PLUGIN_LIST_SUPPORTED = (() => {
 	return PLUGIN_LIST.filter((plugin) => {
 	return plugin.supportedBrowsers
 		? plugin.supportedBrowsers?.includes(browserName)
 		: true;
 	});
 })()
-
-export const PLUGIN_LIST_THEMES = (() => {	
-	return PLUGIN_LIST_SUPPORTED.filter((plugin) => {
-	return plugin.providesTheme;
-	});
-})()	
-
-export const PLUGIN_LIST_RESULTS = (() => {	
-	return PLUGIN_LIST_SUPPORTED.filter((plugin) => {
-	return plugin.providesResults;
-	});
-})()
-
-export const PLUGIN_LIST_CONFIGS = (() => {	
-	return PLUGIN_LIST_SUPPORTED.filter((plugin) => {
-	return plugin.providesConfig;
-	});
-})()
 \n`;
-pluginContent += `export type BobPluginMeta = { 
+pluginContent += `export type BobPluginMeta = {
 	id: string;
 	name: string;
 	file: string;

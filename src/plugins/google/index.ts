@@ -2,6 +2,7 @@ import { type BobWindowState, defineBobPlugin } from "../../core/BobPlugin";
 import { Result } from "../../core/components/result/result";
 import { Search } from "../../core/components/search";
 import { iconFromString, iconGoogle } from "../../core/icons";
+import type { Locale } from "../../core/locales";
 import { NewLocales } from "../../core/locales/new-locales";
 import { focusLastActiveWindow } from "../../core/util/last-active-window";
 import enUS from "./locales/en-US";
@@ -20,7 +21,9 @@ export default defineBobPlugin({
 	name(): string {
 		return t("Google");
 	},
-
+	onLocalChange(locale: Locale) {
+		setLocale(locale);
+	},
 	async provideResults(): Promise<Result[]> {
 		return [
 			new GoogleDork("intitle", t("GoogleDork.intitle")),
@@ -75,10 +78,10 @@ export class GoogleDork extends Result {
 	}
 
 	async execute(state: BobWindowState): Promise<void> {
-		chrome.tabs.create({
+		await chrome.tabs.create({
 			url: `https://google.com/search?q=${state.currentSearch.text.replace("g", "").trim().replaceAll(" ", "+")}`,
 		});
-		focusLastActiveWindow();
+		await focusLastActiveWindow();
 	}
 }
 
@@ -114,9 +117,9 @@ export class GoogleSearch extends Result {
 			state.currentSearch.words()[0] === "g"
 				? state.currentSearch.text.slice(1).trim()
 				: state.currentSearch.text;
-		chrome.tabs.create({
+		await chrome.tabs.create({
 			url: `https://google.com/search?q=${query.replaceAll(" ", "+")}`,
 		});
-		focusLastActiveWindow();
+		await focusLastActiveWindow();
 	}
 }

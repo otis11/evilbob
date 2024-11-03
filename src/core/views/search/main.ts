@@ -51,10 +51,10 @@ getConfig().then(async (cfg) => {
 		filterResults();
 	});
 
-	renderFooter();
+	await renderFooter();
 });
 
-onConfigUpdate((cfg) => {
+onConfigUpdate(() => {
 	// plugins need to be reloaded
 	window.location.reload();
 });
@@ -70,5 +70,5 @@ window.addEventListener("focus", async () => {
 		plugin.onBobWindowFocus?.(bobWindowState());
 	}
 	await loadFreshData();
-	filterResults();
+	await filterResults();
 });

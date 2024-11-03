@@ -7,7 +7,7 @@ import {
 	iconFromUrl,
 	iconPuzzleOutline,
 } from "../../core/icons";
-import { coreI18n } from "../../core/locales";
+import { type Locale, coreI18n } from "../../core/locales";
 import { NewLocales } from "../../core/locales/new-locales";
 import enUS from "./locales/en-US";
 
@@ -21,7 +21,9 @@ export default defineBobPlugin({
 	description() {
 		return t("Management.description");
 	},
-
+	onLocalChange(locale: Locale) {
+		setLocale(locale);
+	},
 	name() {
 		return t("Management");
 	},
@@ -106,7 +108,7 @@ export class Extension extends Result {
 				}),
 			);
 		}
-		// types say can be undefined but in firefox there is a default extension with doesnt have this defined.
+		// types say can be undefined but in firefox there is a default extension with doesn't have this defined.
 		if (this.extension.permissions) {
 			results.push(
 				new Info({

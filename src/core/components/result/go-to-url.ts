@@ -37,6 +37,6 @@ export class GoToUrl extends Result {
 
 	async execute(): Promise<void> {
 		await chrome.tabs.create({ url: this.config.url });
-		focusLastActiveWindow();
+		await focusLastActiveWindow();
 	}
 }

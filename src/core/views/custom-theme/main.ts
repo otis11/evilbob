@@ -3,7 +3,6 @@ import { coreI18n } from "../../locales";
 import { debounce } from "../../util/debounce";
 import "../../global.css";
 import "./main.css";
-import type { BobWindowState } from "../../BobPlugin";
 import { Result } from "../../components/result/result";
 import { Search } from "../../components/search";
 import type { Tag } from "../../components/tags/tags";
@@ -33,7 +32,7 @@ class MockResult extends Result {
 		];
 	}
 
-	async execute(state: BobWindowState): Promise<void> {}
+	async execute(): Promise<void> {}
 
 	prepend(): HTMLElement | undefined {
 		return iconFromString(iconChevronDoubleRight);

@@ -4,16 +4,16 @@ Thanks in advance for making Bob a better extension :)!
 
 [Code of Conduct](./CODE_OF_CONDUCT.md)
 
-- **Check for Existing Issues**  
+- **Check for Existing Issues**
   Before contributing, check if any [open issues](https://github.com/otis11/bob-command-palette/issues) relate to your idea.
 
-- **No Relevant Issue?**  
+- **No Relevant Issue?**
   Open one to discuss your bug or feature suggestion with active developers.
 
 ## Development Setup
 1. Install [Bun](https://bun.sh/)
 2. Go into the project's root folder
-3. Run `bun i` to install the project dependencies 
+3. Run `bun i` to install the project dependencies
 4. Run `bun run watch` to build the extension. It rebuilds automatically on file changes
 5. Load the extension in your browser:
 
@@ -29,9 +29,6 @@ Thanks in advance for making Bob a better extension :)!
 - Click **Load Temporary Add-on**.
 - Open the `dist/firefox/manifest.json` file.
 
-## Update generated docs
-4. Run `bun scripts/generate-docs.ts`.
-
 ## New plugin?
 1. New folder `src/plugins/example`
 2. New entry file for your plugin `src/plugins/example/index.ts`
@@ -43,6 +40,10 @@ export default defineBobPlugin({
     return 'Example'
   }
 })
+```
+Regenerate plugins
+```bash
+bun run scripts/generate-plugins.ts
 ```
 
 #### Theme

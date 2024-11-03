@@ -28,11 +28,11 @@ export function getOptionsSelectedResult() {
 	return selectedResult;
 }
 
-export function closeResultOptions() {
+export async function closeResultOptions() {
 	optionsRoot.style.display = "none";
 	isVisible = false;
 	optionsSearchInput.value = "";
-	filterResults();
+	await filterResults();
 }
 
 export async function showResultOptions(searchResult: Result) {
@@ -48,7 +48,7 @@ export async function showResultOptions(searchResult: Result) {
 	optionsRoot.style.display = "flex";
 	resultOptionsContainer.innerHTML = "";
 	resultsContainer.innerHTML = selectedResult.asHtmlElement().outerHTML;
-	filterResultsOptions();
+	await filterResultsOptions();
 	optionsSearchInput.focus();
 }
 
@@ -79,14 +79,14 @@ export async function filterResultsOptions() {
 	}
 }
 
-optionsSearchInput?.addEventListener("input", () => {
-	filterResultsOptions();
+optionsSearchInput?.addEventListener("input", async () => {
+	await filterResultsOptions();
 });
 
-window.addEventListener("show-options-for-result", (event) => {
-	// @ts-ignore
+window.addEventListener("show-options-for-result", async (event) => {
+	// @ts-expect-error this event is a custom event which has a Result class in .detail.
 	if (event.detail) {
 		// @ts-ignore
-		showResultOptions(event.detail);
+		await showResultOptions(event.detail);
 	}
 });

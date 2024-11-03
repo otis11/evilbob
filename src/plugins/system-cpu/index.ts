@@ -2,6 +2,7 @@ import { defineBobPlugin } from "../../core/BobPlugin";
 import { Info } from "../../core/components/result/info";
 import type { Result } from "../../core/components/result/result";
 import { iconCpu, iconFromString } from "../../core/icons";
+import type { Locale } from "../../core/locales";
 import { NewLocales } from "../../core/locales/new-locales";
 import enUS from "./locales/en-US";
 
@@ -15,6 +16,9 @@ export default defineBobPlugin({
 	prefix: "cpu",
 	description() {
 		return t("SystemCpu.description");
+	},
+	onLocalChange(locale: Locale) {
+		setLocale(locale);
 	},
 	name() {
 		return t("SystemCpu");

@@ -25,8 +25,8 @@ export default defineBobPlugin({
 		const tree = await chrome.bookmarks.getTree();
 		return flattenBookmarksTree(tree);
 	},
-	onLocalChange(state) {
-		setLocale(state.locale);
+	onLocalChange(locale) {
+		setLocale(locale);
 	},
 	icon: iconBookmark,
 });
@@ -85,8 +85,8 @@ export class Bookmark extends Result {
 
 	async execute(): Promise<void> {
 		if (this.bookmark.url) {
-			chrome.tabs.create({ url: this.bookmark.url });
-			focusLastActiveWindow();
+			await chrome.tabs.create({ url: this.bookmark.url });
+			await focusLastActiveWindow();
 		} else {
 			console.error("bookmark has no url", this);
 		}
@@ -108,6 +108,6 @@ class RemoveBookmark extends Result {
 	public async execute(state: BobWindowState): Promise<void> {
 		await chrome.bookmarks.remove(this.bookmark.id);
 		state.closeResultOptions();
-		focusLastActiveWindow();
+		await focusLastActiveWindow();
 	}
 }

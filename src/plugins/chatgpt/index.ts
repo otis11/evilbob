@@ -22,8 +22,8 @@ export default defineBobPlugin({
 	async provideResults(): Promise<Result[]> {
 		return [new ChatGPTStartChat()];
 	},
-	onLocalChange(state) {
-		setLocale(state.locale);
+	onLocalChange(locale) {
+		setLocale(locale);
 	},
 	icon: iconBrain,
 });
@@ -66,6 +66,6 @@ export class ChatGPTStartChatQuery extends Result {
 	async execute(state: BobWindowState): Promise<void> {
 		const query = encodeURI(state.currentSearch.text);
 		await chrome.tabs.create({ url: `https://chatgpt.com?q=${query}` });
-		focusLastActiveWindow();
+		await focusLastActiveWindow();
 	}
 }

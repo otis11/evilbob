@@ -1,4 +1,3 @@
-import type { BobWindowState } from "../BobPlugin";
 import { iconFromString } from "../icons";
 import type { BobPluginMeta } from "../plugin-list";
 import { disablePlugin, enablePlugin } from "../plugins";
@@ -13,7 +12,7 @@ export class PluginMetaResult extends Result {
 		super();
 	}
 
-	async execute(state: BobWindowState): Promise<void> {}
+	async execute(): Promise<void> {}
 
 	protected afterElementCreation(): void {
 		this.rootEl?.addEventListener("click", async () => {

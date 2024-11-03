@@ -2,6 +2,7 @@ import { defineBobPlugin } from "../../core/BobPlugin";
 import { Result } from "../../core/components/result/result";
 import { ShortcutElement } from "../../core/components/shortcut";
 import { iconConsoleLine, iconFromString } from "../../core/icons";
+import type { Locale } from "../../core/locales";
 import { NewLocales } from "../../core/locales/new-locales";
 import enUS from "./locales/en-US";
 
@@ -16,6 +17,9 @@ export default defineBobPlugin({
 	},
 	name() {
 		return t("Commands");
+	},
+	onLocalChange(locale: Locale) {
+		setLocale(locale);
 	},
 	supportedBrowsers: ["chrome", "chromium", "edg"],
 

@@ -1,6 +1,7 @@
 import { type BobWindowState, defineBobPlugin } from "../../core/BobPlugin";
 import { Result } from "../../core/components/result/result";
 import { iconChevronDoubleRight, iconFromString } from "../../core/icons";
+import type { Locale } from "../../core/locales";
 import { NewLocales } from "../../core/locales/new-locales";
 import { PLUGINS_LOADED } from "../../core/plugins";
 import enUS from "./locales/en-US";
@@ -19,7 +20,9 @@ export default defineBobPlugin({
 	name() {
 		return t("Prefixes");
 	},
-
+	onLocalChange(locale: Locale) {
+		setLocale(locale);
+	},
 	async provideResults(): Promise<Result[]> {
 		const groups = PLUGINS_LOADED;
 		const results = [];

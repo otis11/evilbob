@@ -7,8 +7,6 @@ import "../../global.css";
 import "./main.css";
 import { loadTheme } from "../../theme";
 
-loadTheme();
-
 export function renderHeader() {
 	const links = document.getElementById("links");
 	links?.append(
@@ -24,5 +22,7 @@ export function renderHeader() {
 		),
 	);
 }
-
-renderHeader();
+(async () => {
+	await loadTheme();
+	renderHeader();
+})();

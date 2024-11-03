@@ -34,11 +34,13 @@ export async function filterResults() {
 		resultsContainer.innerHTML = "";
 		const noResultsContainer = document.createElement("div");
 		noResultsContainer.classList.add("no-results-container");
+		const link = PluginsLink(() => {
+			focusLastActiveWindow();
+		});
+		link.style.paddingTop = "20px";
 		noResultsContainer.append(
 			H2("There are no plugins enabled that provide results."),
-			PluginsLink(() => {
-				focusLastActiveWindow();
-			}),
+			link,
 		);
 		resultsContainer.append(noResultsContainer);
 		return;
@@ -88,6 +90,6 @@ export async function filterResults() {
 	});
 }
 
-searchInput?.addEventListener("input", () => {
-	filterResults();
+searchInput?.addEventListener("input", async () => {
+	await filterResults();
 });

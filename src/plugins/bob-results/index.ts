@@ -1,19 +1,23 @@
-import { type BobWindowState, defineBobPlugin } from "../../core/BobPlugin";
+import { defineBobPlugin } from "../../core/BobPlugin";
 import { Result } from "../../core/components/result/result";
 import { DEFAULT_CONFIG, setConfig } from "../../core/config";
 import { iconBob, iconFromString } from "../../core/icons";
+import type { Locale } from "../../core/locales";
 import { NewLocales } from "../../core/locales/new-locales";
 import { DEFAULT_USAGE, setUsage } from "../../core/usage";
 import { focusLastActiveWindow } from "../../core/util/last-active-window";
 import enUS from "./locales/en-US";
 
-const { t } = NewLocales({
+const { t, setLocale } = NewLocales({
 	"en-US": enUS,
 });
 
 export default defineBobPlugin({
 	name() {
 		return "Bob";
+	},
+	onLocalChange(locale: Locale) {
+		setLocale(locale);
 	},
 	prefix: "bob",
 	description() {
@@ -45,8 +49,8 @@ class BobOpenOptions extends Result {
 		return iconFromString(iconBob);
 	}
 	async execute(): Promise<void> {
-		chrome.runtime.openOptionsPage();
-		focusLastActiveWindow();
+		await chrome.runtime.openOptionsPage();
+		await focusLastActiveWindow();
 	}
 }
 
@@ -62,8 +66,8 @@ class BobResetOptions extends Result {
 	}
 
 	async execute(): Promise<void> {
-		setConfig(DEFAULT_CONFIG);
-		focusLastActiveWindow();
+		await setConfig(DEFAULT_CONFIG);
+		await focusLastActiveWindow();
 	}
 }
 
@@ -78,8 +82,8 @@ class BobResetUsage extends Result {
 		return iconFromString(iconBob);
 	}
 	async execute(): Promise<void> {
-		setUsage(DEFAULT_USAGE);
-		focusLastActiveWindow();
+		await setUsage(DEFAULT_USAGE);
+		await focusLastActiveWindow();
 	}
 }
 class BobShowUsage extends Result {
@@ -94,10 +98,10 @@ class BobShowUsage extends Result {
 	}
 
 	async execute(): Promise<void> {
-		chrome.tabs.create({
+		await chrome.tabs.create({
 			url: "/src/core/views/usage/index.html",
 		});
-		focusLastActiveWindow();
+		await focusLastActiveWindow();
 	}
 }
 
@@ -113,8 +117,8 @@ class BobOpenPlugins extends Result {
 	}
 
 	async execute(): Promise<void> {
-		chrome.tabs.create({ url: "/src/core/views/plugins/index.html" });
-		focusLastActiveWindow();
+		await chrome.tabs.create({ url: "/src/core/views/plugins/index.html" });
+		await focusLastActiveWindow();
 	}
 }
 
@@ -128,10 +132,10 @@ class BobHelp extends Result {
 	prepend(): HTMLElement | undefined {
 		return iconFromString(iconBob);
 	}
-	async execute(state: BobWindowState): Promise<void> {
-		chrome.tabs.create({
+	async execute(): Promise<void> {
+		await chrome.tabs.create({
 			url: "https://otis11.github.io/bob-command-palette/#faq",
 		});
-		focusLastActiveWindow();
+		await focusLastActiveWindow();
 	}
 }

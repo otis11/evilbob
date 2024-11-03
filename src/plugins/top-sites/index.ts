@@ -6,6 +6,7 @@ import {
 	iconArrowUpBold,
 	iconFromString,
 } from "../../core/icons";
+import type { Locale } from "../../core/locales";
 import { NewLocales } from "../../core/locales/new-locales";
 import { focusLastActiveWindow } from "../../core/util/last-active-window";
 import enUS from "./locales/en-US";
@@ -23,7 +24,9 @@ export default defineBobPlugin({
 	name() {
 		return t("TopSites");
 	},
-
+	onLocalChange(locale: Locale) {
+		setLocale(locale);
+	},
 	async provideResults(): Promise<Result[]> {
 		return (await chrome.topSites.get()).map(
 			(site) => new MostVisitedURL(site),
@@ -53,7 +56,7 @@ export class MostVisitedURL extends Result {
 	}
 
 	async execute(): Promise<void> {
-		chrome.tabs.create({ url: this.site.url });
-		focusLastActiveWindow();
+		await chrome.tabs.create({ url: this.site.url });
+		await focusLastActiveWindow();
 	}
 }

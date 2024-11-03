@@ -14,7 +14,7 @@ import { Select } from "../../components/select";
 import { ShortcutInput } from "../../components/shortcut-input/shortcut-input";
 import {
 	type BobConfig,
-	type KeybindKey,
+	type KeybindingKey,
 	getConfig,
 	updateConfig,
 } from "../../config";
@@ -34,7 +34,7 @@ import { renderFooter } from "./footer";
 	renderLocale(config);
 	renderTheme(config);
 	await renderBobDimensions(config);
-	renderKeybinds(config);
+	renderKeybindings(config);
 	renderSearchOptions(config);
 	renderPluginOptions(config);
 
@@ -82,8 +82,8 @@ function renderLocale(config: BobConfig) {
 		})),
 	);
 
-	locales.addEventListener("change", () => {
-		updateConfig({
+	locales.addEventListener("change", async () => {
+		await updateConfig({
 			locale: locales.value as Locale,
 		});
 	});
@@ -103,8 +103,8 @@ function renderSearchOptions(config: BobConfig) {
 			"Max items that will be rendered in the bob command palette. Recommend to keep low, as more items increases the rendering time.",
 	});
 
-	inputMaxRenderedItems.addEventListener("input", () => {
-		updateConfig({
+	inputMaxRenderedItems.addEventListener("input", async () => {
+		await updateConfig({
 			search: {
 				maxRenderedItems: Number.parseInt(inputMaxRenderedItems.value),
 			},
@@ -138,9 +138,9 @@ function renderPluginOptions(config: BobConfig) {
 						description: obj.description,
 						label: `${plugin.name()}: ${key}`,
 					});
-					input.addEventListener("input", () => {
+					input.addEventListener("input", async () => {
 						if (plugin.id) {
-							updateConfig({
+							await updateConfig({
 								pluginsConfig: {
 									[plugin.id]: {
 										[key]: {
@@ -159,18 +159,18 @@ function renderPluginOptions(config: BobConfig) {
 	document.body.append(container);
 }
 
-function renderKeybinds(config: BobConfig) {
-	const keys = Object.keys(config.keybinds) as KeybindKey[];
+function renderKeybindings(config: BobConfig) {
+	const keys = Object.keys(config.keybindings) as KeybindingKey[];
 	const container = FlexContainer({ gap: "8px", flexDirection: "column" });
-	container.append(GroupHeading("Keybinds"));
+	container.append(GroupHeading("Keybindings"));
 
 	for (const key of keys) {
 		const [inputContainer, input, getKeys] = ShortcutInput(
-			config.keybinds[key]?.keys || [],
+			config.keybindings[key]?.keys || [],
 		);
-		input.addEventListener("blur", () => {
-			updateConfig({
-				keybinds: {
+		input.addEventListener("blur", async () => {
+			await updateConfig({
+				keybindings: {
 					[key]: {
 						keys: getKeys(),
 					},
@@ -178,12 +178,12 @@ function renderKeybinds(config: BobConfig) {
 			});
 		});
 		const title = document.createElement("div");
-		title.innerText = config.keybinds[key]?.title || "";
+		title.innerText = config.keybindings[key]?.title || "";
 		title.style.fontSize = "1rem";
 		title.style.lineHeight = "1";
 
 		const description = document.createElement("div");
-		description.innerText = config.keybinds[key]?.title || "";
+		description.innerText = config.keybindings[key]?.title || "";
 		description.style.fontSize = "0.75rem";
 		container.append(title, description, inputContainer);
 	}

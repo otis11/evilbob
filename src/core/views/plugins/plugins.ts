@@ -16,7 +16,7 @@ export async function renderPlugins(config: BobConfig) {
 		pluginsContainer.append(
 			new PluginMetaResult(
 				plugin,
-				!!config.pluginsEnabled[plugin.id],
+				config.pluginsEnabled[plugin.id],
 			).asHtmlElement(),
 		);
 	}
@@ -64,7 +64,7 @@ function makeFilterPluginsCheckboxes(target: HTMLElement, config: BobConfig) {
 			...plugins.map((plugin) =>
 				new PluginMetaResult(
 					plugin,
-					!!config.pluginsEnabled[plugin.id],
+					config.pluginsEnabled[plugin.id],
 				).asHtmlElement(),
 			),
 		);
@@ -80,8 +80,8 @@ function makeFilterPluginsCheckboxes(target: HTMLElement, config: BobConfig) {
 	});
 	settingsLink.append(iconFromString(iconOpenInNew), Span("Settings"));
 	settingsLink.style.cursor = "pointer";
-	settingsLink.addEventListener("click", () => {
-		chrome.tabs.create({ url: "/src/core/views/options/index.html" });
+	settingsLink.addEventListener("click", async () => {
+		await chrome.tabs.create({ url: "/src/core/views/options/index.html" });
 	});
 	settingsLink.style.color = "var(--bob-color-primary)";
 	document.body.append(settingsLink);

@@ -1,6 +1,7 @@
 import { defineBobPlugin } from "../../core/BobPlugin";
 import { Result } from "../../core/components/result/result";
 import { iconGroup } from "../../core/icons";
+import type { Locale } from "../../core/locales";
 import { NewLocales } from "../../core/locales/new-locales";
 import {
 	focusLastActiveWindow,
@@ -18,6 +19,9 @@ export default defineBobPlugin({
 	},
 	name() {
 		return t("TabGroups");
+	},
+	onLocalChange(locale: Locale) {
+		setLocale(locale);
 	},
 	permissions: ["tabGroups"],
 	supportedBrowsers: ["chrome", "chromium", "edg"],
@@ -54,6 +58,6 @@ class TabGroup extends Result {
 				windowId: lastActiveWindow.id,
 			});
 		}
-		focusLastActiveWindow();
+		await focusLastActiveWindow();
 	}
 }

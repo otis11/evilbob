@@ -2,6 +2,7 @@ import { defineBobPlugin } from "../../core/BobPlugin";
 import { Result } from "../../core/components/result/result";
 import { ShortcutElement } from "../../core/components/shortcut";
 import { iconFromString, iconKeyboardVariant } from "../../core/icons";
+import type { Locale } from "../../core/locales";
 import { NewLocales } from "../../core/locales/new-locales";
 import { isFirefox, isMac } from "../../core/platform";
 import enUS from "./locales/en-US";
@@ -19,7 +20,9 @@ export default defineBobPlugin({
 	},
 	prefix: "sc",
 	icon: iconKeyboardVariant,
-
+	onLocalChange(locale: Locale) {
+		setLocale(locale);
+	},
 	async provideResults(): Promise<Result[]> {
 		const shortcuts = [
 			new Shortcut({
@@ -30,7 +33,7 @@ export default defineBobPlugin({
 			}),
 			// windows
 			new Shortcut({
-				title: t("New Icognito Window"),
+				title: t("New Incognito Window"),
 				shortcut: isMac
 					? new ShortcutElement(["⌘", "Shift", "N"])
 					: isFirefox

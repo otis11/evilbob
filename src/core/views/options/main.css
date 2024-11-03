@@ -1,9 +1,3 @@
-.theme-container {
-	display: flex;
-	flex-wrap: wrap;
-	gap: 16px;
-}
-
 h3 {
 	padding-top: 20px;
 	padding-bottom: 4px;

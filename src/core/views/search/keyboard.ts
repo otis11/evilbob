@@ -20,46 +20,52 @@ import {
 
 (async () => {
 	const config = await getConfig();
-	registerKeysListener(config.keybinds.nextResult?.keys || [], () => {
+	registerKeysListener(config.keybindings.nextResult?.keys || [], () => {
 		selectNextResult();
 	});
-	registerKeysListener(config.keybinds.previousResult?.keys || [], () => {
+	registerKeysListener(config.keybindings.previousResult?.keys || [], () => {
 		selectPrevResult();
 	});
-	registerKeysListener(config.keybinds.selectResult?.keys || [], async () => {
-		const container = isResultOptionsVisible()
-			? resultOptionsContainer
-			: resultsContainer;
-		const target = container.children[getSelectedResultIndex()];
-		const searchResult = Result.instanceFromId(
-			target?.getAttribute("data-instance-id") || "",
-		);
-		setLoading(true);
-		await searchResult?.onSelect(bobWindowState());
-		setLoading(false);
-	});
+	registerKeysListener(
+		config.keybindings.selectResult?.keys || [],
+		async () => {
+			const container = isResultOptionsVisible()
+				? resultOptionsContainer
+				: resultsContainer;
+			const target = container.children[getSelectedResultIndex()];
+			const searchResult = Result.instanceFromId(
+				target?.getAttribute("data-instance-id") || "",
+			);
+			setLoading(true);
+			await searchResult?.onSelect(bobWindowState());
+			setLoading(false);
+		},
+	);
 
-	registerKeysListener(config.keybinds.openResultOptions?.keys || [], () => {
-		const container = isResultOptionsVisible()
-			? resultOptionsContainer
-			: resultsContainer;
-		const target = container.children[getSelectedResultIndex()];
-		const searchResult = Result.instanceFromId(
-			target?.getAttribute("data-instance-id") || "",
-		);
-		if (searchResult) {
-			showResultOptions(searchResult);
-		}
-	});
+	registerKeysListener(
+		config.keybindings.openResultOptions?.keys || [],
+		() => {
+			const container = isResultOptionsVisible()
+				? resultOptionsContainer
+				: resultsContainer;
+			const target = container.children[getSelectedResultIndex()];
+			const searchResult = Result.instanceFromId(
+				target?.getAttribute("data-instance-id") || "",
+			);
+			if (searchResult) {
+				showResultOptions(searchResult);
+			}
+		},
+	);
 
-	registerKeysListener(config.keybinds.close?.keys || [], () => {
+	registerKeysListener(config.keybindings.close?.keys || [], async () => {
 		if (isResultOptionsVisible()) {
-			closeResultOptions();
+			await closeResultOptions();
 			updateSelectedIndex(getLastSelectedResultIndex());
 			searchInput?.focus();
 			document.documentElement.style.overflow = "unset";
 		} else {
-			focusLastActiveWindow();
+			await focusLastActiveWindow();
 		}
 	});
 })();

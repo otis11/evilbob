@@ -2,6 +2,7 @@ import { defineBobPlugin } from "../../core/BobPlugin";
 import { Info } from "../../core/components/result/info";
 import type { Result } from "../../core/components/result/result";
 import { iconFromString, iconNas } from "../../core/icons";
+import type { Locale } from "../../core/locales";
 import { NewLocales } from "../../core/locales/new-locales";
 import { formatBytes } from "../../core/util/format-bytes";
 import enUS from "./locales/en-US";
@@ -17,6 +18,9 @@ export default defineBobPlugin({
 	},
 	name() {
 		return t("SystemStorage");
+	},
+	onLocalChange(locale: Locale) {
+		setLocale(locale);
 	},
 	supportedBrowsers: ["chromium", "chrome", "edg"],
 	prefix: "sto",

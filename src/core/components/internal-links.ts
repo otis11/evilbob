@@ -41,9 +41,9 @@ export function LinkCreateTab(url: string, text: string, onClick?: () => void) {
 	});
 	pluginsLinkElement.append(iconFromString(iconOpenInNew), Span(text));
 	pluginsLinkElement.style.cursor = "pointer";
-	pluginsLinkElement.addEventListener("click", () => {
-		chrome.tabs.create({ url });
+	pluginsLinkElement.addEventListener("click", async () => {
 		onClick?.();
+		await chrome.tabs.create({ url });
 	});
 	pluginsLinkElement.style.color = "var(--bob-color-primary)";
 	return pluginsLinkElement;

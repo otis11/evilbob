@@ -28,7 +28,7 @@ class ResetPage extends Result {
 	description(): string {
 		return "Clears cache, cacheStorage, cookies, localStorage, appcache & indexedDB and reloads";
 	}
-	async execute(state: BobWindowState): Promise<void> {
+	async execute(): Promise<void> {
 		const tab = await getLastActiveTab();
 		if (tab?.id && tab.url) {
 			const url = new URL(tab.url);
@@ -100,7 +100,7 @@ class ClearAllDataSince extends Result {
 			new ClearSinceMilliseconds(() => "All time.", Date.now() - 1000),
 		];
 	}
-	async execute(state: BobWindowState): Promise<void> {
+	async execute(): Promise<void> {
 		this.emitShowOptionsEvent();
 	}
 }

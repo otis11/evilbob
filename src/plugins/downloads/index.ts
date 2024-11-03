@@ -11,6 +11,7 @@ import { NewLocales } from "../../core/locales/new-locales";
 import { formatBytes } from "../../core/util/format-bytes";
 import { focusLastActiveWindow } from "../../core/util/last-active-window";
 
+import type { Locale } from "../../core/locales";
 import enUS from "./locales/en-US";
 
 const { t, setLocale } = NewLocales({
@@ -26,6 +27,9 @@ export default defineBobPlugin({
 	icon: iconDownload,
 	name() {
 		return t("Downloads");
+	},
+	onLocalChange(locale: Locale) {
+		setLocale(locale);
 	},
 	async provideResults(): Promise<Result[]> {
 		const downloads = await chrome.downloads.search({});
@@ -119,7 +123,7 @@ class EraseDownload extends Result {
 
 	public async execute(): Promise<void> {
 		await chrome.downloads.erase({ id: this.item.id });
-		focusLastActiveWindow();
+		await focusLastActiveWindow();
 	}
 }
 
@@ -136,6 +140,6 @@ class RemoveDownload extends Result {
 
 	public async execute(): Promise<void> {
 		await chrome.downloads.removeFile(this.item.id);
-		focusLastActiveWindow();
+		await focusLastActiveWindow();
 	}
 }

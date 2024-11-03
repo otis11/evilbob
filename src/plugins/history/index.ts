@@ -3,11 +3,12 @@ import { Result } from "../../core/components/result/result";
 import type { Tag } from "../../core/components/tags/tags";
 import { getConfig } from "../../core/config";
 import { faviconFromUrl, iconFromString, iconHistory } from "../../core/icons";
+import type { Locale } from "../../core/locales";
 import { NewLocales } from "../../core/locales/new-locales";
 import { focusLastActiveWindow } from "../../core/util/last-active-window";
 import enUS from "./locales/en-US";
 
-const { t } = NewLocales({ "en-US": enUS });
+const { t, setLocale } = NewLocales({ "en-US": enUS });
 
 export default defineBobPlugin({
 	icon: iconHistory,
@@ -24,6 +25,9 @@ export default defineBobPlugin({
 				description: "Max history results",
 			},
 		};
+	},
+	onLocalChange(locale: Locale) {
+		setLocale(locale);
 	},
 	async provideResults(): Promise<Result[]> {
 		const config = await getConfig();
@@ -79,8 +83,8 @@ export class HistoryItem extends Result {
 
 	async execute(): Promise<void> {
 		if (this.item.url) {
-			chrome.tabs.create({ url: this.item.url });
-			focusLastActiveWindow();
+			await chrome.tabs.create({ url: this.item.url });
+			await focusLastActiveWindow();
 		} else {
 			console.error("history has no url", this);
 		}
@@ -102,7 +106,7 @@ class HistoryRemove extends Result {
 		if (this.item.url) {
 			await chrome.history.deleteUrl({ url: this.item.url });
 			state.closeResultOptions();
-			focusLastActiveWindow();
+			await focusLastActiveWindow();
 		}
 	}
 }

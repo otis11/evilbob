@@ -1,8 +1,8 @@
-const laodingElement = document.getElementById("loading");
+const loadingElement = document.getElementById("loading");
 export function setLoading(isLoading = false) {
 	if (isLoading) {
-		laodingElement?.classList.remove("hidden");
+		loadingElement?.classList.remove("hidden");
 	} else {
-		laodingElement?.classList.add("hidden");
+		loadingElement?.classList.add("hidden");
 	}
 }

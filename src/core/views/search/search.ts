@@ -17,7 +17,7 @@ export function sortResults(
 		if (aa.title.score < bb.title.score) {
 			return 1;
 		}
-		// dont sort after description, just showing the matches in description is enough. recents is more important
+		// don't sort after description, just showing the matches in description is enough. Recent results are more important
 		// same title score, use description
 		// if (aa.description.score > bb.description.score) {
 		// 	return -1;

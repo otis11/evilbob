@@ -69,5 +69,6 @@ function ResultUsageRow(
 	container.append(id, count, lastUsed);
 	return container;
 }
-
-renderUsage();
+(async () => {
+	await renderUsage();
+})();

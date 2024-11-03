@@ -11,6 +11,7 @@ import {
 	iconPin,
 	iconTab,
 } from "../../core/icons";
+import type { Locale } from "../../core/locales";
 import { NewLocales } from "../../core/locales/new-locales";
 import { focusLastActiveWindow } from "../../core/util/last-active-window";
 import enUS from "./locales/en-US";
@@ -24,6 +25,9 @@ export default defineBobPlugin({
 	prefix: "t",
 	name() {
 		return t("Tabs");
+	},
+	onLocalChange(locale: Locale) {
+		setLocale(locale);
 	},
 	description() {
 		return t("Tabs.description");
@@ -94,6 +98,6 @@ export class Tab extends Result {
 			tabs: [this.tab.index],
 			windowId: this.tab.windowId,
 		});
-		focusLastActiveWindow();
+		await focusLastActiveWindow();
 	}
 }

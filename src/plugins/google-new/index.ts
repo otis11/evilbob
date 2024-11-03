@@ -2,6 +2,7 @@ import { defineBobPlugin } from "../../core/BobPlugin";
 import { GoToUrl } from "../../core/components/result/go-to-url";
 import type { Result } from "../../core/components/result/result";
 import { iconFromString, iconGoogle } from "../../core/icons";
+import type { Locale } from "../../core/locales";
 import { NewLocales } from "../../core/locales/new-locales";
 import enUS from "./locales/en-US";
 
@@ -17,6 +18,9 @@ export default defineBobPlugin({
 
 	name() {
 		return t("GoogleNew");
+	},
+	onLocalChange(locale: Locale) {
+		setLocale(locale);
 	},
 	async provideResults(): Promise<Result[]> {
 		return [

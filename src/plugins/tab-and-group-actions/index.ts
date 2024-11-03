@@ -1,5 +1,6 @@
 import { defineBobPlugin } from "../../core/BobPlugin";
 import { Result } from "../../core/components/result/result";
+import type { Locale } from "../../core/locales";
 import { NewLocales } from "../../core/locales/new-locales";
 import {
 	focusLastActiveWindow,
@@ -20,6 +21,9 @@ export default defineBobPlugin({
 	},
 	name() {
 		return t("TabGroupActions");
+	},
+	onLocalChange(locale: Locale) {
+		setLocale(locale);
 	},
 	supportedBrowsers: ["chrome", "chromium", "edg"],
 

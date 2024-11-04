@@ -7,9 +7,15 @@ Hi! This is Bob, a command palette for your browser.
 - **Themes**: Choose your favorite color theme plugin.
 
 # Documentation
+- [Installation](#installation)
 - [Plugins](https://otis11.github.io/bob-command-palette/#pluginsh)
 - [FAQ](https://otis11.github.io/bob-command-palette/#faq)
 - [Contributing](./CONTRIBUTING.md)
 - [Code of Conduct](./CODE_OF_CONDUCT.md)
 
 ![Bob Screenshot](./src/core/assets/bob-screenshot-browser.png)
+
+# Installation
+- [Chrome](#bob)
+- [Firefox](https://addons.mozilla.org/de/firefox/addon/bob-command-palette/)
+- [Edge](#bob)

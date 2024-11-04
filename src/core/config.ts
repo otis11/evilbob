@@ -5,7 +5,7 @@ import type { Locale } from "./locales";
 import type { Dimensions } from "./theme";
 import { deepMerge } from "./util/deep-merge";
 
-let configCache: BobConfig;
+let configCache: BobConfig | null = null;
 
 export type KeybindingKey = keyof typeof defaultKeybindings;
 
@@ -77,7 +77,7 @@ export const DEFAULT_CONFIG: BobConfig = {
 };
 
 export async function updateConfig(newConfig: Partial<BobConfig>) {
-	const currentConfig = await getConfig();
+	const currentConfig = await getConfig(true);
 
 	const newMergedConfig = deepMerge(currentConfig, newConfig);
 	await chrome.storage.sync.set({
@@ -108,11 +108,15 @@ export async function setConfig(newConfig: Partial<BobConfig>) {
 	});
 }
 
-export async function getConfig(): Promise<BobConfig> {
+export async function getConfig(refreshCache = false): Promise<BobConfig> {
+	if (refreshCache) {
+		configCache = null;
+	}
+
 	if (!configCache) {
 		configCache =
 			(await chrome.storage.sync.get(["config"])).config ||
 			DEFAULT_CONFIG;
 	}
-	return configCache;
+	return configCache || DEFAULT_CONFIG;
 }

@@ -36,7 +36,7 @@ class GroupTabsByDomain extends Result {
 	title(): string {
 		return t("GroupTabsByDomain");
 	}
-	public async execute(): Promise<void> {
+	public async run(): Promise<void> {
 		const tabs = await getLastActiveWindowTabs();
 		const lastActiveWindow = await getLastActiveWindow();
 
@@ -76,7 +76,7 @@ class UngroupTabs extends Result {
 		return t("Ungroup Tabs");
 	}
 
-	async execute(): Promise<void> {
+	async run(): Promise<void> {
 		const tabs = await getLastActiveWindowTabs();
 		await chrome.tabs.ungroup(
 			tabs.map((tab) => tab.id).filter((id) => id !== undefined),

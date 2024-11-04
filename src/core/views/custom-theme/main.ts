@@ -32,7 +32,7 @@ class MockResult extends Result {
 		];
 	}
 
-	async execute(): Promise<void> {}
+	async run(): Promise<void> {}
 
 	prepend(): HTMLElement | undefined {
 		return iconFromString(iconChevronDoubleRight);

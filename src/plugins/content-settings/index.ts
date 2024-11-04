@@ -75,7 +75,7 @@ class CSJavascript extends Result {
 		super();
 	}
 
-	async execute(): Promise<void> {
+	async run(): Promise<void> {
 		const tab = await getLastActiveTab();
 		if (tab?.url) {
 			const url = new URL(tab.url);

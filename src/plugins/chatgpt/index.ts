@@ -39,7 +39,7 @@ export class ChatGPTStartChat extends Result {
 	prepend(): HTMLElement | undefined {
 		return iconFromString(iconBrain);
 	}
-	async execute(): Promise<void> {
+	async run(): Promise<void> {
 		this.emitShowOptionsEvent();
 	}
 }
@@ -63,7 +63,7 @@ export class ChatGPTStartChatQuery extends Result {
 		return iconFromString(iconBrain);
 	}
 
-	async execute(state: BobWindowState): Promise<void> {
+	async run(state: BobWindowState): Promise<void> {
 		const query = encodeURI(state.currentSearch.text);
 		await chrome.tabs.create({ url: `https://chatgpt.com?q=${query}` });
 		await focusLastActiveWindow();

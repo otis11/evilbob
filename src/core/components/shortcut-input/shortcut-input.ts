@@ -12,14 +12,14 @@ export function ShortcutInput(defaultKeys: string[]) {
 	input.autocomplete = "off";
 	let keysPressedDown: Record<string, boolean> = {};
 
-	fake.innerHTML = new ShortcutElement(defaultKeys).asHtmlElement().outerHTML;
+	fake.innerHTML = ShortcutElement(defaultKeys).outerHTML;
 
 	input.addEventListener("keydown", (keyboardEvent) => {
 		keyboardEvent.preventDefault();
 		keysPressedDown[normalizeKey(keyboardEvent.key)] = true;
-		fake.innerHTML = new ShortcutElement(
+		fake.innerHTML = ShortcutElement(
 			Object.keys(keysPressedDown),
-		).asHtmlElement().outerHTML;
+		).outerHTML;
 	});
 	input.addEventListener("keyup", (keyboardEvent) => {
 		// this only needs to be tracked because of macOS and the Meta key. The Meta key does not trigger a keyup event for keys while its pressed.

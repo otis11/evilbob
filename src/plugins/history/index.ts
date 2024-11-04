@@ -81,7 +81,7 @@ export class HistoryItem extends Result {
 		return this.className() + this.item.id;
 	}
 
-	async execute(): Promise<void> {
+	async run(): Promise<void> {
 		if (this.item.url) {
 			await chrome.tabs.create({ url: this.item.url });
 			await focusLastActiveWindow();
@@ -102,7 +102,7 @@ class HistoryRemove extends Result {
 		super();
 	}
 
-	public async execute(state: BobWindowState): Promise<void> {
+	public async run(state: BobWindowState): Promise<void> {
 		if (this.item.url) {
 			await chrome.history.deleteUrl({ url: this.item.url });
 			state.closeResultOptions();

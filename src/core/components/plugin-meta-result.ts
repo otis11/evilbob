@@ -12,7 +12,7 @@ export class PluginMetaResult extends Result {
 		super();
 	}
 
-	async execute(): Promise<void> {}
+	async run(): Promise<void> {}
 
 	protected afterElementCreation(): void {
 		this.rootEl?.addEventListener("click", async () => {

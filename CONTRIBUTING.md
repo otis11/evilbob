@@ -65,7 +65,7 @@ export class ExampleResult extends Result {
 		return 'Hello World!';
 	}
 
-	async execute(): Promise<void> {
+	async run(): Promise<void> {
 		alert('Result is selected!')
 	}
 }

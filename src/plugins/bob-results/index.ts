@@ -48,7 +48,7 @@ class BobOpenOptions extends Result {
 	prepend(): HTMLElement | undefined {
 		return iconFromString(iconBob);
 	}
-	async execute(): Promise<void> {
+	async run(): Promise<void> {
 		await chrome.runtime.openOptionsPage();
 		await focusLastActiveWindow();
 	}
@@ -65,7 +65,7 @@ class BobResetOptions extends Result {
 		return iconFromString(iconBob);
 	}
 
-	async execute(): Promise<void> {
+	async run(): Promise<void> {
 		await setConfig(DEFAULT_CONFIG);
 		await focusLastActiveWindow();
 	}
@@ -81,7 +81,7 @@ class BobResetUsage extends Result {
 	prepend(): HTMLElement | undefined {
 		return iconFromString(iconBob);
 	}
-	async execute(): Promise<void> {
+	async run(): Promise<void> {
 		await setUsage(DEFAULT_USAGE);
 		await focusLastActiveWindow();
 	}
@@ -97,7 +97,7 @@ class BobShowUsage extends Result {
 		return iconFromString(iconBob);
 	}
 
-	async execute(): Promise<void> {
+	async run(): Promise<void> {
 		await chrome.tabs.create({
 			url: "/src/core/views/usage/index.html",
 		});
@@ -116,7 +116,7 @@ class BobOpenPlugins extends Result {
 		return iconFromString(iconBob);
 	}
 
-	async execute(): Promise<void> {
+	async run(): Promise<void> {
 		await chrome.tabs.create({ url: "/src/core/views/plugins/index.html" });
 		await focusLastActiveWindow();
 	}
@@ -132,7 +132,7 @@ class BobHelp extends Result {
 	prepend(): HTMLElement | undefined {
 		return iconFromString(iconBob);
 	}
-	async execute(): Promise<void> {
+	async run(): Promise<void> {
 		await chrome.tabs.create({
 			url: "https://otis11.github.io/bob-command-palette/#faq",
 		});

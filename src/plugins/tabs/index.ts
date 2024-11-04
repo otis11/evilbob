@@ -93,7 +93,7 @@ export class Tab extends Result {
 		return this.className() + this.tab.id;
 	}
 
-	async execute(state: BobWindowState): Promise<void> {
+	async run(state: BobWindowState): Promise<void> {
 		await chrome.tabs.highlight({
 			tabs: [this.tab.index],
 			windowId: this.tab.windowId,

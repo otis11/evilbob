@@ -41,7 +41,7 @@ export class CloseOtherWindows extends Result {
 		return iconFromString(iconWindowClose);
 	}
 
-	async execute(): Promise<void> {
+	async run(): Promise<void> {
 		const lastActiveWindow = await getLastActiveWindow();
 		const windows = await chrome.windows.getAll();
 		for (const w of windows) {

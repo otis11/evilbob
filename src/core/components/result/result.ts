@@ -151,10 +151,10 @@ export abstract class Result {
 				[this.id()]: usage,
 			},
 		});
-		await this.execute(state);
+		await this.run(state);
 	}
 
-	abstract execute(state: BobWindowState): Promise<void>;
+	abstract run(state: BobWindowState): Promise<void>;
 
 	protected afterElementCreation() {}
 

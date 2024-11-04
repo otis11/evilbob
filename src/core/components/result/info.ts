@@ -37,5 +37,5 @@ export class Info extends Result {
 		return this.className() + this.title();
 	}
 
-	async execute(): Promise<void> {}
+	async run(): Promise<void> {}
 }

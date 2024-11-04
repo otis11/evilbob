@@ -1,6 +1,6 @@
 import { defineBobPlugin } from "../../core/BobPlugin";
-import { GoToUrl } from "../../core/components/result/go-to-url";
 import type { Result } from "../../core/components/result/result";
+import { NewUrlResult } from "../../core/components/result/simpe-result.ts";
 import { iconFromString, iconGoogle } from "../../core/icons";
 import type { Locale } from "../../core/locales";
 import { NewLocales } from "../../core/locales/new-locales";
@@ -24,37 +24,37 @@ export default defineBobPlugin({
 	},
 	async provideResults(): Promise<Result[]> {
 		return [
-			new GoToUrl({
+			NewUrlResult({
 				title: t("GoogleNewDocs.title"),
 				description: t("GoogleNewDocs.description"),
 				url: "https://docs.new",
 				prepend: iconFromString(iconGoogle),
 			}),
-			new GoToUrl({
+			NewUrlResult({
 				title: t("GoogleNewSlides.title"),
 				description: t("GoogleNewSlides.description"),
 				url: "https://slides.new",
 				prepend: iconFromString(iconGoogle),
 			}),
-			new GoToUrl({
+			NewUrlResult({
 				title: t("GoogleNewSheets.title"),
 				description: t("GoogleNewSheets.description"),
 				url: "https://sheets.new",
 				prepend: iconFromString(iconGoogle),
 			}),
-			new GoToUrl({
+			NewUrlResult({
 				title: t("GoogleNewSites.title"),
 				description: t("GoogleNewSites.description"),
 				url: "https://sites.new",
 				prepend: iconFromString(iconGoogle),
 			}),
-			new GoToUrl({
+			NewUrlResult({
 				title: t("GoogleNewKeep.title"),
 				description: t("GoogleNewKeep.description"),
 				url: "https://keep.new",
 				prepend: iconFromString(iconGoogle),
 			}),
-			new GoToUrl({
+			NewUrlResult({
 				title: t("GoogleNewCal.title"),
 				description: t("GoogleNewCal.description"),
 				url: "https://cal.new",

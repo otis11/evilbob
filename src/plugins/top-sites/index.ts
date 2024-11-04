@@ -55,7 +55,7 @@ export class MostVisitedURL extends Result {
 		return this.className() + this.site.url;
 	}
 
-	async execute(): Promise<void> {
+	async run(): Promise<void> {
 		await chrome.tabs.create({ url: this.site.url });
 		await focusLastActiveWindow();
 	}

@@ -57,7 +57,7 @@ export class Session extends Result {
 		super();
 	}
 
-	async execute(): Promise<void> {
+	async run(): Promise<void> {
 		if (this.session.window?.sessionId) {
 			await chrome.sessions.restore(this.session.window.sessionId);
 		}

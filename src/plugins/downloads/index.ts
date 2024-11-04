@@ -89,7 +89,7 @@ export class Download extends Result {
 	) {
 		super();
 	}
-	async execute(): Promise<void> {
+	async run(): Promise<void> {
 		this.emitShowOptionsEvent();
 	}
 }
@@ -105,7 +105,7 @@ class ShowDownload extends Result {
 		super();
 	}
 
-	public async execute(): Promise<void> {
+	public async run(): Promise<void> {
 		chrome.downloads.show(this.item.id);
 	}
 }
@@ -121,7 +121,7 @@ class EraseDownload extends Result {
 		super();
 	}
 
-	public async execute(): Promise<void> {
+	public async run(): Promise<void> {
 		await chrome.downloads.erase({ id: this.item.id });
 		await focusLastActiveWindow();
 	}
@@ -138,7 +138,7 @@ class RemoveDownload extends Result {
 		super();
 	}
 
-	public async execute(): Promise<void> {
+	public async run(): Promise<void> {
 		await chrome.downloads.removeFile(this.item.id);
 		await focusLastActiveWindow();
 	}

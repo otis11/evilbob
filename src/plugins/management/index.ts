@@ -126,7 +126,7 @@ export class Extension extends Result {
 		super();
 	}
 
-	async execute(): Promise<void> {
+	async run(): Promise<void> {
 		this.emitShowOptionsEvent();
 	}
 

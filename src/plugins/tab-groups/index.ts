@@ -49,7 +49,7 @@ class TabGroup extends Result {
 		super();
 	}
 
-	async execute(): Promise<void> {
+	async run(): Promise<void> {
 		const tabs = await chrome.tabs.query({ groupId: this.group.id });
 		const lastActiveWindow = await getLastActiveWindow();
 		if (tabs[0]?.id) {

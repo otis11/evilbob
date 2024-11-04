@@ -77,7 +77,7 @@ export class GoogleDork extends Result {
 		);
 	}
 
-	async execute(state: BobWindowState): Promise<void> {
+	async run(state: BobWindowState): Promise<void> {
 		await chrome.tabs.create({
 			url: `https://google.com/search?q=${state.currentSearch.text.replace("g", "").trim().replaceAll(" ", "+")}`,
 		});
@@ -112,7 +112,7 @@ export class GoogleSearch extends Result {
 		return iconFromString(iconGoogle);
 	}
 
-	async execute(state: BobWindowState): Promise<void> {
+	async run(state: BobWindowState): Promise<void> {
 		const query =
 			state.currentSearch.words()[0] === "g"
 				? state.currentSearch.text.slice(1).trim()

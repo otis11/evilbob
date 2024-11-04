@@ -83,7 +83,7 @@ export class Bookmark extends Result {
 		return this.className() + this.bookmark.id;
 	}
 
-	async execute(): Promise<void> {
+	async run(): Promise<void> {
 		if (this.bookmark.url) {
 			await chrome.tabs.create({ url: this.bookmark.url });
 			await focusLastActiveWindow();
@@ -105,7 +105,7 @@ class RemoveBookmark extends Result {
 		super();
 	}
 
-	public async execute(state: BobWindowState): Promise<void> {
+	public async run(state: BobWindowState): Promise<void> {
 		await chrome.bookmarks.remove(this.bookmark.id);
 		state.closeResultOptions();
 		await focusLastActiveWindow();

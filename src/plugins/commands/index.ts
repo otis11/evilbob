@@ -44,9 +44,7 @@ export class ResultCommand extends Result {
 	}
 
 	append(): HTMLElement | undefined {
-		return new ShortcutElement(
-			(this.command.shortcut || "").split(""),
-		).asHtmlElement();
+		return ShortcutElement((this.command.shortcut || "").split(""));
 	}
 	constructor(private command: chrome.commands.Command) {
 		super();
@@ -55,5 +53,5 @@ export class ResultCommand extends Result {
 	public id(): string {
 		return this.className() + this.command.name;
 	}
-	async execute(): Promise<void> {}
+	async run(): Promise<void> {}
 }

@@ -63,7 +63,7 @@ export class Prefix extends Result {
 		return this.className() + this.title();
 	}
 
-	async execute(state: BobWindowState): Promise<void> {
+	async run(state: BobWindowState): Promise<void> {
 		if (state.currentSearch.inputElement) {
 			state.currentSearch.inputElement.value = this.title();
 			state.currentSearch.inputElement.scrollIntoView();

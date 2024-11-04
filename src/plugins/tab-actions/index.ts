@@ -1,5 +1,7 @@
 import { type BobWindowState, defineBobPlugin } from "../../core/BobPlugin";
 import { Result } from "../../core/components/result/result";
+import { NewResult } from "../../core/components/result/simpe-result.ts";
+import { ShortcutElement } from "../../core/components/shortcut.ts";
 import {
 	iconArrowVerticalSplit,
 	iconFromString,
@@ -15,6 +17,7 @@ import {
 } from "../../core/icons";
 import type { Locale } from "../../core/locales";
 import { NewLocales } from "../../core/locales/new-locales";
+import { isFirefox, isMac } from "../../core/platform.ts";
 import { getLastActiveTab } from "../../core/util/last-active-tab";
 import {
 	focusLastActiveWindow,
@@ -55,6 +58,47 @@ export default defineBobPlugin({
 			new MergeWindows(),
 			new CloseBySearch(tabs),
 			new SplitIntoWindows(),
+			NewResult({
+				title: "New incognito tab",
+				run: async () => {
+					await chrome.windows.create({ incognito: true });
+				},
+				append: isMac
+					? ShortcutElement(["⌘", "Shift", "N"])
+					: isFirefox
+						? ShortcutElement(["Ctrl", "Shift", "P"])
+						: ShortcutElement(["Ctrl", "Shift", "N"]),
+			}),
+			NewResult({
+				title: "New tab",
+				run: async () => {
+					await chrome.tabs.create({ active: true });
+				},
+				append: isMac
+					? ShortcutElement(["⌘", "T"])
+					: ShortcutElement(["Ctrl", "T"]),
+			}),
+			NewResult({
+				title: "Close tab",
+				run: async () => {
+					const lastTab = await getLastActiveTab();
+					if (lastTab?.id) {
+						await chrome.tabs.remove(lastTab.id);
+					}
+				},
+				append: isMac
+					? ShortcutElement(["⌘", "W"])
+					: ShortcutElement(["Ctrl", "W"]),
+			}),
+			NewResult({
+				title: "Restore tabs",
+				run: async () => {
+					await chrome.sessions.restore();
+				},
+				append: isMac
+					? ShortcutElement(["⌘", "Shift", "T"])
+					: ShortcutElement(["Ctrl", "Shift", "T"]),
+			}),
 		];
 	},
 });
@@ -68,7 +112,7 @@ class TabDuplicate extends Result {
 		return iconFromString(iconTabPlus);
 	}
 
-	async execute(): Promise<void> {
+	async run(): Promise<void> {
 		const lastActive = await getLastActiveTab();
 		if (lastActive?.id) {
 			await chrome.tabs.duplicate(lastActive.id);
@@ -85,7 +129,7 @@ class TabMute extends Result {
 		return iconFromString(iconMusicOff);
 	}
 
-	async execute(): Promise<void> {
+	async run(): Promise<void> {
 		const lastActive = await getLastActiveTab();
 		if (lastActive?.id) {
 			await chrome.tabs.update(lastActive.id, { muted: true });
@@ -102,7 +146,7 @@ class TabUnmute extends Result {
 		return iconFromString(iconMusic);
 	}
 
-	async execute(): Promise<void> {
+	async run(): Promise<void> {
 		const lastActive = await getLastActiveTab();
 		if (lastActive?.id) {
 			await chrome.tabs.update(lastActive.id, { muted: false });
@@ -120,7 +164,7 @@ class TabPin extends Result {
 		return iconFromString(iconPin);
 	}
 
-	async execute(): Promise<void> {
+	async run(): Promise<void> {
 		const lastActive = await getLastActiveTab();
 		if (lastActive?.id) {
 			await chrome.tabs.update(lastActive.id, { pinned: true });
@@ -137,7 +181,7 @@ class TabUnpin extends Result {
 		return iconFromString(iconPinOff);
 	}
 
-	async execute(): Promise<void> {
+	async run(): Promise<void> {
 		const lastActive = await getLastActiveTab();
 		if (lastActive?.id) {
 			await chrome.tabs.update(lastActive.id, { pinned: false });
@@ -153,7 +197,7 @@ export class SortTabsByUrl extends Result {
 	prepend(): HTMLElement | undefined {
 		return iconFromString(iconSortAlphabetically);
 	}
-	async execute(): Promise<void> {
+	async run(): Promise<void> {
 		const tabs = await getLastActiveWindowTabs();
 
 		const tabsSortedByUrl = tabs.sort((a, b) => {
@@ -203,7 +247,7 @@ export class MergeWindows extends Result {
 	prepend(): HTMLElement | undefined {
 		return iconFromString(iconWindowRestore);
 	}
-	async execute(): Promise<void> {
+	async run(): Promise<void> {
 		const lastWindow = await getLastActiveWindow();
 		const tabs = await chrome.tabs.query({});
 		const tabsNotInLastWindow = tabs
@@ -225,7 +269,7 @@ export class SplitIntoWindows extends Result {
 		return iconFromString(iconArrowVerticalSplit);
 	}
 
-	async execute(): Promise<void> {
+	async run(): Promise<void> {
 		const tabs = await getLastActiveWindowTabs();
 		const promises = [];
 		for (const tab of tabs) {
@@ -244,7 +288,7 @@ export class CloseOtherTabs extends Result {
 		return iconFromString(iconTabRemove);
 	}
 
-	async execute(): Promise<void> {
+	async run(): Promise<void> {
 		const tabs = await getLastActiveWindowTabs();
 		const lastActiveTab = await getLastActiveTab();
 		const promises = [];
@@ -279,13 +323,13 @@ export class CloseBySearch extends Result {
 		return iconFromString(iconTabRemove);
 	}
 
-	async execute(): Promise<void> {
+	async run(): Promise<void> {
 		this.emitShowOptionsEvent();
 	}
 }
 
 class TabsCloseBySearch extends Tab {
-	async execute(state: BobWindowState): Promise<void> {
+	async run(state: BobWindowState): Promise<void> {
 		const currentWindow = await chrome.windows.getCurrent();
 		for (const result of state.results) {
 			if (

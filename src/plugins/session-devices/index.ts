@@ -52,5 +52,5 @@ export class SessionDevice extends Result {
 	constructor(private device: chrome.sessions.Device) {
 		super();
 	}
-	async execute(): Promise<void> {}
+	async run(): Promise<void> {}
 }

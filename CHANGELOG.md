@@ -1,3 +1,10 @@
+## 0.4.0 (November 05, 2024)
+- Add `Browser Settings` plugin
+- Add `New tab`, `New incognito tab`, `Close tab` and `Restore tabs` to `tab-actions`
+- Fix: remove the `scripting` permission as it was unused
+- Refactor: minor code improvements.
+
+
 ## 0.3.1 - 0.3.7 (November 02, 2024)
 - Buildout fixes: Don't include extra folders in browser.zip file
 - bob-command-palette icon fixes: Make icons pixel perfect

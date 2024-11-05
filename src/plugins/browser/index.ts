@@ -42,8 +42,8 @@ export default defineBobPlugin({
 					url: "chrome://bookmarks",
 					title: "Open Bookmarks",
 					append: isMac
-						? ShortcutElement(["⌘", "⌥", "L"])
-						: ShortcutElement(["Ctrl", "J"]),
+						? ShortcutElement(["⌘", "⌥", "B"])
+						: ShortcutElement(["Ctrl", "Shift", "O"]),
 				}),
 				NewUrlResult({
 					title: "Open Browser Settings",

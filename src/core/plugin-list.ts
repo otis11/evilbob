@@ -128,7 +128,9 @@ export const PLUGIN_LIST = [
 	},
 	{
 		id: "browser",
-		name: "browser",
+		prefix: "cfg",
+		name: "Browser Settings",
+		supportedBrowsers: ["chrome", "chromium", "edg"],
 		providesTheme: false,
 		providesResults: true,
 		providesConfig: false,

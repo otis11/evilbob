@@ -19,4 +19,4 @@ Hi! This is Bob, a command palette for your browser.
 # Installation
 - [Chrome](#bob)
 - [Firefox](https://addons.mozilla.org/de/firefox/addon/bob-command-palette/)
-- [Edge](#bob)
+- [Edge](https://microsoftedge.microsoft.com/addons/detail/bobcommandpalette/nikplhepafilmghdhfkkkbjogblchima)

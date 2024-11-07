@@ -17,6 +17,6 @@ Hi! This is Bob, a command palette for your browser.
 ![Bob Screenshot](./src/core/assets/bob-screenshot-browser.png)
 
 # Installation
-- [Chrome](#bob)
+- [Chrome](https://chromewebstore.google.com/detail/bob-command-palette/ofdklnmcjbihdajkbnfjpcamifkpngdl)
 - [Firefox](https://addons.mozilla.org/de/firefox/addon/bob-command-palette/)
 - [Edge](https://microsoftedge.microsoft.com/addons/detail/bobcommandpalette/nikplhepafilmghdhfkkkbjogblchima)

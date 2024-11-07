@@ -1,3 +1,7 @@
+## 0.4.1 (November 07, 2024)
+- Update manifest name from `bob-command-palette` to `Bob, a command palette for your browser.`
+- Add correct extension store links for firefox, edge & chrome
+
 ## 0.4.0 (November 05, 2024)
 - Add `Browser Settings` plugin
 - Add `New tab`, `New incognito tab`, `Close tab` and `Restore tabs` to `tab-actions`

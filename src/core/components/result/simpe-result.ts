@@ -23,6 +23,7 @@ type NewUrlConfig = {
 	tags?: Tag[];
 	prepend?: HTMLElement;
 	append?: HTMLElement;
+	options?: Result[];
 };
 
 type SimpleResultConfig = {
@@ -32,6 +33,7 @@ type SimpleResultConfig = {
 	prepend?: HTMLElement;
 	append?: HTMLElement;
 	run?: () => Promise<void>;
+	options?: Result[];
 };
 
 export class SimpleResult extends Result {
@@ -53,6 +55,10 @@ export class SimpleResult extends Result {
 
 	append(): HTMLElement | undefined {
 		return this.config.append;
+	}
+
+	options(): Result[] | undefined {
+		return this.config.options || [];
 	}
 
 	constructor(private config: SimpleResultConfig) {

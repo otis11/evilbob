@@ -99,6 +99,15 @@ export default defineBobPlugin({
 					? ShortcutElement(["⌘", "Shift", "T"])
 					: ShortcutElement(["Ctrl", "Shift", "T"]),
 			}),
+			NewResult({
+				title: "Reload and clear cache (doesn't clear cookies)",
+				run: async () => {
+					const tab = await getLastActiveTab();
+					if (tab?.id) {
+						await chrome.tabs.reload(tab.id, { bypassCache: true });
+					}
+				},
+			}),
 		];
 	},
 });

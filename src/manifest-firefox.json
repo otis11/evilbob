@@ -42,9 +42,10 @@
 		"sessions",
 		"topSites",
 		"downloads",
-		"browsingData"
+		"browsingData",
+		"cookies"
 	],
-	"optional_host_permissions": ["https://*/*"],
+	"optional_host_permissions": ["https://*/*", "http://*/*"],
 	"browser_specific_settings": {
 		"gecko": {
 			"id": "{b9b3ea58-ee1c-4d96-8b6e-9548ff99fa5b}",

@@ -23,10 +23,10 @@ class ResetPage extends Result {
 		return iconFromString(iconDeleteSweep);
 	}
 	title(): string {
-		return "Reset Page";
+		return "Reset Page (slow)";
 	}
 	description(): string {
-		return "Clears cache, cacheStorage, cookies, localStorage, appcache & indexedDB and reloads";
+		return "Clears cache, cookies, localStorage and reloads";
 	}
 	async run(): Promise<void> {
 		const tab = await getLastActiveTab();
@@ -38,11 +38,8 @@ class ResetPage extends Result {
 				},
 				{
 					cache: true,
-					cacheStorage: true,
 					cookies: true,
 					localStorage: true,
-					appcache: true,
-					indexedDB: true,
 				},
 			);
 			await chrome.tabs.reload(tab.id, { bypassCache: true });

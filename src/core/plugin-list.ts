@@ -250,6 +250,18 @@ export const PLUGIN_LIST = [
 		canBeDisabled: true,
 	},
 	{
+		id: "tab-cookies",
+		permissions: ["tabs", "cookies"],
+		hostPermissions: ["https://*/*", "http://*/*"],
+		prefix: "tc",
+		name: "Tab Cookies",
+		providesTheme: false,
+		providesResults: true,
+		providesConfig: false,
+		file: "/plugins/tab-cookies.js",
+		canBeDisabled: true,
+	},
+	{
 		id: "bob-results",
 		prefix: "bob",
 		name: "Bob",

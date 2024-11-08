@@ -48,7 +48,8 @@
 		"commands",
 		"downloads",
 		"tabGroups",
-		"browsingData"
+		"browsingData",
+		"cookies"
 	],
-	"optional_host_permissions": ["https://*/*"]
+	"optional_host_permissions": ["https://*/*", "http://*/*"]
 }

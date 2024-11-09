@@ -42,6 +42,8 @@ export type BobWindowState = {
 	locale: Locale;
 	closeResultOptions: () => Promise<void>;
 	results: Result[];
+	filterResults: () => Promise<void>;
+	loadFreshData: () => Promise<void>;
 };
 
 export type BobPluginConfig = {

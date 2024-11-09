@@ -37,7 +37,7 @@ type SimpleResultConfig = {
 	options?: Result[];
 };
 
-export class SimpleResult extends Result {
+class SimpleResult extends Result {
 	description(): string {
 		return this.config.description || "";
 	}

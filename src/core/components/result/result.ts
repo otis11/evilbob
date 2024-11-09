@@ -142,10 +142,12 @@ export abstract class Result {
 			usage = {
 				c: 0,
 				l: 0,
+				t: "",
 			};
 		}
 		usage.l = new Date().getTime();
 		usage.c += 1;
+		usage.t = this.title();
 		await updateUsage({
 			results: {
 				[this.id()]: usage,

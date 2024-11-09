@@ -23,7 +23,6 @@ export default defineBobPlugin({
 		}
 		const domain = getDomainWithoutSubdomains(tab.url);
 		const cookies = await chrome.cookies.getAll({ domain });
-		console.log(cookies, domain);
 		const cookieResults = cookies.map((cookie) => {
 			const tags: Tag[] = [{ text: cookie.domain }];
 			if (cookie.httpOnly) {

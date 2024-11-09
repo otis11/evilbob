@@ -27,7 +27,7 @@ async function renderUsage() {
 	});
 
 	const header = ResultUsageRow(
-		coreI18n.t("Id"),
+		"Name",
 		coreI18n.t("Count"),
 		coreI18n.t("Last used"),
 	);
@@ -36,7 +36,7 @@ async function renderUsage() {
 	for (const key of resultKeys) {
 		document.body.append(
 			ResultUsageRow(
-				key,
+				usage.results[key]?.t || key,
 				(usage.results[key]?.c || 0).toString(),
 				usage.results[key]?.l
 					? unixTimeToHumanReadable(usage.results[key]?.l)
@@ -47,7 +47,7 @@ async function renderUsage() {
 }
 
 function ResultUsageRow(
-	idText: string,
+	nameText: string,
 	countText: string,
 	lastUsedText: string,
 ) {
@@ -58,15 +58,15 @@ function ResultUsageRow(
 	lastUsed.classList.add("result-usage-last");
 	lastUsed.innerText = lastUsedText;
 
-	const id = document.createElement("div");
-	id.classList.add("result-usage-id");
-	id.innerText = idText;
+	const name = document.createElement("div");
+	name.classList.add("result-usage-name");
+	name.innerText = nameText;
 
 	const count = document.createElement("div");
 	count.classList.add("result-usage-count");
 	count.innerText = countText;
 
-	container.append(id, count, lastUsed);
+	container.append(name, count, lastUsed);
 	return container;
 }
 (async () => {

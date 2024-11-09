@@ -1,5 +1,6 @@
 import type { Result } from "../../components/result/result";
 import { PLUGINS_LOADED_PROVIDE_RESULTS } from "../../plugins";
+import { filterResults } from "./results.ts";
 
 let pluginResults: Result[][] = [];
 
@@ -12,4 +13,5 @@ export async function loadFreshData() {
 		plugin.provideResults?.(),
 	).filter((r) => r !== undefined);
 	pluginResults = [...(await Promise.all(promises))];
+	await filterResults();
 }

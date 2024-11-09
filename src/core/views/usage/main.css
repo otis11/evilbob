@@ -29,7 +29,7 @@ h3 {
 	background-color: var(--bob-color-base-content-300);
 }
 
-.result-usage-id {
+.result-usage-name {
 	flex: 1;
 	overflow: hidden;
 	text-overflow: ellipsis;

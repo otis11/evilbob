@@ -102,6 +102,7 @@ export class Extension extends Result {
 				run: async (state: BobWindowState) => {
 					await chrome.management.uninstall(this.extension.id);
 					await state.closeResultOptions();
+					await state.loadFreshData();
 				},
 			}),
 		];

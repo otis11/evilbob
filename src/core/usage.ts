@@ -5,6 +5,7 @@ let usageCache: BobUsage;
 export type ResultUsage = {
 	l: number;
 	c: number;
+	t: string;
 };
 export type BobUsage = {
 	results: Record<string, ResultUsage | undefined>;

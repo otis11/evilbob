@@ -33,6 +33,8 @@ export function bobWindowState() {
 		locale: "en-US" as Locale,
 		closeResultOptions,
 		results: getCurrentResults(),
+		filterResults,
+		loadFreshData,
 	};
 }
 

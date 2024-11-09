@@ -1,6 +1,7 @@
 import { defineBobPlugin } from "../../core/BobPlugin";
 import { Info } from "../../core/components/result/info";
 import { Result } from "../../core/components/result/result";
+import { NewResult } from "../../core/components/result/simpe-result.ts";
 import type { Tag } from "../../core/components/tags/tags";
 import {
 	iconFromString,
@@ -9,6 +10,9 @@ import {
 } from "../../core/icons";
 import { type Locale, coreI18n } from "../../core/locales";
 import { NewLocales } from "../../core/locales/new-locales";
+import { closeResultOptions } from "../../core/views/search/result-options.ts";
+import { filterResults } from "../../core/views/search/results.ts";
+import { loadFreshData } from "../../core/views/search/search-data.ts";
 import enUS from "./locales/en-US";
 
 const { t, setLocale } = NewLocales({
@@ -95,6 +99,15 @@ export class Extension extends Result {
 						? { text: t("Yes"), type: "success" }
 						: { text: t("No"), type: "error" },
 				],
+			}),
+			NewResult({
+				title: "Remove/Uninstall Extension",
+				run: async () => {
+					await chrome.management.uninstall(this.extension.id);
+					await closeResultOptions();
+					await loadFreshData();
+					await filterResults();
+				},
 			}),
 		];
 		if (this.extension.hostPermissions) {

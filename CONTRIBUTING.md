@@ -41,9 +41,9 @@ export default defineBobPlugin({
   }
 })
 ```
-Regenerate plugins
+Regenerate plugin data to update the plugin list `src/core` uses.
 ```bash
-bun run scripts/generate-plugins.ts
+bun run gen:plugins
 ```
 
 #### Theme
@@ -90,6 +90,18 @@ export default defineBobPlugin({
 	},
 })
 ```
+
+## Website changes?
+Run dev server:
+```bash
+bun run dev
+```
+Run regenerate website to update the website in `docs`
+```bash
+bun run gen:website
+```
+
+Merge changes into `gh-pages` branch to update the website live.
 
 ## References
 - [Chrome Extension Api Docs](https://developer.chrome.com/docs/extensions/reference/api)

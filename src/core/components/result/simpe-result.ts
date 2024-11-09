@@ -1,3 +1,4 @@
+import type { BobWindowState } from "../../BobPlugin.ts";
 import { focusLastActiveWindow } from "../../util/last-active-window.ts";
 import type { Tag } from "../tags/tags.ts";
 import { Result } from "./result.ts";
@@ -32,7 +33,7 @@ type SimpleResultConfig = {
 	tags?: Tag[];
 	prepend?: HTMLElement;
 	append?: HTMLElement;
-	run?: () => Promise<void>;
+	run?: (state: BobWindowState) => Promise<void>;
 	options?: Result[];
 };
 
@@ -69,7 +70,7 @@ export class SimpleResult extends Result {
 		return this.className() + this.title();
 	}
 
-	async run(): Promise<void> {
-		await this.config.run?.();
+	async run(state: BobWindowState): Promise<void> {
+		await this.config.run?.(state);
 	}
 }

@@ -23,6 +23,8 @@
 		"build": "bun scripts/build.ts --minify",
 		"watch": "bun scripts/build.ts --watch",
 		"preview": "vite preview",
-		"lint": "biome check --write . && tsc"
+		"lint": "biome check --write . && tsc",
+		"gen:plugins": "bun run scripts/generate-plugins.ts",
+		"gen:website": "bun run scripts/generate-website.ts"
 	}
 }

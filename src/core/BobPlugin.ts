@@ -40,7 +40,7 @@ export type BobWindowState = {
 	isOptionsVisible: boolean;
 	optionsSelectedResult: Result;
 	locale: Locale;
-	closeResultOptions: () => void;
+	closeResultOptions: () => Promise<void>;
 	results: Result[];
 };
 

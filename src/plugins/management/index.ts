@@ -1,4 +1,4 @@
-import { defineBobPlugin } from "../../core/BobPlugin";
+import { type BobWindowState, defineBobPlugin } from "../../core/BobPlugin";
 import { Info } from "../../core/components/result/info";
 import { Result } from "../../core/components/result/result";
 import { NewResult } from "../../core/components/result/simpe-result.ts";
@@ -10,9 +10,6 @@ import {
 } from "../../core/icons";
 import { type Locale, coreI18n } from "../../core/locales";
 import { NewLocales } from "../../core/locales/new-locales";
-import { closeResultOptions } from "../../core/views/search/result-options.ts";
-import { filterResults } from "../../core/views/search/results.ts";
-import { loadFreshData } from "../../core/views/search/search-data.ts";
 import enUS from "./locales/en-US";
 
 const { t, setLocale } = NewLocales({
@@ -102,11 +99,9 @@ export class Extension extends Result {
 			}),
 			NewResult({
 				title: "Remove/Uninstall Extension",
-				run: async () => {
+				run: async (state: BobWindowState) => {
 					await chrome.management.uninstall(this.extension.id);
-					await closeResultOptions();
-					await loadFreshData();
-					await filterResults();
+					await state.closeResultOptions();
 				},
 			}),
 		];

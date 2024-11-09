@@ -10,6 +10,9 @@ globalThis.document = {
 		style: {},
 		append: () => {},
 	}),
+	getElementById(elementId: string): HTMLElement | null {
+		return null;
+	},
 };
 
 const pluginFolders = readdirSync(resolve(__dirname, "../src/plugins"));

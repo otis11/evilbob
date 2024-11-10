@@ -38,7 +38,7 @@ export type BobWindowState = {
 	currentSearch: Search;
 	optionsInput: HTMLInputElement;
 	isOptionsVisible: boolean;
-	optionsSelectedResult: Result;
+	optionsSelectedResult: Result | undefined;
 	locale: Locale;
 	closeResultOptions: () => Promise<void>;
 	results: Result[];

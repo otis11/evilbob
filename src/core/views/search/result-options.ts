@@ -7,52 +7,73 @@ import {
 	resultOptionsContainer,
 	resultsContainer,
 	resultsCounter,
+	searchInput,
 	selectedResultForOptions,
 } from "./dom";
+import { bobWindowState } from "./main.ts";
 import { filterResults, setCurrentResults } from "./results";
 import { newSearch, searchResults } from "./search";
 import {
+	getLastSelectedResultIndex,
 	getSelectedResultIndex,
 	setLastSelectedResultIndex,
 	updateSelectedIndex,
 } from "./selected";
 
 let isVisible = false;
-let selectedResult: Result;
+const selectedResultHistory: Result[] = [];
 
 export function isResultOptionsVisible() {
 	return isVisible;
 }
 
 export function getOptionsSelectedResult() {
-	return selectedResult;
+	return selectedResultHistory.at(-1);
 }
 
 export async function closeResultOptions() {
+	selectedResultHistory.pop();
+	optionsSearchInput.value = "";
+	const resultBefore = selectedResultHistory.at(-1);
+	console.log(selectedResultHistory, "history pls");
+	if (selectedResultHistory.length > 0 && resultBefore) {
+		await showResultOptions(resultBefore, false);
+		return;
+	}
 	optionsRoot.style.display = "none";
 	isVisible = false;
-	optionsSearchInput.value = "";
 	await filterResults();
+	updateSelectedIndex(getLastSelectedResultIndex());
+	searchInput?.focus();
+	document.documentElement.style.overflow = "unset";
 }
 
-export async function showResultOptions(searchResult: Result) {
-	isVisible = true;
-	selectedResult = searchResult;
-	document.documentElement.style.overflow = "hidden";
-
-	if (!selectedResult?.options) {
+export async function showResultOptions(
+	searchResult: Result,
+	addToHistory = true,
+) {
+	if (!searchResult?.options) {
 		return;
+	}
+
+	isVisible = true;
+	document.documentElement.style.overflow = "hidden";
+	if (addToHistory) {
+		selectedResultHistory.push(searchResult);
 	}
 	selectedResultForOptions.innerHTML = searchResult.asHtmlElement().outerHTML;
 	setLastSelectedResultIndex(getSelectedResultIndex());
 	optionsRoot.style.display = "flex";
 	resultOptionsContainer.innerHTML = "";
-	resultsContainer.innerHTML = selectedResult.asHtmlElement().outerHTML;
+	resultsContainer.innerHTML = searchResult.asHtmlElement().outerHTML;
+	console.log("hi", searchResult);
+	searchResult.onOptionsOpen(bobWindowState());
 	await filterResultsOptions();
 	optionsSearchInput.focus();
 }
 
 export async function filterResultsOptions() {
+	const selectedResult = getOptionsSelectedResult();
 	const usage = await getUsage();
 	if (!selectedResult?.options) {
 		return;

@@ -135,6 +135,8 @@ export abstract class Result {
 		return this.constructor.name;
 	}
 
+	public onOptionsOpen(state: BobWindowState) {}
+
 	public async onSelect(state: BobWindowState) {
 		const currentUsage = await getUsage();
 		let usage = currentUsage.results[this.id()];

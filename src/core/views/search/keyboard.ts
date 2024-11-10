@@ -2,7 +2,7 @@ import { registerKeysListener } from "../../components/keys";
 import { Result } from "../../components/result/result";
 import { getConfig } from "../../config";
 import { focusLastActiveWindow } from "../../util/last-active-window";
-import { resultOptionsContainer, resultsContainer, searchInput } from "./dom";
+import { resultOptionsContainer, resultsContainer } from "./dom";
 import { setLoading } from "./loading";
 import { bobWindowState } from "./main";
 import {
@@ -11,11 +11,9 @@ import {
 	showResultOptions,
 } from "./result-options";
 import {
-	getLastSelectedResultIndex,
 	getSelectedResultIndex,
 	selectNextResult,
 	selectPrevResult,
-	updateSelectedIndex,
 } from "./selected";
 
 (async () => {
@@ -61,9 +59,6 @@ import {
 	registerKeysListener(config.keybindings.close?.keys || [], async () => {
 		if (isResultOptionsVisible()) {
 			await closeResultOptions();
-			updateSelectedIndex(getLastSelectedResultIndex());
-			searchInput?.focus();
-			document.documentElement.style.overflow = "unset";
 		} else {
 			await focusLastActiveWindow();
 		}

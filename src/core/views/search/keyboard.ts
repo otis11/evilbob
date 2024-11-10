@@ -52,7 +52,7 @@ import {
 			const searchResult = Result.instanceFromId(
 				target?.getAttribute("data-instance-id") || "",
 			);
-			if (searchResult) {
+			if (searchResult && (searchResult.options()?.length || 0) > 0) {
 				showResultOptions(searchResult);
 			}
 		},

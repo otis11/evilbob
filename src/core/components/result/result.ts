@@ -221,7 +221,7 @@ export abstract class Result {
 			this.rootEl.append(span);
 		}
 
-		if (this.options()) {
+		if ((this.options()?.length || 0) > 0) {
 			const span = Result.OptionsTemplate.cloneNode(true);
 			span.addEventListener("click", (event) => {
 				event.stopImmediatePropagation();

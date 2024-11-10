@@ -101,3 +101,7 @@ footer .icon svg {
 		width: 0%;
 	}
 }
+
+#selected-result {
+	pointer-events: none;
+}

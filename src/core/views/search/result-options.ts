@@ -61,7 +61,9 @@ export async function showResultOptions(
 	if (addToHistory) {
 		selectedResultHistory.push(searchResult);
 	}
-	selectedResultForOptions.innerHTML = searchResult.asHtmlElement().outerHTML;
+	selectedResultForOptions.innerHTML = selectedResultHistory
+		.map((r) => r.asHtmlElement().outerHTML)
+		.join("");
 	setLastSelectedResultIndex(getSelectedResultIndex());
 	optionsRoot.style.display = "flex";
 	resultOptionsContainer.innerHTML = "";

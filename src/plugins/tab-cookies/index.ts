@@ -4,6 +4,7 @@ import { NewResult } from "../../core/components/result/simpe-result.ts";
 import type { Tag } from "../../core/components/tags/tags.ts";
 import { iconCookie, iconFromString } from "../../core/icons.ts";
 import { getLastActiveTab } from "../../core/util/last-active-tab.ts";
+import { focusLastActiveWindow } from "../../core/util/last-active-window.ts";
 import { getDomainWithoutSubdomains } from "../../core/util/url.ts";
 
 export default defineBobPlugin({
@@ -13,17 +14,42 @@ export default defineBobPlugin({
 	prefix: "tc",
 	async provideResults(): Promise<Result[]> {
 		const tab = await getLastActiveTab();
+		let tabDomain = tab?.url ? getDomainWithoutSubdomains(tab.url) : "";
+		const results: Result[] = [
+			NewResult({
+				title: "Clear Cookies for Base Domain",
+				tags: [{ text: tabDomain }],
+				run: async () => {
+					const tab = await getLastActiveTab();
+					if (!tab?.url || !tab.id) {
+						return;
+					}
+					tabDomain = getDomainWithoutSubdomains(tab.url);
+					const cookies = await chrome.cookies.getAll({
+						domain: tabDomain,
+					});
+					const promises = [];
+					for (const cookie of cookies) {
+						const protocol = cookie.secure ? "https://" : "http://";
+						const url = protocol + cookie.domain + cookie.path;
+						promises.push(
+							chrome.cookies.remove({
+								name: cookie.name,
+								url,
+							}),
+						);
+					}
+					await Promise.all(promises);
+					await focusLastActiveWindow();
+					await chrome.tabs.reload(tab.id, { bypassCache: true });
+				},
+			}),
+		];
 		if (!tab?.url) {
-			return [
-				NewResult({
-					title: "No tab cookies found.",
-					prepend: iconFromString(iconCookie),
-				}),
-			];
+			return results;
 		}
-		const domain = getDomainWithoutSubdomains(tab.url);
-		const cookies = await chrome.cookies.getAll({ domain });
-		const cookieResults = cookies.map((cookie) => {
+		const cookies = await chrome.cookies.getAll({ domain: tabDomain });
+		for (const cookie of cookies) {
 			const tags: Tag[] = [{ text: cookie.domain }];
 			if (cookie.httpOnly) {
 				tags.push({ text: "httpOnly", type: "success" });
@@ -31,25 +57,19 @@ export default defineBobPlugin({
 			if (cookie.secure) {
 				tags.push({ text: "secure", type: "success" });
 			}
-			return NewResult({
-				title: cookie.name,
-				description: cookie.value,
-				prepend: iconFromString(iconCookie),
-				tags,
-				run: async () => {
-					// TODO toast or notification copied
-					await navigator.clipboard.writeText(cookie.value);
-				},
-			});
-		});
-		if (cookieResults.length === 0) {
-			return [
+			results.push(
 				NewResult({
-					title: "No tab cookies found.",
+					title: cookie.name,
+					description: cookie.value,
 					prepend: iconFromString(iconCookie),
+					tags,
+					run: async () => {
+						// TODO toast or notification copied
+						await navigator.clipboard.writeText(cookie.value);
+					},
 				}),
-			];
+			);
 		}
-		return cookieResults;
+		return results;
 	},
 });

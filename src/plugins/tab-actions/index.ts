@@ -108,6 +108,17 @@ export default defineBobPlugin({
 					}
 				},
 			}),
+			NewResult({
+				title: "Copy tab title",
+				run: async () => {
+					const tab = await getLastActiveTab();
+					if (tab?.title) {
+						// TODO toast or notification copied
+						await navigator.clipboard.writeText(tab.title);
+						await focusLastActiveWindow();
+					}
+				},
+			}),
 		];
 	},
 });

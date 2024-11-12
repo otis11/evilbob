@@ -123,14 +123,21 @@ export default defineBobPlugin({
 				title: "Sleep other tabs",
 				run: async () => {
 					const window = await getLastActiveWindow();
+					const lastActiveTab = await getLastActiveTab();
 					const tabs = await chrome.tabs.query({
 						windowId: window.id,
 					});
 					const promises = [];
 					for (const tab of tabs) {
-						promises.push(chrome.tabs.discard(tab.id));
+						if (tab.id !== lastActiveTab?.id) {
+							promises.push(chrome.tabs.discard(tab.id));
+						}
 					}
-					await Promise.all(promises);
+					try {
+						await Promise.all(promises);
+					} catch (e) {
+						console.error(e);
+					}
 					await focusLastActiveWindow();
 				},
 			}),

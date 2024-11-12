@@ -72,11 +72,17 @@ main {
 	display: flex;
 	gap: 8px;
 	flex-wrap: wrap;
+	justify-content: center;
 }
 
 .plugins-container li {
-	min-width: 400px;
+	min-width: 320px;
+	width: 400px;
 	max-width: 400px;
 	margin: 4px;
 	padding: 8px;
+}
+
+.plugins-container .result-description {
+	white-space: wrap;
 }

@@ -7,6 +7,8 @@ import { focusLastActiveWindow } from "../../core/util/last-active-window.ts";
 
 export default defineBobPlugin({
 	name: () => "Youtube",
+	description: () =>
+		"Youtube search and Youtube shortcuts, for instance Youtube History.",
 	prefix: "yt",
 	icon: iconYoutube,
 	async provideResults(): Promise<Result[]> {

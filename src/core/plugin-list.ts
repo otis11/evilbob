@@ -128,6 +128,8 @@ export const PLUGIN_LIST = [
 		id: "youtube",
 		prefix: "yt",
 		name: "Youtube",
+		description:
+			"Youtube search and Youtube shortcuts, for instance Youtube History.",
 		providesTheme: false,
 		providesResults: true,
 		providesConfig: false,
@@ -268,6 +270,7 @@ export const PLUGIN_LIST = [
 		hostPermissions: ["https://*/*", "http://*/*"],
 		prefix: "tc",
 		name: "Tab Cookies",
+		description: "List all cookies of a tab or clear all cookies of a tab",
 		providesTheme: false,
 		providesResults: true,
 		providesConfig: false,

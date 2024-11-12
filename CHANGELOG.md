@@ -1,3 +1,17 @@
+## 0.5.0 (November 12, 2024)
+- Feat: Support multiple levels when showing the options for a result and going back
+- Fix: Don't render or go into the options view of a result if the result has no options.
+- Plugins: add `Bookmark actions` Plugin. For instance create a bookmark for the current tab.
+- Plugins: add `Youtube` Plugin. Youtube search and Youtube shortcuts, for instance Youtube History.
+- Plugins: add `Tab cookies` Plugin. List all cookies of a tab or clear all cookies of a tab.
+- Plugins: add `filterResults` and `loadFreshData` to BobWindowState which can be used by plugins.
+- Plugin `management`: add `Remove/Uninstall Extension` as a result
+- Plugin `tab-actions`: add `Reload and clear cache (doesn't clear cookies)`, `Copy tab title` and `Sleep other tabs`
+- Usage View: add a title for each result usage to make it more clear which result was used.
+- Development: add `gen:plugins` and `gen:website` to scripts
+- Development: Move `publish_website.yml` workflow to script `gen:website`
+
+
 ## 0.4.1 (November 07, 2024)
 - Update manifest name from `bob-command-palette` to `Bob, a command palette for your browser.`
 - Add correct extension store links for firefox, edge & chrome

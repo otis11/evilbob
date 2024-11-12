@@ -9,6 +9,8 @@ import { getDomainWithoutSubdomains } from "../../core/util/url.ts";
 
 export default defineBobPlugin({
 	name: () => "Tab Cookies",
+	description: () =>
+		"List all cookies of a tab or clear all cookies of a tab",
 	permissions: ["tabs", "cookies"],
 	hostPermissions: ["https://*/*", "http://*/*"],
 	prefix: "tc",

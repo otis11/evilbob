@@ -17,7 +17,15 @@ export default defineBobPlugin({
 
 	async provideResults(): Promise<Result[]> {
 		const tab = await getLastActiveTab();
-		const bookmarks = await chrome.bookmarks.search({ url: tab?.url });
+		if (!tab?.url) {
+			return [];
+		}
+
+		// firefox will throw an error
+		if (tab.url.startsWith("about:")) {
+			return [];
+		}
+		const bookmarks = await chrome.bookmarks.search({ url: tab.url });
 		const tabBookmark = bookmarks[0];
 		const results: Result[] = [
 			NewResult({

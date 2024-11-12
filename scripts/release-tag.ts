@@ -23,7 +23,7 @@ const versionType = Bun.argv[2];
 
 if (!versionTypes.includes(versionType)) {
 	console.error("Invalid version given: ", versionType);
-	console.log("Available: major, minor, patch");
+	console.info("Available: major, minor, patch");
 	process.exit(1);
 }
 
@@ -72,4 +72,4 @@ await $`git tag v${newVersion}`;
 await $`git push`;
 await $`git push origin v${newVersion}`;
 
-console.log(`\nDone. Version v${newVersion} pushed.`);
+console.info(`\nDone. Version v${newVersion} pushed.`);

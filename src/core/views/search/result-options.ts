@@ -35,7 +35,6 @@ export async function closeResultOptions() {
 	selectedResultHistory.pop();
 	optionsSearchInput.value = "";
 	const resultBefore = selectedResultHistory.at(-1);
-	console.log(selectedResultHistory, "history pls");
 	if (selectedResultHistory.length > 0 && resultBefore) {
 		await showResultOptions(resultBefore, false);
 		return;
@@ -68,7 +67,6 @@ export async function showResultOptions(
 	optionsRoot.style.display = "flex";
 	resultOptionsContainer.innerHTML = "";
 	resultsContainer.innerHTML = searchResult.asHtmlElement().outerHTML;
-	console.log("hi", searchResult);
 	searchResult.onOptionsOpen(bobWindowState());
 	await filterResultsOptions();
 	optionsSearchInput.focus();

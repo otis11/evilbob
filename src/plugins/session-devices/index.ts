@@ -52,5 +52,19 @@ export class SessionDevice extends Result {
 	constructor(private device: chrome.sessions.Device) {
 		super();
 	}
-	async run(): Promise<void> {}
+
+	async run(): Promise<void> {
+		for (const session of this.device.sessions) {
+			try {
+				if (session.window?.sessionId) {
+					await chrome.sessions.restore(session.window.sessionId);
+				}
+				if (session.tab?.sessionId) {
+					await chrome.sessions.restore(session.tab.sessionId);
+				}
+			} catch (e) {
+				console.error("restore of session failed", e);
+			}
+		}
+	}
 }

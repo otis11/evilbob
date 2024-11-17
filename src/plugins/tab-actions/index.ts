@@ -58,6 +58,7 @@ export default defineBobPlugin({
 			new MergeWindows(),
 			new CloseBySearch(tabs),
 			new SplitIntoWindows(),
+			new SplitTabOutRight(),
 			NewResult({
 				title: "New incognito tab",
 				run: async () => {
@@ -383,5 +384,33 @@ class TabsCloseBySearch extends Tab {
 			}
 		}
 		await focusLastActiveWindow();
+	}
+}
+
+class SplitTabOutRight extends Result {
+	title(): string {
+		return "Split tab out right";
+	}
+	async run(state: BobWindowState): Promise<void> {
+		const currentTab = await getLastActiveTab();
+		const currentWindow = await getLastActiveWindow();
+		if (currentTab?.id && currentWindow?.id) {
+			const { availHeight, availWidth } = screen;
+			const halfWidth = Math.floor(availWidth / 2);
+			await chrome.windows.create({
+				tabId: currentTab.id,
+				left: halfWidth,
+				height: availHeight,
+				width: halfWidth,
+				top: 0,
+			});
+			await chrome.windows.update(currentWindow.id, {
+				left: 0,
+				height: availHeight,
+				width: halfWidth,
+				top: 0,
+			});
+			await focusLastActiveWindow();
+		}
 	}
 }

@@ -2,6 +2,7 @@ import { H2 } from "../../components/elements";
 import { PluginsLink } from "../../components/internal-links";
 import type { Result } from "../../components/result/result";
 import { getConfig } from "../../config";
+import { iconFromString } from "../../icons.ts";
 import { coreI18n } from "../../locales";
 import { PLUGINS_LOADED_PROVIDE_RESULTS } from "../../plugins";
 import { getUsage } from "../../usage";
@@ -17,6 +18,9 @@ import { newSearch, searchResults } from "./search";
 import { getPluginResults } from "./search-data";
 import { updateSelectedIndex } from "./selected";
 
+const prefixPluginActiveEl = document.getElementById(
+	"prefix-plugin-active",
+) as HTMLDivElement;
 let currentResults: Result[] = [];
 
 export function getCurrentResults() {
@@ -55,6 +59,12 @@ export async function filterResults() {
 
 	currentResults = [];
 	if (pluginAloneIndex > -1) {
+		const plugin = PLUGINS_LOADED_PROVIDE_RESULTS[pluginAloneIndex];
+		prefixPluginActiveEl.innerHTML = "";
+		prefixPluginActiveEl.append(
+			iconFromString(plugin.icon || "", "12px"),
+			plugin.name(),
+		);
 		const searchWithoutPrefix = newSearch(
 			isResultOptionsVisible() ? optionsSearchInput : searchInput,
 			search.words().slice(1).join(" "),
@@ -65,6 +75,7 @@ export async function filterResults() {
 			usage,
 		);
 	} else {
+		prefixPluginActiveEl.innerHTML = "";
 		currentResults = searchResults(
 			getPluginResults().flat(),
 			search,

@@ -3,6 +3,7 @@
 	width: 100%;
 	border-radius: 8px;
 	box-shadow: 0 16px 70px rgba(0, 0, 0, 0.2);
+	position: relative;
 }
 
 .search-container input {
@@ -104,4 +105,15 @@ footer .icon svg {
 
 #selected-result {
 	pointer-events: none;
+}
+
+.prefix-plugin-active {
+	padding: 0 12px 4px;
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	position: absolute;
+	width: 100%;
+	bottom: 0;
+	font-size: 11px;
 }

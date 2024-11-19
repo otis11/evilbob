@@ -2,7 +2,11 @@ import { defineBobPlugin } from "../../core/BobPlugin.ts";
 import type { Result } from "../../core/components/result/result.ts";
 import { NewResult } from "../../core/components/result/simpe-result.ts";
 import type { Tag } from "../../core/components/tags/tags.ts";
-import { iconCookie, iconFromString } from "../../core/icons.ts";
+import {
+	iconCookie,
+	iconFromString,
+	iconMinusOutline,
+} from "../../core/icons.ts";
 import { getLastActiveTab } from "../../core/util/last-active-tab.ts";
 import { focusLastActiveWindow } from "../../core/util/last-active-window.ts";
 import { getDomainWithoutSubdomains } from "../../core/util/url.ts";
@@ -14,6 +18,7 @@ export default defineBobPlugin({
 	permissions: ["tabs", "cookies"],
 	hostPermissions: ["https://*/*", "http://*/*"],
 	prefix: "tc",
+	icon: iconMinusOutline,
 	async provideResults(): Promise<Result[]> {
 		const tab = await getLastActiveTab();
 		let tabDomain = tab?.url ? getDomainWithoutSubdomains(tab.url) : "";

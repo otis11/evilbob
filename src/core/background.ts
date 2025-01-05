@@ -1,7 +1,6 @@
 import { getConfig } from "./config";
 import type { Dimensions } from "./theme";
 
-let bobCurrentWindowId = -1;
 let currentWindow: chrome.windows.Window | undefined;
 let windowDimensions: Dimensions | undefined;
 
@@ -13,7 +12,6 @@ chrome.runtime.onInstalled.addListener(async (details) => {
 	if (details.reason === "update") {
 		// on update
 	}
-
 	// set uninstall url
 	// chrome.runtime.setUninstallURL();
 });
@@ -35,18 +33,37 @@ chrome.windows.onFocusChanged.addListener(async () => {
 	currentWindow = await chrome.windows.getCurrent();
 });
 
-chrome.windows.onRemoved.addListener((windowId) => {
-	if (windowId === bobCurrentWindowId) {
-		bobCurrentWindowId = -1;
+chrome.windows.onRemoved.addListener(async (windowId) => {
+	if (windowId === (await getLastBobWindowId())) {
+		await chrome.storage.local.set({
+			lastBobWindowId: -1,
+		});
 	}
 });
 
+async function getLastBobWindowId() {
+	// Important: this cannot be stored inside a variable as browsers can stop activated service workers
+	// which causes the variable value to reset and this caused multiple bob windows to open in the past.
+	// Service workers should be stateless.
+	// https://github.com/otis11/bob-command-palette/issues/32
+	// https://developer.chrome.com/docs/extensions/develop/concepts/service-workers/lifecycle#idle-shutdown
+	return (await chrome.storage.local.get("lastBobWindowId"))
+		.lastBobWindowId as number;
+}
+
 async function openBob() {
-	if (bobCurrentWindowId > 0) {
-		await chrome.windows.update(bobCurrentWindowId, {
+	const lastBobWindowId = await getLastBobWindowId();
+	await chrome.storage.local.set({
+		lastFocusedWindowId: currentWindow?.id,
+	});
+	if (lastBobWindowId > 0) {
+		await chrome.windows.update(lastBobWindowId, {
 			focused: true,
 		});
-		return;
+		// no error occurred focusing the last bob window. Don't continue to open a new bob window.
+		if (!chrome.runtime.lastError) {
+			return;
+		}
 	}
 
 	if (!windowDimensions) {
@@ -87,9 +104,7 @@ async function openBob() {
 		});
 	}
 
-	bobCurrentWindowId = newBobWindow.id || -1;
-
-	await chrome.storage.sync.set({
-		lastFocusedWindowId: currentWindow?.id,
+	await chrome.storage.local.set({
+		lastBobWindowId: newBobWindow.id || -1,
 	});
 }

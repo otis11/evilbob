@@ -1,5 +1,5 @@
 export async function getLastActiveTab() {
-	const storage = await chrome.storage.sync.get(["lastFocusedWindowId"]);
+	const storage = await chrome.storage.local.get(["lastFocusedWindowId"]);
 	const tabs = await chrome.tabs.query({
 		windowId: storage.lastFocusedWindowId,
 		active: true,

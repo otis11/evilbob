@@ -1,5 +1,5 @@
 export async function getLastActiveWindow() {
-	const storage = await chrome.storage.sync.get(["lastFocusedWindowId"]);
+	const storage = await chrome.storage.local.get(["lastFocusedWindowId"]);
 	return (
 		((await chrome.windows.get(
 			storage.lastFocusedWindowId,
@@ -7,15 +7,21 @@ export async function getLastActiveWindow() {
 	);
 }
 export async function getLastActiveWindowTabs() {
-	const storage = await chrome.storage.sync.get(["lastFocusedWindowId"]);
+	const storage = await chrome.storage.local.get(["lastFocusedWindowId"]);
 	return await chrome.tabs.query({
 		windowId: storage.lastFocusedWindowId,
 	});
 }
 
 export async function focusLastActiveWindow() {
-	const storage = await chrome.storage.sync.get(["lastFocusedWindowId"]);
+	const storage = await chrome.storage.local.get(["lastFocusedWindowId"]);
 	await chrome.windows.update(storage.lastFocusedWindowId, {
 		focused: true,
 	});
+	if (chrome.runtime.lastError) {
+		console.error(
+			"Cannot focus last focused window",
+			chrome.runtime.lastError,
+		);
+	}
 }

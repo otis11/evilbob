@@ -1,3 +1,10 @@
+## 0.6.0 (January 05, 2025)
+- Feat: add an indicator below the search which prefix is currently active
+- Plugin `tab-actions`: add `split tab out right` to move the tab into a new window and show both Windows 50/50 on screen.
+- Plugin `session-devices`: when selecting a session device open all sessions of that device
+- Fix: fix opening multiple bob windows. This occurs when the browser would stop the background service worker for inactivity, which resets a variable value that stored the last active bob window.
+- MacOS: Use `⌘` instead of `Ctrl` for the bob open shortcut on the welcome screen.
+
 ## 0.5.0 (November 12, 2024)
 - Feat: Support multiple levels when showing the options for a result and going back
 - Fix: Don't render or go into the options view of a result if the result has no options.

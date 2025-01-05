@@ -32,7 +32,8 @@ const defaultKeybindings = {
 	},
 	close: {
 		keys: ["Escape"],
-		description: "This will hide the bob command palette window or close the options opened for a command. To close the bob window and not only hide it, enable the 'On bob leave close window' plugin.",
+		description:
+			"This will hide the bob command palette window or close the options opened for a command. To close the bob window and not only hide it, enable the 'On bob leave close window' plugin.",
 		title: "Hide bob or close the options of a command.",
 	},
 };

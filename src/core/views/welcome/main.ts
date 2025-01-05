@@ -5,6 +5,7 @@ import {
 } from "../../components/internal-links";
 import "../../global.css";
 import "./main.css";
+import { isMac } from "../../platform.ts";
 import { loadTheme } from "../../theme";
 
 export function renderHeader() {
@@ -25,4 +26,8 @@ export function renderHeader() {
 (async () => {
 	await loadTheme();
 	renderHeader();
+	const openShortcutHeader = document.getElementById("open-bob-shortcut");
+	if (openShortcutHeader) {
+		openShortcutHeader.innerHTML = `<kbd>${isMac ? "⌘" : "Ctrl"}</kbd><kbd>Shift</kbd><kbd>L</kbd>`;
+	}
 })();

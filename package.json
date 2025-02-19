@@ -11,7 +11,7 @@
 		"@biomejs/biome": "1.9.3",
 		"@types/bun": "latest",
 		"@types/chrome": "^0.0.275",
-		"vite": "^5.4.8"
+		"vite": "^6.1.1"
 	},
 	"peerDependencies": {
 		"typescript": "^5.0.0"

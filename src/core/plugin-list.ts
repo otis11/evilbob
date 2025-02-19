@@ -419,7 +419,7 @@ export type BobPluginMeta = {
 	name: string;
 	file: string;
 	prefix?: string;
-	permissions?: string[];
+	permissions?: chrome.runtime.ManifestPermissions[];
 	hostPermissions?: string[];
 	description?: string;
 	supportedBrowsers?: string[];

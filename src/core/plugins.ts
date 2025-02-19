@@ -53,7 +53,7 @@ export async function enablePlugin(plugin: BobPluginMeta) {
 
 export async function disablePlugin(plugin: BobPluginMeta) {
 	await loadPlugins();
-	const permissionsCanRemove: string[] = [];
+	const permissionsCanRemove: chrome.runtime.ManifestPermissions[] = [];
 	const permissionsWithoutPlugin = PLUGINS_LOADED.filter(
 		(pl) => pl.id !== plugin.id,
 	).flatMap((pl) => pl.permissions);

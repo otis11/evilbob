@@ -8,7 +8,7 @@
 	"module": "index.ts",
 	"type": "module",
 	"devDependencies": {
-		"@biomejs/biome": "1.9.3",
+		"@biomejs/biome": "1.9.4",
 		"@types/bun": "latest",
 		"@types/chrome": "^0.0.275",
 		"vite": "^6.1.1"

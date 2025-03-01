@@ -23,12 +23,13 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
 
 		const iframe = document.createElement("iframe");
 
-		iframe.src =
-			"chrome-extension://lheepncdpplcjclapcdacckeihbekldk/src/core/views/search/index.html";
+		iframe.src = chrome.runtime.getURL("/src/core/views/search/index.html");
 
 		iframe.id = "bob-search-iframe";
 		iframe.style.border = "none";
 		iframe.style.outline = "none";
+		iframe.style.borderRadius = "16px";
+		iframe.style.overflow = "hidden";
 		iframe.height = `${window.innerHeight / 1.5}px`;
 		iframe.width = `${window.innerWidth / 1.5}px`;
 		dialog.appendChild(iframe);

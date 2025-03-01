@@ -19,15 +19,15 @@ chrome.runtime.onInstalled.addListener(async (details) => {
 chrome.commands.onCommand.addListener(async (command) => {
 	if (command === "bob.open") {
 		const config = await getConfig(true);
-		if (config.open === "inline") {
-			openBobInline();
+		if (config.open === "inline-iframe") {
+			openBobInlineIFrame();
 		} else {
 			await openBobExtraWindow();
 		}
 	}
 });
 
-function openBobInline() {
+function openBobInlineIFrame() {
 	chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
 		if (tabs[0]?.id) {
 			chrome.tabs.sendMessage(

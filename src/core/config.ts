@@ -39,7 +39,7 @@ const defaultKeybindings = {
 };
 
 export type BobConfig = {
-	open: "inline" | "window";
+	open: "inline-iframe" | "window";
 	locale: Locale;
 	theme: string;
 	dimensions: Dimensions;

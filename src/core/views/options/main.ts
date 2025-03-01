@@ -33,6 +33,7 @@ import { renderFooter } from "./footer";
 	document.body.append(container);
 	renderLocale(config);
 	renderTheme(config);
+	renderOpenOptions(config);
 	await renderBobDimensions(config);
 	renderKeybindings(config);
 	renderSearchOptions(config);
@@ -188,5 +189,38 @@ function renderKeybindings(config: BobConfig) {
 		container.append(title, description, inputContainer);
 	}
 
+	document.body.append(container);
+}
+
+function renderOpenOptions(config: BobConfig) {
+	const container = FlexContainer({ gap: "24px", alignItems: "center" });
+
+	const openOptions = Select([
+		{
+			value: "popup",
+			title: "Popup",
+			selected: config.windowType === "popup",
+		},
+		{
+			value: "normal",
+			title: "Normal",
+			selected: config.windowType === "normal",
+		},
+		{
+			value: "panel",
+			title: "Panel",
+			selected: config.windowType === "panel",
+		},
+	]);
+
+	openOptions.addEventListener("change", async () => {
+		await updateConfig({
+			windowType: openOptions.value as chrome.windows.createTypeEnum,
+		});
+		window.location.reload();
+	});
+
+	container.append(openOptions);
+	document.body.append(GroupHeading("Open Options"));
 	document.body.append(container);
 }

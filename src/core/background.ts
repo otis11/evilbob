@@ -52,6 +52,7 @@ async function getLastBobWindowId() {
 }
 
 async function openBob() {
+	const freshConfig = await getConfig(true);
 	const lastBobWindowId = await getLastBobWindowId();
 	await chrome.storage.local.set({
 		lastFocusedWindowId: currentWindow?.id,
@@ -82,7 +83,7 @@ async function openBob() {
 	try {
 		newBobWindow = await chrome.windows.create({
 			url: "/src/core/views/search/index.html",
-			type: "popup",
+			type: freshConfig.windowType,
 			width: windowDimensions.width,
 			height: windowDimensions.height,
 			left: left,
@@ -95,7 +96,7 @@ async function openBob() {
 		}
 		newBobWindow = await chrome.windows.create({
 			url: "/src/core/views/search/index.html",
-			type: "popup",
+			type: freshConfig.windowType,
 			width: currentWindow?.width || 600,
 			height: currentWindow?.height || 400,
 			left: currentWindow?.left || 0,

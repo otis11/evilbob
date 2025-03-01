@@ -54,6 +54,7 @@ export type BobConfig = {
 			{ keys: string[]; description?: string; title?: string }
 		>
 	>;
+	windowType: chrome.windows.createTypeEnum;
 };
 
 export const DEFAULT_CONFIG: BobConfig = {
@@ -75,6 +76,7 @@ export const DEFAULT_CONFIG: BobConfig = {
 	keybindings: defaultKeybindings,
 	theme: "dark",
 	customTheme: darkTheme,
+	windowType: "popup",
 };
 
 export async function updateConfig(newConfig: Partial<BobConfig>) {

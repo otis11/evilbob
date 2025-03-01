@@ -21,6 +21,18 @@
 			"128": "icons/bob-icon-128x128.png"
 		}
 	},
+	"web_accessible_resources": [
+		{
+			"resources": ["src/core/views/search/index.html"],
+			"matches": ["<all_urls>"]
+		}
+	],
+	"content_scripts": [
+		{
+			"matches": ["<all_urls>"],
+			"js": ["content-script.js"]
+		}
+	],
 	"commands": {
 		"bob.open": {
 			"suggested_key": {

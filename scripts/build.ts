@@ -17,6 +17,25 @@ const views = readdirSync(path.resolve(__dirname, "../src/core/views"));
 const plugins = readdirSync(path.resolve(__dirname, "../src/plugins"));
 
 await Promise.all([
+	// content script needs to be seprated as it will not contain any imports and everything is bundled in one script
+	build({
+		resolve: {
+			alias: {
+				"@core": path.resolve(__dirname, "../src/core"),
+			},
+		},
+		build: {
+			outDir: "dist/chrome",
+			emptyOutDir: false,
+			lib: {
+				name: "content-script",
+				entry: path.resolve(__dirname, "../src/core/content-script.ts"),
+				fileName: "content-script",
+				formats: ["es"],
+			},
+			watch,
+		},
+	}),
 	// service worker needs to separated as they don't support "import" or "require" / code splitting bundles
 	build({
 		resolve: {

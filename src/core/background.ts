@@ -18,9 +18,26 @@ chrome.runtime.onInstalled.addListener(async (details) => {
 
 chrome.commands.onCommand.addListener(async (command) => {
 	if (command === "bob.open") {
-		await openBob();
+		const config = await getConfig(true);
+		if (config.open === "inline") {
+			openBobInline();
+		} else {
+			await openBobExtraWindow();
+		}
 	}
 });
+
+function openBobInline() {
+	chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
+		if (tabs[0]?.id) {
+			chrome.tabs.sendMessage(
+				tabs[0].id,
+				{ type: "bob.open.inline" },
+				(response) => {},
+			);
+		}
+	});
+}
 
 chrome.action.onClicked.addListener(async () => {
 	await chrome.runtime.openOptionsPage();
@@ -51,8 +68,8 @@ async function getLastBobWindowId() {
 		.lastBobWindowId as number;
 }
 
-async function openBob() {
-	const freshConfig = await getConfig(true);
+async function openBobExtraWindow() {
+    const freshConfig = await getConfig(true);
 	const lastBobWindowId = await getLastBobWindowId();
 	await chrome.storage.local.set({
 		lastFocusedWindowId: currentWindow?.id,

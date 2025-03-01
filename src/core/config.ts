@@ -39,6 +39,7 @@ const defaultKeybindings = {
 };
 
 export type BobConfig = {
+	open: "inline" | "window";
 	locale: Locale;
 	theme: string;
 	dimensions: Dimensions;
@@ -59,6 +60,7 @@ export type BobConfig = {
 
 export const DEFAULT_CONFIG: BobConfig = {
 	locale: "en-US",
+	open: "window",
 	search: {
 		maxRenderedItems: 40,
 	},

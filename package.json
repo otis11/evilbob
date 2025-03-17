@@ -10,7 +10,7 @@
 	"devDependencies": {
 		"@biomejs/biome": "1.9.4",
 		"@types/bun": "latest",
-		"@types/chrome": "^0.0.308",
+		"@types/chrome": "^0.0.309",
 		"vite": "^6.1.1"
 	},
 	"peerDependencies": {

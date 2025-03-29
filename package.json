@@ -10,7 +10,7 @@
 	"devDependencies": {
 		"@biomejs/biome": "1.9.4",
 		"@types/bun": "latest",
-		"@types/chrome": "^0.0.309",
+		"@types/chrome": "^0.0.313",
 		"vite": "^6.1.1",
 		"web-ext": "^8.5.0"
 	},

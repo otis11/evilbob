@@ -7,6 +7,7 @@ import { NewLocales } from "../../core/locales/new-locales";
 import { getLastActiveTab } from "../../core/util/last-active-tab";
 import { focusLastActiveWindow } from "../../core/util/last-active-window";
 import enUS from "./locales/en-US";
+import JavascriptContentSetting = chrome.contentSettings.JavascriptContentSetting;
 
 const { t, setLocale } = NewLocales({
 	"en-US": enUS,
@@ -37,7 +38,9 @@ export default defineBobPlugin({
 					{ primaryUrl: url },
 					resolve,
 				);
-			})) as chrome.contentSettings.JavascriptSetDetails;
+			})) as chrome.contentSettings.ContentSettingGetResult<
+				"allow" | "block"
+			>;
 			results.push(new CSJavascript(javascript));
 		}
 
@@ -48,7 +51,8 @@ class CSJavascript extends Result {
 	title(): string {
 		return t("CSJavascript.title", {
 			enableDisable:
-				this.javascript.setting === "allow"
+				this.javascriptSetting.setting ===
+				JavascriptContentSetting.ALLOW
 					? coreI18n.t("Disable")
 					: coreI18n.t("Enable"),
 		});
@@ -62,15 +66,22 @@ class CSJavascript extends Result {
 		return [
 			{
 				text:
-					this.javascript.setting === "allow"
+					this.javascriptSetting.setting ===
+					JavascriptContentSetting.ALLOW
 						? coreI18n.t("Enabled")
 						: coreI18n.t("Disabled"),
-				type: this.javascript.setting === "allow" ? "success" : "error",
+				type:
+					this.javascriptSetting.setting ===
+					JavascriptContentSetting.ALLOW
+						? "success"
+						: "error",
 			},
 		];
 	}
 	constructor(
-		private javascript: chrome.contentSettings.JavascriptSetDetails,
+		private javascriptSetting: chrome.contentSettings.ContentSettingGetResult<
+			"allow" | "block"
+		>,
 	) {
 		super();
 	}
@@ -84,7 +95,10 @@ class CSJavascript extends Result {
 				{
 					primaryPattern: url.href,
 					setting:
-						this.javascript.setting === "allow" ? "block" : "allow",
+						this.javascriptSetting.setting ===
+						JavascriptContentSetting.ALLOW
+							? "block"
+							: "allow",
 				},
 				() => focusLastActiveWindow(),
 			);

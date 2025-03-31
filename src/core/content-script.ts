@@ -57,3 +57,9 @@ document.addEventListener("click", (clickEvent) => {
 		document.getElementById("bob-search-iframe-dialog")?.remove();
 	}
 });
+
+window.addEventListener("message", (event) => {
+	if (event.data.type === "bob.focus-last-active-window") {
+		document.getElementById("bob-search-iframe-dialog")?.remove();
+	}
+});

@@ -211,11 +211,18 @@ function renderOpenOptions(config: BobConfig) {
 			title: "Panel",
 			selected: config.windowType === "panel",
 		},
+		{
+			value: "inline-iframe",
+			title: "Inline iFrame",
+			selected: config.windowType === "inline-iframe",
+		},
 	]);
 
 	openOptions.addEventListener("change", async () => {
 		await updateConfig({
-			windowType: openOptions.value as chrome.windows.createTypeEnum,
+			windowType: openOptions.value as
+				| chrome.windows.createTypeEnum
+				| "inline-iframe",
 		});
 		window.location.reload();
 	});

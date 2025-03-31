@@ -15,13 +15,19 @@ export async function getLastActiveWindowTabs() {
 
 export async function focusLastActiveWindow() {
 	const storage = await chrome.storage.local.get(["lastFocusedWindowId"]);
-	await chrome.windows.update(storage.lastFocusedWindowId, {
-		focused: true,
-	});
-	if (chrome.runtime.lastError) {
-		console.error(
-			"Cannot focus last focused window",
-			chrome.runtime.lastError,
-		);
-	}
+	try {
+		await chrome.windows.update(storage.lastFocusedWindowId, {
+			focused: true,
+		});
+		if (chrome.runtime.lastError) {
+			console.error(
+				"Cannot focus last focused window",
+				chrome.runtime.lastError,
+			);
+		}
+	} catch (error) {}
+	parent.postMessage(
+		{ type: "bob.focus-last-active-window", data: {} },
+		{ targetOrigin: "*" },
+	);
 }

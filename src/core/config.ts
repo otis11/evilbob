@@ -39,7 +39,6 @@ const defaultKeybindings = {
 };
 
 export type BobConfig = {
-	open: "inline-iframe" | "window";
 	locale: Locale;
 	theme: string;
 	dimensions: Dimensions;
@@ -55,12 +54,11 @@ export type BobConfig = {
 			{ keys: string[]; description?: string; title?: string }
 		>
 	>;
-	windowType: chrome.windows.createTypeEnum;
+	windowType: chrome.windows.createTypeEnum | "inline-iframe";
 };
 
 export const DEFAULT_CONFIG: BobConfig = {
 	locale: "en-US",
-	open: "window",
 	search: {
 		maxRenderedItems: 40,
 	},

@@ -15,7 +15,7 @@
 	},
 	"devDependencies": {
 		"@types/bun": "latest",
-		"@types/chrome": "^0.0.316",
+		"@types/chrome": "^0.0.318",
 		"@types/react": "^19.1.2",
 		"@types/react-dom": "^19.1.2",
 		"@vitejs/plugin-react": "^4.4.1",

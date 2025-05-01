@@ -1,7 +1,4 @@
-import {
-	searchForPluginCommands,
-	searchForPluginViewsWithSlash,
-} from "@evil-bob/plugins/src/plugin.ts";
+import { searchForPluginCommands } from "@evil-bob/plugins/src/plugin.ts";
 import type {
 	Plugin,
 	PluginCommandExtended,
@@ -19,28 +16,29 @@ import type { onSearchInputChangeProps } from "../components/SearchInput.tsx";
 import { importPluginCommand } from "../config/plugins-frontend.ts";
 
 export interface MainViewProps {
-	prefillSearch?: string;
+	search?: string;
 	pluginView: PluginCommandExtended | undefined;
 	plugins: Plugin[];
 	onCommandClick?: (item: PluginCommandExtended) => void;
 	onBack?: () => void;
 }
-export function MainSearchView({
-	prefillSearch,
-	plugins,
-	pluginView,
-	onCommandClick,
-	onBack,
-}: MainViewProps) {
-	const [search, setSearch] = useState(prefillSearch || "");
+
+export function MainSearchView({ plugins, pluginView, onBack }: MainViewProps) {
+	const [search, setSearch] = useState("");
 	const inputRef = useRef<HTMLInputElement | null>(null);
-	const [searchBehindSlash, setSearchBehindSlash] = useState("");
 	const [searchBehindBang, setSearchBehindBang] = useState("");
 	const [searchHasBang, setSearchHasBang] = useState(false);
-	const [searchHasSlash, setSearchHasSlash] = useState(false);
 
 	useEffect(() => {
-		inputRef.current?.focus();
+		if (!pluginView) {
+			inputRef.current?.focus();
+		}
+	}, [pluginView]);
+
+	useEffect(() => {
+		window.addEventListener("evil-bob-unmount-plugin-view", () => {
+			setSearch("");
+		});
 	}, []);
 
 	useEffect(() => {
@@ -51,17 +49,22 @@ export function MainSearchView({
 		);
 		setSearchHasBang(foundBang);
 		setSearchBehindBang(newSearchBehindBang);
-		const [foundSlash, newSearchBehindSlash] = findStringStartUntil(
-			search,
-			"/",
-			" ",
-		);
-		setSearchHasSlash(foundSlash);
-		setSearchBehindSlash(newSearchBehindSlash);
 	}, [search]);
 
 	async function onBangSelect(item: Bang) {
-		await browserApi.tabs.create({ url: getBangSearchUrl(search, item) });
+		await browserApi.tabs.create({
+			url: getBangSearchUrl(search, item),
+		});
+	}
+
+	async function onCommandClick(item: PluginCommandExtended) {
+		const command = await importPluginCommand(item.plugin.id, item.name);
+		if (item.type === "view") {
+			setSearch("");
+			EvilBob.instance().renderPluginView(item, command, { search: "" });
+		} else if (item.type === "command") {
+			await command();
+		}
 	}
 
 	function onChange(data: onSearchInputChangeProps) {
@@ -71,29 +74,7 @@ export function MainSearchView({
 		});
 	}
 
-	let slashViewExactMatch: PluginCommandExtended | undefined;
-	let commands: PluginCommandExtended[] = [];
-	if (searchHasSlash) {
-		[commands, slashViewExactMatch] = searchForPluginViewsWithSlash(
-			searchBehindSlash,
-			plugins,
-		);
-	} else {
-		commands = searchForPluginCommands(search, plugins);
-	}
-
-	if (slashViewExactMatch) {
-		setSearch(search.replace(`/${slashViewExactMatch?.slash}`, "").trim());
-		setSearchBehindSlash("");
-		importPluginCommand(
-			slashViewExactMatch.plugin.id,
-			slashViewExactMatch.name,
-		).then((View) => {
-			EvilBob.instance().renderPluginView(slashViewExactMatch, View, {
-				search,
-			});
-		});
-	}
+	const commands = searchForPluginCommands(search, plugins);
 
 	async function onManagePluginsClick() {
 		await chrome.runtime.sendMessage({ event: "open-plugins" });
@@ -102,8 +83,6 @@ export function MainSearchView({
 	let searchHint = "";
 	if (pluginView) {
 		searchHint = pluginView.plugin.title;
-	} else if (searchHasSlash) {
-		searchHint = "Command Views";
 	} else if (searchHasBang) {
 		searchHint = "Bangs";
 	}

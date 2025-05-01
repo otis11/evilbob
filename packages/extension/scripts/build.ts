@@ -115,23 +115,6 @@ async function getPluginEntryPoints() {
 
 		// make sure viewSlashes don't clash
 		if (pluginDefinition.commands) {
-			for (const command of pluginDefinition.commands) {
-				if (command.type === "view" && !command.slash) {
-					console.error("All views require a slash.");
-					process.exit(1);
-				}
-				if (!command.slash) {
-					continue;
-				}
-				if (commandSlashes[command.slash]) {
-					console.error(
-						`! Overlapping view slashes. ${command.slash} from ${pluginFolder}. ${commandSlashes[command.slash]} already uses ${command.slash}`,
-					);
-					process.exit(1);
-				} else {
-					commandSlashes[command.slash] = pluginFolder;
-				}
-			}
 			entryPoints.push(
 				...pluginDefinition.commands.map((view) => {
 					const filePathWithoutExtension = path.resolve(

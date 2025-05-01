@@ -1,9 +1,4 @@
-import type {
-	Plugin,
-	PluginCommand,
-	PluginCommandExtended,
-	PluginDefinition,
-} from "./types.ts";
+import type { Plugin, PluginCommand, PluginDefinition } from "./types.ts";
 
 export function definePlugin(definition: PluginDefinition) {
 	return definition;
@@ -46,25 +41,4 @@ export function searchForPluginCommands(search: string, plugins: Plugin[]) {
 			extendedCommand(foundCommand, plugin),
 		);
 	});
-}
-
-export function searchForPluginViewsWithSlash(
-	search: string,
-	plugins: Plugin[],
-): [PluginCommandExtended[], PluginCommandExtended | undefined] {
-	let exactMatchingView: undefined | PluginCommandExtended = undefined;
-	const foundViews = plugins.flatMap((plugin) => {
-		const foundCommands =
-			plugin.definition.commands?.filter((command) => {
-				if (command.slash === search) {
-					exactMatchingView = extendedCommand(command, plugin);
-				}
-				return (
-					command.type === "view" &&
-					command.slash?.toLowerCase().includes(search.toLowerCase())
-				);
-			}) || [];
-		return foundCommands.map((command) => extendedCommand(command, plugin));
-	});
-	return [foundViews, exactMatchingView];
 }

@@ -5,7 +5,6 @@ export default definePlugin({
 	description: "Manage your colors",
 	commands: [
 		{
-			slash: "col",
 			title: "Colors",
 			name: "colors",
 			type: "view",

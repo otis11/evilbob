@@ -31,4 +31,9 @@ export const defaultKeybindings = {
 		description: "This will close evil bob.",
 		title: "Close evil bob.",
 	},
+	closePluginView: {
+		keys: ["Meta", "b"],
+		description: "This will close the plugin view.",
+		title: "Close plugin view.",
+	},
 };

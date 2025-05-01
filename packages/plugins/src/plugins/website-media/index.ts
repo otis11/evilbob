@@ -5,7 +5,6 @@ export default definePlugin({
 	description: "Filter media contents from a Website",
 	commands: [
 		{
-			slash: "m",
 			title: "Website Media Contents",
 			name: "media",
 			type: "view",

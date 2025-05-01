@@ -8,8 +8,8 @@ A plugin-based command palette prototype.
 - [Firefox](https://addons.mozilla.org/de/firefox/addon/bob-command-palette/)
 - [Edge](https://microsoftedge.microsoft.com/addons/detail/bobcommandpalette/nikplhepafilmghdhfkkkbjogblchima)
 
-### Development
-#### Install dependencies
+# Development
+### Install dependencies
 ```bash
 bun i && bunx playwright install --with-deps
 ```

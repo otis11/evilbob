@@ -1,0 +1,11 @@
+{
+	"manifest_version": 3,
+	"name": "Evil Bob",
+	"version": "0.7.0",
+	"browser_specific_settings": {
+		"gecko": {
+			"id": "{b9b3ea58-ee1c-4d96-8b6e-9548ff99fa5b}",
+			"strict_min_version": "109.0"
+		}
+	}
+}

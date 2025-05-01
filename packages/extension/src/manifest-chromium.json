@@ -1,0 +1,54 @@
+{
+	"manifest_version": 3,
+	"name": "Evil Bob",
+	"description": "Evil Bob, a command palette.",
+	"version": "0.7.0",
+	"background": {
+		"service_worker": "background.js",
+		"type": "module"
+	},
+	"web_accessible_resources": [
+		{
+			"resources": ["plugins/*", "assets/*", "content-script.js"],
+			"matches": ["<all_urls>"]
+		}
+	],
+	"action": {
+		"default_icon": {
+			"16": "media/evil-bob-icon-16x16.png",
+			"32": "media/evil-bob-icon-32x32.png",
+			"48": "media/evil-bob-icon-48x48.png",
+			"128": "media/evil-bob-icon-128x128.png"
+		}
+	},
+	"icons": {
+		"16": "media/evil-bob-icon-16x16.png",
+		"32": "media/evil-bob-icon-32x32.png",
+		"48": "media/evil-bob-icon-48x48.png",
+		"128": "media/evil-bob-icon-128x128.png"
+	},
+	"content_scripts": [
+		{
+			"matches": ["<all_urls>"],
+			"js": ["content-script-entrypoint.js"],
+			"all_frames": true,
+			"match_origin_as_fallback": true,
+			"match_about_blank": true
+		}
+	],
+	"permissions": ["storage"],
+	"optional_permissions": ["bookmarks"],
+	"optional_host_permissions": ["https://*/*", "http://*/*"],
+	"commands": {
+		"open": {
+			"suggested_key": {
+				"default": "Ctrl+Shift+L",
+				"windows": "Ctrl+Shift+L",
+				"mac": "Command+Shift+L",
+				"chromeos": "Ctrl+Shift+L",
+				"linux": "Ctrl+Shift+L"
+			},
+			"description": "Open Evil Bob"
+		}
+	}
+}

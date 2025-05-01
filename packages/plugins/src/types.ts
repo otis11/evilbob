@@ -3,7 +3,6 @@ import type { JSX } from "react";
 export interface PluginCommand {
 	title: string;
 	type: "command" | "view";
-	slash?: string;
 	name: string;
 	description?: string;
 }

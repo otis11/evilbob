@@ -27,7 +27,6 @@ export function MainTopBar({
 	}
 
 	EvilBob.instance().fullscreen(isFullscreen);
-
 	return (
 		<>
 			<div className="flex items-center gap-3">

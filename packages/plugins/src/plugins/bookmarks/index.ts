@@ -13,7 +13,6 @@ export default definePlugin({
 		{
 			title: "Bookmarks",
 			name: "bookmarks",
-			slash: "b",
 			type: "view",
 		},
 	],

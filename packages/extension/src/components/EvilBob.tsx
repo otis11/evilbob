@@ -2,14 +2,12 @@ import type {
 	PluginCommandExtended,
 	PluginViewProps,
 } from "@evil-bob/plugins/src/types.ts";
+import { KeyboardListener } from "@evil-bob/utils/src/keyboard.ts";
 import type { FunctionComponent } from "react";
 import { type Root, createRoot } from "react-dom/client";
 import type { Plugin } from "../../../plugins/src/types.ts";
-import type { EvilBobConfig } from "../config/config.ts";
-import {
-	importPluginCommand,
-	loadEnabledPlugins,
-} from "../config/plugins-frontend.ts";
+import { type EvilBobConfig, getConfig } from "../config/config.ts";
+import { loadEnabledPlugins } from "../config/plugins-frontend.ts";
 // @ts-expect-error typescript does not know ?inline imports
 import styles from "../theme.css?inline";
 import { MainSearchView } from "../views/MainSearchView.tsx";
@@ -41,7 +39,16 @@ export class EvilBob {
 		public readonly shadowRoot: ShadowRoot,
 		public readonly rootElement: HTMLElement,
 		public readonly dialogElement: HTMLDialogElement,
-	) {}
+	) {
+		getConfig().then((config: EvilBobConfig) => {
+			const listener = new KeyboardListener(
+				EvilBob.instance().shadowRoot,
+			);
+			listener.register(config.keybindings.closePluginView.keys, () => {
+				this.unmountPluginView();
+			});
+		});
+	}
 
 	static instance(target?: HTMLElement) {
 		if (!EvilBob.internalInstance) {
@@ -134,10 +141,8 @@ export class EvilBob {
 	public renderMainView() {
 		this.mainRoot?.render(
 			<MainSearchView
-				prefillSearch={this.pluginViewProps?.search}
 				plugins={this.plugins || []}
 				pluginView={this.pluginViewCommand}
-				onCommandClick={this.onCommandClick.bind(this)}
 				onBack={this.unmountPluginView.bind(this)}
 			></MainSearchView>,
 		);
@@ -179,29 +184,19 @@ export class EvilBob {
 	public unmountPluginView() {
 		this.mainElement.classList.remove("!h-auto");
 		this.pluginViewElement.classList.remove("!h-full");
-		setTimeout(() => {
-			this.pluginViewRoot?.unmount();
-			this.pluginViewRoot = undefined;
-			this.PluginView = undefined;
-			this.pluginViewCommand = undefined;
-			this.renderMainView();
-		}, 0);
-	}
-
-	private async onCommandClick(item: PluginCommandExtended) {
-		const command = await importPluginCommand(item.plugin.id, item.name);
-		if (item.type === "view") {
-			this.renderPluginView(item, command);
-		} else if (item.type === "command") {
-			await command();
-		}
+		this.pluginViewRoot?.unmount();
+		this.pluginViewRoot = undefined;
+		this.PluginView = undefined;
+		this.pluginViewRoot = undefined;
+		this.pluginViewCommand = undefined;
+		this.renderMainView();
+		window.dispatchEvent(new CustomEvent("evil-bob-unmount-plugin-view"));
 	}
 
 	private _rerenderPluginView() {
 		if (this.PluginView && this.pluginViewProps) {
-			const View = this.PluginView;
 			this.pluginViewRoot?.render(
-				<View {...this.pluginViewProps}></View>,
+				<this.PluginView {...this.pluginViewProps}></this.PluginView>,
 			);
 		}
 	}

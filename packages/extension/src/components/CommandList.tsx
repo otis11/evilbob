@@ -24,12 +24,14 @@ export function CommandList({ onCommandClick, commands }: CommandListProps) {
 						<span className="text-fg-weak text-sm pl-4">
 							{item.plugin?.title}
 						</span>
-						{item.slash ? (
-							<span className="pl-4 text-fg-weak font-bold text-sm">
-								/{item.slash}
-							</span>
+						{item.type === "command" ? (
+							<div className="ml-auto text-fg-weak text-sm">
+								Command
+							</div>
 						) : (
-							""
+							<div className="ml-auto text-fg-weak text-sm">
+								View
+							</div>
 						)}
 					</VList.Item>
 				);

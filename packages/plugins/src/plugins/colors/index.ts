@@ -1,0 +1,19 @@
+import { definePlugin } from "../../plugin.ts";
+
+export default definePlugin({
+	title: "Colors",
+	description: "Manage your colors",
+	commands: [
+		{
+			slash: "col",
+			title: "Colors",
+			name: "colors",
+			type: "view",
+		},
+		{
+			title: "Add color",
+			name: "add-color",
+			type: "command",
+		},
+	],
+});

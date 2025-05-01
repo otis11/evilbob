@@ -1,0 +1,14 @@
+{
+	"name": "@evil-bob/utils",
+	"module": "index.ts",
+	"type": "module",
+	"private": true,
+	"devDependencies": {
+		"@types/bun": "latest",
+		"@types/react": "^19.1.2",
+		"@types/react-dom": "^19.1.2"
+	},
+	"peerDependencies": {
+		"typescript": "^5"
+	}
+}

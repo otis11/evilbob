@@ -1,16 +1,16 @@
 name: on_pr
 
 on:
-  pull_request:
-    branches:
-      - main
+    pull_request:
+        branches:
+            - main
 jobs:
-  lint:
-    name: lint
-    timeout-minutes: 2
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - uses: oven-sh/setup-bun@v2
-      - run: bun i
-      - run: bun run lint
+    lint:
+        name: lint
+        timeout-minutes: 2
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v4
+            - uses: oven-sh/setup-bun@v2
+            - run: bun i
+            - run: bun run lint

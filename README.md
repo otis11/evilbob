@@ -1,5 +1,5 @@
 # Evil Bob
-A plugin-based command palette prototype.
+A command palette prototype.
 
 ![Evil Bob](./packages/extension/src/media/evil-bob-icon-128x128.png)
 

@@ -17,8 +17,8 @@ jobs:
                   bun i
                   bun run build
 
-                  cd packages/extension/dist/chrome
-                  zip -r ../../../../chrome.zip *
+                  cd packages/extension/dist/chromium
+                  zip -r ../../../../chromium.zip *
 
                   cd ../firefox
                   zip -r ../../../../firefox.zip *
@@ -28,6 +28,6 @@ jobs:
                   git config --global user.email "148579276+otis11@users.noreply.github.com"
                   git config --global user.name "on_tag_yml_release"
 
-                  gh release create "$GITHUB_REF_NAME" --title "$GITHUB_REF_NAME" ./chrome.zip ./firefox.zip
+                  gh release create "$GITHUB_REF_NAME" --title "$GITHUB_REF_NAME" ./chromium.zip ./firefox.zip
               env:
                   GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}

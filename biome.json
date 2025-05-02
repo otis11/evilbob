@@ -7,10 +7,11 @@
 	},
 	"files": {
 		"ignore": [
-			"packages/extension/src/bangs/bangs.json",
-			"packages/extension/src/bangs/bangs-sorted.json",
-			"packages/plugins/src/list.json",
-			"packages/extension/src/theme.css"
+			"dist",
+			"src/bangs/bangs.json",
+			"src/bangs/bangs-sorted.json",
+			"src/plugins/list.json",
+			"src/theme.css"
 		],
 		"ignoreUnknown": false
 	},

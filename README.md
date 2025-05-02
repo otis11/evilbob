@@ -1,7 +1,7 @@
 # Evil Bob
 A command palette prototype.
 
-![Evil Bob](./packages/extension/src/media/evil-bob-icon-128x128.png)
+![Evil Bob](src/media/evil-bob-icon-128x128.png)
 
 # Installation
 > **_NOTE:_** The rewrite is not yet available. Only the old version.

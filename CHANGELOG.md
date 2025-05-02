@@ -5,20 +5,20 @@
 
 ## 0.6.0 (January 05, 2025)
 - Feat: add an indicator below the search which prefix is currently active
-- Plugin `tab-actions`: add `split tab out right` to move the tab into a new window and show both Windows 50/50 on screen.
-- Plugin `session-devices`: when selecting a session device open all sessions of that device
+- Index `tab-actions`: add `split tab out right` to move the tab into a new window and show both Windows 50/50 on screen.
+- Index `session-devices`: when selecting a session device open all sessions of that device
 - Fix: fix opening multiple bob windows. This occurs when the browser would stop the background service worker for inactivity, which resets a variable value that stored the last active bob window.
 - MacOS: Use `⌘` instead of `Ctrl` for the bob open shortcut on the welcome screen.
 
 ## 0.5.0 (November 12, 2024)
 - Feat: Support multiple levels when showing the options for a result and going back
 - Fix: Don't render or go into the options view of a result if the result has no options.
-- Plugins: add `Bookmark actions` Plugin. For instance create a bookmark for the current tab.
-- Plugins: add `Youtube` Plugin. Youtube search and Youtube shortcuts, for instance Youtube History.
-- Plugins: add `Tab cookies` Plugin. List all cookies of a tab or clear all cookies of a tab.
+- Plugins: add `Bookmark actions` Index. For instance create a bookmark for the current tab.
+- Plugins: add `Youtube` Index. Youtube search and Youtube shortcuts, for instance Youtube History.
+- Plugins: add `Tab cookies` Index. List all cookies of a tab or clear all cookies of a tab.
 - Plugins: add `filterResults` and `loadFreshData` to BobWindowState which can be used by plugins.
-- Plugin `management`: add `Remove/Uninstall Extension` as a result
-- Plugin `tab-actions`: add `Reload and clear cache (doesn't clear cookies)`, `Copy tab title` and `Sleep other tabs`
+- Index `management`: add `Remove/Uninstall Extension` as a result
+- Index `tab-actions`: add `Reload and clear cache (doesn't clear cookies)`, `Copy tab title` and `Sleep other tabs`
 - Usage View: add a title for each result usage to make it more clear which result was used.
 - Development: add `gen:plugins` and `gen:website` to scripts
 - Development: Move `publish_website.yml` workflow to script `gen:website`

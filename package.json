@@ -1,14 +1,37 @@
 {
 	"name": "evil-bob",
-	"workspaces": ["packages/*"],
-	"devDependencies": {
-		"@biomejs/biome": "^1.9.4"
+	"type": "module",
+	"author": {
+		"name": "otis11",
+		"url": "https://github.com/otis11"
 	},
+	"private": true,
 	"scripts": {
 		"lint": "biome check --write . && tsc",
-		"dev:chromium": "cd packages/extension && bun run dev:chromium",
-		"build:chromium": "cd packages/extension && bun run build:chromium",
-		"build": "cd packages/extension && bun run build",
-		"build:plugins": "cd packages/plugins && bun run build"
+		"dev:chromium": "NODE_ENV=dev bun scripts/dev.ts",
+		"build": "bun scripts/build.ts --firefox --chromium",
+		"build:chromium": "bun scripts/build.ts --chromium",
+		"watch": "bun scripts/build.ts --firefox --chromium --watch",
+		"watch:chromium": "bun scripts/build.ts --chromium --watch"
+	},
+	"devDependencies": {
+		"@types/bun": "latest",
+		"@types/chrome": "^0.0.316",
+		"@types/react": "^19.1.2",
+		"@types/react-dom": "^19.1.2",
+		"@vitejs/plugin-react": "^4.4.1",
+		"esbuild": "^0.25.3",
+		"vite": "^6.3.3",
+		"@playwright/test": "^1.52.0"
+	},
+	"peerDependencies": {
+		"typescript": "^5"
+	},
+	"dependencies": {
+		"@tailwindcss/vite": "^4.1.4",
+		"lucide-react": "^0.503.0",
+		"react": "^19.1.0",
+		"react-dom": "^19.1.0",
+		"tailwindcss": "^4.1.4"
 	}
 }

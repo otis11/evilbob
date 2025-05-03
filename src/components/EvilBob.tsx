@@ -135,9 +135,10 @@ export class EvilBob {
 	private static createDialogElement() {
 		const dialog = document.createElement("dialog");
 		dialog.className =
-			"max-w-full max-h-full m-0 backdrop:bg-black backdrop:opacity-40 p-3 outline-none border-solid border-fg-weakest border bg-bg text-fg font-main rounded-lg m-auto overflow-hidden flex flex-col";
+			"max-w-full max-h-full m-0 backdrop:bg-black backdrop:opacity-40 p-3 outline-none border-solid border-fg-weakest border bg-bg text-fg font-main rounded-lg m-auto overflow-hidden flex-col";
 
 		dialog.addEventListener("close", () => {
+			dialog.classList.remove("flex");
 			EvilBob.instance().dialogElement.classList.add("!hidden");
 			EvilBob.instance().mainRoot?.unmount();
 			EvilBob.instance().pluginViewRoot?.unmount();
@@ -188,7 +189,9 @@ export class EvilBob {
 		)}px`;
 		this.dialogElement.style.width = `${Math.min(config.dimensions.width, window.innerWidth - maxWidthOffset)}px`;
 
-		this.mainRoot = createRoot(this.mainElement);
+		if (!this.mainRoot) {
+			this.mainRoot = createRoot(this.mainElement);
+		}
 		this.renderMainView();
 
 		if (this.PluginView && this.pluginViewProps) {
@@ -199,6 +202,7 @@ export class EvilBob {
 		}
 
 		document.body.style.overflow = "hidden";
+		this.dialogElement.classList.add("flex");
 		EvilBob.instance().dialogElement.classList.remove("!hidden");
 		this.dialogElement.showModal();
 	}

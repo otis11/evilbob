@@ -1,8 +1,8 @@
 import { Checkbox } from "@/components/Checkbox.tsx";
-import { VList, VListItemTile, type VListRef } from "@/components/VList.tsx";
+import { VList, VListItemTile } from "@/components/VList.tsx";
 import { DropdownMenuItem } from "@/components/ui/dropdown-menu.tsx";
 import type { PluginViewProps } from "@/plugins";
-import { type ChangeEvent, useEffect, useRef, useState } from "react";
+import { type ChangeEvent, useEffect, useState } from "react";
 
 type MediaType =
 	| "img"
@@ -77,8 +77,6 @@ export function Command(props: PluginViewProps) {
 		});
 	}
 
-	const listRef = useRef<VListRef>(null);
-
 	return (
 		<>
 			<div
@@ -115,12 +113,14 @@ export function Command(props: PluginViewProps) {
 				itemHeight={height}
 				itemWidth={width}
 				itemSpacing={{ x: 4, y: 4 }}
-				ref={listRef}
 			>
 				{elements.map((element, index) => {
 					if (element instanceof HTMLImageElement) {
 						return (
-							<VListItemTile key={index}>
+							<VListItemTile
+								key={index}
+								Actions={<Actions url={element.src}></Actions>}
+							>
 								<img
 									alt={element.alt}
 									src={element.src}

@@ -15,7 +15,7 @@ interface Color {
 }
 const RGBA: RgbaKey[] = ["r", "g", "b", "a"] as const;
 
-export default function AddColor() {
+export function Command() {
 	const [rgba, setRgba] = useState<Rgba>({
 		r: 100,
 		g: 100,

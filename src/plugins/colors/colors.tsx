@@ -1,7 +1,7 @@
 import { browserApi } from "@/browser-api.ts";
-import { VList, VListItemTile, type VListRef } from "@/components/VList.tsx";
+import { VList, VListItemTile } from "@/components/VList.tsx";
 import type { PluginViewProps } from "@/plugins";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 interface Color {
 	c: string;
 	title: string;
@@ -11,7 +11,6 @@ export function Command({ search }: PluginViewProps) {
 	const width = 160;
 	const height = 160;
 	const [colors, setColors] = useState<Color[] | undefined>();
-	const listRef = useRef<VListRef>(null);
 	const [colorsLoadingMessage, setColorsLoadingMessage] =
 		useState("loading...");
 
@@ -36,7 +35,7 @@ export function Command({ search }: PluginViewProps) {
 					{colorsLoadingMessage}
 				</div>
 			) : (
-				<VList itemWidth={width} itemHeight={height} ref={listRef}>
+				<VList itemWidth={width} itemHeight={height}>
 					{(
 						colors?.filter((color) =>
 							searchInColor(search, color),

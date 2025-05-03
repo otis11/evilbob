@@ -1,3 +1,7 @@
+import {
+	getThemePreference,
+	onThemePreferenceChange,
+} from "@/lib/theme-preference.ts";
 import { KeyboardListener } from "@/lib/utils.ts";
 import type { PluginCommandExtended, PluginViewProps } from "@/plugins";
 import type { Plugin } from "@/plugins";
@@ -132,6 +136,18 @@ export class EvilBob {
 			document.body.style.overflow = "auto";
 		});
 
+		if (getThemePreference() === "dark") {
+			dialog.classList.add("dark");
+		}
+
+		onThemePreferenceChange((preference) => {
+			if (preference === "dark") {
+				dialog.classList.add("dark");
+			} else {
+				dialog.classList.remove("dark");
+			}
+		});
+
 		return dialog;
 	}
 
@@ -179,7 +195,7 @@ export class EvilBob {
 	}
 
 	public unmountPluginView() {
-		this.mainElement.classList.remove("!h-auto");
+		this.mainElement.classList.remove("!h-full");
 		this.pluginViewElement.classList.remove("!h-full");
 		this.pluginViewRoot?.unmount();
 		this.pluginViewRoot = undefined;

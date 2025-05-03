@@ -55,12 +55,12 @@ function highlightElement(el: HTMLElement | undefined | null) {
 	}
 
 	if (highlightedItem) {
-		highlightedItem.classList.remove("!bg-accent", "!border-accent");
+		highlightedItem.classList.remove("!bg-accent", "!border-ring");
 	}
 
 	highlightedItem = el;
 	if (el.classList.contains("vlist-item-tile")) {
-		highlightedItem.classList.add("!border-accent");
+		highlightedItem.classList.add("!border-ring");
 	} else {
 		highlightedItem.classList.add("!bg-accent");
 	}

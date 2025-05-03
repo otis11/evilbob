@@ -1,9 +1,9 @@
+import { Checkbox } from "@/components/Checkbox.tsx";
 import {
 	VList,
 	type VListChildProps,
 	type VListRef,
 } from "@/components/VList.tsx";
-import { Checkbox } from "@/components/ui/checkbox.tsx";
 import type { PluginViewProps } from "@/plugins";
 import { type ChangeEvent, useEffect, useRef, useState } from "react";
 
@@ -141,8 +141,8 @@ export default function MediaContentView(props: PluginViewProps) {
 						const node = item.cloneNode(true) as SVGElement;
 						node.setAttribute("width", width.toString());
 						node.setAttribute("height", height.toString());
-						node.style.fill = "var(--color-fg)";
-						node.style.color = "var(--color-fg)";
+						node.style.fill = "var(--foreground)";
+						node.style.color = "var(--foreground)";
 						return (
 							<VList.ItemTile style={style} key={index}>
 								<div

@@ -1,3 +1,4 @@
+import { ActionsBoxTop } from "@/components/ActionsBoxTop.tsx";
 import { Input } from "@/components/ui/input.tsx";
 import { ArrowLeft, Blocks, Maximize2, Minimize2 } from "lucide-react";
 import { type ChangeEvent, type RefObject, useState } from "react";
@@ -21,6 +22,12 @@ export function MainTopBar({
 	search,
 }: MainTopBarProps) {
 	const [isFullscreen, setIsFullscreen] = useState(false);
+	const [open, setOpen] = useState(false);
+	const actions = [
+		<div key={1}>hi</div>,
+		<div key={2}>again</div>,
+		<div key={3}>test</div>,
+	];
 
 	async function onPluginsClick() {
 		await chrome.runtime.sendMessage({ event: "open-plugins" });
@@ -54,8 +61,13 @@ export function MainTopBar({
 				)}
 				<Blocks size={20} onClick={onPluginsClick}></Blocks>
 			</div>
-			<div className="h-6 flex items-center pl-8">
-				<div className="text-sm text-fg-weak">{hint}</div>
+			<div className="py-2 flex items-center pl-8">
+				<div className="text-sm text-muted-foreground">{hint}</div>
+				<ActionsBoxTop
+					open={open}
+					onOpenChange={setOpen}
+					actions={actions}
+				/>
 			</div>
 		</>
 	);

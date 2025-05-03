@@ -118,7 +118,7 @@
 	* {
 		@apply border-border outline-ring/50;
 	}
-	body {
+	body, dialog {
 		@apply bg-background text-foreground h-full w-full p-5;
 	}
 

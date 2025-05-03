@@ -2,13 +2,7 @@ import { type Bang, getBangSearchUrl } from "@/lib/bangs/bangs.ts";
 import { findStringStartUntil } from "@/lib/utils";
 import { searchForPluginCommands } from "@/plugins";
 import type { Plugin, PluginCommandExtended } from "@/plugins";
-import {
-	type ChangeEvent,
-	type FunctionComponent,
-	useEffect,
-	useRef,
-	useState,
-} from "react";
+import { type ChangeEvent, type JSX, useEffect, useRef, useState } from "react";
 import { browserApi } from "../browser-api.ts";
 import { BangsList } from "../components/BangsList.tsx";
 import { CommandList } from "../components/CommandList.tsx";
@@ -23,14 +17,14 @@ export interface MainViewProps {
 	plugins: Plugin[];
 	onCommandClick?: (item: PluginCommandExtended) => void;
 	onBack?: () => void;
-	Actions: FunctionComponent | undefined;
+	actions: JSX.Element;
 }
 
 export function MainSearchView({
 	plugins,
 	pluginView,
 	onBack,
-	Actions,
+	actions,
 }: MainViewProps) {
 	const [search, setSearch] = useState("");
 	const inputRef = useRef<HTMLInputElement | null>(null);
@@ -100,7 +94,7 @@ export function MainSearchView({
 	return (
 		<>
 			<MainTopBar
-				Actions={Actions}
+				actions={actions}
 				search={search}
 				inputRef={inputRef}
 				showBack={!!pluginView}

@@ -88,10 +88,10 @@ export function Command({ search }: PluginViewProps) {
 							onClick={() => onBookmarkClick(item)}
 						>
 							<span>{item.node.title}</span>
-							<span className="text-fg-weak pl-4 truncate">
+							<span className="text-muted-foreground pl-4 truncate">
 								{item.node.url}
 							</span>
-							<span className="text-fg-weak pl-4 font-bold">
+							<span className="text-muted-foreground pl-4 font-bold">
 								{item.folders.map((f) => f.title).join("/")}
 							</span>
 						</VListItem>

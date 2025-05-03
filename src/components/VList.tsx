@@ -203,6 +203,10 @@ const VList = <T,>({
 						width: itemWidth === -1 ? "100%" : `${itemWidth}px`,
 						left: `${((startIndex + index) % itemCountPerRow) * realItemWidth}px`,
 					};
+					const activeClasses =
+						child.type?.name === "VListItem"
+							? "!bg-accent"
+							: "!border-ring";
 					return (
 						<div
 							onClick={() =>
@@ -211,11 +215,9 @@ const VList = <T,>({
 							onMouseOver={() => onChildMouseOver(index)}
 							onFocus={() => onChildMouseOver(index)}
 							style={style}
-							className={
-								activeIndex === index
-									? "!bg-accent"
-									: "!border-ring"
-							}
+							className={` rounded-sm border-2 border-solid border-transparent ${
+								activeIndex === index ? activeClasses : ""
+							}`}
 							key={index}
 						>
 							{child}
@@ -243,7 +245,7 @@ const VListItemTile = ({
 }: VListItemTileProps) => {
 	return (
 		<li
-			className={`${className} h-full w-full rounded-lg border-2 border-solid border-transparent overflow-hidden flex flex-col items-start justify-start`}
+			className={`${className} h-full w-full overflow-hidden flex flex-col items-start justify-start`}
 		>
 			{children}
 		</li>
@@ -260,7 +262,7 @@ export interface VListItemProps {
 const VListItem = ({ children, onClick, data, Actions }: VListItemProps) => {
 	return (
 		<li
-			className="truncate text-base text-fg items-center flex h-full w-full m-0 py-1.5 px-2 rounded-sm list-none"
+			className="truncate text-base text-fg items-center flex h-full w-full m-0 py-1.5 px-2 list-none"
 			onClick={onClick}
 		>
 			{children}

@@ -61,7 +61,10 @@ export function MainTopBar({
 				)}
 				<Blocks size={20} onClick={onPluginsClick}></Blocks>
 			</div>
-			<div className="py-2 flex items-center pl-8">
+			<div className="h-8 min-h-8 flex items-center justify-between">
+				<div className="text-xs tracking-widest text-muted-foreground">
+					Go Back ⌘b
+				</div>
 				<div className="text-sm text-muted-foreground">{hint}</div>
 				<ActionsBoxTop
 					open={open}

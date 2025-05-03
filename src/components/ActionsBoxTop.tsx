@@ -43,7 +43,7 @@ export function ActionsBoxTop({
 }: ActionsTopBoxProps) {
 	return (
 		<DropdownMenu open={open} onOpenChange={onOpenChange}>
-			<DropdownMenuTrigger className="ml-auto text-xs tracking-widest text-muted-foreground">
+			<DropdownMenuTrigger className="text-xs tracking-widest text-muted-foreground">
 				Actions ⌘⏎
 			</DropdownMenuTrigger>
 			<DropdownMenuContent container={EvilBob.instance().dialogElement}>

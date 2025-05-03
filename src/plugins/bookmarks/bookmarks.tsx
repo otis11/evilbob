@@ -1,9 +1,5 @@
 import { browserApi } from "@/browser-api.ts";
-import {
-	VList,
-	type VListChildProps,
-	type VListRef,
-} from "@/components/VList.tsx";
+import { VList, VListItem, type VListRef } from "@/components/VList.tsx";
 import type { PluginViewProps } from "@/plugins";
 import { useEffect, useRef, useState } from "react";
 
@@ -83,36 +79,24 @@ export function Command({ search }: PluginViewProps) {
 					{bookmarksLoadingMessage}
 				</div>
 			) : (
-				<VList
-					items={
+				<VList itemWidth={-1} itemHeight={32} ref={listRef}>
+					{(
 						bookmarks?.filter((b) => searchInBookmark(search, b)) ||
 						[]
-					}
-					itemWidth={-1}
-					itemHeight={32}
-					ref={listRef}
-				>
-					{({
-						item,
-						style,
-						index,
-					}: VListChildProps<BookmarkItem>) => {
-						return (
-							<VList.Item
-								onClick={() => onBookmarkClick(item)}
-								key={index}
-								style={style}
-							>
-								<span>{item.node.title}</span>
-								<span className="text-fg-weak pl-4 truncate">
-									{item.node.url}
-								</span>
-								<span className="text-fg-weak pl-4 font-bold">
-									{item.folders.map((f) => f.title).join("/")}
-								</span>
-							</VList.Item>
-						);
-					}}
+					).map((item) => (
+						<VListItem
+							key={item.node.id}
+							onClick={() => onBookmarkClick(item)}
+						>
+							<span>{item.node.title}</span>
+							<span className="text-fg-weak pl-4 truncate">
+								{item.node.url}
+							</span>
+							<span className="text-fg-weak pl-4 font-bold">
+								{item.folders.map((f) => f.title).join("/")}
+							</span>
+						</VListItem>
+					))}
 				</VList>
 			)}
 		</>

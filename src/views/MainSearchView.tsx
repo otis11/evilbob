@@ -73,7 +73,7 @@ export function MainSearchView({
 				search: "",
 			});
 		} else if (item.type === "command") {
-			await command.Command();
+			await (command.Command as () => Promise<void>)();
 		}
 	}
 

@@ -77,6 +77,6 @@ export interface PluginViewProps {
 export type PluginView = (props: PluginViewProps) => JSX.Element;
 
 export interface PluginCommandImported {
-	Command: any;
+	Command: FunctionComponent | (() => Promise<void>);
 	Actions?: FunctionComponent;
 }

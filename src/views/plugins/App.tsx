@@ -1,9 +1,9 @@
-import { VList, VListItemTile, type VListRef } from "@/components/VList.tsx";
+import { VList, VListItemTile } from "@/components/VList.tsx";
 import { Button } from "@/components/ui/button.tsx";
 import { type Plugin, searchInPlugin } from "@/plugins";
 import pluginJsonList from "@/plugins/list.json";
 import { Check } from "lucide-react";
-import { type ChangeEvent, useEffect, useRef, useState } from "react";
+import { type ChangeEvent, useState } from "react";
 
 import { Input } from "@/components/ui/input.tsx";
 import { type EvilBobConfig, getConfig } from "@/lib/config.ts";
@@ -14,13 +14,9 @@ interface AppProps {
 	config: EvilBobConfig;
 }
 export default function App({ config }: AppProps) {
-	const listRef = useRef<VListRef>(null);
 	const [localConfig, setLocalConfig] = useState<EvilBobConfig>(config);
 	const [searchValue, setSearchValue] = useState("");
 	const [pluginLoading, setPluginLoading] = useState("");
-	useEffect(() => {
-		listRef.current?.focus();
-	}, []);
 
 	async function onEnableDisableClick(plugin: Plugin) {
 		setPluginLoading(plugin.id);
@@ -45,7 +41,6 @@ export default function App({ config }: AppProps) {
 				itemHeight={280}
 				itemWidth={280}
 				itemSpacing={{ x: 12, y: 12 }}
-				ref={listRef}
 			>
 				{plugins
 					.filter((plugin) => searchInPlugin(searchValue, plugin))

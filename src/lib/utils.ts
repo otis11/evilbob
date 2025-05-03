@@ -97,9 +97,13 @@ export class KeyboardListener {
 		isActive: boolean;
 		id: number;
 	}[] = [];
+	keyupHandler: (e: Event) => void;
+	keydownHandler: (e: Event) => void;
 
-	constructor(target: HTMLElement | Window | Document | ShadowRoot) {
-		target.addEventListener("keyup", (keyboardEvent) => {
+	constructor(
+		private readonly target: HTMLElement | Window | Document | ShadowRoot,
+	) {
+		this.keyupHandler = (keyboardEvent: Event) => {
 			if (keyboardEvent instanceof KeyboardEvent) {
 				// this only needs to be tracked because of macOS and the Meta key. The Meta key does not trigger keyup event for keys while its pressed.
 				// if key not held down emulate the key up event for that specific key.
@@ -113,9 +117,9 @@ export class KeyboardListener {
 					this.normalizeKey(keyboardEvent.key)
 				];
 			}
-		});
+		};
 
-		target.addEventListener("keydown", (keyboardEvent) => {
+		this.keydownHandler = (keyboardEvent) => {
 			if (keyboardEvent instanceof KeyboardEvent) {
 				const normalizedKey = this.normalizeKey(keyboardEvent.key);
 				this.keysPressedDown[normalizedKey] = true;
@@ -143,7 +147,10 @@ export class KeyboardListener {
 					}
 				}
 			}
-		});
+		};
+
+		this.target.addEventListener("keyup", this.keyupHandler.bind(this));
+		this.target.addEventListener("keydown", this.keydownHandler.bind(this));
 	}
 
 	normalizeKey(key: string) {
@@ -155,7 +162,7 @@ export class KeyboardListener {
 
 	register(keys: string[], onActivate: () => void, onLeave?: () => void) {
 		if (keys.length === 0) {
-			return;
+			return -1;
 		}
 		this.keydownListener.push({
 			keys: keys.map((key) => this.normalizeKey(key)),
@@ -166,6 +173,21 @@ export class KeyboardListener {
 		});
 		this.keydownListenerIdCounter += 1;
 		return this.keydownListenerIdCounter - 1;
+	}
+	remove(id: number) {
+		this.keydownListener = this.keydownListener.filter(
+			(listener) => listener.id !== id,
+		);
+	}
+	destroy() {
+		this.keysPressedDown = {};
+		this.keydownListenerIdCounter = 0;
+		this.keydownListener = [];
+		this.target.removeEventListener("keyup", this.keyupHandler.bind(this));
+		this.target.removeEventListener(
+			"keydown",
+			this.keydownHandler.bind(this),
+		);
 	}
 }
 export interface Rgba {

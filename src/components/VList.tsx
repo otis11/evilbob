@@ -1,12 +1,9 @@
 import { KeyboardListener } from "@/lib/utils.ts";
 import {
 	type CSSProperties,
-	type FunctionComponent,
 	type JSX,
 	type ReactNode,
-	type RefObject,
 	useEffect,
-	useImperativeHandle,
 	useRef,
 	useState,
 } from "react";
@@ -15,7 +12,6 @@ import { EvilBob } from "./EvilBob.tsx";
 
 interface VListProps<T> {
 	children: ReactNode;
-	ref: RefObject<VListRef | null>;
 	itemHeight: number;
 	itemWidth: number;
 	itemsOutOfBounds?: number;
@@ -24,66 +20,17 @@ interface VListProps<T> {
 		y: number;
 	};
 	keyboardListenerTarget?: Window | Document | HTMLElement;
-}
-
-export interface VListRef {
-	focus: () => void;
-	blur: () => void;
-	highlightNth: (n: number) => void;
-	highlightNextBelow: () => void;
-	highlightNextAbove: () => void;
-	highlightNextLeft: () => void;
-	highlightNextRight: () => void;
-	getHighlighted: () => HTMLElement | undefined;
-}
-
-export interface VListChildProps<T> {
-	style: CSSProperties;
-	index: number;
-	item: T;
-}
-
-export type VListChild<T> = (props: VListChildProps<T>) => JSX.Element;
-
-let highlightedItem: HTMLElement | undefined;
-let focusedList: HTMLElement | undefined;
-
-function highlightElement(el: HTMLElement | undefined | null) {
-	if (!el) {
-		return;
-	}
-
-	if (highlightedItem) {
-		highlightedItem.classList.remove("!bg-accent", "!border-ring");
-	}
-
-	highlightedItem = el;
-	if (el.classList.contains("vlist-item-tile")) {
-		highlightedItem.classList.add("!border-ring");
-	} else {
-		highlightedItem.classList.add("!bg-accent");
-	}
-}
-
-function focusList(el: HTMLElement | undefined | null) {
-	if (!el) {
-		return;
-	}
-	if (focusedList) {
-		focusedList.classList.remove("vlist-focused");
-	}
-	focusedList = el;
-	focusedList.classList.add("vlist-focused");
+	onSelect?: (item: any) => void;
 }
 
 const VList = <T,>({
 	children,
-	ref,
 	itemHeight,
 	itemWidth,
 	itemsOutOfBounds,
 	itemSpacing,
 	keyboardListenerTarget,
+	onSelect,
 }: VListProps<T>) => {
 	const [renderedChildren, setRenderedChildren] = useState<JSX.Element[]>([]);
 	const root = useRef<HTMLUListElement>(null);
@@ -93,44 +40,38 @@ const VList = <T,>({
 	const [realItemWidth, setRealItemWidth] = useState(0);
 	const [itemCountPerRow, setItemCountPerRow] = useState(0);
 	const [scrollTop, setScrollTop] = useState(root.current?.scrollTop || 0);
+	const [activeIndex, setActiveIndex] = useState(0);
 	const parsedChildren = Array.isArray(children) ? children : [];
 
 	// biome-ignore lint/correctness/useExhaustiveDependencies: ignore for now, as it should only run once to register keybord listeners
 	useEffect(() => {
+		const keyboardListener = new KeyboardListener(
+			keyboardListenerTarget || EvilBob.instance().shadowRoot,
+		);
 		getConfig().then((config) => {
-			const keyboardListener = new KeyboardListener(
-				keyboardListenerTarget || EvilBob.instance().shadowRoot,
+			keyboardListener.register(
+				config.keybindings.nextAbove.keys,
+				highlightNextAbove,
 			);
-			keyboardListener.register(config.keybindings.nextAbove.keys, () => {
-				if (!isFocused()) return;
-				ref.current?.highlightNextAbove();
-			});
-			keyboardListener.register(config.keybindings.nextBelow.keys, () => {
-				if (!isFocused()) return;
-				ref.current?.highlightNextBelow();
-			});
-			keyboardListener.register(config.keybindings.nextLeft.keys, () => {
-				if (!isFocused()) return;
-				ref.current?.highlightNextLeft();
-			});
-			keyboardListener.register(config.keybindings.nextRight.keys, () => {
-				if (!isFocused()) return;
-				ref.current?.highlightNextRight();
-			});
+			keyboardListener.register(
+				config.keybindings.nextBelow.keys,
+				highlightNextBelow,
+			);
+			keyboardListener.register(
+				config.keybindings.nextLeft.keys,
+				highlightNextLeft,
+			);
+			keyboardListener.register(
+				config.keybindings.nextRight.keys,
+				highlightNextRight,
+			);
 			keyboardListener.register(
 				config.keybindings.selectResult.keys,
-				() => {
-					if (!isFocused()) return;
-					const highlighted = ref.current?.getHighlighted();
-					highlighted?.click();
-				},
+				() => onSelect?.(parsedChildren[activeIndex].props.data),
 			);
 		});
-		requestAnimationFrame(() => {
-			ref.current?.focus();
-			ref.current?.highlightNth(0);
-		});
-	}, []);
+		return () => keyboardListener.destroy();
+	}, [activeIndex, itemCountPerRow, parsedChildren]);
 	useEffect(() => {
 		const availHeight = root.current?.getBoundingClientRect().height || 0;
 		const availWidth = root.current?.getBoundingClientRect().width || 0;
@@ -141,7 +82,6 @@ const VList = <T,>({
 		const totalRowCount = Math.ceil(
 			parsedChildren.length / localItemCountPerRow,
 		);
-
 		if (root.current) {
 			root.current.style.position = "relative";
 		}
@@ -173,7 +113,7 @@ const VList = <T,>({
 		);
 
 		requestAnimationFrame(() => {
-			ref.current?.highlightNth(0);
+			highlightNth(0);
 		});
 	}, [
 		scrollTop,
@@ -181,114 +121,67 @@ const VList = <T,>({
 		itemSpacing,
 		itemWidth,
 		itemHeight,
-		ref,
 		parsedChildren,
 	]);
-	function isFocused() {
-		return root.current?.classList.contains("vlist-focused");
+
+	function highlightNth(n: number) {
+		setActiveIndex(n);
 	}
-
-	function getListElements(): [HTMLElement[], number] {
-		const listElements = root.current
-			? Array.from(
-					root.current.querySelectorAll<HTMLElement>(".vlist-item"),
-				)
-			: [];
-		const currentIndex = highlightedItem
-			? listElements.indexOf(highlightedItem)
-			: -1;
-		return [listElements, currentIndex];
+	function highlightNextBelow() {
+		if (activeIndex === -1) {
+			setActiveIndex(0);
+		} else {
+			setActiveIndex(
+				(activeIndex + itemCountPerRow) % parsedChildren.length,
+			);
+		}
 	}
-
-	useImperativeHandle(ref, () => ({
-		highlightNth(n: number) {
-			const listElements = root.current
-				? Array.from(
-						root.current.querySelectorAll<HTMLElement>(
-							".vlist-item",
-						),
-					)
-				: [];
-
-			if (listElements[n]) {
-				highlightElement(listElements[n]);
+	function highlightNextAbove() {
+		if (activeIndex === -1) {
+			setActiveIndex(0);
+		} else {
+			let targetIndex = activeIndex - itemCountPerRow;
+			if (targetIndex < 0) {
+				targetIndex = parsedChildren.length - 1;
 			}
-		},
-		focus() {
-			focusList(root.current);
-		},
-		blur() {
-			root.current?.classList.remove("vlist-focused");
-			focusedList = undefined;
-		},
-		highlightNextBelow() {
-			const [listElements, currentIndex] = getListElements();
-
-			if (currentIndex === -1) {
-				highlightElement(listElements[0]);
-			} else {
-				highlightElement(
-					listElements[
-						(currentIndex + itemCountPerRow) % listElements.length
-					],
-				);
-			}
-		},
-		highlightNextAbove() {
-			const [listElements, currentIndex] = getListElements();
-
-			if (currentIndex === -1) {
-				highlightElement(listElements[0]);
-			} else {
-				let targetIndex = currentIndex - itemCountPerRow;
-				if (targetIndex < 0) {
-					targetIndex = listElements.length - 1;
-				}
-				highlightElement(listElements[targetIndex]);
-			}
-		},
-		highlightNextLeft() {
-			if (itemWidth === -1) {
-				return;
-			}
-			const [listElements, currentIndex] = getListElements();
-
-			if (currentIndex % itemCountPerRow === 0) {
-				// border do nothing
-				return;
-			}
-			if (currentIndex === -1) {
-				highlightElement(listElements[0]);
-			} else {
-				highlightElement(
-					listElements[(currentIndex - 1) % listElements.length],
-				);
-			}
-		},
-		highlightNextRight() {
-			if (itemWidth === -1) {
-				return;
-			}
-			const [listElements, currentIndex] = getListElements();
-			if ((currentIndex + 1) % itemCountPerRow === 0) {
-				// border do nothing
-				return;
-			}
-			if (currentIndex === -1) {
-				highlightElement(listElements[0]);
-			} else {
-				highlightElement(
-					listElements[(currentIndex + 1) % listElements.length],
-				);
-			}
-		},
-		getHighlighted() {
-			return highlightedItem;
-		},
-	}));
+			setActiveIndex(targetIndex);
+		}
+	}
+	function highlightNextLeft() {
+		if (itemWidth === -1) {
+			return;
+		}
+		if (activeIndex % itemCountPerRow === 0) {
+			// border do nothing
+			return;
+		}
+		if (activeIndex === -1) {
+			setActiveIndex(0);
+		} else {
+			setActiveIndex((activeIndex - 1) % parsedChildren.length);
+		}
+	}
+	function highlightNextRight() {
+		if (itemWidth === -1) {
+			return;
+		}
+		if ((activeIndex + 1) % itemCountPerRow === 0) {
+			// border do nothing
+			return;
+		}
+		if (activeIndex === -1) {
+			setActiveIndex(0);
+		} else {
+			setActiveIndex((activeIndex + 1) % parsedChildren.length);
+		}
+	}
 
 	function onScroll() {
 		setScrollTop(root.current?.scrollTop || 0);
+	}
+
+	function onChildMouseOver(index: number) {
+		setActiveIndex(index);
 	}
 
 	return (
@@ -307,7 +200,20 @@ const VList = <T,>({
 						left: `${((startIndex + index) % itemCountPerRow) * realItemWidth}px`,
 					};
 					return (
-						<div style={style} key={index}>
+						<div
+							onClick={() =>
+								onSelect?.(parsedChildren[index].props.data)
+							}
+							onMouseOver={() => onChildMouseOver(index)}
+							onFocus={() => onChildMouseOver(index)}
+							style={style}
+							className={
+								activeIndex === index
+									? "!bg-accent"
+									: "!border-ring"
+							}
+							key={index}
+						>
 							{child}
 						</div>
 					);
@@ -317,46 +223,18 @@ const VList = <T,>({
 	);
 };
 
-function onMouseOver(e: MouseEvent) {
-	const composedPath = e.composedPath();
-	let hoveredListElement: HTMLElement | undefined;
-	let hoveredList: HTMLElement | undefined;
-	for (const item of composedPath) {
-		if (!(item instanceof HTMLElement)) {
-			continue;
-		}
-		if (item.classList.contains("vlist-item")) {
-			hoveredListElement = item;
-		}
-		if (item.classList.contains("vlist")) {
-			hoveredList = item;
-		}
-	}
-	if (hoveredListElement) {
-		highlightElement(hoveredListElement);
-	}
-	if (hoveredList) {
-		focusList(hoveredList);
-	}
-}
-
-window.addEventListener("mouseover", onMouseOver);
-window.addEventListener("evil-bob-mouse-over", (e) => {
-	if ("detail" in e) {
-		onMouseOver(e.detail as MouseEvent);
-	}
-});
-
 export interface VListItemTileProps {
 	children: ReactNode;
 	className?: string;
-	Actions?: FunctionComponent | undefined;
+	Actions?: JSX.Element | undefined;
+	data?: any;
 }
 
 const VListItemTile = ({
 	children,
 	className,
 	Actions,
+	data,
 }: VListItemTileProps) => {
 	return (
 		<li
@@ -370,15 +248,14 @@ const VListItemTile = ({
 export interface VListItemProps {
 	children: ReactNode;
 	onClick?: () => void;
-	style?: CSSProperties;
-	Actions?: FunctionComponent | undefined;
+	Actions?: JSX.Element | undefined;
+	data?: any;
 }
-const VListItem = ({ children, onClick, style }: VListItemProps) => {
+const VListItem = ({ children, onClick, data, Actions }: VListItemProps) => {
 	return (
 		<li
 			className="vlist-item truncate text-base text-fg items-center flex  w-full m-0 py-1.5 px-2 rounded-sm list-none"
 			onClick={onClick}
-			style={style}
 		>
 			{children}
 		</li>

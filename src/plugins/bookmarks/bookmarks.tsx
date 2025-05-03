@@ -1,7 +1,7 @@
 import { browserApi } from "@/browser-api.ts";
-import { VList, VListItem, type VListRef } from "@/components/VList.tsx";
+import { VList, VListItem } from "@/components/VList.tsx";
 import type { PluginViewProps } from "@/plugins";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 
 export interface BookmarkFolder {
 	id: string;
@@ -15,7 +15,6 @@ export interface BookmarkItem {
 
 export function Command({ search }: PluginViewProps) {
 	const [bookmarks, setBookmarks] = useState<BookmarkItem[] | undefined>();
-	const listRef = useRef<VListRef>(null);
 	const [bookmarksLoadingMessage, setBookmarksLoadingMessage] =
 		useState("loading...");
 
@@ -79,7 +78,7 @@ export function Command({ search }: PluginViewProps) {
 					{bookmarksLoadingMessage}
 				</div>
 			) : (
-				<VList itemWidth={-1} itemHeight={32} ref={listRef}>
+				<VList itemWidth={-1} itemHeight={32}>
 					{(
 						bookmarks?.filter((b) => searchInBookmark(search, b)) ||
 						[]

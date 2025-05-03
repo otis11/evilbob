@@ -124,7 +124,7 @@ export function MainSearchView({
 				</div>
 			) : (
 				<CommandList
-					onCommandClick={onCommandClick}
+					onSelect={onCommandClick}
 					commands={commands}
 				></CommandList>
 			)}

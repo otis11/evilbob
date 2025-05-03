@@ -1,19 +1,14 @@
 import type { PluginCommandExtended } from "@/plugins";
-import { useRef } from "react";
-import { VList, VListItem, type VListRef } from "./VList.tsx";
+import { VList, VListItem } from "./VList.tsx";
 export interface CommandListProps {
-	onCommandClick?: (item: PluginCommandExtended) => void;
 	commands: PluginCommandExtended[];
+	onSelect: (item: any) => void;
 }
-export function CommandList({ onCommandClick, commands }: CommandListProps) {
-	const listRef = useRef<VListRef>(null);
+export function CommandList({ commands, onSelect }: CommandListProps) {
 	return (
-		<VList ref={listRef} itemHeight={32} itemWidth={-1}>
+		<VList itemHeight={32} itemWidth={-1} onSelect={onSelect}>
 			{commands.map((command) => (
-				<VListItem
-					key={command.name}
-					onClick={() => onCommandClick?.(command)}
-				>
+				<VListItem data={command} key={command.name}>
 					<span>{command.title}</span>
 					<span className="text-fg-weak text-sm pl-4">
 						{command.plugin?.title}

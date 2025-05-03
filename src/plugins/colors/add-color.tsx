@@ -1,5 +1,6 @@
 import { browserApi } from "@/browser-api.ts";
 import { PluginActions } from "@/components/PluginActions";
+import { toast } from "@/components/Toast";
 import { Button } from "@/components/ui/button.tsx";
 import { DropdownMenuItem } from "@/components/ui/dropdown-menu.tsx";
 import { Input } from "@/components/ui/input.tsx";
@@ -28,6 +29,7 @@ export function Command() {
 		`#${decimalToHex(rgba.r)}${decimalToHex(rgba.g)}${decimalToHex(rgba.b)}${decimalToHex(rgba.a)}`,
 	);
 	useEffect(() => {
+		toast(<span>Color Changed.</span>);
 		setHexColor(
 			`#${decimalToHex(rgba.r)}${decimalToHex(rgba.g)}${decimalToHex(rgba.b)}${decimalToHex(rgba.a)}`,
 		);

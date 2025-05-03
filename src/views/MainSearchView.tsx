@@ -1,3 +1,4 @@
+import { Toast } from "@/components/Toast.tsx";
 import { type Bang, getBangSearchUrl } from "@/lib/bangs/bangs.ts";
 import { findStringStartUntil } from "@/lib/utils";
 import { searchForPluginCommands } from "@/plugins";
@@ -93,6 +94,7 @@ export function MainSearchView({
 
 	return (
 		<>
+			<Toast></Toast>
 			<MainTopBar
 				actions={actions}
 				search={search}

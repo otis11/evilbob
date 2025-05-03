@@ -3,7 +3,11 @@ import {
 	onThemePreferenceChange,
 } from "@/lib/theme-preference.ts";
 import { KeyboardListener } from "@/lib/utils.ts";
-import type { PluginCommandExtended, PluginViewProps } from "@/plugins";
+import type {
+	PluginCommandExtended,
+	PluginCommandImported,
+	PluginViewProps,
+} from "@/plugins";
 import type { Plugin } from "@/plugins";
 import type { FunctionComponent } from "react";
 import { type Root, createRoot } from "react-dom/client";
@@ -26,6 +30,7 @@ export interface ShowInputProps {
 export class EvilBob {
 	static internalInstance: EvilBob | undefined;
 	public mainRoot: Root | undefined;
+	public Actions: FunctionComponent | undefined = undefined;
 
 	public pluginViewRoot: Root | undefined = undefined;
 	public PluginView: FunctionComponent<PluginViewProps> | undefined =
@@ -47,6 +52,9 @@ export class EvilBob {
 			);
 			listener.register(config.keybindings.closePluginView.keys, () => {
 				this.unmountPluginView();
+			});
+			listener.register(config.keybindings.openActions.keys, () => {
+				window.dispatchEvent(new CustomEvent("evil-bob-open-actions"));
 			});
 		});
 	}
@@ -154,6 +162,7 @@ export class EvilBob {
 	public renderMainView() {
 		this.mainRoot?.render(
 			<MainSearchView
+				Actions={this.Actions}
 				plugins={this.plugins || []}
 				pluginView={this.pluginViewCommand}
 				onBack={this.unmountPluginView.bind(this)}
@@ -218,16 +227,17 @@ export class EvilBob {
 	 * To render a view conditional we need a second root node as react has specific rules for hooks:
 	 * Do not call Hooks inside conditions or loops.
 	 * @param command
-	 * @param View
+	 * @param imported
 	 * @param props
 	 */
-	public renderPluginView(
+	public renderPluginCommand(
 		command: PluginCommandExtended,
-		View: FunctionComponent<PluginViewProps>,
+		imported: PluginCommandImported,
 		props?: PluginViewProps,
 	) {
 		this.pluginViewCommand = command;
-		this.PluginView = View;
+		this.PluginView = imported.Command;
+		this.Actions = imported.Actions;
 		if (props) {
 			this.pluginViewProps = props;
 		}

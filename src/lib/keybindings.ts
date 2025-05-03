@@ -36,4 +36,9 @@ export const defaultKeybindings = {
 		description: "This will close the plugin view.",
 		title: "Close plugin view.",
 	},
+	openActions: {
+		keys: ["Meta", "Enter"],
+		description: "This will open the actions for a View.",
+		title: "Open Actions.",
+	},
 };

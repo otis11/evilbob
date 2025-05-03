@@ -11,7 +11,7 @@ interface Color {
 	title: string;
 }
 
-export default function Colors({ search }: PluginViewProps) {
+export function Command({ search }: PluginViewProps) {
 	const width = 160;
 	const height = 160;
 	const [colors, setColors] = useState<Color[] | undefined>();

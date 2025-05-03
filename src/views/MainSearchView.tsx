@@ -2,7 +2,13 @@ import { type Bang, getBangSearchUrl } from "@/lib/bangs/bangs.ts";
 import { findStringStartUntil } from "@/lib/utils";
 import { searchForPluginCommands } from "@/plugins";
 import type { Plugin, PluginCommandExtended } from "@/plugins";
-import { type ChangeEvent, useEffect, useRef, useState } from "react";
+import {
+	type ChangeEvent,
+	type FunctionComponent,
+	useEffect,
+	useRef,
+	useState,
+} from "react";
 import { browserApi } from "../browser-api.ts";
 import { BangsList } from "../components/BangsList.tsx";
 import { CommandList } from "../components/CommandList.tsx";
@@ -17,9 +23,15 @@ export interface MainViewProps {
 	plugins: Plugin[];
 	onCommandClick?: (item: PluginCommandExtended) => void;
 	onBack?: () => void;
+	Actions: FunctionComponent | undefined;
 }
 
-export function MainSearchView({ plugins, pluginView, onBack }: MainViewProps) {
+export function MainSearchView({
+	plugins,
+	pluginView,
+	onBack,
+	Actions,
+}: MainViewProps) {
 	const [search, setSearch] = useState("");
 	const inputRef = useRef<HTMLInputElement | null>(null);
 	const [searchBehindBang, setSearchBehindBang] = useState("");
@@ -57,9 +69,11 @@ export function MainSearchView({ plugins, pluginView, onBack }: MainViewProps) {
 		const command = await importPluginCommand(item.plugin.id, item.name);
 		if (item.type === "view") {
 			setSearch("");
-			EvilBob.instance().renderPluginView(item, command, { search: "" });
+			EvilBob.instance().renderPluginCommand(item, command, {
+				search: "",
+			});
 		} else if (item.type === "command") {
-			await command();
+			await command.Command();
 		}
 	}
 
@@ -86,6 +100,7 @@ export function MainSearchView({ plugins, pluginView, onBack }: MainViewProps) {
 	return (
 		<>
 			<MainTopBar
+				Actions={Actions}
 				search={search}
 				inputRef={inputRef}
 				showBack={!!pluginView}

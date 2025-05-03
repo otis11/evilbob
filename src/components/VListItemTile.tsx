@@ -1,10 +1,11 @@
-import type { CSSProperties, ReactNode } from "react";
+import type { CSSProperties, FunctionComponent, ReactNode } from "react";
 
 export interface VListItemTileProps {
 	children: ReactNode;
 	title?: string;
 	style?: CSSProperties;
 	className?: string;
+	Actions: FunctionComponent | undefined;
 }
 
 export const VListItemTile = ({
@@ -12,6 +13,7 @@ export const VListItemTile = ({
 	title,
 	className,
 	style,
+	Actions,
 }: VListItemTileProps) => {
 	return (
 		<li

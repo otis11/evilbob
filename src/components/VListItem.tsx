@@ -1,9 +1,10 @@
-import type { CSSProperties, ReactNode } from "react";
+import type { CSSProperties, FunctionComponent, ReactNode } from "react";
 
 export interface VListItemProps {
 	children: ReactNode;
 	onClick?: () => void;
 	style?: CSSProperties;
+	Actions: FunctionComponent | undefined;
 }
 export const VListItem = ({ children, onClick, style }: VListItemProps) => {
 	return (

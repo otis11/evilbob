@@ -1,11 +1,11 @@
+import { Input } from "@/components/ui/input.tsx";
 import { ArrowLeft, Blocks, Maximize2, Minimize2 } from "lucide-react";
-import { type RefObject, useState } from "react";
+import { type ChangeEvent, type RefObject, useState } from "react";
 import { EvilBob } from "./EvilBob.tsx";
-import { SearchInput, type onSearchInputChangeProps } from "./SearchInput.tsx";
 
 export interface MainTopBarProps {
 	hint?: string;
-	onChange?: (data: onSearchInputChangeProps) => void;
+	onChange?: (data: ChangeEvent<HTMLInputElement>) => void;
 	onBack?: () => void;
 	showBack?: boolean;
 	inputRef: RefObject<HTMLInputElement | null>;
@@ -35,11 +35,12 @@ export function MainTopBar({
 					size={20}
 					className={showBack ? "" : "pointer-events-none opacity-50"}
 				></ArrowLeft>
-				<SearchInput
+				<Input
+					className="h-12 !text-lg"
 					ref={inputRef}
 					onChange={onChange}
 					value={search}
-				></SearchInput>
+				></Input>
 				{isFullscreen ? (
 					<Minimize2
 						onClick={() => setIsFullscreen(false)}

@@ -25,13 +25,13 @@ export function CommandList({ onCommandClick, commands }: CommandListProps) {
 							{item.plugin?.title}
 						</span>
 						{item.type === "command" ? (
-							<div className="ml-auto text-fg-weak text-sm">
+							<span className="ml-auto text-fg-weak text-sm">
 								Command
-							</div>
+							</span>
 						) : (
-							<div className="ml-auto text-fg-weak text-sm">
+							<span className="ml-auto text-fg-weak text-sm">
 								View
-							</div>
+							</span>
 						)}
 					</VList.Item>
 				);

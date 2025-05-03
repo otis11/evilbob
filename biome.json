@@ -8,10 +8,10 @@
 	"files": {
 		"ignore": [
 			"dist",
-			"src/bangs/bangs.json",
-			"src/bangs/bangs-sorted.json",
+			"src/lib/bangs/bangs.json",
+			"src/lib/bangs/bangs-sorted.json",
 			"src/plugins/list.json",
-			"src/theme.css"
+			"src/globals.css"
 		],
 		"ignoreUnknown": false
 	},
@@ -28,7 +28,8 @@
 		"rules": {
 			"recommended": true,
 			"suspicious": {
-				"noConsoleLog": "error"
+				"noConsoleLog": "error",
+				"noArrayIndexKey": "warn"
 			},
 			"style": {
 				"useSelfClosingElements": "off"

@@ -8,7 +8,7 @@ import {
 	useRef,
 	useState,
 } from "react";
-import { getConfig } from "../config/config.ts";
+import { getConfig } from "../lib/config.ts";
 import { EvilBob } from "./EvilBob.tsx";
 import { VListItem } from "./VListItem.tsx";
 import { VListItemTile } from "./VListItemTile.tsx";
@@ -55,14 +55,14 @@ function highlightElement(el: HTMLElement | undefined | null) {
 	}
 
 	if (highlightedItem) {
-		highlightedItem.classList.remove("!bg-fg-weakest", "!border-fg-weak");
+		highlightedItem.classList.remove("!bg-accent", "!border-accent");
 	}
 
 	highlightedItem = el;
 	if (el.classList.contains("vlist-item-tile")) {
-		highlightedItem.classList.add("!border-fg-weak");
+		highlightedItem.classList.add("!border-accent");
 	} else {
-		highlightedItem.classList.add("!bg-fg-weakest");
+		highlightedItem.classList.add("!bg-accent");
 	}
 }
 

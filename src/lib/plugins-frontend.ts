@@ -1,4 +1,4 @@
-import type { Plugin } from "@/plugins";
+import type { Plugin, PluginCommandImported } from "@/plugins";
 import { getConfig, updateConfig } from "./config.ts";
 
 export async function enablePlugin(plugin: Plugin) {
@@ -74,11 +74,14 @@ export async function loadEnabledPlugins() {
 	return plugins;
 }
 
-export async function importPluginCommand(pluginId: string, name: string) {
+export async function importPluginCommand(
+	pluginId: string,
+	name: string,
+): Promise<PluginCommandImported> {
 	// TODO fix support persistent scripts
-	return (
-		await import(`/plugins/${pluginId}/${name}.js?version=${Date.now()}`)
-	).default;
+	return await import(
+		`/plugins/${pluginId}/${name}.js?version=${Date.now()}`
+	);
 }
 
 export async function importPluginDefinition(pluginId: string) {

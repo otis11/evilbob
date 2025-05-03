@@ -17,7 +17,7 @@ export interface BookmarkItem {
 	folders: BookmarkFolder[];
 }
 
-export default function BookmarksView({ search }: PluginViewProps) {
+export function Command({ search }: PluginViewProps) {
 	const [bookmarks, setBookmarks] = useState<BookmarkItem[] | undefined>();
 	const listRef = useRef<VListRef>(null);
 	const [bookmarksLoadingMessage, setBookmarksLoadingMessage] =

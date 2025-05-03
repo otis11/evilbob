@@ -41,7 +41,7 @@ export function searchForPluginCommands(search: string, plugins: Plugin[]) {
 	});
 }
 
-import type { JSX } from "react";
+import type { FunctionComponent, JSX } from "react";
 
 export interface PluginCommand {
 	title: string;
@@ -75,3 +75,8 @@ export interface PluginViewProps {
 	search: string;
 }
 export type PluginView = (props: PluginViewProps) => JSX.Element;
+
+export interface PluginCommandImported {
+	Command: any;
+	Actions?: FunctionComponent;
+}

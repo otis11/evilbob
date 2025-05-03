@@ -4,6 +4,7 @@ import {
 	type VListChildProps,
 	type VListRef,
 } from "@/components/VList.tsx";
+import { DropdownMenuItem } from "@/components/ui/dropdown-menu.tsx";
 import type { PluginViewProps } from "@/plugins";
 import { type ChangeEvent, useEffect, useRef, useState } from "react";
 
@@ -15,7 +16,7 @@ type MediaType =
 	| "picture"
 	| "object"
 	| "canvas";
-export default function MediaContentView(props: PluginViewProps) {
+export function Command(props: PluginViewProps) {
 	const [elements, setElements] = useState<HTMLOrSVGElement[]>([]);
 	const [selectedCheckboxes, setSelectedCheckboxes] = useState<
 		Record<MediaType, boolean>
@@ -184,4 +185,8 @@ export default function MediaContentView(props: PluginViewProps) {
 			</VList>
 		</>
 	);
+}
+
+function Actions(props: { url: string }) {
+	return <DropdownMenuItem>{props.url}</DropdownMenuItem>;
 }

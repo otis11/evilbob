@@ -1,7 +1,14 @@
 import { ActionsBoxTop } from "@/components/ActionsBoxTop.tsx";
 import { Input } from "@/components/ui/input.tsx";
 import { ArrowLeft, Blocks, Maximize2, Minimize2 } from "lucide-react";
-import { type ChangeEvent, type RefObject, useState } from "react";
+import {
+	type ChangeEvent,
+	type FunctionComponent,
+	type KeyboardEvent,
+	type RefObject,
+	useEffect,
+	useState,
+} from "react";
 import { EvilBob } from "./EvilBob.tsx";
 
 export interface MainTopBarProps {
@@ -11,6 +18,7 @@ export interface MainTopBarProps {
 	showBack?: boolean;
 	inputRef: RefObject<HTMLInputElement | null>;
 	search: string;
+	Actions: FunctionComponent | undefined;
 }
 
 export function MainTopBar({
@@ -20,17 +28,28 @@ export function MainTopBar({
 	onBack,
 	inputRef,
 	search,
+	Actions,
 }: MainTopBarProps) {
 	const [isFullscreen, setIsFullscreen] = useState(false);
 	const [open, setOpen] = useState(false);
-	const actions = [
-		<div key={1}>hi</div>,
-		<div key={2}>again</div>,
-		<div key={3}>test</div>,
-	];
+	useEffect(() => {
+		window.addEventListener("evil-bob-open-actions", () => {
+			setOpen(true);
+		});
+	}, []);
+
+	function onOpenChange(isOpen: boolean) {
+		setOpen(isOpen);
+		if (!isOpen) {
+			inputRef.current?.focus();
+		}
+	}
 
 	async function onPluginsClick() {
 		await chrome.runtime.sendMessage({ event: "open-plugins" });
+	}
+	function onKeyDownActions(e: KeyboardEvent<HTMLElement>) {
+		e.stopPropagation();
 	}
 
 	EvilBob.instance().fullscreen(isFullscreen);
@@ -61,16 +80,17 @@ export function MainTopBar({
 				)}
 				<Blocks size={20} onClick={onPluginsClick}></Blocks>
 			</div>
-			<div className="h-8 min-h-8 flex items-center justify-between">
+			<div
+				className="h-8 min-h-8 flex items-center justify-between"
+				onKeyDown={onKeyDownActions}
+			>
 				<div className="text-xs tracking-widest text-muted-foreground">
 					Go Back ⌘b
 				</div>
 				<div className="text-sm text-muted-foreground">{hint}</div>
-				<ActionsBoxTop
-					open={open}
-					onOpenChange={setOpen}
-					actions={actions}
-				/>
+				<ActionsBoxTop open={open} onOpenChange={onOpenChange}>
+					{Actions !== undefined ? <Actions></Actions> : ""}
+				</ActionsBoxTop>
 			</div>
 		</>
 	);

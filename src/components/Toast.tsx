@@ -16,8 +16,14 @@ export function Toast() {
 		},
 	);
 	return (
-		<div className="shadow-md absolute top-4 -translate-x-1/2 left-1/2 py-1.5 px-2 border-input rounded-sm border border-solid">
-			{toastContent}
+		<div className="absolute pointer-events-none left-0 right-0 bottom-4 w-full flex justify-center">
+			{toastContent ? (
+				<div className="animate-slide-bottom-in flex shadow-md items-center py-3 px-4 border-input rounded-sm border border-solid bg-primary text-primary-foreground pointer-events-auto">
+					{toastContent}
+				</div>
+			) : (
+				""
+			)}
 		</div>
 	);
 }

@@ -29,7 +29,6 @@ export function Command() {
 		`#${decimalToHex(rgba.r)}${decimalToHex(rgba.g)}${decimalToHex(rgba.b)}${decimalToHex(rgba.a)}`,
 	);
 	useEffect(() => {
-		toast(<span>Color Changed.</span>);
 		setHexColor(
 			`#${decimalToHex(rgba.r)}${decimalToHex(rgba.g)}${decimalToHex(rgba.b)}${decimalToHex(rgba.a)}`,
 		);
@@ -40,6 +39,7 @@ export function Command() {
 			(await browserApi.storage.sync.get(["colors"])).colors || [];
 		colors.push({ c: hexColor, title: hexColor });
 		await browserApi.storage.sync.set({ colors: colors });
+		toast(<span>Color Added.</span>);
 	}
 
 	function onInputChange(

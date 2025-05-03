@@ -206,7 +206,7 @@ const VList = <T,>({
 					const activeClasses =
 						child.type?.name === "VListItem"
 							? "!bg-accent"
-							: "!border-ring";
+							: "!border-primary";
 					return (
 						<div
 							onClick={() =>
@@ -215,7 +215,7 @@ const VList = <T,>({
 							onMouseOver={() => onChildMouseOver(index)}
 							onFocus={() => onChildMouseOver(index)}
 							style={style}
-							className={` rounded-sm border-2 border-solid border-transparent ${
+							className={` rounded-sm border-4 border-solid border-transparent ${
 								activeIndex === index ? activeClasses : ""
 							}`}
 							key={index}

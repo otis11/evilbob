@@ -1,16 +1,15 @@
+import { type Bang, getBangSearchUrl } from "@/lib/bangs/bangs.ts";
 import { findStringStartUntil } from "@/lib/utils";
 import { searchForPluginCommands } from "@/plugins";
 import type { Plugin, PluginCommandExtended } from "@/plugins";
-import { useEffect, useRef, useState } from "react";
-import { type Bang, getBangSearchUrl } from "../bangs/bangs.ts";
+import { type ChangeEvent, useEffect, useRef, useState } from "react";
 import { browserApi } from "../browser-api.ts";
 import { BangsList } from "../components/BangsList.tsx";
-import { Button } from "../components/Button.tsx";
 import { CommandList } from "../components/CommandList.tsx";
 import { EvilBob } from "../components/EvilBob.tsx";
 import { MainTopBar } from "../components/MainTopBar.tsx";
-import type { onSearchInputChangeProps } from "../components/SearchInput.tsx";
-import { importPluginCommand } from "../config/plugins-frontend.ts";
+import { Button } from "../components/ui/button.tsx";
+import { importPluginCommand } from "../lib/plugins-frontend.ts";
 
 export interface MainViewProps {
 	search?: string;
@@ -64,10 +63,10 @@ export function MainSearchView({ plugins, pluginView, onBack }: MainViewProps) {
 		}
 	}
 
-	function onChange(data: onSearchInputChangeProps) {
-		setSearch(data.value);
+	function onChange(data: ChangeEvent<HTMLInputElement>) {
+		setSearch(data.target.value);
 		EvilBob.instance().updatePluginView({
-			search: data.value,
+			search: data.target.value,
 		});
 	}
 
@@ -79,7 +78,7 @@ export function MainSearchView({ plugins, pluginView, onBack }: MainViewProps) {
 
 	let searchHint = "";
 	if (pluginView) {
-		searchHint = pluginView.plugin.title;
+		searchHint = pluginView.title;
 	} else if (searchHasBang) {
 		searchHint = "Bangs";
 	}

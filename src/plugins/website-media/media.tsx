@@ -1,9 +1,9 @@
-import { Checkbox } from "@/components/Checkbox.tsx";
 import {
 	VList,
 	type VListChildProps,
 	type VListRef,
 } from "@/components/VList.tsx";
+import { Checkbox } from "@/components/ui/checkbox.tsx";
 import type { PluginViewProps } from "@/plugins";
 import { type ChangeEvent, useEffect, useRef, useState } from "react";
 

@@ -12,7 +12,7 @@ export default definePlugin({
 		{
 			title: "Add color",
 			name: "add-color",
-			type: "command",
+			type: "view",
 		},
 	],
 });

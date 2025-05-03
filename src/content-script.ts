@@ -1,5 +1,5 @@
 import { EvilBob } from "./components/EvilBob.tsx";
-import { getConfig } from "./config/config.ts";
+import { getConfig } from "./lib/config.ts";
 
 chrome.runtime.onMessage.addListener(async (message) => {
 	const event = message.event;

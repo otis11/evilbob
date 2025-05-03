@@ -3,10 +3,10 @@ import type { PluginCommandExtended, PluginViewProps } from "@/plugins";
 import type { Plugin } from "@/plugins";
 import type { FunctionComponent } from "react";
 import { type Root, createRoot } from "react-dom/client";
-import { type EvilBobConfig, getConfig } from "../config/config.ts";
-import { loadEnabledPlugins } from "../config/plugins-frontend.ts";
 // @ts-expect-error typescript does not know ?inline imports
-import styles from "../theme.css?inline";
+import styles from "../globals.css?inline";
+import { type EvilBobConfig, getConfig } from "../lib/config.ts";
+import { loadEnabledPlugins } from "../lib/plugins-frontend.ts";
 import { MainSearchView } from "../views/MainSearchView.tsx";
 
 interface OpenDialogProps {
@@ -113,7 +113,7 @@ export class EvilBob {
 	private static createPluginViewElement() {
 		const viewDiv = document.createElement("div");
 		viewDiv.id = "dialog-view";
-		viewDiv.className = "overflow-hidden h-auto";
+		viewDiv.className = "overflow-hidden h-auto flex flex-col";
 		return viewDiv;
 	}
 
@@ -251,66 +251,5 @@ export class EvilBob {
 				"!rounded-none",
 			);
 		}
-	}
-
-	async showInput({
-		type,
-		title,
-	}: ShowInputProps): Promise<string | undefined> {
-		return new Promise((resolve) => {
-			const input = document.createElement("input");
-			input.className = "h-full w-full m-0";
-			input.type = type;
-
-			window.addEventListener("paste", (e) => {
-				const newValue =
-					e.clipboardData?.getData("Text") || input.value;
-				input.value = newValue;
-				label.style.backgroundColor = newValue;
-			});
-
-			const label = document.createElement("label");
-			label.className =
-				"h-full w-full flex flex-col items-center justify-center m-0 p-0";
-
-			const titleElement = document.createElement("div");
-			titleElement.className = "text-fg p-1";
-			titleElement.innerText = title;
-			label.append(titleElement, input);
-
-			if (type === "color") {
-				input.className = "hidden";
-				input.addEventListener("change", (e) => {
-					if (e.target instanceof HTMLInputElement) {
-						label.style.backgroundColor = e.target.value;
-					}
-				});
-			}
-
-			const dialog = document.createElement("dialog");
-			dialog.addEventListener("close", async () => {
-				removeSelf();
-				resolve(undefined);
-			});
-
-			dialog.addEventListener("keydown", (e) => {
-				e.stopPropagation();
-				if (e.key === "Enter") {
-					removeSelf();
-					resolve(input.value);
-				}
-			});
-
-			dialog.appendChild(label);
-			dialog.className =
-				"outline-none border-solid border-fg-weakest border h-12 w-96 flex items-center justify-center backdrop:bg-black backdrop:opacity-40 m-auto";
-
-			function removeSelf() {
-				dialog.remove();
-			}
-
-			this.shadowRoot.appendChild(dialog);
-			dialog.showModal();
-		});
 	}
 }

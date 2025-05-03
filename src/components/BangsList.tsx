@@ -1,5 +1,5 @@
+import { type Bang, loadBangs, searchInBang } from "@/lib/bangs/bangs.ts";
 import { useEffect, useRef, useState } from "react";
-import { type Bang, loadBangs, searchInBang } from "../bangs/bangs.ts";
 import { VList, type VListChildProps, type VListRef } from "./VList.tsx";
 
 export interface BangsListProps {

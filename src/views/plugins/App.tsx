@@ -1,20 +1,17 @@
-import { type Plugin, searchInPlugin } from "@/plugins";
-import pluginJsonList from "@/plugins/list.json";
-import { Check } from "lucide-react";
-import { useEffect, useRef, useState } from "react";
-import { Button } from "../../components/Button.tsx";
 import {
 	VList,
 	type VListChildProps,
 	type VListRef,
-} from "../../components/VList.tsx";
+} from "@/components/VList.tsx";
+import { Button } from "@/components/ui/button.tsx";
+import { type Plugin, searchInPlugin } from "@/plugins";
+import pluginJsonList from "@/plugins/list.json";
+import { Check } from "lucide-react";
+import { type ChangeEvent, useEffect, useRef, useState } from "react";
 
-import {
-	SearchInput,
-	type onSearchInputChangeProps,
-} from "../../components/SearchInput.tsx";
-import { type EvilBobConfig, getConfig } from "../../config/config.ts";
-import { disablePlugin, enablePlugin } from "../../config/plugins-frontend.ts";
+import { Input } from "@/components/ui/input.tsx";
+import { type EvilBobConfig, getConfig } from "@/lib/config.ts";
+import { disablePlugin, enablePlugin } from "@/lib/plugins-frontend.ts";
 const plugins = pluginJsonList as Plugin[];
 
 interface AppProps {
@@ -40,13 +37,13 @@ export default function App({ config }: AppProps) {
 		setPluginLoading("");
 	}
 
-	function onChange(data: onSearchInputChangeProps) {
-		setSearchValue(data.value);
+	function onChange(data: ChangeEvent<HTMLInputElement>) {
+		setSearchValue(data.target.value);
 	}
 
 	return (
 		<>
-			<SearchInput onChange={onChange}></SearchInput>
+			<Input className="h-12 !text-lg" onChange={onChange}></Input>
 			<VList
 				keyboardListenerTarget={window}
 				itemHeight={280}
@@ -73,10 +70,10 @@ export default function App({ config }: AppProps) {
 								onClick={() => onEnableDisableClick(item)}
 								variant={
 									localConfig.plugins.enabled[item.id]
-										? "accent"
+										? "secondary"
 										: "default"
 								}
-								loading={pluginLoading === item.id}
+								disabled={pluginLoading === item.id}
 							>
 								{localConfig.plugins.enabled[item.id] ? (
 									<>

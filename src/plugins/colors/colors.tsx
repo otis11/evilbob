@@ -12,8 +12,8 @@ interface Color {
 }
 
 export default function Colors({ search }: PluginViewProps) {
-	const width = 120;
-	const height = 120;
+	const width = 160;
+	const height = 160;
 	const [colors, setColors] = useState<Color[] | undefined>();
 	const listRef = useRef<VListRef>(null);
 	const [colorsLoadingMessage, setColorsLoadingMessage] =
@@ -57,7 +57,7 @@ export default function Colors({ search }: PluginViewProps) {
 									className="w-full h-full"
 									style={{ backgroundColor: item.c }}
 								></div>
-								<span className="m-auto p-2">{item.title}</span>
+								<span className="m-auto p-1">{item.title}</span>
 							</VList.ItemTile>
 						);
 					}}

@@ -1,3 +1,10 @@
+import { type ClassValue, clsx } from "clsx";
+import { twMerge } from "tailwind-merge";
+
+export function cn(...inputs: ClassValue[]) {
+	return twMerge(clsx(inputs));
+}
+
 export interface CopyToClipboardProps {
 	"image/png": Blob;
 	"image/jpeg": Blob;
@@ -161,3 +168,74 @@ export class KeyboardListener {
 		return this.keydownListenerIdCounter - 1;
 	}
 }
+export interface Rgba {
+	r: number;
+	g: number;
+	b: number;
+	a: number;
+}
+export type RgbaKey = keyof Rgba;
+export function rgbaToHex({ r, g, b, a }: Rgba) {
+	// 255 -> FF
+}
+
+export function hexToRgba(hexStr: string): Rgba {
+	let str = hexStr.toUpperCase();
+	if (str.startsWith("#")) {
+		str = str.slice(1);
+	}
+	const chunks = chunkString(str, 2);
+
+	return {
+		r: hexToDecimal(chunks[0]),
+		g: hexToDecimal(chunks[1]),
+		b: hexToDecimal(chunks[2]),
+		a: hexToDecimal(chunks[3]),
+	};
+}
+
+export function chunkString(str: string, chunkSize: number) {
+	const chunks: string[] = [];
+	for (let i = 0; i < str.length; i += chunkSize) {
+		chunks.push(str.slice(i, i + chunkSize));
+	}
+	return chunks;
+}
+
+export function decimalToHex(n: number) {
+	return n.toString(16);
+}
+
+export function hexToDecimal(hexStr: string | undefined) {
+	if (hexStr === undefined) {
+		return 0;
+	}
+	let sum = 0;
+	for (let i = 0; i < hexStr.length; i++) {
+		const char = hexStr[i];
+		if (char === undefined || HEX_CHAR_NUMBER_MAP[char] === undefined) {
+			throw new Error(`Invalid hex number: ${hexStr}`);
+		}
+		sum += HEX_CHAR_NUMBER_MAP[char] * 16 ** (hexStr.length - 1 - i);
+	}
+	return sum;
+}
+
+const HEX_CHAR_NUMBER_MAP: Record<string, number> = {
+	"0": 0,
+	"1": 1,
+	"2": 2,
+	"3": 3,
+	"4": 4,
+	"5": 5,
+	"6": 6,
+	"7": 7,
+	"8": 8,
+	"9": 9,
+	A: 10,
+	B: 11,
+	C: 12,
+	D: 13,
+	E: 14,
+	F: 15,
+};

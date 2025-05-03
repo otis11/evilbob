@@ -1,9 +1,11 @@
 // sort bangs by length, so first shown is always the shortest.
 // sorted in this script to reduce overhead when rendering
 import path from "node:path";
-import type { Bang } from "../src/bangs/bangs.ts";
+import type { Bang } from "@/lib/bangs/bangs.ts";
 
-const bangsFile = Bun.file(path.resolve(__dirname, "../src/bangs/bangs.json"));
+const bangsFile = Bun.file(
+	path.resolve(__dirname, "../src/lib/bangs/bangs.json"),
+);
 
 const bangs: LocalBang[] = await bangsFile.json();
 
@@ -37,6 +39,6 @@ const bangsSorted: Bang[] = bangs
 	});
 
 await Bun.write(
-	path.resolve(__dirname, "../src/bangs/bangs-sorted.json"),
+	path.resolve(__dirname, "../src/lib/bangs/bangs-sorted.json"),
 	JSON.stringify(bangsSorted),
 );

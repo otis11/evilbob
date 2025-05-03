@@ -1,4 +1,4 @@
-import { deepMerge } from "@/lib/utils";
+import { deepMerge } from "@/lib/utils.ts";
 import { type KeybindingKey, defaultKeybindings } from "./keybindings.ts";
 
 let configCache: EvilBobConfig | undefined;

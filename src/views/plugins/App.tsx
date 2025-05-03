@@ -1,8 +1,4 @@
-import {
-	VList,
-	type VListChildProps,
-	type VListRef,
-} from "@/components/VList.tsx";
+import { VList, VListItemTile, type VListRef } from "@/components/VList.tsx";
 import { Button } from "@/components/ui/button.tsx";
 import { type Plugin, searchInPlugin } from "@/plugins";
 import pluginJsonList from "@/plugins/list.json";
@@ -50,15 +46,12 @@ export default function App({ config }: AppProps) {
 				itemWidth={280}
 				itemSpacing={{ x: 12, y: 12 }}
 				ref={listRef}
-				items={plugins.filter((plugin) =>
-					searchInPlugin(searchValue, plugin),
-				)}
 			>
-				{({ item, index, style }: VListChildProps<Plugin>) => {
-					return (
-						<VList.ItemTile
+				{plugins
+					.filter((plugin) => searchInPlugin(searchValue, plugin))
+					.map((item) => (
+						<VListItemTile
 							className="rounded-lg m-2 p-5"
-							style={style}
 							key={item.id}
 						>
 							<div className="pb-3">{item.definition.title}</div>
@@ -87,9 +80,8 @@ export default function App({ config }: AppProps) {
 									"Enable"
 								)}
 							</Button>
-						</VList.ItemTile>
-					);
-				}}
+						</VListItemTile>
+					))}
 			</VList>
 		</>
 	);

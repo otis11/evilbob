@@ -1,7 +1,9 @@
 import { KeyboardListener } from "@/lib/utils.ts";
 import {
 	type CSSProperties,
+	type FunctionComponent,
 	type JSX,
+	type ReactNode,
 	type RefObject,
 	useEffect,
 	useImperativeHandle,
@@ -10,13 +12,10 @@ import {
 } from "react";
 import { getConfig } from "../lib/config.ts";
 import { EvilBob } from "./EvilBob.tsx";
-import { VListItem } from "./VListItem.tsx";
-import { VListItemTile } from "./VListItemTile.tsx";
 
 interface VListProps<T> {
-	children: VListChild<T>;
+	children: ReactNode;
 	ref: RefObject<VListRef | null>;
-	items: T[];
 	itemHeight: number;
 	itemWidth: number;
 	itemsOutOfBounds?: number;
@@ -82,12 +81,11 @@ const VList = <T,>({
 	ref,
 	itemHeight,
 	itemWidth,
-	items,
 	itemsOutOfBounds,
 	itemSpacing,
 	keyboardListenerTarget,
 }: VListProps<T>) => {
-	const [renderedItems, setRenderedItems] = useState<T[]>([]);
+	const [renderedChildren, setRenderedChildren] = useState<JSX.Element[]>([]);
 	const root = useRef<HTMLUListElement>(null);
 	const heightDiv = useRef<HTMLDivElement>(null);
 	const [startIndex, setStartIndex] = useState(0);
@@ -95,6 +93,7 @@ const VList = <T,>({
 	const [realItemWidth, setRealItemWidth] = useState(0);
 	const [itemCountPerRow, setItemCountPerRow] = useState(0);
 	const [scrollTop, setScrollTop] = useState(root.current?.scrollTop || 0);
+	const parsedChildren = Array.isArray(children) ? children : [];
 
 	// biome-ignore lint/correctness/useExhaustiveDependencies: ignore for now, as it should only run once to register keybord listeners
 	useEffect(() => {
@@ -132,7 +131,6 @@ const VList = <T,>({
 			ref.current?.highlightNth(0);
 		});
 	}, []);
-
 	useEffect(() => {
 		const availHeight = root.current?.getBoundingClientRect().height || 0;
 		const availWidth = root.current?.getBoundingClientRect().width || 0;
@@ -140,7 +138,9 @@ const VList = <T,>({
 		const localRealItemHeight = itemHeight + (itemSpacing?.x || 0);
 		const localItemCountPerRow =
 			itemWidth === -1 ? 1 : Math.floor(availWidth / localRealItemWidth);
-		const totalRowCount = Math.ceil(items.length / localItemCountPerRow);
+		const totalRowCount = Math.ceil(
+			parsedChildren.length / localItemCountPerRow,
+		);
 
 		if (root.current) {
 			root.current.style.position = "relative";
@@ -168,19 +168,21 @@ const VList = <T,>({
 		setRealItemHeight(localRealItemHeight);
 		setRealItemWidth(localRealItemWidth);
 		setItemCountPerRow(localItemCountPerRow);
-		setRenderedItems(items.slice(localStartIndex, localEndIndex));
+		setRenderedChildren(
+			parsedChildren.slice(localStartIndex, localEndIndex),
+		);
 
 		requestAnimationFrame(() => {
 			ref.current?.highlightNth(0);
 		});
 	}, [
 		scrollTop,
-		items,
 		itemsOutOfBounds,
 		itemSpacing,
 		itemWidth,
 		itemHeight,
 		ref,
+		parsedChildren,
 	]);
 	function isFocused() {
 		return root.current?.classList.contains("vlist-focused");
@@ -296,7 +298,7 @@ const VList = <T,>({
 			onScroll={onScroll}
 		>
 			<div ref={heightDiv}>
-				{renderedItems.map((item, index) => {
+				{renderedChildren.map((child, index) => {
 					const style: CSSProperties = {
 						position: "absolute",
 						top: `${Math.floor((startIndex + index) / itemCountPerRow) * realItemHeight}px`,
@@ -304,10 +306,11 @@ const VList = <T,>({
 						width: itemWidth === -1 ? "100%" : `${itemWidth}px`,
 						left: `${((startIndex + index) % itemCountPerRow) * realItemWidth}px`,
 					};
-					if (children) {
-						return children({ item, index, style });
-					}
-					return "";
+					return (
+						<div style={style} key={index}>
+							{child}
+						</div>
+					);
 				})}
 			</div>
 		</ul>
@@ -344,6 +347,42 @@ window.addEventListener("evil-bob-mouse-over", (e) => {
 	}
 });
 
-VList.Item = VListItem;
-VList.ItemTile = VListItemTile;
-export { VList };
+export interface VListItemTileProps {
+	children: ReactNode;
+	className?: string;
+	Actions?: FunctionComponent | undefined;
+}
+
+const VListItemTile = ({
+	children,
+	className,
+	Actions,
+}: VListItemTileProps) => {
+	return (
+		<li
+			className={`${className} vlist-item vlist-item-tile rounded-lg border-2 border-solid border-transparent overflow-hidden flex flex-col items-start justify-start`}
+		>
+			{children}
+		</li>
+	);
+};
+
+export interface VListItemProps {
+	children: ReactNode;
+	onClick?: () => void;
+	style?: CSSProperties;
+	Actions?: FunctionComponent | undefined;
+}
+const VListItem = ({ children, onClick, style }: VListItemProps) => {
+	return (
+		<li
+			className="vlist-item truncate text-base text-fg items-center flex  w-full m-0 py-1.5 px-2 rounded-sm list-none"
+			onClick={onClick}
+			style={style}
+		>
+			{children}
+		</li>
+	);
+};
+
+export { VList, VListItemTile, VListItem };

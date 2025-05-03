@@ -1,6 +1,6 @@
 import type { PluginCommandExtended } from "@/plugins";
 import { useRef } from "react";
-import { VList, type VListChildProps, type VListRef } from "./VList.tsx";
+import { VList, VListItem, type VListRef } from "./VList.tsx";
 export interface CommandListProps {
 	onCommandClick?: (item: PluginCommandExtended) => void;
 	commands: PluginCommandExtended[];
@@ -8,34 +8,27 @@ export interface CommandListProps {
 export function CommandList({ onCommandClick, commands }: CommandListProps) {
 	const listRef = useRef<VListRef>(null);
 	return (
-		<VList ref={listRef} items={commands} itemHeight={32} itemWidth={-1}>
-			{({
-				item,
-				index,
-				style,
-			}: VListChildProps<PluginCommandExtended>) => {
-				return (
-					<VList.Item
-						style={style}
-						key={index}
-						onClick={() => onCommandClick?.(item)}
-					>
-						<span>{item.title}</span>
-						<span className="text-fg-weak text-sm pl-4">
-							{item.plugin?.title}
+		<VList ref={listRef} itemHeight={32} itemWidth={-1}>
+			{commands.map((command) => (
+				<VListItem
+					key={command.name}
+					onClick={() => onCommandClick?.(command)}
+				>
+					<span>{command.title}</span>
+					<span className="text-fg-weak text-sm pl-4">
+						{command.plugin?.title}
+					</span>
+					{command.type === "command" ? (
+						<span className="ml-auto text-fg-weak text-sm">
+							Command
 						</span>
-						{item.type === "command" ? (
-							<span className="ml-auto text-fg-weak text-sm">
-								Command
-							</span>
-						) : (
-							<span className="ml-auto text-fg-weak text-sm">
-								View
-							</span>
-						)}
-					</VList.Item>
-				);
-			}}
+					) : (
+						<span className="ml-auto text-fg-weak text-sm">
+							View
+						</span>
+					)}
+				</VListItem>
+			))}
 		</VList>
 	);
 }

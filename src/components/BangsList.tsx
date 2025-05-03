@@ -1,6 +1,6 @@
 import { type Bang, loadBangs, searchInBang } from "@/lib/bangs/bangs.ts";
 import { useEffect, useRef, useState } from "react";
-import { VList, type VListChildProps, type VListRef } from "./VList.tsx";
+import { VList, VListItem, type VListRef } from "./VList.tsx";
 
 export interface BangsListProps {
 	search: string;
@@ -15,19 +15,10 @@ export function BangsList({ search, onBangSelect }: BangsListProps) {
 	}, []);
 
 	return (
-		<VList
-			ref={listRef}
-			items={bangs ? bangs.filter((b) => searchInBang(search, b)) : []}
-			itemHeight={32}
-			itemWidth={-1}
-		>
-			{({ item, index, style }: VListChildProps<Bang>) => {
-				return (
-					<VList.Item
-						style={style}
-						key={index}
-						onClick={() => onBangSelect(item)}
-					>
+		<VList ref={listRef} itemHeight={32} itemWidth={-1}>
+			{(bangs ? bangs.filter((b) => searchInBang(search, b)) : []).map(
+				(item, index) => (
+					<VListItem key={index} onClick={() => onBangSelect(item)}>
 						<span>{item.s}</span>
 						<span className="pl-4 text-fg-weak font-bold text-sm">
 							!{item.t}
@@ -35,9 +26,9 @@ export function BangsList({ search, onBangSelect }: BangsListProps) {
 						<span className="text-fg-weak text-sm pl-4">
 							{item.u}
 						</span>
-					</VList.Item>
-				);
-			}}
+					</VListItem>
+				),
+			)}
 		</VList>
 	);
 }

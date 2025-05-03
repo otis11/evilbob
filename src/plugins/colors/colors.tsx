@@ -1,9 +1,5 @@
 import { browserApi } from "@/browser-api.ts";
-import {
-	VList,
-	type VListChildProps,
-	type VListRef,
-} from "@/components/VList.tsx";
+import { VList, VListItemTile, type VListRef } from "@/components/VList.tsx";
 import type { PluginViewProps } from "@/plugins";
 import { useEffect, useRef, useState } from "react";
 interface Color {
@@ -40,27 +36,20 @@ export function Command({ search }: PluginViewProps) {
 					{colorsLoadingMessage}
 				</div>
 			) : (
-				<VList
-					items={
+				<VList itemWidth={width} itemHeight={height} ref={listRef}>
+					{(
 						colors?.filter((color) =>
 							searchInColor(search, color),
 						) || []
-					}
-					itemWidth={width}
-					itemHeight={height}
-					ref={listRef}
-				>
-					{({ item, style, index }: VListChildProps<Color>) => {
-						return (
-							<VList.ItemTile key={index} style={style}>
-								<div
-									className="w-full h-full"
-									style={{ backgroundColor: item.c }}
-								></div>
-								<span className="m-auto p-1">{item.title}</span>
-							</VList.ItemTile>
-						);
-					}}
+					).map((item, index) => (
+						<VListItemTile key={index}>
+							<div
+								className="w-full h-full"
+								style={{ backgroundColor: item.c }}
+							></div>
+							<span className="m-auto p-1">{item.title}</span>
+						</VListItemTile>
+					))}
 				</VList>
 			)}
 		</>

@@ -236,7 +236,7 @@ export class EvilBob {
 		props?: PluginViewProps,
 	) {
 		this.pluginViewCommand = command;
-		this.PluginView = imported.Command;
+		this.PluginView = imported.Command as FunctionComponent | undefined;
 		this.Actions = imported.Actions;
 		if (props) {
 			this.pluginViewProps = props;

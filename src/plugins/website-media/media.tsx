@@ -1,9 +1,5 @@
 import { Checkbox } from "@/components/Checkbox.tsx";
-import {
-	VList,
-	type VListChildProps,
-	type VListRef,
-} from "@/components/VList.tsx";
+import { VList, VListItemTile, type VListRef } from "@/components/VList.tsx";
 import { DropdownMenuItem } from "@/components/ui/dropdown-menu.tsx";
 import type { PluginViewProps } from "@/plugins";
 import { type ChangeEvent, useEffect, useRef, useState } from "react";
@@ -120,68 +116,63 @@ export function Command(props: PluginViewProps) {
 				itemWidth={width}
 				itemSpacing={{ x: 4, y: 4 }}
 				ref={listRef}
-				items={elements}
 			>
-				{({
-					item,
-					index,
-					style,
-				}: VListChildProps<HTMLOrSVGElement>) => {
-					if (item instanceof HTMLImageElement) {
+				{elements.map((element, index) => {
+					if (element instanceof HTMLImageElement) {
 						return (
-							<VList.ItemTile style={style} key={index}>
+							<VListItemTile key={index}>
 								<img
-									alt={item.alt}
-									src={item.src}
+									alt={element.alt}
+									src={element.src}
 									className="w-full h-full object-contain"
 								/>
-							</VList.ItemTile>
+							</VListItemTile>
 						);
 					}
-					if (item instanceof SVGElement) {
-						const node = item.cloneNode(true) as SVGElement;
+					if (element instanceof SVGElement) {
+						const node = element.cloneNode(true) as SVGElement;
 						node.setAttribute("width", width.toString());
 						node.setAttribute("height", height.toString());
 						node.style.fill = "var(--foreground)";
 						node.style.color = "var(--foreground)";
 						return (
-							<VList.ItemTile style={style} key={index}>
+							<VListItemTile key={index}>
 								<div
 									// biome-ignore lint/security/noDangerouslySetInnerHtml: can do better? seems okish
 									dangerouslySetInnerHTML={{
 										__html: node.outerHTML,
 									}}
 								></div>
-							</VList.ItemTile>
+							</VListItemTile>
 						);
 					}
-					if (item instanceof HTMLVideoElement) {
+					if (element instanceof HTMLVideoElement) {
 						return (
-							<VList.ItemTile style={style} key={index}>
+							<VListItemTile key={index}>
 								<video
 									muted
-									src={item.src}
+									src={element.src}
 									className="w-full h-full object-contain"
 								/>
-							</VList.ItemTile>
+							</VListItemTile>
 						);
 					}
-					if (item instanceof HTMLElement) {
+					if (element instanceof HTMLElement) {
 						return (
-							<VList.ItemTile style={style} key={index}>
+							<VListItemTile key={index}>
 								<div
 									style={{
 										backgroundImage:
-											getComputedStyle(item)
+											getComputedStyle(element)
 												.backgroundImage,
 									}}
 									className="w-full h-full object-contain"
 								/>
-							</VList.ItemTile>
+							</VListItemTile>
 						);
 					}
-					return <></>;
-				}}
+					return <div key={index}></div>;
+				})}
 			</VList>
 		</>
 	);

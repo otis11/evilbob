@@ -20,6 +20,7 @@ interface VListProps<T> {
 		y: number;
 	};
 	keyboardListenerTarget?: Window | Document | HTMLElement;
+	// biome-ignore lint/suspicious/noExplicitAny: Can be any but can probably be improved via generic types?
 	onSelect?: (item: any) => void;
 }
 
@@ -70,7 +71,7 @@ const VList = <T,>({
 				() => onSelect?.(parsedChildren[activeIndex]?.props.data),
 			);
 		});
-		EvilBob.instance().setCurrentVListProps(
+		EvilBob.instance().setActiveVListItemProps(
 			parsedChildren[activeIndex]?.props,
 		);
 		return () => keyboardListener.destroy();
@@ -230,6 +231,7 @@ export interface VListItemTileProps {
 	children: ReactNode;
 	className?: string;
 	Actions?: JSX.Element | undefined;
+	// biome-ignore lint/suspicious/noExplicitAny: Can be any but can probably be improved via generic types?
 	data?: any;
 }
 
@@ -241,7 +243,7 @@ const VListItemTile = ({
 }: VListItemTileProps) => {
 	return (
 		<li
-			className={`${className} vlist-item vlist-item-tile rounded-lg border-2 border-solid border-transparent overflow-hidden flex flex-col items-start justify-start`}
+			className={`${className} h-full w-full rounded-lg border-2 border-solid border-transparent overflow-hidden flex flex-col items-start justify-start`}
 		>
 			{children}
 		</li>
@@ -252,12 +254,13 @@ export interface VListItemProps {
 	children: ReactNode;
 	onClick?: () => void;
 	Actions?: JSX.Element | undefined;
+	// biome-ignore lint/suspicious/noExplicitAny: Can be any but can probably be improved via generic types?
 	data?: any;
 }
 const VListItem = ({ children, onClick, data, Actions }: VListItemProps) => {
 	return (
 		<li
-			className="vlist-item truncate text-base text-fg items-center flex  w-full m-0 py-1.5 px-2 rounded-sm list-none"
+			className="truncate text-base text-fg items-center flex h-full w-full m-0 py-1.5 px-2 rounded-sm list-none"
 			onClick={onClick}
 		>
 			{children}

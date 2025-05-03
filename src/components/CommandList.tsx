@@ -2,6 +2,7 @@ import type { PluginCommandExtended } from "@/plugins";
 import { VList, VListItem } from "./VList.tsx";
 export interface CommandListProps {
 	commands: PluginCommandExtended[];
+	// biome-ignore lint/suspicious/noExplicitAny: Can be any but can probably be improved via generic types?
 	onSelect: (item: any) => void;
 }
 export function CommandList({ commands, onSelect }: CommandListProps) {

@@ -9,7 +9,7 @@ import type {
 	PluginViewProps,
 } from "@/plugins";
 import type { Plugin } from "@/plugins";
-import type { FunctionComponent } from "react";
+import type { FunctionComponent, JSX } from "react";
 import { type Root, createRoot } from "react-dom/client";
 // @ts-expect-error typescript does not know ?inline imports
 import styles from "../globals.css?inline";
@@ -34,11 +34,12 @@ export class EvilBob {
 	public pluginViewRoot: Root | undefined = undefined;
 	public PluginView: FunctionComponent<PluginViewProps> | undefined =
 		undefined;
+	private pluginActions: JSX.Element | undefined;
 	public pluginViewProps: PluginViewProps | undefined;
 	public plugins: Plugin[] | undefined;
 	public pluginViewCommand: PluginCommandExtended | undefined;
-    // todo how to handle plugin view actions that dont have lists?
-	private currentVListProps: any;
+	// biome-ignore lint/suspicious/noExplicitAny: They can be any.
+	private activeVListItemProps: any;
 
 	private constructor(
 		public readonly pluginViewElement: HTMLDivElement,
@@ -55,7 +56,6 @@ export class EvilBob {
 				this.unmountPluginView();
 			});
 			listener.register(config.keybindings.openActions.keys, () => {
-				console.log("ok open actions", this.currentVListProps);
 				this.renderMainView();
 				window.dispatchEvent(new CustomEvent("evil-bob-open-actions"));
 			});
@@ -165,7 +165,9 @@ export class EvilBob {
 	public renderMainView() {
 		this.mainRoot?.render(
 			<MainSearchView
-				actions={this.currentVListProps?.Actions}
+				actions={
+					this.activeVListItemProps?.Actions || this.pluginActions
+				}
 				plugins={this.plugins || []}
 				pluginView={this.pluginViewCommand}
 				onBack={this.unmountPluginView.bind(this)}
@@ -206,8 +208,13 @@ export class EvilBob {
 		this.rootElement.remove();
 	}
 
-	public setCurrentVListProps(data: any) {
-		this.currentVListProps = data;
+	setPluginActions(newActions: JSX.Element) {
+		this.pluginActions = newActions;
+	}
+
+	// biome-ignore lint/suspicious/noExplicitAny: Can be any
+	public setActiveVListItemProps(data: any) {
+		this.activeVListItemProps = data;
 	}
 
 	public unmountPluginView() {
@@ -218,6 +225,8 @@ export class EvilBob {
 		this.PluginView = undefined;
 		this.pluginViewRoot = undefined;
 		this.pluginViewCommand = undefined;
+		this.pluginActions = undefined;
+		this.activeVListItemProps = undefined;
 		this.renderMainView();
 		window.dispatchEvent(new CustomEvent("evil-bob-unmount-plugin-view"));
 	}

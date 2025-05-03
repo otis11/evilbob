@@ -23,10 +23,10 @@ export function BangsList({ search, onBangSelect }: BangsListProps) {
 				(item, index) => (
 					<VListItem key={index} data={item}>
 						<span>{item.s}</span>
-						<span className="pl-4 text-fg-weak font-bold text-sm">
+						<span className="pl-4 text-muted-foreground font-bold text-sm">
 							!{item.t}
 						</span>
-						<span className="text-fg-weak text-sm pl-4">
+						<span className="text-muted-foreground text-sm pl-4">
 							{item.u}
 						</span>
 					</VListItem>

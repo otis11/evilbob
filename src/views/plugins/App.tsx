@@ -50,7 +50,7 @@ export default function App({ config }: AppProps) {
 							key={item.id}
 						>
 							<div className="pb-3">{item.definition.title}</div>
-							<div className="text-fg-weak">
+							<div className="text-muted-foreground">
 								{item.definition.description}
 							</div>
 							<Button

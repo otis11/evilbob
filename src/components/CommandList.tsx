@@ -11,15 +11,15 @@ export function CommandList({ commands, onSelect }: CommandListProps) {
 			{commands.map((command) => (
 				<VListItem data={command} key={command.name}>
 					<span>{command.title}</span>
-					<span className="text-fg-weak text-sm pl-4">
+					<span className="text-muted-foreground text-sm pl-4">
 						{command.plugin?.title}
 					</span>
 					{command.type === "command" ? (
-						<span className="ml-auto text-fg-weak text-sm">
+						<span className="ml-auto text-muted-foreground text-sm">
 							Command
 						</span>
 					) : (
-						<span className="ml-auto text-fg-weak text-sm">
+						<span className="ml-auto text-muted-foreground text-sm">
 							View
 						</span>
 					)}

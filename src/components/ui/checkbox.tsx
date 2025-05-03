@@ -4,7 +4,7 @@ import type * as React from "react";
 
 import { cn } from "@/lib/utils";
 
-function Checkbox({
+function CheckboxOnly({
 	className,
 	...props
 }: React.ComponentProps<typeof CheckboxPrimitive.Root>) {
@@ -27,4 +27,4 @@ function Checkbox({
 	);
 }
 
-export { Checkbox };
+export { CheckboxOnly };

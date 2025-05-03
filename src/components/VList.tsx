@@ -67,9 +67,12 @@ const VList = <T,>({
 			);
 			keyboardListener.register(
 				config.keybindings.selectResult.keys,
-				() => onSelect?.(parsedChildren[activeIndex].props.data),
+				() => onSelect?.(parsedChildren[activeIndex]?.props.data),
 			);
 		});
+		EvilBob.instance().setCurrentVListProps(
+			parsedChildren[activeIndex]?.props,
+		);
 		return () => keyboardListener.destroy();
 	}, [activeIndex, itemCountPerRow, parsedChildren]);
 	useEffect(() => {

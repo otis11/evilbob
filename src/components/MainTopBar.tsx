@@ -3,7 +3,7 @@ import { Input } from "@/components/ui/input.tsx";
 import { ArrowLeft, Blocks, Maximize2, Minimize2 } from "lucide-react";
 import {
 	type ChangeEvent,
-	type FunctionComponent,
+	type JSX,
 	type KeyboardEvent,
 	type RefObject,
 	useEffect,
@@ -18,7 +18,7 @@ export interface MainTopBarProps {
 	showBack?: boolean;
 	inputRef: RefObject<HTMLInputElement | null>;
 	search: string;
-	Actions: FunctionComponent | undefined;
+	actions: JSX.Element;
 }
 
 export function MainTopBar({
@@ -28,7 +28,7 @@ export function MainTopBar({
 	onBack,
 	inputRef,
 	search,
-	Actions,
+	actions,
 }: MainTopBarProps) {
 	const [isFullscreen, setIsFullscreen] = useState(false);
 	const [open, setOpen] = useState(false);
@@ -89,7 +89,7 @@ export function MainTopBar({
 				</div>
 				<div className="text-sm text-muted-foreground">{hint}</div>
 				<ActionsBoxTop open={open} onOpenChange={onOpenChange}>
-					{Actions !== undefined ? <Actions></Actions> : ""}
+					{actions}
 				</ActionsBoxTop>
 			</div>
 		</>

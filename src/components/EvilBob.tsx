@@ -30,7 +30,6 @@ export interface ShowInputProps {
 export class EvilBob {
 	static internalInstance: EvilBob | undefined;
 	public mainRoot: Root | undefined;
-	public Actions: FunctionComponent | undefined = undefined;
 
 	public pluginViewRoot: Root | undefined = undefined;
 	public PluginView: FunctionComponent<PluginViewProps> | undefined =
@@ -38,6 +37,8 @@ export class EvilBob {
 	public pluginViewProps: PluginViewProps | undefined;
 	public plugins: Plugin[] | undefined;
 	public pluginViewCommand: PluginCommandExtended | undefined;
+    // todo how to handle plugin view actions that dont have lists?
+	private currentVListProps: any;
 
 	private constructor(
 		public readonly pluginViewElement: HTMLDivElement,
@@ -54,6 +55,8 @@ export class EvilBob {
 				this.unmountPluginView();
 			});
 			listener.register(config.keybindings.openActions.keys, () => {
+				console.log("ok open actions", this.currentVListProps);
+				this.renderMainView();
 				window.dispatchEvent(new CustomEvent("evil-bob-open-actions"));
 			});
 		});
@@ -162,7 +165,7 @@ export class EvilBob {
 	public renderMainView() {
 		this.mainRoot?.render(
 			<MainSearchView
-				Actions={this.Actions}
+				actions={this.currentVListProps?.Actions}
 				plugins={this.plugins || []}
 				pluginView={this.pluginViewCommand}
 				onBack={this.unmountPluginView.bind(this)}
@@ -203,8 +206,12 @@ export class EvilBob {
 		this.rootElement.remove();
 	}
 
+	public setCurrentVListProps(data: any) {
+		this.currentVListProps = data;
+	}
+
 	public unmountPluginView() {
-		this.mainElement.classList.remove("!h-full");
+		this.mainElement.classList.remove("!h-auto");
 		this.pluginViewElement.classList.remove("!h-full");
 		this.pluginViewRoot?.unmount();
 		this.pluginViewRoot = undefined;
@@ -237,7 +244,6 @@ export class EvilBob {
 	) {
 		this.pluginViewCommand = command;
 		this.PluginView = imported.Command as FunctionComponent | undefined;
-		this.Actions = imported.Actions;
 		if (props) {
 			this.pluginViewProps = props;
 		}

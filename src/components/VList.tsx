@@ -12,8 +12,8 @@ import { EvilBob } from "./EvilBob.tsx";
 
 interface VListProps<T> {
 	children: ReactNode;
-	itemHeight: number;
-	itemWidth: number;
+	itemHeight?: number;
+	itemWidth?: number;
 	itemsOutOfBounds?: number;
 	itemSpacing?: {
 		x: number;
@@ -26,8 +26,8 @@ interface VListProps<T> {
 
 const VList = <T,>({
 	children,
-	itemHeight,
-	itemWidth,
+	itemHeight = 40,
+	itemWidth = -1,
 	itemsOutOfBounds,
 	itemSpacing,
 	keyboardListenerTarget,
@@ -203,10 +203,14 @@ const VList = <T,>({
 						width: itemWidth === -1 ? "100%" : `${itemWidth}px`,
 						left: `${((startIndex + index) % itemCountPerRow) * realItemWidth}px`,
 					};
+					const classes =
+						child.type?.name === "VListItem"
+							? "rounded-sm overflow-hidden"
+							: " overflow-hidden rounded-sm border-1 border-solid border-transparent";
 					const activeClasses =
 						child.type?.name === "VListItem"
 							? "!bg-accent"
-							: "!border-primary";
+							: "!bg-accent !border-primary";
 					return (
 						<div
 							onClick={() =>
@@ -215,7 +219,7 @@ const VList = <T,>({
 							onMouseOver={() => onChildMouseOver(index)}
 							onFocus={() => onChildMouseOver(index)}
 							style={style}
-							className={` rounded-sm border-4 border-solid border-transparent ${
+							className={`${classes} ${
 								activeIndex === index ? activeClasses : ""
 							}`}
 							key={index}

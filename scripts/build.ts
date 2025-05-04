@@ -151,10 +151,10 @@ async function getPlugins() {
 		) {
 			continue;
 		}
-		const entrypointPath = path.resolve(
-			__dirname,
-			`../src/plugins/${folder}/index.ts`,
-		);
+		const filePathWithoutExtension = `${path.resolve(__dirname, `../src/plugins/${folder}`)}/index`;
+		const entrypointPath = existsSync(`${filePathWithoutExtension}.ts`)
+			? `${filePathWithoutExtension}.ts`
+			: `${filePathWithoutExtension}.tsx`;
 
 		const pluginDefinition = (await import(entrypointPath))
 			.default as PluginDefinition;

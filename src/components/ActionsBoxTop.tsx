@@ -1,5 +1,7 @@
 "use client";
 
+import type { EvilBobConfig } from "@/lib/config";
+import { keysAsString } from "@/lib/keybindings.ts";
 import type { ReactNode } from "react";
 import { EvilBob } from "./EvilBob";
 import {
@@ -12,16 +14,18 @@ export interface ActionsTopBoxProps {
 	children: ReactNode;
 	onOpenChange: (isOpen: boolean) => void;
 	open: boolean;
+	config?: EvilBobConfig;
 }
 export function ActionsBoxTop({
 	children,
 	open,
 	onOpenChange,
+	config,
 }: ActionsTopBoxProps) {
 	return (
 		<DropdownMenu open={open} onOpenChange={onOpenChange}>
 			<DropdownMenuTrigger className="text-xs tracking-widest text-muted-foreground">
-				Actions ⌘⏎
+				Actions {keysAsString(config?.keybindings.openActions.keys)}
 			</DropdownMenuTrigger>
 			<DropdownMenuContent
 				onCloseAutoFocus={(event) => {

@@ -78,15 +78,12 @@ export function Command({ search }: PluginViewProps) {
 					{bookmarksLoadingMessage}
 				</div>
 			) : (
-				<VList>
+				<VList onSelect={onBookmarkClick}>
 					{(
 						bookmarks?.filter((b) => searchInBookmark(search, b)) ||
 						[]
 					).map((item) => (
-						<VListItem
-							key={item.node.id}
-							onClick={() => onBookmarkClick(item)}
-						>
+						<VListItem data={item} key={item.node.id}>
 							<span>{item.node.title}</span>
 							<span className="text-muted-foreground pl-4 truncate">
 								{item.node.url}

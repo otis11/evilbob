@@ -18,6 +18,13 @@ export interface TabsQueryProps {
 }
 
 export const browserApi = {
+	topSites: {
+		async get() {
+			return await chrome.runtime.sendMessage({
+				event: "chrome.topSites.get",
+			});
+		},
+	},
 	tabs: {
 		async create(props: TabsCreateProps): Promise<void> {
 			return await chrome.runtime.sendMessage({

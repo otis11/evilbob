@@ -46,10 +46,13 @@ const VList = <T,>({
 
 	// biome-ignore lint/correctness/useExhaustiveDependencies: ignore for now, as it should only run once to register keybord listeners
 	useEffect(() => {
+		// to fix a race condition if the getConfig promise takes longer than a rerender of the component
+		let isMounted = true;
 		const keyboardListener = new KeyboardListener(
 			keyboardListenerTarget || EvilBob.instance().shadowRoot,
 		);
 		getConfig().then((config) => {
+			if (!isMounted) return;
 			keyboardListener.register(
 				config.keybindings.nextAbove.keys,
 				highlightNextAbove,
@@ -74,7 +77,10 @@ const VList = <T,>({
 		EvilBob.instance().setActiveVListItemProps(
 			parsedChildren[activeIndex]?.props,
 		);
-		return () => keyboardListener.destroy();
+		return () => {
+			isMounted = false;
+			keyboardListener.destroy();
+		};
 	}, [activeIndex, itemCountPerRow, parsedChildren]);
 	useEffect(() => {
 		const availHeight = root.current?.getBoundingClientRect().height || 0;

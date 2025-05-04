@@ -12,11 +12,6 @@ export type ChromeStorageSetProps = {
 	[key: string]: any;
 };
 
-export interface TabsQueryProps {
-	active: boolean;
-	currentWindow: boolean;
-}
-
 export const browserApi = {
 	topSites: {
 		async get() {
@@ -40,9 +35,17 @@ export const browserApi = {
 				data: props,
 			});
 		},
-		async query(props: TabsQueryProps): Promise<chrome.tabs.Tab[]> {
+		async query(props: chrome.tabs.QueryInfo): Promise<chrome.tabs.Tab[]> {
 			return await chrome.runtime.sendMessage({
 				event: "chrome.tabs.query",
+				data: props,
+			});
+		},
+		async update(
+			props: chrome.tabs.UpdateProperties,
+		): Promise<chrome.tabs.Tab | undefined> {
+			return await chrome.runtime.sendMessage({
+				event: "chrome.tabs.update",
 				data: props,
 			});
 		},

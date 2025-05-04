@@ -78,6 +78,9 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
 	} else if (event === "chrome.history.search") {
 		chrome.history.search(data).then((res) => sendResponse(res));
 		return true;
+	} else if (event === "chrome.tabs.update") {
+		chrome.tabs.update(data).then((res) => sendResponse(res));
+		return true;
 	}
 	return false;
 });

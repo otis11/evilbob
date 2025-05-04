@@ -16,7 +16,7 @@ export function Toast() {
 		},
 	);
 	return (
-		<div className="absolute pointer-events-none left-0 right-0 bottom-4 w-full flex justify-center">
+		<div className="z-50 absolute pointer-events-none left-0 right-0 bottom-4 w-full flex justify-center">
 			{toastContent ? (
 				<div className="animate-slide-bottom-in flex shadow-md items-center py-3 px-4 border-input rounded-sm border border-solid bg-primary text-primary-foreground pointer-events-auto">
 					{toastContent}

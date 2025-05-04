@@ -72,6 +72,9 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
 	} else if (event === "chrome.windows.remove") {
 		chrome.windows.remove(data).then((res) => sendResponse(res));
 		return true;
+	} else if (event === "chrome.topSites.get") {
+		chrome.topSites.get().then((res) => sendResponse(res));
+		return true;
 	}
 	return false;
 });

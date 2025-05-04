@@ -1,5 +1,5 @@
 import type { PluginCommandExtended } from "@/plugins";
-import { VList, VListItem } from "./VList.tsx";
+import { VList, VListItem, VListItemIcon } from "./VList.tsx";
 export interface CommandListProps {
 	commands: PluginCommandExtended[];
 	// biome-ignore lint/suspicious/noExplicitAny: Can be any but can probably be improved via generic types?
@@ -10,9 +10,7 @@ export function CommandList({ commands, onSelect }: CommandListProps) {
 		<VList onSelect={onSelect}>
 			{commands.map((command) => (
 				<VListItem data={command} key={command.name}>
-					<span className="pr-2 flex items-center">
-						{command.plugin.icon}
-					</span>
+					<VListItemIcon>{command.plugin.icon}</VListItemIcon>
 					<span>{command.title}</span>
 					<span className="text-muted-foreground text-sm pl-4">
 						{command.plugin?.title}

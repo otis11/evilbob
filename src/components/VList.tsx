@@ -1,4 +1,5 @@
 import { KeyboardListener } from "@/lib/utils.ts";
+import { CircleHelpIcon } from "lucide-react";
 import {
 	type CSSProperties,
 	type JSX,
@@ -279,5 +280,29 @@ const VListItem = ({ children, onClick, data, Actions }: VListItemProps) => {
 		</li>
 	);
 };
+export interface VListItemIconProps {
+	url?: string;
+	children?: ReactNode;
+}
+const VListItemIcon = ({ url, children }: VListItemIconProps) => {
+	const [error, setError] = useState(false);
 
-export { VList, VListItemTile, VListItem };
+	return (
+		<span className="pr-2 flex items-center">
+			{error ? (
+				<CircleHelpIcon></CircleHelpIcon>
+			) : url ? (
+				<img
+					onError={() => setError(true)}
+					className="h-6 w-6 object-contain overflow-hidden"
+					src={url}
+					alt={url}
+				/>
+			) : (
+				children
+			)}
+		</span>
+	);
+};
+
+export { VList, VListItemTile, VListItem, VListItemIcon };

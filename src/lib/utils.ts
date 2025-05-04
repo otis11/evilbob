@@ -261,3 +261,11 @@ const HEX_CHAR_NUMBER_MAP: Record<string, number> = {
 	E: 14,
 	F: 15,
 };
+
+export function getFaviconUrl(urlStr: string | undefined) {
+	if (!urlStr) {
+		return "";
+	}
+	const url = new URL(urlStr);
+	return `${url.origin}/favicon.ico`;
+}

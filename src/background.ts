@@ -75,6 +75,9 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
 	} else if (event === "chrome.topSites.get") {
 		chrome.topSites.get().then((res) => sendResponse(res));
 		return true;
+	} else if (event === "chrome.history.search") {
+		chrome.history.search(data).then((res) => sendResponse(res));
+		return true;
 	}
 	return false;
 });

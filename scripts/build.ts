@@ -91,6 +91,7 @@ async function buildExtension(options: BuildExtensionOptions) {
 	});
 
 	await $`cp -r "${path.resolve(__dirname, "../src/media")}" dist/${options.outputFolder}`;
+	await $`cp -r "${path.resolve(__dirname, "../src/media/favicon.ico")}" dist/${options.outputFolder}/favicon.ico`;
 	await $`cp -r "${path.resolve(__dirname, "../src/content-script-entrypoint.js")}" dist/${options.outputFolder}/content-script-entrypoint.js`;
 
 	if (options.copy) {

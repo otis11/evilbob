@@ -118,6 +118,7 @@ export function Command(props: PluginViewProps) {
 					if (element instanceof HTMLImageElement) {
 						return (
 							<VListItemTile
+								className="p-1"
 								key={index}
 								Actions={<Actions url={element.src}></Actions>}
 							>
@@ -131,13 +132,16 @@ export function Command(props: PluginViewProps) {
 					}
 					if (element instanceof SVGElement) {
 						const node = element.cloneNode(true) as SVGElement;
-						node.setAttribute("width", width.toString());
-						node.setAttribute("height", height.toString());
-						node.style.fill = "var(--foreground)";
-						node.style.color = "var(--foreground)";
+						node.classList.add(
+							"text-foreground",
+							"fill-foreground",
+							"w-full",
+							"h-auto",
+						);
 						return (
-							<VListItemTile key={index}>
+							<VListItemTile className="p-1" key={index}>
 								<div
+									className="w-full h-full object-contain"
 									// biome-ignore lint/security/noDangerouslySetInnerHtml: can do better? seems okish
 									dangerouslySetInnerHTML={{
 										__html: node.outerHTML,
@@ -148,7 +152,7 @@ export function Command(props: PluginViewProps) {
 					}
 					if (element instanceof HTMLVideoElement) {
 						return (
-							<VListItemTile key={index}>
+							<VListItemTile className="p-1" key={index}>
 								<video
 									muted
 									src={element.src}
@@ -159,7 +163,7 @@ export function Command(props: PluginViewProps) {
 					}
 					if (element instanceof HTMLElement) {
 						return (
-							<VListItemTile key={index}>
+							<VListItemTile className="p-1" key={index}>
 								<div
 									style={{
 										backgroundImage:

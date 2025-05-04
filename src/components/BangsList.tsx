@@ -14,11 +14,7 @@ export function BangsList({ search, onBangSelect }: BangsListProps) {
 	}, []);
 
 	return (
-		<VList
-			itemHeight={32}
-			itemWidth={-1}
-			onSelect={(item) => onBangSelect(item.b)}
-		>
+		<VList onSelect={(item) => onBangSelect(item.b)}>
 			{(bangs ? bangs.filter((b) => searchInBang(search, b)) : []).map(
 				(item, index) => (
 					<VListItem key={index} data={item}>

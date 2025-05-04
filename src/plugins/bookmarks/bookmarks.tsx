@@ -78,7 +78,7 @@ export function Command({ search }: PluginViewProps) {
 					{bookmarksLoadingMessage}
 				</div>
 			) : (
-				<VList itemWidth={-1} itemHeight={32}>
+				<VList>
 					{(
 						bookmarks?.filter((b) => searchInBookmark(search, b)) ||
 						[]

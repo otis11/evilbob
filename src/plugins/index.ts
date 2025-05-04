@@ -1,3 +1,5 @@
+import type { FunctionComponent, JSX } from "react";
+
 export function definePlugin(definition: PluginDefinition) {
 	return definition;
 }
@@ -8,6 +10,7 @@ export function extendedCommand(command: PluginCommand, plugin: Plugin) {
 		plugin: {
 			id: plugin.id,
 			title: plugin.definition.title,
+			icon: plugin.definition.icon,
 		},
 	};
 }
@@ -41,8 +44,6 @@ export function searchForPluginCommands(search: string, plugins: Plugin[]) {
 	});
 }
 
-import type { FunctionComponent, JSX } from "react";
-
 export interface PluginCommand {
 	title: string;
 	type: "command" | "view";
@@ -54,6 +55,7 @@ export interface PluginCommandExtended extends PluginCommand {
 	plugin: {
 		id: string;
 		title: string;
+		icon?: JSX.Element;
 	};
 }
 
@@ -66,7 +68,7 @@ export interface PluginDefinition {
 	commands?: PluginCommand[];
 	permissions?: chrome.runtime.ManifestPermissions[];
 	hostPermissions?: string[];
-	icon?: string;
+	icon?: JSX.Element;
 	title: string;
 	description?: string;
 }

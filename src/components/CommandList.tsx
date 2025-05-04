@@ -7,9 +7,12 @@ export interface CommandListProps {
 }
 export function CommandList({ commands, onSelect }: CommandListProps) {
 	return (
-		<VList itemHeight={32} itemWidth={-1} onSelect={onSelect}>
+		<VList onSelect={onSelect}>
 			{commands.map((command) => (
 				<VListItem data={command} key={command.name}>
+					<span className="pr-2 flex items-center">
+						{command.plugin.icon}
+					</span>
 					<span>{command.title}</span>
 					<span className="text-muted-foreground text-sm pl-4">
 						{command.plugin?.title}

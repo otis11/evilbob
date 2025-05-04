@@ -63,6 +63,15 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
 	} else if (event === "chrome.storage.local.set") {
 		chrome.storage.local.set(data).then((res) => sendResponse(res));
 		return true;
+	} else if (event === "chrome.tabs.query") {
+		chrome.tabs.query(data).then((res) => sendResponse(res));
+		return true;
+	} else if (event === "chrome.windows.getAll") {
+		chrome.windows.getAll().then((res) => sendResponse(res));
+		return true;
+	} else if (event === "chrome.windows.remove") {
+		chrome.windows.remove(data).then((res) => sendResponse(res));
+		return true;
 	}
 	return false;
 });

@@ -12,12 +12,36 @@ export type ChromeStorageSetProps = {
 	[key: string]: any;
 };
 
+export interface TabsQueryProps {
+	active: boolean;
+	currentWindow: boolean;
+}
+
 export const browserApi = {
 	tabs: {
 		async create(props: TabsCreateProps): Promise<void> {
 			return await chrome.runtime.sendMessage({
 				event: "chrome.tabs.create",
 				data: props,
+			});
+		},
+		async query(props: TabsQueryProps): Promise<chrome.tabs.Tab[]> {
+			return await chrome.runtime.sendMessage({
+				event: "chrome.tabs.query",
+				data: props,
+			});
+		},
+	},
+	windows: {
+		async getAll(): Promise<chrome.windows.Window[]> {
+			return await chrome.runtime.sendMessage({
+				event: "chrome.windows.getAll",
+			});
+		},
+		async remove(id: number): Promise<void> {
+			return await chrome.runtime.sendMessage({
+				event: "chrome.windows.remove",
+				data: id,
 			});
 		},
 	},

@@ -27,6 +27,7 @@ export const DEFAULT_CONFIG: EvilBobConfig = {
 		enabled: {
 			colors: true,
 			"website-media": true,
+			window: true,
 		},
 	},
 	keybindings: defaultKeybindings,

@@ -16,7 +16,6 @@ export interface MainViewProps {
 	search?: string;
 	pluginView: PluginCommandExtended | undefined;
 	plugins: Plugin[];
-	onCommandClick?: (item: PluginCommandExtended) => void;
 	onBack?: () => void;
 	actions: JSX.Element;
 }

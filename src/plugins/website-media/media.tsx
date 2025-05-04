@@ -80,7 +80,7 @@ export function Command(props: PluginViewProps) {
 	return (
 		<>
 			<div
-				className="flex items-center gap-2"
+				className="flex items-center gap-2 pb-4"
 				onChange={onCheckboxesChange}
 			>
 				<Checkbox value="img" checked={selectedCheckboxes.img}>

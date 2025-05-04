@@ -1,8 +1,10 @@
 import { definePlugin } from "@/plugins/index.ts";
+import { SquarePlayIcon } from "lucide-react";
 
 export default definePlugin({
 	title: "Youtube",
 	description: "Youtube Shortcuts",
+	icon: <SquarePlayIcon></SquarePlayIcon>,
 	commands: [
 		{
 			title: "Open Youtube History",

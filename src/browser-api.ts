@@ -25,6 +25,14 @@ export const browserApi = {
 			});
 		},
 	},
+	history: {
+		async search(props: chrome.history.HistoryQuery) {
+			return await chrome.runtime.sendMessage({
+				event: "chrome.history.search",
+				data: props,
+			});
+		},
+	},
 	tabs: {
 		async create(props: TabsCreateProps): Promise<void> {
 			return await chrome.runtime.sendMessage({

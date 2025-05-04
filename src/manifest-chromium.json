@@ -37,7 +37,7 @@
 		}
 	],
 	"permissions": ["storage"],
-	"optional_permissions": ["bookmarks", "topSites"],
+	"optional_permissions": ["bookmarks", "topSites", "history"],
 	"optional_host_permissions": ["https://*/*", "http://*/*"],
 	"commands": {
 		"open": {

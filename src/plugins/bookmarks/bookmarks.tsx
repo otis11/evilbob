@@ -1,5 +1,6 @@
 import { browserApi } from "@/browser-api.ts";
-import { VList, VListItem } from "@/components/VList.tsx";
+import { VList, VListItem, VListItemIcon } from "@/components/VList.tsx";
+import { getFaviconUrl } from "@/lib/utils.ts";
 import type { PluginViewProps } from "@/plugins";
 import { useEffect, useState } from "react";
 
@@ -84,11 +85,14 @@ export function Command({ search }: PluginViewProps) {
 						[]
 					).map((item) => (
 						<VListItem data={item} key={item.node.id}>
+							<VListItemIcon
+								url={getFaviconUrl(item.node.url)}
+							></VListItemIcon>
 							<span>{item.node.title}</span>
 							<span className="text-muted-foreground pl-4 truncate">
 								{item.node.url}
 							</span>
-							<span className="text-muted-foreground pl-4 font-bold">
+							<span className="text-muted-foreground pl-4">
 								{item.folders.map((f) => f.title).join("/")}
 							</span>
 						</VListItem>

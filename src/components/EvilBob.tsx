@@ -30,6 +30,7 @@ export interface ShowInputProps {
 export class EvilBob {
 	static internalInstance: EvilBob | undefined;
 	public mainRoot: Root | undefined;
+	public config: EvilBobConfig | undefined;
 
 	public pluginViewRoot: Root | undefined = undefined;
 	public PluginView: FunctionComponent<PluginViewProps> | undefined =
@@ -49,6 +50,7 @@ export class EvilBob {
 		public readonly dialogElement: HTMLDialogElement,
 	) {
 		getConfig().then((config: EvilBobConfig) => {
+			this.config = config;
 			const listener = new KeyboardListener(
 				EvilBob.instance().shadowRoot,
 			);
@@ -167,6 +169,7 @@ export class EvilBob {
 	public renderMainView() {
 		this.mainRoot?.render(
 			<MainSearchView
+				config={this.config}
 				actions={
 					this.activeVListItemProps?.Actions || this.pluginActions
 				}

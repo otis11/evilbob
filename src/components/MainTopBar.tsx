@@ -1,5 +1,7 @@
 import { ActionsBoxTop } from "@/components/ActionsBoxTop.tsx";
 import { Input } from "@/components/ui/input.tsx";
+import type { EvilBobConfig } from "@/lib/config.ts";
+import { keysAsString } from "@/lib/keybindings.ts";
 import { ArrowLeft, Blocks, Maximize2, Minimize2 } from "lucide-react";
 import {
 	type ChangeEvent,
@@ -19,6 +21,7 @@ export interface MainTopBarProps {
 	inputRef: RefObject<HTMLInputElement | null>;
 	search: string;
 	actions: JSX.Element;
+	config?: EvilBobConfig;
 }
 
 export function MainTopBar({
@@ -29,6 +32,7 @@ export function MainTopBar({
 	inputRef,
 	search,
 	actions,
+	config,
 }: MainTopBarProps) {
 	const [isFullscreen, setIsFullscreen] = useState(false);
 	const [open, setOpen] = useState(false);
@@ -85,10 +89,15 @@ export function MainTopBar({
 				onKeyDown={onKeyDownActions}
 			>
 				<div className="text-xs tracking-widest text-muted-foreground">
-					Go Back ⌘b
+					Go Back{" "}
+					{keysAsString(config?.keybindings.closePluginView.keys)}
 				</div>
 				<div className="text-sm text-muted-foreground">{hint}</div>
-				<ActionsBoxTop open={open} onOpenChange={onOpenChange}>
+				<ActionsBoxTop
+					config={config}
+					open={open}
+					onOpenChange={onOpenChange}
+				>
 					{actions}
 				</ActionsBoxTop>
 			</div>

@@ -1,4 +1,8 @@
+import { isMac } from "./platform";
+
 export type KeybindingKey = keyof typeof defaultKeybindings;
+
+const ACTION_KEY = isMac ? "Meta" : "Control";
 
 export const defaultKeybindings = {
 	selectResult: {
@@ -32,13 +36,28 @@ export const defaultKeybindings = {
 		title: "Close evil bob.",
 	},
 	closePluginView: {
-		keys: ["Meta", "b"],
+		keys: [ACTION_KEY, "b"],
 		description: "This will close the plugin view.",
 		title: "Close plugin view.",
 	},
 	openActions: {
-		keys: ["Meta", "Enter"],
+		keys: [ACTION_KEY, "Enter"],
 		description: "This will open the actions for a View.",
 		title: "Open Actions.",
 	},
 };
+
+const KEYS_ICONS_MAP: Record<string, string> = {
+	Meta: "⌘",
+	Enter: "⏎",
+};
+export function keysAsString(keys: string[] | undefined): string {
+	if (!keys) {
+		return "";
+	}
+	let result = "";
+	for (let i = 0; i < keys.length; i++) {
+		result += KEYS_ICONS_MAP[keys[i] || ""] || keys[i];
+	}
+	return result;
+}

@@ -1,5 +1,6 @@
 import { Toast } from "@/components/Toast.tsx";
 import { type Bang, getBangSearchUrl } from "@/lib/bangs/bangs.ts";
+import type { EvilBobConfig } from "@/lib/config.ts";
 import { findStringStartUntil } from "@/lib/utils";
 import { searchForPluginCommands } from "@/plugins";
 import type { Plugin, PluginCommandExtended } from "@/plugins";
@@ -18,6 +19,7 @@ export interface MainViewProps {
 	plugins: Plugin[];
 	onBack?: () => void;
 	actions: JSX.Element;
+	config?: EvilBobConfig;
 }
 
 export function MainSearchView({
@@ -25,6 +27,7 @@ export function MainSearchView({
 	pluginView,
 	onBack,
 	actions,
+	config,
 }: MainViewProps) {
 	const [search, setSearch] = useState("");
 	const inputRef = useRef<HTMLInputElement | null>(null);
@@ -95,6 +98,7 @@ export function MainSearchView({
 		<>
 			<Toast></Toast>
 			<MainTopBar
+				config={config}
 				actions={actions}
 				search={search}
 				inputRef={inputRef}

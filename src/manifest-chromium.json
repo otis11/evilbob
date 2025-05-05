@@ -9,23 +9,28 @@
 	},
 	"web_accessible_resources": [
 		{
-			"resources": ["plugins/*", "assets/*", "content-script.js"],
+			"resources": [
+				"plugins/*",
+				"assets/*",
+				"content-script.js",
+				"favicon.ico"
+			],
 			"matches": ["<all_urls>"]
 		}
 	],
 	"action": {
 		"default_icon": {
-			"16": "media/evil-bob-icon-16x16.png",
-			"32": "media/evil-bob-icon-32x32.png",
-			"48": "media/evil-bob-icon-48x48.png",
-			"128": "media/evil-bob-icon-128x128.png"
+			"16": "media/evilbob-icon-16x16.png",
+			"32": "media/evilbob-icon-32x32.png",
+			"48": "media/evilbob-icon-48x48.png",
+			"128": "media/evilbob-icon-128x128.png"
 		}
 	},
 	"icons": {
-		"16": "media/evil-bob-icon-16x16.png",
-		"32": "media/evil-bob-icon-32x32.png",
-		"48": "media/evil-bob-icon-48x48.png",
-		"128": "media/evil-bob-icon-128x128.png"
+		"16": "media/evilbob-icon-16x16.png",
+		"32": "media/evilbob-icon-32x32.png",
+		"48": "media/evilbob-icon-48x48.png",
+		"128": "media/evilbob-icon-128x128.png"
 	},
 	"content_scripts": [
 		{

@@ -6,15 +6,15 @@ import { Check } from "lucide-react";
 import { type ChangeEvent, useState } from "react";
 
 import { Input } from "@/components/ui/input.tsx";
-import { type EvilBobConfig, getConfig } from "@/lib/config.ts";
+import { type EvilbobConfig, getConfig } from "@/lib/config.ts";
 import { disablePlugin, enablePlugin } from "@/lib/plugins-frontend.ts";
 const plugins = pluginJsonList as Plugin[];
 
 interface AppProps {
-	config: EvilBobConfig;
+	config: EvilbobConfig;
 }
 export default function App({ config }: AppProps) {
-	const [localConfig, setLocalConfig] = useState<EvilBobConfig>(config);
+	const [localConfig, setLocalConfig] = useState<EvilbobConfig>(config);
 	const [searchValue, setSearchValue] = useState("");
 	const [pluginLoading, setPluginLoading] = useState("");
 

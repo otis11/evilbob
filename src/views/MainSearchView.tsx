@@ -1,6 +1,6 @@
 import { Toast } from "@/components/Toast.tsx";
 import { type Bang, getBangSearchUrl } from "@/lib/bangs/bangs.ts";
-import type { EvilBobConfig } from "@/lib/config.ts";
+import type { EvilbobConfig } from "@/lib/config.ts";
 import { findStringStartUntil } from "@/lib/utils";
 import { searchForPluginCommands } from "@/plugins";
 import type { Plugin, PluginCommandExtended } from "@/plugins";
@@ -8,7 +8,7 @@ import { type ChangeEvent, type JSX, useEffect, useRef, useState } from "react";
 import { browserApi } from "../browser-api.ts";
 import { BangsList } from "../components/BangsList.tsx";
 import { CommandList } from "../components/CommandList.tsx";
-import { EvilBob } from "../components/EvilBob.tsx";
+import { Evilbob } from "../components/Evilbob.tsx";
 import { MainTopBar } from "../components/MainTopBar.tsx";
 import { Button } from "../components/ui/button.tsx";
 import { importPluginCommand } from "../lib/plugins-frontend.ts";
@@ -19,7 +19,7 @@ export interface MainViewProps {
 	plugins: Plugin[];
 	onBack?: () => void;
 	actions: JSX.Element;
-	config?: EvilBobConfig;
+	config?: EvilbobConfig;
 }
 
 export function MainSearchView({
@@ -41,7 +41,7 @@ export function MainSearchView({
 	}, [pluginView]);
 
 	useEffect(() => {
-		window.addEventListener("evil-bob-unmount-plugin-view", () => {
+		window.addEventListener("evilbob-unmount-plugin-view", () => {
 			setSearch("");
 		});
 	}, []);
@@ -66,7 +66,7 @@ export function MainSearchView({
 		const command = await importPluginCommand(item.plugin.id, item.name);
 		if (item.type === "view") {
 			setSearch("");
-			EvilBob.instance().renderPluginCommand(item, command, {
+			Evilbob.instance().renderPluginCommand(item, command, {
 				search: "",
 			});
 		} else if (item.type === "command") {
@@ -76,7 +76,7 @@ export function MainSearchView({
 
 	function onChange(data: ChangeEvent<HTMLInputElement>) {
 		setSearch(data.target.value);
-		EvilBob.instance().updatePluginView({
+		Evilbob.instance().updatePluginView({
 			search: data.target.value,
 		});
 	}

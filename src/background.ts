@@ -81,6 +81,12 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
 	} else if (event === "chrome.tabs.update") {
 		chrome.tabs.update(data).then((res) => sendResponse(res));
 		return true;
+	} else if (event === "chrome.history.deleteUrl") {
+		chrome.history.deleteUrl(data).then((res) => sendResponse(res));
+		return true;
+	} else if (event === "chrome.history.getVisits") {
+		chrome.history.getVisits(data).then((res) => sendResponse(res));
+		return true;
 	}
 	return false;
 });

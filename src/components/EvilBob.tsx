@@ -171,7 +171,7 @@ export class EvilBob {
 			<MainSearchView
 				config={this.config}
 				actions={
-					this.activeVListItemProps?.Actions || this.pluginActions
+					this.activeVListItemProps?.actions || this.pluginActions
 				}
 				plugins={this.plugins || []}
 				pluginView={this.pluginViewCommand}

@@ -120,7 +120,7 @@ export function Command(props: PluginViewProps) {
 							<VListItemTile
 								className="p-1"
 								key={index}
-								Actions={<Actions url={element.src}></Actions>}
+								actions={<Actions url={element.src}></Actions>}
 							>
 								<img
 									alt={element.alt}

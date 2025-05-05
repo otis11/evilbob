@@ -243,7 +243,7 @@ const VList = <T,>({
 export interface VListItemTileProps {
 	children: ReactNode;
 	className?: string;
-	Actions?: JSX.Element | undefined;
+	actions?: JSX.Element | undefined;
 	// biome-ignore lint/suspicious/noExplicitAny: Can be any but can probably be improved via generic types?
 	data?: any;
 }
@@ -251,7 +251,7 @@ export interface VListItemTileProps {
 const VListItemTile = ({
 	children,
 	className,
-	Actions,
+	actions,
 	data,
 }: VListItemTileProps) => {
 	return (
@@ -266,11 +266,11 @@ const VListItemTile = ({
 export interface VListItemProps {
 	children: ReactNode;
 	onClick?: () => void;
-	Actions?: JSX.Element | undefined;
+	actions?: JSX.Element | undefined;
 	// biome-ignore lint/suspicious/noExplicitAny: Can be any but can probably be improved via generic types?
 	data?: any;
 }
-const VListItem = ({ children, onClick, data, Actions }: VListItemProps) => {
+const VListItem = ({ children, onClick, data, actions }: VListItemProps) => {
 	return (
 		<li
 			className="truncate text-base text-fg items-center flex h-full w-full m-0 py-1.5 px-2 list-none"

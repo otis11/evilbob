@@ -27,6 +27,20 @@ export const browserApi = {
 				data: props,
 			});
 		},
+		async deleteUrl(props: chrome.history.Url) {
+			return await chrome.runtime.sendMessage({
+				event: "chrome.history.deleteUrl",
+				data: props,
+			});
+		},
+		async getVisits(
+			props: chrome.history.Url,
+		): Promise<chrome.history.VisitItem[]> {
+			return await chrome.runtime.sendMessage({
+				event: "chrome.history.getVisits",
+				data: props,
+			});
+		},
 	},
 	tabs: {
 		async create(props: TabsCreateProps): Promise<void> {

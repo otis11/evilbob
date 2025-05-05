@@ -1,6 +1,8 @@
 import { browserApi } from "@/browser-api.ts";
 import { NumberSelect } from "@/components/NumberSelect.tsx";
+import { toast } from "@/components/Toast";
 import { VList, VListItem, VListItemIcon } from "@/components/VList.tsx";
+import { DropdownMenuItem } from "@/components/ui/dropdown-menu.tsx";
 import { getFaviconUrl } from "@/lib/utils.ts";
 import type { PluginViewProps } from "@/plugins";
 import { useEffect, useState } from "react";
@@ -50,22 +52,46 @@ export function Command({ search }: PluginViewProps) {
 				</div>
 			) : (
 				<VList onSelect={onSelect}>
-					{(history || []).map((site) => (
-						<VListItem data={site} key={site.url}>
+					{(history || []).map((item) => (
+						<VListItem
+							data={item}
+							key={item.url}
+							actions={<Actions {...item}></Actions>}
+						>
 							<VListItemIcon
-								url={getFaviconUrl(site.url)}
+								url={getFaviconUrl(item.url)}
 							></VListItemIcon>
-							<span>{site.title}</span>
+							<span>{item.title}</span>
 							<span className="text-muted-foreground pl-4 truncate shrink-0">
-								{site.visitCount} Visits
+								{item.visitCount} Visits
 							</span>
 							<span className="text-muted-foreground pl-4 truncate">
-								{site.url}
+								{item.url}
 							</span>
 						</VListItem>
 					))}
 				</VList>
 			)}
+		</>
+	);
+}
+
+function Actions(item: chrome.history.HistoryItem) {
+	async function deleteUrl() {
+		if (!item.url) {
+			toast(<span>Item has no url.</span>);
+			return;
+		}
+
+		await browserApi.history.deleteUrl({ url: item.url });
+		toast(<span>Url deleted.</span>);
+	}
+
+	return (
+		<>
+			<DropdownMenuItem onClick={deleteUrl}>
+				Delete Url (Removes all occurrences)
+			</DropdownMenuItem>
 		</>
 	);
 }

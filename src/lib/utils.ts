@@ -269,3 +269,28 @@ export function getFaviconUrl(urlStr: string | undefined) {
 	const url = new URL(urlStr);
 	return `${url.origin}/favicon.ico`;
 }
+
+export function formatTimeAgo(unix: number | undefined): string {
+	if (!unix) {
+		return "";
+	}
+	const now = new Date();
+	const diffInMs = now.getTime() - unix;
+
+	if (diffInMs < 1000 * 60) {
+		return "now";
+	}
+	if (diffInMs < 1000 * 60 * 60) {
+		return `${Math.floor(diffInMs / 1000 / 60)} minutes ago`;
+	}
+	if (diffInMs < 1000 * 60 * 60 * 24) {
+		return `${Math.floor(diffInMs / 1000 / 60 / 60)} hours ago`;
+	}
+	if (diffInMs < 1000 * 60 * 60 * 24 * 31) {
+		return `${Math.floor(diffInMs / 1000 / 60 / 60 / 24)} days ago`;
+	}
+	if (diffInMs < 1000 * 60 * 60 * 24 * 365) {
+		return `${Math.floor(diffInMs / 1000 / 60 / 60 / 24)} days ago`;
+	}
+	return new Date(unix).toLocaleDateString("en-US", {});
+}

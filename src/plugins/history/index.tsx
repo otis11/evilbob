@@ -12,5 +12,10 @@ export default definePlugin({
 			type: "view",
 			name: "history",
 		},
+		{
+			title: "History Visits",
+			type: "view",
+			name: "visits",
+		},
 	],
 });

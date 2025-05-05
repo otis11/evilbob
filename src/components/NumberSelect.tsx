@@ -26,6 +26,12 @@ export function NumberSelect({
 				<SelectValue placeholder="Theme" />
 			</SelectTrigger>
 			<SelectContent
+				onCloseAutoFocus={(event) => {
+					event.preventDefault();
+				}}
+				onKeyDown={(e) => {
+					e.stopPropagation();
+				}}
 				container={EvilBob.instance().dialogElement || document.body}
 			>
 				{values.map((value, index) => (

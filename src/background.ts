@@ -1,10 +1,10 @@
 chrome.commands.onCommand.addListener(async (command) => {
 	if (command === "open") {
-		await tryOpenEvilBobCurrentTab();
+		await tryOpenEvilbobCurrentTab();
 	}
 });
 
-async function tryOpenEvilBobCurrentTab(): Promise<void> {
+async function tryOpenEvilbobCurrentTab(): Promise<void> {
 	const [currentTab] = await chrome.tabs.query({
 		active: true,
 		currentWindow: true,
@@ -17,13 +17,13 @@ async function tryOpenEvilBobCurrentTab(): Promise<void> {
 		// cannot send a message to the current tab
 		console.error(error);
 		const emptyTab = await chrome.tabs.create({
-			url: "src/views/evil-bob-empty-page/evil-bob-empty-page.html",
+			url: "src/views/evilbob-empty-page/evilbob-empty-page.html",
 		});
 	}
 }
 
 chrome.action.onClicked.addListener(async () => {
-	await tryOpenEvilBobCurrentTab();
+	await tryOpenEvilbobCurrentTab();
 });
 
 // do callback not make async

@@ -44,7 +44,7 @@ export function deepMerge(
 		if (Object.hasOwn(source, key)) {
 			if (isJsObject(source[key])) {
 				if (!Object.hasOwn(source, key)) continue;
-				// https://github.com/otis11/evil-bob/security/code-scanning/1
+				// https://github.com/otis11/evilbob/security/code-scanning/1
 				if (key === "__proto__" || key === "constructor") continue;
 				if (
 					!target[key] ||

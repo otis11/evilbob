@@ -9,7 +9,7 @@ import {
 	useState,
 } from "react";
 import { getConfig } from "../lib/config.ts";
-import { EvilBob } from "./EvilBob.tsx";
+import { Evilbob } from "./Evilbob.tsx";
 
 interface VListProps<T> {
 	children: ReactNode;
@@ -43,6 +43,7 @@ const VList = <T,>({
 	const [itemCountPerRow, setItemCountPerRow] = useState(0);
 	const [scrollTop, setScrollTop] = useState(root.current?.scrollTop || 0);
 	const [activeIndex, setActiveIndex] = useState(0);
+	const [activeRenderedIndex, setActiveRenderedIndex] = useState(0);
 	const parsedChildren = Array.isArray(children) ? children : [];
 
 	// biome-ignore lint/correctness/useExhaustiveDependencies: ignore for now, as it should only run once to register keybord listeners
@@ -50,7 +51,7 @@ const VList = <T,>({
 		// to fix a race condition if the getConfig promise takes longer than a rerender of the component
 		let isMounted = true;
 		const keyboardListener = new KeyboardListener(
-			keyboardListenerTarget || EvilBob.instance().shadowRoot,
+			keyboardListenerTarget || Evilbob.instance().shadowRoot,
 		);
 		getConfig().then((config) => {
 			if (!isMounted) return;
@@ -75,7 +76,7 @@ const VList = <T,>({
 				() => onSelect?.(parsedChildren[activeIndex]?.props.data),
 			);
 		});
-		EvilBob.instance().setActiveVListItemProps(
+		Evilbob.instance().setActiveVListItemProps(
 			parsedChildren[activeIndex]?.props,
 		);
 		return () => {
@@ -191,8 +192,9 @@ const VList = <T,>({
 		setScrollTop(root.current?.scrollTop || 0);
 	}
 
-	function onChildMouseOver(index: number) {
-		setActiveIndex(index);
+	function onChildMouseOver(child: JSX.Element) {
+		const childIndex = parsedChildren.findIndex((c) => c.key === child.key);
+		setActiveIndex(childIndex);
 	}
 
 	return (
@@ -220,16 +222,16 @@ const VList = <T,>({
 							: "!bg-accent !border-primary";
 					return (
 						<div
-							onClick={() =>
-								onSelect?.(parsedChildren[index].props.data)
-							}
-							onMouseOver={() => onChildMouseOver(index)}
-							onFocus={() => onChildMouseOver(index)}
+							onClick={() => onSelect?.(child.props.data)}
+							onMouseOver={() => onChildMouseOver(child)}
+							onFocus={() => onChildMouseOver(child)}
 							style={style}
 							className={`${classes} ${
-								activeIndex === index ? activeClasses : ""
+								activeIndex === startIndex + index
+									? activeClasses
+									: ""
 							}`}
-							key={index}
+							key={child.key}
 						>
 							{child}
 						</div>

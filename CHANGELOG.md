@@ -1,6 +1,6 @@
 ## Unreleased
 - Rewrite From Scratch
-- Rename from `bob-command-palette` to `Evil Bob`
+- Rename from `bob-command-palette` to `Evilbob`
 - Mark it clearly as a prototype
 
 ## 0.6.0 (January 05, 2025)

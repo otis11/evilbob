@@ -2,8 +2,8 @@ import { definePlugin } from "@/plugins/index.ts";
 import { CircleDotIcon } from "lucide-react";
 
 export default definePlugin({
-	title: "Evil Bob",
-	description: "Evil Bob",
+	title: "Evilbob",
+	description: "Evilbob",
 	icon: <CircleDotIcon></CircleDotIcon>,
 	commands: [
 		{

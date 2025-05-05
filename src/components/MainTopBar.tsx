@@ -1,6 +1,6 @@
 import { ActionsBoxTop } from "@/components/ActionsBoxTop.tsx";
 import { Input } from "@/components/ui/input.tsx";
-import type { EvilBobConfig } from "@/lib/config.ts";
+import type { EvilbobConfig } from "@/lib/config.ts";
 import { keysAsString } from "@/lib/keybindings.ts";
 import { ArrowLeft, Blocks, Maximize2, Minimize2 } from "lucide-react";
 import {
@@ -11,7 +11,7 @@ import {
 	useEffect,
 	useState,
 } from "react";
-import { EvilBob } from "./EvilBob.tsx";
+import { Evilbob } from "./Evilbob.tsx";
 
 export interface MainTopBarProps {
 	hint?: string;
@@ -21,7 +21,7 @@ export interface MainTopBarProps {
 	inputRef: RefObject<HTMLInputElement | null>;
 	search: string;
 	actions: JSX.Element;
-	config?: EvilBobConfig;
+	config?: EvilbobConfig;
 }
 
 export function MainTopBar({
@@ -37,7 +37,7 @@ export function MainTopBar({
 	const [isFullscreen, setIsFullscreen] = useState(false);
 	const [open, setOpen] = useState(false);
 	useEffect(() => {
-		window.addEventListener("evil-bob-open-actions", () => {
+		window.addEventListener("evilbob-open-actions", () => {
 			setOpen(true);
 		});
 	}, []);
@@ -56,7 +56,7 @@ export function MainTopBar({
 		e.stopPropagation();
 	}
 
-	EvilBob.instance().fullscreen(isFullscreen);
+	Evilbob.instance().fullscreen(isFullscreen);
 	return (
 		<>
 			<div className="flex items-center gap-3">

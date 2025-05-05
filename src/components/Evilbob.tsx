@@ -13,7 +13,7 @@ import type { FunctionComponent, JSX } from "react";
 import { type Root, createRoot } from "react-dom/client";
 // @ts-expect-error typescript does not know ?inline imports
 import styles from "../globals.css?inline";
-import { type EvilBobConfig, getConfig } from "../lib/config.ts";
+import { type EvilbobConfig, getConfig } from "../lib/config.ts";
 import { loadEnabledPlugins } from "../lib/plugins-frontend.ts";
 import { MainSearchView } from "../views/MainSearchView.tsx";
 
@@ -27,10 +27,10 @@ export interface ShowInputProps {
 	title: string;
 }
 
-export class EvilBob {
-	static internalInstance: EvilBob | undefined;
+export class Evilbob {
+	static internalInstance: Evilbob | undefined;
 	public mainRoot: Root | undefined;
-	public config: EvilBobConfig | undefined;
+	public config: EvilbobConfig | undefined;
 
 	public pluginViewRoot: Root | undefined = undefined;
 	public PluginView: FunctionComponent<PluginViewProps> | undefined =
@@ -49,30 +49,30 @@ export class EvilBob {
 		public readonly rootElement: HTMLElement,
 		public readonly dialogElement: HTMLDialogElement,
 	) {
-		getConfig().then((config: EvilBobConfig) => {
+		getConfig().then((config: EvilbobConfig) => {
 			this.config = config;
 			const listener = new KeyboardListener(
-				EvilBob.instance().shadowRoot,
+				Evilbob.instance().shadowRoot,
 			);
 			listener.register(config.keybindings.closePluginView.keys, () => {
 				this.unmountPluginView();
 			});
 			listener.register(config.keybindings.openActions.keys, () => {
 				this.renderMainView();
-				window.dispatchEvent(new CustomEvent("evil-bob-open-actions"));
+				window.dispatchEvent(new CustomEvent("evilbob-open-actions"));
 			});
 		});
 	}
 
 	static instance(target?: HTMLElement) {
-		if (!EvilBob.internalInstance) {
-			const rootElement = document.createElement("evil-bob");
-			const shadowRoot = EvilBob.createShadowRoot(rootElement);
+		if (!Evilbob.internalInstance) {
+			const rootElement = document.createElement("evilbob-root");
+			const shadowRoot = Evilbob.createShadowRoot(rootElement);
 
-			const mainElement = EvilBob.createMainElement();
-			const pluginViewElement = EvilBob.createPluginViewElement();
+			const mainElement = Evilbob.createMainElement();
+			const pluginViewElement = Evilbob.createPluginViewElement();
 
-			const dialogElement = EvilBob.createDialogElement();
+			const dialogElement = Evilbob.createDialogElement();
 			dialogElement.appendChild(mainElement);
 			dialogElement.appendChild(pluginViewElement);
 			shadowRoot.appendChild(dialogElement);
@@ -90,7 +90,7 @@ export class EvilBob {
 				}
 			});
 
-			EvilBob.internalInstance = new EvilBob(
+			Evilbob.internalInstance = new Evilbob(
 				pluginViewElement,
 				mainElement,
 				shadowRoot,
@@ -99,7 +99,7 @@ export class EvilBob {
 			);
 		}
 
-		return EvilBob.internalInstance;
+		return Evilbob.internalInstance;
 	}
 
 	private static createShadowRoot(root: HTMLElement) {
@@ -113,7 +113,7 @@ export class EvilBob {
 		// it does trigger consistent on the shadow root
 		shadow.addEventListener("mouseover", (e) => {
 			window.dispatchEvent(
-				new CustomEvent("evil-bob-mouse-over", { detail: e }),
+				new CustomEvent("evilbob-mouse-over", { detail: e }),
 			);
 		});
 
@@ -141,10 +141,10 @@ export class EvilBob {
 
 		dialog.addEventListener("close", () => {
 			dialog.classList.remove("flex");
-			EvilBob.instance().dialogElement.classList.add("!hidden");
-			EvilBob.instance().mainRoot?.unmount();
-			EvilBob.instance().pluginViewRoot?.unmount();
-			EvilBob.instance().mainRoot = undefined;
+			Evilbob.instance().dialogElement.classList.add("!hidden");
+			Evilbob.instance().mainRoot?.unmount();
+			Evilbob.instance().pluginViewRoot?.unmount();
+			Evilbob.instance().mainRoot = undefined;
 		});
 
 		dialog.addEventListener("close", async () => {
@@ -180,7 +180,7 @@ export class EvilBob {
 		);
 	}
 
-	public async openDialog(config: EvilBobConfig) {
+	public async openDialog(config: EvilbobConfig) {
 		if (!this.plugins) {
 			this.plugins = await loadEnabledPlugins();
 		}
@@ -207,7 +207,7 @@ export class EvilBob {
 
 		document.body.style.overflow = "hidden";
 		this.dialogElement.classList.add("flex");
-		EvilBob.instance().dialogElement.classList.remove("!hidden");
+		Evilbob.instance().dialogElement.classList.remove("!hidden");
 		this.dialogElement.showModal();
 	}
 
@@ -236,7 +236,7 @@ export class EvilBob {
 		this.pluginActions = undefined;
 		this.activeVListItemProps = undefined;
 		this.renderMainView();
-		window.dispatchEvent(new CustomEvent("evil-bob-unmount-plugin-view"));
+		window.dispatchEvent(new CustomEvent("evilbob-unmount-plugin-view"));
 	}
 
 	private _rerenderPluginView() {

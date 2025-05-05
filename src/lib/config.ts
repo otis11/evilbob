@@ -1,14 +1,14 @@
 import { deepMerge } from "@/lib/utils.ts";
 import { type KeybindingKey, defaultKeybindings } from "./keybindings.ts";
 
-let configCache: EvilBobConfig | undefined;
+let configCache: EvilbobConfig | undefined;
 
 export interface Dimensions {
 	width: number;
 	height: number;
 }
 
-export interface EvilBobConfig {
+export interface EvilbobConfig {
 	dimensions: Dimensions;
 	plugins: {
 		enabled: Record<string, boolean>;
@@ -19,7 +19,7 @@ export interface EvilBobConfig {
 	>;
 }
 
-export const DEFAULT_CONFIG: EvilBobConfig = {
+export const DEFAULT_CONFIG: EvilbobConfig = {
 	dimensions: { width: 900, height: 600 },
 	plugins: {
 		// TODO determine default enabled plugins
@@ -28,13 +28,13 @@ export const DEFAULT_CONFIG: EvilBobConfig = {
 			colors: true,
 			"website-media": true,
 			window: true,
-			"evil-bob": true,
+			evilbob: true,
 		},
 	},
 	keybindings: defaultKeybindings,
 };
 
-export async function updateConfig(newConfig: Partial<EvilBobConfig>) {
+export async function updateConfig(newConfig: Partial<EvilbobConfig>) {
 	const currentConfig = await getConfig();
 	configCache = undefined;
 
@@ -44,14 +44,14 @@ export async function updateConfig(newConfig: Partial<EvilBobConfig>) {
 	});
 }
 
-export async function setConfig(newConfig: Partial<EvilBobConfig>) {
+export async function setConfig(newConfig: Partial<EvilbobConfig>) {
 	configCache = undefined;
 	await chrome.storage.sync.set({
 		config: newConfig,
 	});
 }
 
-export async function getConfig(forceRefresh = false): Promise<EvilBobConfig> {
+export async function getConfig(forceRefresh = false): Promise<EvilbobConfig> {
 	if (forceRefresh) {
 		configCache = undefined;
 	}

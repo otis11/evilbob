@@ -5,7 +5,7 @@ import {
 	SelectTrigger,
 	SelectValue,
 } from "@/components/ui/select";
-import { EvilBob } from "./EvilBob";
+import { Evilbob } from "./Evilbob.tsx";
 
 export interface NumberSelectProps {
 	values: number[];
@@ -32,7 +32,7 @@ export function NumberSelect({
 				onKeyDown={(e) => {
 					e.stopPropagation();
 				}}
-				container={EvilBob.instance().dialogElement || document.body}
+				container={Evilbob.instance().dialogElement || document.body}
 			>
 				{values.map((value, index) => (
 					<SelectItem key={value} value={value.toString()}>

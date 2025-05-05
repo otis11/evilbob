@@ -1,19 +1,19 @@
-import { EvilBob } from "./components/EvilBob.tsx";
+import { Evilbob } from "./components/Evilbob.tsx";
 import { getConfig } from "./lib/config.ts";
 
 chrome.runtime.onMessage.addListener(async (message) => {
 	const event = message.event;
 	const data = message.data;
 	if (event === "open") {
-		await openEvilBob();
+		await openEvilbob();
 	}
 });
 
-if (document.documentURI.endsWith("evil-bob-empty-page.html")) {
-	openEvilBob().then();
+if (document.documentURI.endsWith("evilbob-empty-page.html")) {
+	openEvilbob().then();
 }
 
-async function openEvilBob() {
+async function openEvilbob() {
 	const config = await getConfig();
-	EvilBob.instance().openDialog(config);
+	Evilbob.instance().openDialog(config);
 }

@@ -1,10 +1,10 @@
 import type { JSX } from "react";
-import { EvilBob } from "./EvilBob";
+import { Evilbob } from "./Evilbob.tsx";
 
 export interface PluginActionsProps {
 	children: JSX.Element;
 }
 export function PluginActions({ children }: PluginActionsProps) {
-	EvilBob.instance().setPluginActions(children);
+	Evilbob.instance().setPluginActions(children);
 	return <></>;
 }

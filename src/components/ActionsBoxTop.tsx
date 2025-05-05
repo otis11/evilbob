@@ -1,9 +1,9 @@
 "use client";
 
-import type { EvilBobConfig } from "@/lib/config";
+import type { EvilbobConfig } from "@/lib/config";
 import { keysAsString } from "@/lib/keybindings.ts";
 import type { ReactNode } from "react";
-import { EvilBob } from "./EvilBob";
+import { Evilbob } from "./Evilbob.tsx";
 import {
 	DropdownMenu,
 	DropdownMenuContent,
@@ -14,7 +14,7 @@ export interface ActionsTopBoxProps {
 	children: ReactNode;
 	onOpenChange: (isOpen: boolean) => void;
 	open: boolean;
-	config?: EvilBobConfig;
+	config?: EvilbobConfig;
 }
 export function ActionsBoxTop({
 	children,
@@ -31,7 +31,7 @@ export function ActionsBoxTop({
 				onCloseAutoFocus={(event) => {
 					event.preventDefault();
 				}}
-				container={EvilBob.instance().dialogElement}
+				container={Evilbob.instance().dialogElement}
 			>
 				{children}
 			</DropdownMenuContent>

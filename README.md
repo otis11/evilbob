@@ -1,5 +1,5 @@
 <p align="center">
-    <img src="https://raw.githubusercontent.com/otis11/evil-bob/refs/heads/main/src/media/evil-bob-icon-128x128.png">
+    <img src="https://raw.githubusercontent.com/otis11/evilbob/refs/heads/main/src/media/evilbob-icon-128x128.png">
 </p>
 <p align="center">
     <a href="https://chromewebstore.google.com/detail/bob-command-palette/ofdklnmcjbihdajkbnfjpcamifkpngdl">Chrome</a>

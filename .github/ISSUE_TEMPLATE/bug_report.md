@@ -1,6 +1,6 @@
 ---
 name: Bug report
-about: Create a report to help Evil Bob improve
+about: Create a report to help Evilbob improve
 title: ''
 labels: bug
 assignees: ''
@@ -13,4 +13,4 @@ A clear description of what the bug is.
 **System*
 - OS: [e.g. iOS]
 - Browser & Version [e.g. chrome 129.0.0]
-- Evil Bob Version [e.g. 0.0.6]
+- Evilbob Version [e.g. 0.0.6]

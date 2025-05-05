@@ -1,7 +1,7 @@
 {
 	"manifest_version": 3,
-	"name": "Evil Bob",
-	"description": "Evil Bob, a command palette prototype.",
+	"name": "Evilbob",
+	"description": "Evilbob, a command palette prototype.",
 	"version": "0.7.0",
 	"background": {
 		"service_worker": "background.js",
@@ -59,7 +59,7 @@
 				"chromeos": "Ctrl+Shift+L",
 				"linux": "Ctrl+Shift+L"
 			},
-			"description": "Open Evil Bob"
+			"description": "Open Evilbob"
 		}
 	}
 }

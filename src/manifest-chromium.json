@@ -1,7 +1,7 @@
 {
 	"manifest_version": 3,
 	"name": "Evil Bob",
-	"description": "Evil Bob, a command palette.",
+	"description": "Evil Bob, a command palette prototype.",
 	"version": "0.7.0",
 	"background": {
 		"service_worker": "background.js",
@@ -37,7 +37,13 @@
 		}
 	],
 	"permissions": ["storage"],
-	"optional_permissions": ["bookmarks", "topSites", "history", "tabs"],
+	"optional_permissions": [
+		"bookmarks",
+		"topSites",
+		"history",
+		"tabs",
+		"management"
+	],
 	"optional_host_permissions": ["https://*/*", "http://*/*"],
 	"commands": {
 		"open": {

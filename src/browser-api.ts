@@ -20,6 +20,22 @@ export const browserApi = {
 			});
 		},
 	},
+	management: {
+		async getAll(): Promise<chrome.management.ExtensionInfo[]> {
+			return await chrome.runtime.sendMessage({
+				event: "chrome.management.getAll",
+			});
+		},
+		async uninstall(props: {
+			id: string;
+			options?: chrome.management.UninstallOptions;
+		}): Promise<void> {
+			return await chrome.runtime.sendMessage({
+				event: "chrome.management.uninstall",
+				data: props,
+			});
+		},
+	},
 	history: {
 		async search(props: chrome.history.HistoryQuery) {
 			return await chrome.runtime.sendMessage({

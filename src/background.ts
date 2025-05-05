@@ -87,6 +87,14 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
 	} else if (event === "chrome.history.getVisits") {
 		chrome.history.getVisits(data).then((res) => sendResponse(res));
 		return true;
+	} else if (event === "chrome.management.getAll") {
+		chrome.management.getAll().then((res) => sendResponse(res));
+		return true;
+	} else if (event === "chrome.management.uninstall") {
+		chrome.management
+			.uninstall(data.id, data.options)
+			.then((res) => sendResponse(res));
+		return true;
 	}
 	return false;
 });

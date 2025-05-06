@@ -1,6 +1,6 @@
 import { type JSX, useSyncExternalStore } from "react";
 
-let toastContent: JSX.Element | undefined;
+let toastContent: JSX.Element | undefined | string;
 const toastDuration = 3000;
 const listeners = new Set<() => void>();
 let activeTimeout: number | Timer | undefined = undefined;
@@ -28,7 +28,7 @@ export function Toast() {
 	);
 }
 
-export function toast(content: JSX.Element) {
+export function toast(content: JSX.Element | string) {
 	if (toastContent) {
 		toastContent = undefined;
 		updateToasts();
@@ -46,7 +46,7 @@ function updateToasts() {
 	}
 }
 
-function showToast(content: JSX.Element) {
+function showToast(content: JSX.Element | string) {
 	toastContent = content;
 	updateToasts();
 	if (activeTimeout) {

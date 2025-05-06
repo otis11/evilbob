@@ -69,6 +69,21 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
 	} else if (event === "chrome.windows.getAll") {
 		chrome.windows.getAll().then((res) => sendResponse(res));
 		return true;
+	} else if (event === "chrome.windows.getLastFocused") {
+		chrome.windows.getLastFocused().then((res) => sendResponse(res));
+		return true;
+	} else if (event === "chrome.windows.create") {
+		// @ts-expect-error seems to have the wrong type in @types/chrome. can be removed when fixed.
+		chrome.windows.create(data).then((res) => sendResponse(res));
+		return true;
+	} else if (event === "chrome.tabs.move") {
+		chrome.tabs
+			.move(data.tabId, data.moveProperties)
+			.then((res) => sendResponse(res));
+		return true;
+	} else if (event === "chrome.tabs.remove") {
+		chrome.tabs.remove(data).then((res) => sendResponse(res));
+		return true;
 	} else if (event === "chrome.windows.remove") {
 		chrome.windows.remove(data).then((res) => sendResponse(res));
 		return true;
@@ -79,7 +94,10 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
 		chrome.history.search(data).then((res) => sendResponse(res));
 		return true;
 	} else if (event === "chrome.tabs.update") {
-		chrome.tabs.update(data).then((res) => sendResponse(res));
+		chrome.tabs
+			.update(data.id, data.props)
+			// @ts-expect-error seems to have the wrong type in @types/chrome. can be removed when fixed.
+			.then((res) => sendResponse(res));
 		return true;
 	} else if (event === "chrome.history.deleteUrl") {
 		chrome.history.deleteUrl(data).then((res) => sendResponse(res));
@@ -94,6 +112,9 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
 		chrome.management
 			.uninstall(data.id, data.options)
 			.then((res) => sendResponse(res));
+		return true;
+	} else if (event === "chrome.tabs.duplicate") {
+		chrome.tabs.duplicate(data).then((res) => sendResponse(res));
 		return true;
 	}
 	return false;

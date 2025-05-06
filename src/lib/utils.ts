@@ -18,7 +18,10 @@ export async function copyTextToClipboard(text: string) {
 		[type]: text,
 	};
 	const clipboardItem = new ClipboardItem(clipboardItemData);
-	await navigator.clipboard.write([clipboardItem]);
+	return await navigator.clipboard
+		.write([clipboardItem])
+		.then(() => true)
+		.catch(() => false);
 }
 
 export async function copyImageToClipboard(url: string) {

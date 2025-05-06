@@ -1,8 +1,10 @@
 import { Checkbox } from "@/components/Checkbox.tsx";
+import { toast } from "@/components/Toast";
 import { VList, VListItemTile } from "@/components/VList.tsx";
 import { DropdownMenuItem } from "@/components/ui/dropdown-menu.tsx";
+import { copyTextToClipboard } from "@/lib/utils.ts";
 import type { PluginViewProps } from "@/plugins";
-import { type ChangeEvent, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 
 type MediaType =
 	| "img"
@@ -69,8 +71,7 @@ export function Command(props: PluginViewProps) {
 		setElements(elements);
 	}, [selectedCheckboxes]);
 
-	function onCheckboxesChange(event: ChangeEvent<HTMLInputElement>) {
-		const checkbox = event.target.value as MediaType;
+	function onCheckboxesChange(checkbox: MediaType) {
 		setSelectedCheckboxes({
 			...selectedCheckboxes,
 			[checkbox]: !selectedCheckboxes[checkbox],
@@ -79,29 +80,51 @@ export function Command(props: PluginViewProps) {
 
 	return (
 		<>
-			<div
-				className="flex items-center gap-2 pb-4"
-				onChange={onCheckboxesChange}
-			>
-				<Checkbox value="img" checked={selectedCheckboxes.img}>
+			<div className="flex items-center gap-2 pb-4">
+				<Checkbox
+					onClick={() => onCheckboxesChange("img")}
+					value="img"
+					checked={selectedCheckboxes.img}
+				>
 					img
 				</Checkbox>
-				<Checkbox value="svg" checked={selectedCheckboxes.svg}>
+				<Checkbox
+					onClick={() => onCheckboxesChange("svg")}
+					value="svg"
+					checked={selectedCheckboxes.svg}
+				>
 					svg
 				</Checkbox>
-				<Checkbox value="video" checked={selectedCheckboxes.video}>
+				<Checkbox
+					onClick={() => onCheckboxesChange("video")}
+					value="video"
+					checked={selectedCheckboxes.video}
+				>
 					video
 				</Checkbox>
-				<Checkbox value="picture" checked={selectedCheckboxes.picture}>
+				<Checkbox
+					onClick={() => onCheckboxesChange("picture")}
+					value="picture"
+					checked={selectedCheckboxes.picture}
+				>
 					picture
 				</Checkbox>
-				<Checkbox value="object" checked={selectedCheckboxes.object}>
+				<Checkbox
+					onClick={() => onCheckboxesChange("object")}
+					value="object"
+					checked={selectedCheckboxes.object}
+				>
 					object
 				</Checkbox>
-				<Checkbox value="canvas" checked={selectedCheckboxes.canvas}>
+				<Checkbox
+					onClick={() => onCheckboxesChange("canvas")}
+					value="canvas"
+					checked={selectedCheckboxes.canvas}
+				>
 					canvas
 				</Checkbox>
 				<Checkbox
+					onClick={() => onCheckboxesChange("background-image")}
 					value="background-image"
 					checked={selectedCheckboxes["background-image"]}
 				>
@@ -120,7 +143,12 @@ export function Command(props: PluginViewProps) {
 							<VListItemTile
 								className="p-1"
 								key={index}
-								actions={<Actions url={element.src}></Actions>}
+								actions={
+									<Actions
+										url={element.src}
+										html={element.outerHTML}
+									></Actions>
+								}
 							>
 								<img
 									alt={element.alt}
@@ -139,7 +167,13 @@ export function Command(props: PluginViewProps) {
 							"h-auto",
 						);
 						return (
-							<VListItemTile className="p-1" key={index}>
+							<VListItemTile
+								className="p-1"
+								key={index}
+								actions={
+									<Actions html={element.outerHTML}></Actions>
+								}
+							>
 								<div
 									className="w-full h-full object-contain"
 									// biome-ignore lint/security/noDangerouslySetInnerHtml: can do better? seems okish
@@ -152,7 +186,16 @@ export function Command(props: PluginViewProps) {
 					}
 					if (element instanceof HTMLVideoElement) {
 						return (
-							<VListItemTile className="p-1" key={index}>
+							<VListItemTile
+								className="p-1"
+								key={index}
+								actions={
+									<Actions
+										url={element.src}
+										html={element.outerHTML}
+									></Actions>
+								}
+							>
 								<video
 									muted
 									src={element.src}
@@ -163,7 +206,19 @@ export function Command(props: PluginViewProps) {
 					}
 					if (element instanceof HTMLElement) {
 						return (
-							<VListItemTile className="p-1" key={index}>
+							<VListItemTile
+								className="p-1"
+								key={index}
+								actions={
+									<Actions
+										backgroundStyle={
+											getComputedStyle(element)
+												.backgroundImage
+										}
+										html={element.outerHTML}
+									></Actions>
+								}
+							>
 								<div
 									style={{
 										backgroundImage:
@@ -182,6 +237,47 @@ export function Command(props: PluginViewProps) {
 	);
 }
 
-function Actions(props: { url: string }) {
-	return <DropdownMenuItem>{props.url}</DropdownMenuItem>;
+function Actions(props: {
+	url?: string;
+	html?: string;
+	backgroundStyle?: string;
+}) {
+	async function tryCopy(text: string | undefined) {
+		if (!text) {
+			return;
+		}
+		if (await copyTextToClipboard(text)) {
+			toast("Copied.");
+		} else {
+			toast("Copy failed.");
+		}
+	}
+
+	return (
+		<>
+			{props.url ? (
+				<DropdownMenuItem onClick={() => tryCopy(props.url)}>
+					Copy Url
+				</DropdownMenuItem>
+			) : (
+				""
+			)}
+			{props.html ? (
+				<DropdownMenuItem onClick={() => tryCopy(props.html)}>
+					Copy Html
+				</DropdownMenuItem>
+			) : (
+				""
+			)}
+			{props.backgroundStyle ? (
+				<DropdownMenuItem
+					onClick={() => tryCopy(props.backgroundStyle)}
+				>
+					Copy Background Style
+				</DropdownMenuItem>
+			) : (
+				""
+			)}
+		</>
+	);
 }

@@ -35,8 +35,9 @@ export default function App({ config }: AppProps) {
 
 	return (
 		<>
-			<Input className="h-12 !text-lg" onChange={onChange}></Input>
+			<Input className="h-12 !text-lg mb-4" onChange={onChange}></Input>
 			<VList
+				onSelect={onEnableDisableClick}
 				keyboardListenerTarget={window}
 				itemHeight={280}
 				itemWidth={280}
@@ -46,15 +47,34 @@ export default function App({ config }: AppProps) {
 					.filter((plugin) => searchInPlugin(searchValue, plugin))
 					.map((item) => (
 						<VListItemTile
+							data={item}
 							className="rounded-lg m-2 p-5"
 							key={item.id}
 						>
-							<div className="pb-3">{item.definition.title}</div>
+							<div className="pb-2">{item.definition.title}</div>
 							<div className="text-muted-foreground">
 								{item.definition.description}
 							</div>
+							<div className="mt-auto pb-4 text-muted-foreground flex gap-4 text-xs">
+								<span>
+									{
+										item.definition.commands?.filter(
+											(c) => c.type === "command",
+										).length
+									}{" "}
+									Commands
+								</span>
+								<span>
+									{
+										item.definition.commands?.filter(
+											(c) => c.type === "view",
+										).length
+									}{" "}
+									Views
+								</span>
+							</div>
 							<Button
-								className="mt-auto w-full"
+								className="w-full"
 								onClick={() => onEnableDisableClick(item)}
 								variant={
 									localConfig.plugins.enabled[item.id]

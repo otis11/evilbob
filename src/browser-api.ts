@@ -65,18 +65,40 @@ export const browserApi = {
 				data: props,
 			});
 		},
+		async remove(tabId: number): Promise<void> {
+			return await chrome.runtime.sendMessage({
+				event: "chrome.tabs.remove",
+				data: tabId,
+			});
+		},
 		async query(props: chrome.tabs.QueryInfo): Promise<chrome.tabs.Tab[]> {
 			return await chrome.runtime.sendMessage({
 				event: "chrome.tabs.query",
 				data: props,
 			});
 		},
+		async duplicate(props: number): Promise<chrome.tabs.Tab[]> {
+			return await chrome.runtime.sendMessage({
+				event: "chrome.tabs.duplicate",
+				data: props,
+			});
+		},
+		async move(
+			tabId: number | number[],
+			moveProperties: chrome.tabs.MoveProperties,
+		) {
+			return await chrome.runtime.sendMessage({
+				event: "chrome.tabs.move",
+				data: { tabId, moveProperties },
+			});
+		},
 		async update(
+			id: number,
 			props: chrome.tabs.UpdateProperties,
 		): Promise<chrome.tabs.Tab | undefined> {
 			return await chrome.runtime.sendMessage({
 				event: "chrome.tabs.update",
-				data: props,
+				data: { id, props },
 			});
 		},
 	},
@@ -84,6 +106,19 @@ export const browserApi = {
 		async getAll(): Promise<chrome.windows.Window[]> {
 			return await chrome.runtime.sendMessage({
 				event: "chrome.windows.getAll",
+			});
+		},
+		async create(
+			props: chrome.windows.CreateData,
+		): Promise<chrome.windows.Window> {
+			return await chrome.runtime.sendMessage({
+				event: "chrome.windows.create",
+				data: props,
+			});
+		},
+		async getLastFocused(): Promise<chrome.windows.Window> {
+			return await chrome.runtime.sendMessage({
+				event: "chrome.windows.getLastFocused",
 			});
 		},
 		async remove(id: number): Promise<void> {
@@ -137,3 +172,11 @@ export const browserApi = {
 		},
 	},
 };
+
+export async function getCurrentTab(): Promise<chrome.tabs.Tab | undefined> {
+	const [currentTab] = await browserApi.tabs.query({
+		active: true,
+		currentWindow: true,
+	});
+	return currentTab;
+}

@@ -15,7 +15,12 @@ export async function Command() {
 			// -0.5 make smaller icons happen more often
 			const icon =
 				bobIcons[Math.floor(Math.random() * (bobIcons.length - 0.5))];
-			element.innerHTML = element.innerHTML + icon;
+
+			if (icon) {
+				const template = document.createElement("template");
+				template.innerHTML = icon;
+				element.append(...Array.from(template.content.childNodes));
+			}
 		}
 	}
 }

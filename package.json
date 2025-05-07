@@ -8,6 +8,7 @@
 	"private": true,
 	"scripts": {
 		"lint": "biome check --write . && tsc",
+		"test": "playwright test",
 		"dev:chromium": "NODE_ENV=dev bun scripts/dev.ts",
 		"build": "bun scripts/build.ts --firefox --chromium",
 		"build:chromium": "bun scripts/build.ts --chromium",

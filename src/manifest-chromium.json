@@ -47,7 +47,10 @@
 		"topSites",
 		"history",
 		"tabs",
-		"management"
+		"management",
+		"browsingData",
+		"downloads",
+		"cookies"
 	],
 	"optional_host_permissions": ["https://*/*", "http://*/*"],
 	"commands": {

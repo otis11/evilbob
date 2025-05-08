@@ -8,9 +8,9 @@ import {
 import { Evilbob } from "./Evilbob.tsx";
 
 export interface NumberSelectProps {
-	values: number[];
+	values: number[] | { value: number; label: string }[];
 	onValueChange?: (value: number) => void;
-	value: number;
+	value: number | string;
 }
 export function NumberSelect({
 	values,
@@ -35,8 +35,15 @@ export function NumberSelect({
 				container={Evilbob.instance().dialogElement || document.body}
 			>
 				{values.map((value, index) => (
-					<SelectItem key={value} value={value.toString()}>
-						{value}
+					<SelectItem
+						key={typeof value === "number" ? value : value.value}
+						value={
+							typeof value === "number"
+								? value.toString()
+								: value.value.toString()
+						}
+					>
+						{typeof value === "number" ? value : value.label}
 					</SelectItem>
 				))}
 			</SelectContent>

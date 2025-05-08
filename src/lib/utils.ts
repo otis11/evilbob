@@ -104,7 +104,13 @@ export class KeyboardListener {
 	keydownHandler: (e: Event) => void;
 
 	constructor(
-		private readonly target: HTMLElement | Window | Document | ShadowRoot,
+		private readonly targets: (
+			| HTMLElement
+			| Window
+			| Document
+			| ShadowRoot
+			| null
+		)[],
 	) {
 		this.keyupHandler = (keyboardEvent: Event) => {
 			if (keyboardEvent instanceof KeyboardEvent) {
@@ -152,8 +158,13 @@ export class KeyboardListener {
 			}
 		};
 
-		this.target.addEventListener("keyup", this.keyupHandler.bind(this));
-		this.target.addEventListener("keydown", this.keydownHandler.bind(this));
+		for (const target of this.targets) {
+			if (target === null) {
+				continue;
+			}
+			target.addEventListener("keyup", this.keyupHandler.bind(this));
+			target.addEventListener("keydown", this.keydownHandler.bind(this));
+		}
 	}
 
 	normalizeKey(key: string) {
@@ -186,11 +197,16 @@ export class KeyboardListener {
 		this.keysPressedDown = {};
 		this.keydownListenerIdCounter = 0;
 		this.keydownListener = [];
-		this.target.removeEventListener("keyup", this.keyupHandler.bind(this));
-		this.target.removeEventListener(
-			"keydown",
-			this.keydownHandler.bind(this),
-		);
+		for (const target of this.targets) {
+			if (target === null) {
+				continue;
+			}
+			target.removeEventListener("keyup", this.keyupHandler.bind(this));
+			target.removeEventListener(
+				"keydown",
+				this.keydownHandler.bind(this),
+			);
+		}
 	}
 }
 export interface Rgba {
@@ -279,7 +295,6 @@ export function formatTimeAgo(unix: number | undefined): string {
 	}
 	const now = new Date();
 	const diffInMs = now.getTime() - unix;
-
 	if (diffInMs < 1000 * 60) {
 		return "now";
 	}
@@ -296,4 +311,38 @@ export function formatTimeAgo(unix: number | undefined): string {
 		return `${Math.floor(diffInMs / 1000 / 60 / 60 / 24)} days ago`;
 	}
 	return new Date(unix).toLocaleDateString("en-US", {});
+}
+
+export function formatTimeFuture(unix: number | undefined): string {
+	if (!unix) {
+		return "";
+	}
+	const now = new Date();
+	const diffInMs = unix - now.getTime();
+	if (diffInMs < 1000 * 60) {
+		return "now";
+	}
+	if (diffInMs < 1000 * 60 * 60) {
+		return `${Math.floor(diffInMs / 1000 / 60)} minutes`;
+	}
+	if (diffInMs < 1000 * 60 * 60 * 24) {
+		return `${Math.floor(diffInMs / 1000 / 60 / 60)} hours`;
+	}
+	if (diffInMs < 1000 * 60 * 60 * 24 * 31) {
+		return `${Math.floor(diffInMs / 1000 / 60 / 60 / 24)} days`;
+	}
+	if (diffInMs < 1000 * 60 * 60 * 24 * 365) {
+		return `${Math.floor(diffInMs / 1000 / 60 / 60 / 24)} days`;
+	}
+	return new Date(unix).toLocaleDateString("en-US", {});
+}
+
+export function getSecondLevelDomain(urlString: string) {
+	const url = new URL(urlString);
+	return url.hostname.split(".").at(-2) || "";
+}
+
+export function getDomainWithoutSubdomains(urlString: string) {
+	const url = new URL(urlString);
+	return `${url.hostname.split(".").at(-2) || ""}.${url.hostname.split(".").at(-1) || ""}`;
 }

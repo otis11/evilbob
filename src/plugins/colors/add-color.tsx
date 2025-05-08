@@ -1,8 +1,8 @@
 import { browserApi } from "@/browser-api.ts";
 import { PluginActions } from "@/components/PluginActions";
 import { toast } from "@/components/Toast";
+import { VList, VListItem } from "@/components/VList.tsx";
 import { Button } from "@/components/ui/button.tsx";
-import { DropdownMenuItem } from "@/components/ui/dropdown-menu.tsx";
 import { Input } from "@/components/ui/input.tsx";
 import { Slider } from "@/components/ui/slider.tsx";
 import {
@@ -62,7 +62,9 @@ export function Command() {
 	return (
 		<>
 			<PluginActions>
-				<DropdownMenuItem onClick={onAddClick}>Add</DropdownMenuItem>
+				<VList>
+					<VListItem onClick={onAddClick}>Add</VListItem>
+				</VList>
 			</PluginActions>
 			<div
 				className="mx-auto mt-4 mb-12 w-48 h-48 border border-solid border-secondary-foreground rounded-lg"

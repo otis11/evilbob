@@ -116,6 +116,33 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
 	} else if (event === "chrome.tabs.duplicate") {
 		chrome.tabs.duplicate(data).then((res) => sendResponse(res));
 		return true;
+	} else if (event === "chrome.browsingData.remove") {
+		chrome.browsingData
+			.remove(data.options, data.dataToRemove)
+			.then((res) => sendResponse(res));
+		return true;
+	} else if (event === "chrome.downloads.erase") {
+		chrome.downloads.erase(data).then((res) => sendResponse(res));
+		return true;
+	} else if (event === "chrome.downloads.show") {
+		chrome.downloads.show(data);
+	} else if (event === "chrome.downloads.getFileIcon") {
+		chrome.downloads.getFileIcon(data).then((res) => sendResponse(res));
+		return true;
+	} else if (event === "chrome.downloads.search") {
+		chrome.downloads.search(data).then((res) => sendResponse(res));
+		return true;
+	} else if (event === "chrome.downloads.removeFile") {
+		chrome.downloads.removeFile(data).then((res) => sendResponse(res));
+		return true;
+	} else if (event === "chrome.cookies.getAll") {
+		chrome.cookies.getAll(data).then((res) => sendResponse(res));
+		return true;
+	} else if (event === "chrome.cookies.remove") {
+		chrome.cookies.remove(data).then((res) => sendResponse(res));
+		return true;
+	} else if (event === "chrome.downloads.showDefaultFolder") {
+		chrome.downloads.showDefaultFolder();
 	}
 	return false;
 });

@@ -27,20 +27,22 @@ export interface ShowInputProps {
 	title: string;
 }
 
+export type HTMLEvilbobRoot = HTMLElement & { instance: Evilbob };
+
 export class Evilbob {
-	static internalInstance: Evilbob | undefined;
 	public mainRoot: Root | undefined;
 	public config: EvilbobConfig | undefined;
 
 	public pluginViewRoot: Root | undefined = undefined;
 	public PluginView: FunctionComponent<PluginViewProps> | undefined =
 		undefined;
-	private pluginActions: JSX.Element | undefined;
+	private pluginActions: JSX.Element | JSX.Element[] | undefined;
 	public pluginViewProps: PluginViewProps | undefined;
 	public plugins: Plugin[] | undefined;
 	public pluginViewCommand: PluginCommandExtended | undefined;
 	// biome-ignore lint/suspicious/noExplicitAny: They can be any.
 	private activeVListItemProps: any;
+	public isActionsOpen = false;
 
 	private constructor(
 		public readonly pluginViewElement: HTMLDivElement,
@@ -51,55 +53,59 @@ export class Evilbob {
 	) {
 		getConfig().then((config: EvilbobConfig) => {
 			this.config = config;
-			const listener = new KeyboardListener(
+			const listener = new KeyboardListener([
 				Evilbob.instance().shadowRoot,
-			);
+			]);
 			listener.register(config.keybindings.closePluginView.keys, () => {
-				this.unmountPluginView();
+				Evilbob.instance().unmountPluginView();
 			});
 			listener.register(config.keybindings.openActions.keys, () => {
-				this.renderMainView();
-				window.dispatchEvent(new CustomEvent("evilbob-open-actions"));
+				this.isActionsOpen = true;
+				Evilbob.instance().renderMainView();
 			});
 		});
 	}
 
 	static instance(target?: HTMLElement) {
-		if (!Evilbob.internalInstance) {
-			const rootElement = document.createElement("evilbob-root");
-			const shadowRoot = Evilbob.createShadowRoot(rootElement);
-
-			const mainElement = Evilbob.createMainElement();
-			const pluginViewElement = Evilbob.createPluginViewElement();
-
-			const dialogElement = Evilbob.createDialogElement();
-			dialogElement.appendChild(mainElement);
-			dialogElement.appendChild(pluginViewElement);
-			shadowRoot.appendChild(dialogElement);
-
-			(target || document.body).appendChild(rootElement);
-
-			shadowRoot.addEventListener("keydown", (e) => {
-				if (dialogElement.open) {
-					e.stopPropagation();
-				}
-			});
-			shadowRoot.addEventListener("keyup", (e) => {
-				if (dialogElement.open) {
-					e.stopPropagation();
-				}
-			});
-
-			Evilbob.internalInstance = new Evilbob(
-				pluginViewElement,
-				mainElement,
-				shadowRoot,
-				rootElement,
-				dialogElement,
-			);
+		const existingRoot =
+			document.querySelector<HTMLEvilbobRoot>("evilbob-root");
+		if (existingRoot) {
+			return existingRoot.instance;
 		}
+		const rootElement = document.createElement(
+			"evilbob-root",
+		) as HTMLEvilbobRoot;
+		const shadowRoot = Evilbob.createShadowRoot(rootElement);
 
-		return Evilbob.internalInstance;
+		const mainElement = Evilbob.createMainElement();
+		const pluginViewElement = Evilbob.createPluginViewElement();
+
+		const dialogElement = Evilbob.createDialogElement();
+		dialogElement.appendChild(mainElement);
+		dialogElement.appendChild(pluginViewElement);
+		shadowRoot.appendChild(dialogElement);
+
+		(target || document.body).appendChild(rootElement);
+
+		shadowRoot.addEventListener("keydown", (e) => {
+			if (dialogElement.open) {
+				e.stopPropagation();
+			}
+		});
+		shadowRoot.addEventListener("keyup", (e) => {
+			if (dialogElement.open) {
+				e.stopPropagation();
+			}
+		});
+
+		rootElement.instance = new Evilbob(
+			pluginViewElement,
+			mainElement,
+			shadowRoot,
+			rootElement,
+			dialogElement,
+		);
+		return rootElement.instance;
 	}
 
 	private static createShadowRoot(root: HTMLElement) {
@@ -169,6 +175,7 @@ export class Evilbob {
 	public renderMainView() {
 		this.mainRoot?.render(
 			<MainSearchView
+				isActionsOpen={this.isActionsOpen}
 				config={this.config}
 				actions={
 					this.activeVListItemProps?.actions || this.pluginActions
@@ -216,7 +223,8 @@ export class Evilbob {
 		this.rootElement.remove();
 	}
 
-	setPluginActions(newActions: JSX.Element) {
+	setPluginActions(newActions: JSX.Element | JSX.Element[]) {
+		this.activeVListItemProps = undefined;
 		this.pluginActions = newActions;
 	}
 

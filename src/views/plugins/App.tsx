@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button.tsx";
 import { type Plugin, searchInPlugin } from "@/plugins";
 import pluginJsonList from "@/plugins/list.json";
 import { Check } from "lucide-react";
-import { type ChangeEvent, useState } from "react";
+import { type ChangeEvent, useEffect, useRef, useState } from "react";
 
 import { Input } from "@/components/ui/input.tsx";
 import { type EvilbobConfig, getConfig } from "@/lib/config.ts";
@@ -17,6 +17,11 @@ export default function App({ config }: AppProps) {
 	const [localConfig, setLocalConfig] = useState<EvilbobConfig>(config);
 	const [searchValue, setSearchValue] = useState("");
 	const [pluginLoading, setPluginLoading] = useState("");
+	const inputRef = useRef<HTMLInputElement>(null);
+
+	useEffect(() => {
+		inputRef.current?.focus();
+	}, []);
 
 	async function onEnableDisableClick(plugin: Plugin) {
 		setPluginLoading(plugin.id);
@@ -35,10 +40,18 @@ export default function App({ config }: AppProps) {
 
 	return (
 		<>
-			<Input className="h-12 !text-lg mb-4" onChange={onChange}></Input>
+			<Input
+				autoCapitalize="off"
+				autoCorrect="off"
+				autoComplete="off"
+				ref={inputRef}
+				className="h-12 !text-lg mb-4"
+				onChange={onChange}
+				data-vlist-stay-focused
+			></Input>
 			<VList
+				activeElementTarget={document}
 				onSelect={onEnableDisableClick}
-				keyboardListenerTarget={window}
 				itemHeight={280}
 				itemWidth={280}
 				itemSpacing={{ x: 12, y: 12 }}

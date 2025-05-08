@@ -11,5 +11,10 @@ export default definePlugin({
 			name: "bobify-page",
 			type: "command",
 		},
+		{
+			title: "Open Plugins",
+			name: "open-plugins",
+			type: "command",
+		},
 	],
 });

@@ -13,6 +13,66 @@ export type ChromeStorageSetProps = {
 };
 
 export const browserApi = {
+	cookies: {
+		async getAll(
+			props: chrome.cookies.GetAllDetails,
+		): Promise<chrome.cookies.Cookie[]> {
+			return await chrome.runtime.sendMessage({
+				event: "chrome.cookies.getAll",
+				data: props,
+			});
+		},
+		async remove(
+			props: chrome.cookies.CookieDetails,
+		): Promise<chrome.cookies.CookieDetails> {
+			return await chrome.runtime.sendMessage({
+				event: "chrome.cookies.remove",
+				data: props,
+			});
+		},
+	},
+	downloads: {
+		async getFileIcon(
+			downloadId: number,
+			options?: chrome.downloads.GetFileIconOptions,
+		): Promise<string> {
+			return await chrome.runtime.sendMessage({
+				event: "chrome.downloads.getFileIcon",
+				data: { downloadId, options },
+			});
+		},
+		async show(downloadId: number): Promise<void> {
+			return await chrome.runtime.sendMessage({
+				event: "chrome.downloads.show",
+				data: downloadId,
+			});
+		},
+		async erase(query: chrome.downloads.DownloadQuery): Promise<void> {
+			return await chrome.runtime.sendMessage({
+				event: "chrome.downloads.erase",
+				data: query,
+			});
+		},
+		async search(
+			query: chrome.downloads.DownloadQuery,
+		): Promise<chrome.downloads.DownloadItem[]> {
+			return await chrome.runtime.sendMessage({
+				event: "chrome.downloads.search",
+				data: query,
+			});
+		},
+		async removeFile(id: number): Promise<void> {
+			return await chrome.runtime.sendMessage({
+				event: "chrome.downloads.removeFile",
+				data: id,
+			});
+		},
+		async showDefaultFolder(): Promise<void> {
+			return await chrome.runtime.sendMessage({
+				event: "chrome.downloads.showDefaultFolder",
+			});
+		},
+	},
 	topSites: {
 		async get() {
 			return await chrome.runtime.sendMessage({
@@ -99,6 +159,20 @@ export const browserApi = {
 			return await chrome.runtime.sendMessage({
 				event: "chrome.tabs.update",
 				data: { id, props },
+			});
+		},
+	},
+	browsingData: {
+		async remove(
+			options: chrome.browsingData.RemovalOptions,
+			dataToRemove: chrome.browsingData.DataTypeSet,
+		): Promise<chrome.windows.Window[]> {
+			return await chrome.runtime.sendMessage({
+				event: "chrome.browsingData.remove",
+				data: {
+					options,
+					dataToRemove,
+				},
 			});
 		},
 	},

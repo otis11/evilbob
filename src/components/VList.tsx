@@ -4,6 +4,7 @@ import {
 	type CSSProperties,
 	type JSX,
 	type ReactNode,
+	isValidElement,
 	useEffect,
 	useRef,
 	useState,
@@ -20,9 +21,9 @@ interface VListProps<T> {
 		x: number;
 		y: number;
 	};
-	keyboardListenerTarget?: Window | Document | HTMLElement;
 	// biome-ignore lint/suspicious/noExplicitAny: Can be any but can probably be improved via generic types?
 	onSelect?: (item: any) => void;
+	activeElementTarget?: Document | ShadowRoot;
 }
 
 const VList = <T,>({
@@ -31,28 +32,63 @@ const VList = <T,>({
 	itemWidth = -1,
 	itemsOutOfBounds,
 	itemSpacing,
-	keyboardListenerTarget,
 	onSelect,
+	activeElementTarget = Evilbob.instance().shadowRoot,
 }: VListProps<T>) => {
 	const [renderedChildren, setRenderedChildren] = useState<JSX.Element[]>([]);
-	const root = useRef<HTMLUListElement>(null);
+	const listRoot = useRef<HTMLUListElement>(null);
 	const heightDiv = useRef<HTMLDivElement>(null);
 	const [startIndex, setStartIndex] = useState(0);
 	const [realItemHeight, setRealItemHeight] = useState(0);
 	const [realItemWidth, setRealItemWidth] = useState(0);
 	const [itemCountPerRow, setItemCountPerRow] = useState(0);
-	const [scrollTop, setScrollTop] = useState(root.current?.scrollTop || 0);
+	const [scrollTop, setScrollTop] = useState(
+		listRoot.current?.scrollTop || 0,
+	);
 	const [activeIndex, setActiveIndex] = useState(0);
-	const [activeRenderedIndex, setActiveRenderedIndex] = useState(0);
-	const parsedChildren = Array.isArray(children) ? children : [];
+	const [parsedChildren, setParsedChildren] = useState<JSX.Element[]>([]);
+
+	// biome-ignore lint/correctness/useExhaustiveDependencies : should not update if parsedChildren.length, itself sets it
+	useEffect(() => {
+		let newChildren: JSX.Element[] = [];
+		if (Array.isArray(children)) {
+			newChildren = children.filter((c) => isValidElement(c));
+		} else if (isValidElement(children)) {
+			newChildren = [children];
+		} else {
+			newChildren = [];
+		}
+
+		const isSameChildrenLength =
+			newChildren.length === parsedChildren.length;
+		setParsedChildren(newChildren);
+		if (!isSameChildrenLength) {
+			requestAnimationFrame(() => {
+				if (
+					!activeElementTarget.activeElement?.hasAttribute(
+						"data-vlist-stay-focused",
+					)
+				) {
+					listRoot.current?.focus();
+				}
+				highlightNth(0);
+			});
+		}
+	}, [children]);
 
 	// biome-ignore lint/correctness/useExhaustiveDependencies: ignore for now, as it should only run once to register keybord listeners
 	useEffect(() => {
 		// to fix a race condition if the getConfig promise takes longer than a rerender of the component
 		let isMounted = true;
-		const keyboardListener = new KeyboardListener(
-			keyboardListenerTarget || Evilbob.instance().shadowRoot,
-		);
+		if (!listRoot.current) {
+			return;
+		}
+		const keyboardListener = new KeyboardListener([
+			listRoot.current,
+			activeElementTarget.querySelector<HTMLElement>(
+				"[data-vlist-stay-focused]",
+			),
+		]);
 		getConfig().then((config) => {
 			if (!isMounted) return;
 			keyboardListener.register(
@@ -73,7 +109,7 @@ const VList = <T,>({
 			);
 			keyboardListener.register(
 				config.keybindings.selectResult.keys,
-				() => onSelect?.(parsedChildren[activeIndex]?.props.data),
+				() => onClick(parsedChildren[activeIndex]),
 			);
 		});
 		Evilbob.instance().setActiveVListItemProps(
@@ -85,48 +121,69 @@ const VList = <T,>({
 		};
 	}, [activeIndex, itemCountPerRow, parsedChildren]);
 	useEffect(() => {
-		const availHeight = root.current?.getBoundingClientRect().height || 0;
-		const availWidth = root.current?.getBoundingClientRect().width || 0;
+		let isMounted = true;
+
 		const localRealItemWidth = itemWidth + (itemSpacing?.x || 0);
 		const localRealItemHeight = itemHeight + (itemSpacing?.x || 0);
+
+		const availWidth = listRoot.current?.getBoundingClientRect().width || 0;
 		const localItemCountPerRow =
 			itemWidth === -1 ? 1 : Math.floor(availWidth / localRealItemWidth);
 		const totalRowCount = Math.ceil(
 			parsedChildren.length / localItemCountPerRow,
 		);
-		if (root.current) {
-			root.current.style.position = "relative";
+
+		if (listRoot.current) {
+			listRoot.current.style.position = "relative";
 		}
 		if (heightDiv.current) {
 			heightDiv.current.style.width = "100%";
 			heightDiv.current.style.height = `${localRealItemHeight * totalRowCount}px`;
 		}
 
-		const outOfBounds = (itemsOutOfBounds || 3) * localItemCountPerRow;
-		const localStartIndex = Math.max(
-			Math.ceil(scrollTop / localRealItemHeight) * localItemCountPerRow -
-				outOfBounds,
-			0,
-		);
-		const localEndIndex = Math.min(
-			localStartIndex +
-				Math.ceil(availHeight / localRealItemHeight) *
-					localItemCountPerRow +
-				outOfBounds,
-			totalRowCount * localItemCountPerRow,
-		);
-
-		setStartIndex(localStartIndex);
-		setRealItemHeight(localRealItemHeight);
-		setRealItemWidth(localRealItemWidth);
-		setItemCountPerRow(localItemCountPerRow);
-		setRenderedChildren(
-			parsedChildren.slice(localStartIndex, localEndIndex),
-		);
-
+		// wait after first render, heightDiv gets calculated height which sometimes can change availHeight
 		requestAnimationFrame(() => {
-			highlightNth(0);
+			if (!isMounted) return; // rerender happening
+
+			const availHeight =
+				listRoot.current?.getBoundingClientRect().height || 0;
+			const availWidth =
+				listRoot.current?.getBoundingClientRect().width || 0;
+			const localItemCountPerRow =
+				itemWidth === -1
+					? 1
+					: Math.floor(availWidth / localRealItemWidth);
+			const totalRowCount = Math.ceil(
+				parsedChildren.length / localItemCountPerRow,
+			);
+
+			const outOfBounds = (itemsOutOfBounds || 3) * localItemCountPerRow;
+			const localStartIndex = Math.max(
+				Math.ceil(scrollTop / localRealItemHeight) *
+					localItemCountPerRow -
+					outOfBounds,
+				0,
+			);
+			const localEndIndex = Math.min(
+				localStartIndex +
+					Math.ceil(availHeight / localRealItemHeight) *
+						localItemCountPerRow +
+					outOfBounds,
+				totalRowCount * localItemCountPerRow,
+			);
+
+			setStartIndex(localStartIndex);
+			setRealItemHeight(localRealItemHeight);
+			setRealItemWidth(localRealItemWidth);
+			setItemCountPerRow(localItemCountPerRow);
+			setRenderedChildren(
+				parsedChildren.slice(localStartIndex, localEndIndex),
+			);
 		});
+
+		return () => {
+			isMounted = false;
+		};
 	}, [
 		scrollTop,
 		itemsOutOfBounds,
@@ -189,7 +246,7 @@ const VList = <T,>({
 	}
 
 	function onScroll() {
-		setScrollTop(root.current?.scrollTop || 0);
+		setScrollTop(listRoot.current?.scrollTop || 0);
 	}
 
 	function onChildMouseOver(child: JSX.Element) {
@@ -197,10 +254,20 @@ const VList = <T,>({
 		setActiveIndex(childIndex);
 	}
 
+	function onClick(child?: JSX.Element) {
+		window.dispatchEvent(new CustomEvent("evilbob-vlist-click"));
+		onSelect?.(child?.props.data);
+		if (typeof child?.props.onClick === "function") {
+			child.props.onClick();
+		}
+	}
+
 	return (
 		<ul
-			className="vlist py-3 m-0 text-sm flex list-none h-full overflow-auto relative "
-			ref={root}
+			// biome-ignore lint/a11y/noNoninteractiveTabindex: this one is interactive
+			tabIndex={0}
+			className="vlist m-0 text-sm flex list-none h-full overflow-auto relative "
+			ref={listRoot}
 			onScroll={onScroll}
 		>
 			<div ref={heightDiv}>
@@ -213,16 +280,19 @@ const VList = <T,>({
 						left: `${((startIndex + index) % itemCountPerRow) * realItemWidth}px`,
 					};
 					const classes =
-						child.type?.name === "VListItem"
-							? "rounded-sm overflow-hidden"
-							: " overflow-hidden rounded-sm border-1 border-solid border-transparent";
+						child.type?.name === "VListItemTile"
+							? " overflow-hidden rounded-sm border-1 border-solid border-transparent"
+							: "rounded-sm overflow-hidden";
 					const activeClasses =
-						child.type?.name === "VListItem"
-							? "!bg-accent"
-							: "!bg-accent !border-primary";
+						child.type?.name === "VListItemTile"
+							? "!bg-accent !border-primary"
+							: "!bg-accent";
 					return (
-						<div
-							onClick={() => onSelect?.(child.props.data)}
+						// biome-ignore lint/a11y/useKeyWithClickEvents: they key listener for keyboard events is registered in the root of the list
+						<li
+							// biome-ignore lint/a11y/noNoninteractiveTabindex: this one is interactive
+							tabIndex={0}
+							onClick={() => onClick(child)}
 							onMouseOver={() => onChildMouseOver(child)}
 							onFocus={() => onChildMouseOver(child)}
 							style={style}
@@ -234,7 +304,7 @@ const VList = <T,>({
 							key={child.key}
 						>
 							{child}
-						</div>
+						</li>
 					);
 				})}
 			</div>
@@ -248,6 +318,7 @@ export interface VListItemTileProps {
 	actions?: JSX.Element | undefined;
 	// biome-ignore lint/suspicious/noExplicitAny: Can be any but can probably be improved via generic types?
 	data?: any;
+	onClick?: () => void;
 }
 
 const VListItemTile = ({
@@ -255,13 +326,14 @@ const VListItemTile = ({
 	className,
 	actions,
 	data,
+	onClick,
 }: VListItemTileProps) => {
 	return (
-		<li
+		<div
 			className={`${className} h-full w-full overflow-hidden flex flex-col items-start justify-start`}
 		>
 			{children}
-		</li>
+		</div>
 	);
 };
 
@@ -271,15 +343,21 @@ export interface VListItemProps {
 	actions?: JSX.Element | undefined;
 	// biome-ignore lint/suspicious/noExplicitAny: Can be any but can probably be improved via generic types?
 	data?: any;
+	className?: string;
 }
-const VListItem = ({ children, onClick, data, actions }: VListItemProps) => {
+const VListItem = ({
+	className,
+	children,
+	onClick,
+	data,
+	actions,
+}: VListItemProps) => {
 	return (
-		<li
-			className="truncate text-base text-fg items-center flex h-full w-full m-0 py-1.5 px-2 list-none"
-			onClick={onClick}
+		<div
+			className={`${className ? className : ""} truncate text-base text-fg items-center flex h-full w-full m-0 py-1.5 px-2 list-none`}
 		>
 			{children}
-		</li>
+		</div>
 	);
 };
 export interface VListItemIconProps {

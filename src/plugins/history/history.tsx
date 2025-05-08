@@ -2,7 +2,6 @@ import { browserApi } from "@/browser-api.ts";
 import { NumberSelect } from "@/components/NumberSelect.tsx";
 import { toast } from "@/components/Toast";
 import { VList, VListItem, VListItemIcon } from "@/components/VList.tsx";
-import { DropdownMenuItem } from "@/components/ui/dropdown-menu.tsx";
 import { getFaviconUrl } from "@/lib/utils.ts";
 import type { PluginViewProps } from "@/plugins";
 import { useEffect, useState } from "react";
@@ -88,10 +87,10 @@ function Actions(item: chrome.history.HistoryItem) {
 	}
 
 	return (
-		<>
-			<DropdownMenuItem onClick={deleteUrl}>
+		<VList>
+			<VListItem onClick={deleteUrl}>
 				Delete Url (Removes all occurrences)
-			</DropdownMenuItem>
-		</>
+			</VListItem>
+		</VList>
 	);
 }

@@ -1,7 +1,6 @@
 import { browserApi } from "@/browser-api.ts";
 import { toast } from "@/components/Toast.tsx";
 import { VList, VListItem, VListItemIcon } from "@/components/VList.tsx";
-import { DropdownMenuItem } from "@/components/ui/dropdown-menu.tsx";
 import type { PluginViewProps } from "@/plugins";
 import { CheckIcon, PenOffIcon } from "lucide-react";
 import { useEffect, useState } from "react";
@@ -104,8 +103,8 @@ function Actions(extension: chrome.management.ExtensionInfo) {
 	}
 
 	return (
-		<>
-			<DropdownMenuItem onClick={uninstall}>Uninstall</DropdownMenuItem>
-		</>
+		<VList>
+			<VListItem onClick={uninstall}>Uninstall</VListItem>
+		</VList>
 	);
 }

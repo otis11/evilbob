@@ -22,7 +22,7 @@ function PopoverContent({
 	container = document.body,
 	...props
 }: React.ComponentProps<typeof PopoverPrimitive.Content> & {
-	container: HTMLElement | ShadowRoot;
+	container?: HTMLElement | ShadowRoot;
 }) {
 	return (
 		<PopoverPrimitive.Portal container={container}>

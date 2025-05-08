@@ -141,6 +141,14 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
 	} else if (event === "chrome.cookies.remove") {
 		chrome.cookies.remove(data).then((res) => sendResponse(res));
 		return true;
+	} else if (event === "chrome.sessions.getRecentlyClosed") {
+		chrome.sessions
+			.getRecentlyClosed(data)
+			.then((res) => sendResponse(res));
+		return true;
+	} else if (event === "chrome.sessions.restore") {
+		chrome.sessions.restore(data).then((res) => sendResponse(res));
+		return true;
 	} else if (event === "chrome.downloads.showDefaultFolder") {
 		chrome.downloads.showDefaultFolder();
 	}

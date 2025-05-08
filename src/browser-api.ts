@@ -13,6 +13,22 @@ export type ChromeStorageSetProps = {
 };
 
 export const browserApi = {
+	sessions: {
+		async getRecentlyClosed(
+			props: chrome.sessions.Filter,
+		): Promise<chrome.sessions.Session[]> {
+			return await chrome.runtime.sendMessage({
+				event: "chrome.sessions.getRecentlyClosed",
+				data: props,
+			});
+		},
+		async restore(sessionId: string): Promise<chrome.sessions.Session> {
+			return await chrome.runtime.sendMessage({
+				event: "chrome.sessions.restore",
+				data: sessionId,
+			});
+		},
+	},
 	cookies: {
 		async getAll(
 			props: chrome.cookies.GetAllDetails,

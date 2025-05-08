@@ -50,7 +50,8 @@
 		"management",
 		"browsingData",
 		"downloads",
-		"cookies"
+		"cookies",
+		"sessions"
 	],
 	"optional_host_permissions": ["https://*/*", "http://*/*"],
 	"commands": {

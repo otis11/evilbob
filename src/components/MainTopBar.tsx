@@ -2,15 +2,8 @@ import { ActionsBoxTop } from "@/components/ActionsBoxTop.tsx";
 import { Input } from "@/components/ui/input.tsx";
 import type { EvilbobConfig } from "@/lib/config.ts";
 import { keysAsString } from "@/lib/keybindings.ts";
-import { ArrowLeft, Blocks, Maximize2, Minimize2 } from "lucide-react";
-import {
-	type ChangeEvent,
-	type JSX,
-	type KeyboardEvent,
-	type RefObject,
-	useEffect,
-	useState,
-} from "react";
+import { ArrowLeft, Blocks, Loader2, Maximize2, Minimize2 } from "lucide-react";
+import { type ChangeEvent, type JSX, type RefObject, useState } from "react";
 import { Evilbob } from "./Evilbob.tsx";
 
 export interface MainTopBarProps {
@@ -22,6 +15,8 @@ export interface MainTopBarProps {
 	search: string;
 	actions: JSX.Element;
 	config?: EvilbobConfig;
+	isActionsOpen?: boolean;
+	isCommandExecuting?: boolean;
 }
 
 export function MainTopBar({
@@ -33,18 +28,16 @@ export function MainTopBar({
 	search,
 	actions,
 	config,
+	isActionsOpen,
+	isCommandExecuting,
 }: MainTopBarProps) {
 	const [isFullscreen, setIsFullscreen] = useState(false);
-	const [open, setOpen] = useState(false);
-	useEffect(() => {
-		window.addEventListener("evilbob-open-actions", () => {
-			setOpen(true);
-		});
-	}, []);
 
 	function onOpenChange(isOpen: boolean) {
-		setOpen(isOpen);
 		if (!isOpen) {
+			Evilbob.instance().isActionsOpen = false;
+			Evilbob.instance().updatePluginView({ search });
+			Evilbob.instance().renderMainView();
 			inputRef.current?.focus();
 		}
 	}
@@ -52,20 +45,28 @@ export function MainTopBar({
 	async function onPluginsClick() {
 		await chrome.runtime.sendMessage({ event: "open-plugins" });
 	}
-	function onKeyDownActions(e: KeyboardEvent<HTMLElement>) {
-		e.stopPropagation();
-	}
-
 	Evilbob.instance().fullscreen(isFullscreen);
 	return (
 		<>
 			<div className="flex items-center gap-3">
-				<ArrowLeft
-					onClick={onBack}
-					size={20}
-					className={showBack ? "" : "pointer-events-none opacity-50"}
-				></ArrowLeft>
+				{isCommandExecuting ? (
+					<Loader2 className="animate-spin" size={20} />
+				) : (
+					<ArrowLeft
+						onClick={onBack}
+						size={20}
+						className={
+							showBack ? "" : "pointer-events-none opacity-50"
+						}
+					></ArrowLeft>
+				)}
+
 				<Input
+					autoCapitalize="off"
+					autoCorrect="off"
+					autoComplete="off"
+					data-vlist-stay-focused
+					id="evilbob-search-input"
 					className="h-12 !text-lg"
 					ref={inputRef}
 					onChange={onChange}
@@ -84,10 +85,7 @@ export function MainTopBar({
 				)}
 				<Blocks size={20} onClick={onPluginsClick}></Blocks>
 			</div>
-			<div
-				className="h-8 min-h-8 flex items-center justify-between"
-				onKeyDown={onKeyDownActions}
-			>
+			<div className="h-8 min-h-8 flex items-center justify-between">
 				<div className="text-xs tracking-widest text-muted-foreground">
 					Go Back{" "}
 					{keysAsString(config?.keybindings.closePluginView.keys)}
@@ -95,7 +93,7 @@ export function MainTopBar({
 				<div className="text-sm text-muted-foreground">{hint}</div>
 				<ActionsBoxTop
 					config={config}
-					open={open}
+					open={!!isActionsOpen}
 					onOpenChange={onOpenChange}
 				>
 					{actions}

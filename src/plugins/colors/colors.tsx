@@ -1,5 +1,6 @@
 import { browserApi } from "@/browser-api.ts";
-import { VList, VListItemTile } from "@/components/VList.tsx";
+import { toast } from "@/components/Toast.tsx";
+import { VList, VListItem, VListItemTile } from "@/components/VList.tsx";
 import type { PluginViewProps } from "@/plugins";
 import { useEffect, useState } from "react";
 interface Color {
@@ -41,7 +42,10 @@ export function Command({ search }: PluginViewProps) {
 							searchInColor(search, color),
 						) || []
 					).map((item, index) => (
-						<VListItemTile key={index}>
+						<VListItemTile
+							key={item.title}
+							actions={<Actions {...item}></Actions>}
+						>
 							<div
 								className="w-full h-full"
 								style={{ backgroundColor: item.c }}
@@ -52,5 +56,24 @@ export function Command({ search }: PluginViewProps) {
 				</VList>
 			)}
 		</>
+	);
+}
+
+function Actions(color: Color) {
+	async function removeColor() {
+		const colors: Color[] =
+			(await browserApi.storage.sync.get(["colors"])).colors || [];
+		await browserApi.storage.sync.set({
+			colors: colors.filter(
+				(c) => !(c.title === color.title && c.title === color.c),
+			),
+		});
+		toast(<span>Color Removed.</span>);
+	}
+
+	return (
+		<VList>
+			<VListItem onClick={removeColor}>Remove</VListItem>
+		</VList>
 	);
 }

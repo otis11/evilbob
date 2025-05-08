@@ -1,11 +1,10 @@
 import { Checkbox } from "@/components/Checkbox.tsx";
 import { toast } from "@/components/Toast";
-import { VList, VListItemTile } from "@/components/VList.tsx";
-import { DropdownMenuItem } from "@/components/ui/dropdown-menu.tsx";
+import { VList, VListItem, VListItemTile } from "@/components/VList.tsx";
 import { copyTextToClipboard } from "@/lib/utils.ts";
 import type { PluginViewProps } from "@/plugins";
 import { useEffect, useState } from "react";
-
+let imageIdCounter = 0;
 type MediaType =
 	| "img"
 	| "svg"
@@ -14,7 +13,7 @@ type MediaType =
 	| "picture"
 	| "object"
 	| "canvas";
-export function Command(props: PluginViewProps) {
+export function Command({ search }: PluginViewProps) {
 	const [elements, setElements] = useState<HTMLOrSVGElement[]>([]);
 	const [selectedCheckboxes, setSelectedCheckboxes] = useState<
 		Record<MediaType, boolean>
@@ -139,10 +138,16 @@ export function Command(props: PluginViewProps) {
 			>
 				{elements.map((element, index) => {
 					if (element instanceof HTMLImageElement) {
+						if (
+							!element.src.includes(search.toLowerCase()) &&
+							!element.alt.includes(search.toLowerCase())
+						) {
+							return "";
+						}
 						return (
 							<VListItemTile
 								className="p-1"
-								key={index}
+								key={imageIdCounter++}
 								actions={
 									<Actions
 										url={element.src}
@@ -159,6 +164,9 @@ export function Command(props: PluginViewProps) {
 						);
 					}
 					if (element instanceof SVGElement) {
+						if (!element.outerHTML.includes(search.toLowerCase())) {
+							return "";
+						}
 						const node = element.cloneNode(true) as SVGElement;
 						node.classList.add(
 							"text-foreground",
@@ -169,7 +177,7 @@ export function Command(props: PluginViewProps) {
 						return (
 							<VListItemTile
 								className="p-1"
-								key={index}
+								key={imageIdCounter++}
 								actions={
 									<Actions html={element.outerHTML}></Actions>
 								}
@@ -185,10 +193,13 @@ export function Command(props: PluginViewProps) {
 						);
 					}
 					if (element instanceof HTMLVideoElement) {
+						if (!element.src.includes(search.toLowerCase())) {
+							return "";
+						}
 						return (
 							<VListItemTile
 								className="p-1"
-								key={index}
+								key={imageIdCounter++}
 								actions={
 									<Actions
 										url={element.src}
@@ -205,10 +216,17 @@ export function Command(props: PluginViewProps) {
 						);
 					}
 					if (element instanceof HTMLElement) {
+						if (
+							!getComputedStyle(element).backgroundImage.includes(
+								search.toLowerCase(),
+							)
+						) {
+							return "";
+						}
 						return (
 							<VListItemTile
 								className="p-1"
-								key={index}
+								key={imageIdCounter++}
 								actions={
 									<Actions
 										backgroundStyle={
@@ -230,7 +248,7 @@ export function Command(props: PluginViewProps) {
 							</VListItemTile>
 						);
 					}
-					return <div key={index}></div>;
+					return "";
 				})}
 			</VList>
 		</>
@@ -254,30 +272,31 @@ function Actions(props: {
 	}
 
 	return (
-		<>
+		<VList>
 			{props.url ? (
-				<DropdownMenuItem onClick={() => tryCopy(props.url)}>
+				<VListItem key="url" onClick={() => tryCopy(props.url)}>
 					Copy Url
-				</DropdownMenuItem>
+				</VListItem>
 			) : (
 				""
 			)}
 			{props.html ? (
-				<DropdownMenuItem onClick={() => tryCopy(props.html)}>
+				<VListItem key="html" onClick={() => tryCopy(props.html)}>
 					Copy Html
-				</DropdownMenuItem>
+				</VListItem>
 			) : (
 				""
 			)}
 			{props.backgroundStyle ? (
-				<DropdownMenuItem
+				<VListItem
+					key="style"
 					onClick={() => tryCopy(props.backgroundStyle)}
 				>
 					Copy Background Style
-				</DropdownMenuItem>
+				</VListItem>
 			) : (
 				""
 			)}
-		</>
+		</VList>
 	);
 }

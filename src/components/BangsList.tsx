@@ -17,7 +17,7 @@ export function BangsList({ search, onBangSelect }: BangsListProps) {
 		<VList onSelect={(item) => onBangSelect(item.b)}>
 			{(bangs ? bangs.filter((b) => searchInBang(search, b)) : []).map(
 				(item, index) => (
-					<VListItem key={index} data={item}>
+					<VListItem key={item.t} data={item}>
 						<span>{item.s}</span>
 						<span className="pl-4 text-muted-foreground font-bold text-sm">
 							!{item.t}

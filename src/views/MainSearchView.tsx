@@ -20,6 +20,7 @@ export interface MainViewProps {
 	onBack?: () => void;
 	actions: JSX.Element;
 	config?: EvilbobConfig;
+	isActionsOpen?: boolean;
 }
 
 export function MainSearchView({
@@ -28,11 +29,13 @@ export function MainSearchView({
 	onBack,
 	actions,
 	config,
+	isActionsOpen,
 }: MainViewProps) {
 	const [search, setSearch] = useState("");
 	const inputRef = useRef<HTMLInputElement | null>(null);
 	const [searchBehindBang, setSearchBehindBang] = useState("");
 	const [searchHasBang, setSearchHasBang] = useState(false);
+	const [isCommandExecuting, setIsCommandExecuting] = useState(false);
 
 	useEffect(() => {
 		if (!pluginView) {
@@ -41,9 +44,12 @@ export function MainSearchView({
 	}, [pluginView]);
 
 	useEffect(() => {
-		window.addEventListener("evilbob-unmount-plugin-view", () => {
+		const listener = () => {
 			setSearch("");
-		});
+		};
+		window.addEventListener("evilbob-unmount-plugin-view", listener);
+		return () =>
+			window.removeEventListener("evilbob-unmount-plugin-view", listener);
 	}, []);
 
 	useEffect(() => {
@@ -70,7 +76,9 @@ export function MainSearchView({
 				search: "",
 			});
 		} else if (item.type === "command") {
+			setIsCommandExecuting(true);
 			await (command.Command as () => Promise<void>)();
+			setIsCommandExecuting(false);
 		}
 	}
 
@@ -98,6 +106,7 @@ export function MainSearchView({
 		<>
 			<Toast></Toast>
 			<MainTopBar
+				isActionsOpen={isActionsOpen}
 				config={config}
 				actions={actions}
 				search={search}
@@ -106,6 +115,7 @@ export function MainSearchView({
 				onBack={onBack}
 				onChange={onChange}
 				hint={searchHint}
+				isCommandExecuting={isCommandExecuting}
 			></MainTopBar>
 			{pluginView !== undefined ? (
 				""

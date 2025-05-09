@@ -1,14 +1,15 @@
-import { browserApi } from "@/browser-api.ts";
 import { toast } from "@/components/Toast.tsx";
 import { VList, VListItem, VListItemTile } from "@/components/VList.tsx";
-import type { PluginViewProps } from "@/plugins";
+import { browserApi } from "@/lib/browser-api.ts";
+import { useMemoryStore } from "@/lib/memory-store.ts";
 import { useEffect, useState } from "react";
 interface Color {
 	c: string;
 	title: string;
 }
 
-export function Command({ search }: PluginViewProps) {
+export function Command() {
+	const [search, useSearch] = useMemoryStore("search");
 	const width = 160;
 	const height = 160;
 	const [colors, setColors] = useState<Color[] | undefined>();
@@ -36,7 +37,11 @@ export function Command({ search }: PluginViewProps) {
 					{colorsLoadingMessage}
 				</div>
 			) : (
-				<VList itemWidth={width} itemHeight={height}>
+				<VList
+					itemWidth={width}
+					itemHeight={height}
+					itemSpacing={{ x: 4, y: 4 }}
+				>
 					{(
 						colors?.filter((color) =>
 							searchInColor(search, color),

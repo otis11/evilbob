@@ -1,11 +1,12 @@
-import { browserApi } from "@/browser-api.ts";
 import { toast } from "@/components/Toast.tsx";
 import { VList, VListItem, VListItemIcon } from "@/components/VList.tsx";
-import type { PluginViewProps } from "@/plugins";
+import { browserApi } from "@/lib/browser-api.ts";
+import { useMemoryStore } from "@/lib/memory-store.ts";
 import { CheckIcon, PenOffIcon } from "lucide-react";
 import { useEffect, useState } from "react";
 
-export function Command({ search }: PluginViewProps) {
+export function Command() {
+	const [search, useSearch] = useMemoryStore("search");
 	const [extensions, setExtensions] = useState<
 		chrome.management.ExtensionInfo[] | undefined
 	>();

@@ -1,8 +1,11 @@
+import { memoryStore } from "@/lib/memory-store.ts";
 import { KeyboardListener } from "@/lib/utils.ts";
 import { CircleHelpIcon } from "lucide-react";
 import {
 	type CSSProperties,
+	type FocusEvent,
 	type JSX,
+	type MouseEvent,
 	type ReactNode,
 	isValidElement,
 	useEffect,
@@ -10,11 +13,12 @@ import {
 	useState,
 } from "react";
 import { getConfig } from "../lib/config.ts";
-import { Evilbob } from "./Evilbob.tsx";
+import { EvilbobRoot } from "../lib/evilbob-root.tsx";
 
 interface VListProps<T> {
 	children: ReactNode;
 	itemHeight?: number;
+	surroundingItems?: number;
 	itemWidth?: number;
 	itemsOutOfBounds?: number;
 	itemSpacing?: {
@@ -28,12 +32,13 @@ interface VListProps<T> {
 
 const VList = <T,>({
 	children,
+	surroundingItems = 1,
 	itemHeight = 40,
 	itemWidth = -1,
 	itemsOutOfBounds,
 	itemSpacing,
 	onSelect,
-	activeElementTarget = Evilbob.instance().shadowRoot,
+	activeElementTarget = EvilbobRoot.instance().shadowRoot,
 }: VListProps<T>) => {
 	const [renderedChildren, setRenderedChildren] = useState<JSX.Element[]>([]);
 	const listRoot = useRef<HTMLUListElement>(null);
@@ -47,6 +52,8 @@ const VList = <T,>({
 	);
 	const [activeIndex, setActiveIndex] = useState(0);
 	const [parsedChildren, setParsedChildren] = useState<JSX.Element[]>([]);
+	const [lastMousePosition, setLastMousePosition] = useState({ x: 0, y: 0 });
+	const [availHeight, setAvailHeight] = useState<number>(0);
 
 	// biome-ignore lint/correctness/useExhaustiveDependencies : should not update if parsedChildren.length, itself sets it
 	useEffect(() => {
@@ -112,14 +119,45 @@ const VList = <T,>({
 				() => onClick(parsedChildren[activeIndex]),
 			);
 		});
-		Evilbob.instance().setActiveVListItemProps(
-			parsedChildren[activeIndex]?.props,
-		);
+		const newActions = parsedChildren[activeIndex]?.props?.actions;
+		if (newActions) {
+			memoryStore.set("actions", newActions);
+		}
+
 		return () => {
 			isMounted = false;
 			keyboardListener.destroy();
 		};
 	}, [activeIndex, itemCountPerRow, parsedChildren]);
+
+	// biome-ignore lint/correctness/useExhaustiveDependencies: possibly sets scroll top, don't set as a dependency
+	useEffect(() => {
+		const start = scrollTop + surroundingItems * realItemHeight;
+		const end = scrollTop + availHeight - surroundingItems * realItemHeight;
+		const item = realItemHeight * Math.floor(activeIndex / itemCountPerRow);
+		/*
+            |   - start
+            |
+            |   - item
+            |
+            |   - end
+         */
+		if (item > end) {
+			const newScrollTop = scrollTop + realItemHeight;
+			if (listRoot.current) {
+				listRoot.current.scrollTop = newScrollTop;
+			}
+			setScrollTop(newScrollTop);
+		}
+		if (item < start) {
+			const newScrollTop = scrollTop - realItemHeight;
+			if (listRoot.current) {
+				listRoot.current.scrollTop = newScrollTop;
+			}
+			setScrollTop(newScrollTop);
+		}
+	}, [activeIndex, surroundingItems]);
+
 	useEffect(() => {
 		let isMounted = true;
 
@@ -145,7 +183,7 @@ const VList = <T,>({
 		requestAnimationFrame(() => {
 			if (!isMounted) return; // rerender happening
 
-			const availHeight =
+			const localAvailHeight =
 				listRoot.current?.getBoundingClientRect().height || 0;
 			const availWidth =
 				listRoot.current?.getBoundingClientRect().width || 0;
@@ -166,12 +204,13 @@ const VList = <T,>({
 			);
 			const localEndIndex = Math.min(
 				localStartIndex +
-					Math.ceil(availHeight / localRealItemHeight) *
+					Math.ceil(localAvailHeight / localRealItemHeight) *
 						localItemCountPerRow +
 					outOfBounds,
 				totalRowCount * localItemCountPerRow,
 			);
 
+			setAvailHeight(localAvailHeight);
 			setStartIndex(localStartIndex);
 			setRealItemHeight(localRealItemHeight);
 			setRealItemWidth(localRealItemWidth);
@@ -200,6 +239,10 @@ const VList = <T,>({
 		if (activeIndex === -1) {
 			setActiveIndex(0);
 		} else {
+			if (activeIndex + itemCountPerRow >= parsedChildren.length) {
+				// border do nothing
+				return;
+			}
 			setActiveIndex(
 				(activeIndex + itemCountPerRow) % parsedChildren.length,
 			);
@@ -210,6 +253,10 @@ const VList = <T,>({
 			setActiveIndex(0);
 		} else {
 			let targetIndex = activeIndex - itemCountPerRow;
+			if (targetIndex < 0) {
+				// border do nothing
+				return;
+			}
 			if (targetIndex < 0) {
 				targetIndex = parsedChildren.length - 1;
 			}
@@ -249,7 +296,26 @@ const VList = <T,>({
 		setScrollTop(listRoot.current?.scrollTop || 0);
 	}
 
-	function onChildMouseOver(child: JSX.Element) {
+	function onChildMouseOver(event: MouseEvent, child: JSX.Element) {
+		// make sure the mouse was moved to another position
+		// opening actions and closing them would cause a new mouse event
+		// this fixes that a new mouse event on the same position does not select the element while the mouse was not moved
+		if (
+			lastMousePosition.x !== event.clientX ||
+			lastMousePosition.y !== event.clientY
+		) {
+			const childIndex = parsedChildren.findIndex(
+				(c) => c.key === child.key,
+			);
+			setActiveIndex(childIndex);
+			setLastMousePosition({ x: event.clientX, y: event.clientY });
+		}
+	}
+
+	function onChildFocus(
+		event: FocusEvent<HTMLLIElement>,
+		child: JSX.Element,
+	) {
 		const childIndex = parsedChildren.findIndex((c) => c.key === child.key);
 		setActiveIndex(childIndex);
 	}
@@ -293,8 +359,10 @@ const VList = <T,>({
 							// biome-ignore lint/a11y/noNoninteractiveTabindex: this one is interactive
 							tabIndex={0}
 							onClick={() => onClick(child)}
-							onMouseOver={() => onChildMouseOver(child)}
-							onFocus={() => onChildMouseOver(child)}
+							onMouseOver={(event) =>
+								onChildMouseOver(event, child)
+							}
+							onFocus={(event) => onChildFocus(event, child)}
 							style={style}
 							className={`${classes} ${
 								activeIndex === startIndex + index

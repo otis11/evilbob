@@ -1,10 +1,10 @@
-import { browserApi } from "@/browser-api.ts";
 import { PluginActions } from "@/components/PluginActions";
 import { toast } from "@/components/Toast";
 import { VList, VListItem } from "@/components/VList.tsx";
 import { Button } from "@/components/ui/button.tsx";
 import { Input } from "@/components/ui/input.tsx";
 import { Slider } from "@/components/ui/slider.tsx";
+import { browserApi } from "@/lib/browser-api.ts";
 import {
 	type Rgba,
 	type RgbaKey,

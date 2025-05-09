@@ -1,5 +1,5 @@
-import { Evilbob } from "./components/Evilbob.tsx";
 import { getConfig } from "./lib/config.ts";
+import { EvilbobRoot } from "./lib/evilbob-root.tsx";
 
 chrome.runtime.onMessage.addListener(async (message) => {
 	const event = message.event;
@@ -15,5 +15,5 @@ if (document.documentURI.endsWith("evilbob-empty-page.html")) {
 
 async function openEvilbob() {
 	const config = await getConfig();
-	Evilbob.instance().openDialog(config);
+	EvilbobRoot.instance().openDialog(config);
 }

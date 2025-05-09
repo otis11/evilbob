@@ -4,34 +4,29 @@ import {
 	PopoverContent,
 	PopoverTrigger,
 } from "@/components/ui/popover.tsx";
-import type { EvilbobConfig } from "@/lib/config";
 import { keysAsString } from "@/lib/keybindings.ts";
+import { useMemoryStore } from "@/lib/memory-store.ts";
 import { type ReactNode, useEffect } from "react";
-import { Evilbob } from "./Evilbob.tsx";
+import { EvilbobRoot } from "../lib/evilbob-root.tsx";
 
 export interface ActionsTopBoxProps {
 	children: ReactNode;
-	onOpenChange: (isOpen: boolean) => void;
-	open: boolean;
-	config?: EvilbobConfig;
 }
-export function ActionsBoxTop({
-	children,
-	open,
-	onOpenChange,
-	config,
-}: ActionsTopBoxProps) {
+export function ActionsBoxTop({ children }: ActionsTopBoxProps) {
+	const [config, setConfig] = useMemoryStore("config");
+	const [isActionsOpen, setIsActionsOpen] = useMemoryStore("isActionsOpen");
+
 	useEffect(() => {
 		const onResultClick = () => {
-			onOpenChange(false);
+			setIsActionsOpen(false);
 		};
 		window.addEventListener("evilbob-vlist-click", onResultClick);
 		return () =>
 			window.removeEventListener("evilbob-vlist-click", onResultClick);
-	}, [onOpenChange]);
+	}, [setIsActionsOpen]);
 
 	return (
-		<Popover open={open} onOpenChange={onOpenChange}>
+		<Popover open={isActionsOpen} onOpenChange={setIsActionsOpen}>
 			<PopoverTrigger className="text-xs tracking-widest text-muted-foreground">
 				Actions {keysAsString(config?.keybindings.openActions.keys)}
 			</PopoverTrigger>
@@ -40,7 +35,7 @@ export function ActionsBoxTop({
 				onCloseAutoFocus={(event) => {
 					event.preventDefault();
 				}}
-				container={Evilbob.instance().dialogElement}
+				container={EvilbobRoot.instance().dialogElement}
 			>
 				{children}
 			</PopoverContent>

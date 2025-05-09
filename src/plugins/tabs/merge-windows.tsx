@@ -1,4 +1,4 @@
-import { browserApi } from "@/browser-api";
+import { browserApi } from "@/lib/browser-api.ts";
 
 export async function Command() {
 	const lastWindow = await browserApi.windows.getLastFocused();

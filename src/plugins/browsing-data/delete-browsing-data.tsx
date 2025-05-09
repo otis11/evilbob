@@ -1,9 +1,9 @@
-import { browserApi } from "@/browser-api.ts";
 import { NumberSelect } from "@/components/NumberSelect.tsx";
 import { PluginActions } from "@/components/PluginActions";
 import { toast } from "@/components/Toast.tsx";
 import { VList, VListItem } from "@/components/VList.tsx";
 import { Button } from "@/components/ui/button.tsx";
+import { browserApi } from "@/lib/browser-api.ts";
 import { Loader2 } from "lucide-react";
 import { useState } from "react";
 

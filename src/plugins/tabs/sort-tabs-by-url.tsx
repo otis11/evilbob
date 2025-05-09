@@ -1,5 +1,5 @@
-import { browserApi } from "@/browser-api";
 import { toast } from "@/components/Toast";
+import { browserApi } from "@/lib/browser-api.ts";
 
 export async function Command() {
 	const activeWindow = await browserApi.windows.getLastFocused();

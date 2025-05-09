@@ -1,12 +1,13 @@
-import { browserApi } from "@/browser-api.ts";
 import { NumberSelect } from "@/components/NumberSelect.tsx";
 import { toast } from "@/components/Toast";
 import { VList, VListItem, VListItemIcon } from "@/components/VList.tsx";
+import { browserApi } from "@/lib/browser-api.ts";
+import { useMemoryStore } from "@/lib/memory-store.ts";
 import { getFaviconUrl } from "@/lib/utils.ts";
-import type { PluginViewProps } from "@/plugins";
 import { useEffect, useState } from "react";
 
-export function Command({ search }: PluginViewProps) {
+export function Command() {
+	const [search, useSearch] = useMemoryStore("search");
 	const [history, setHistory] = useState<
 		chrome.history.HistoryItem[] | undefined
 	>();

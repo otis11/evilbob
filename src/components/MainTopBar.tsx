@@ -1,51 +1,42 @@
 import { ActionsBoxTop } from "@/components/ActionsBoxTop.tsx";
 import { Input } from "@/components/ui/input.tsx";
-import type { EvilbobConfig } from "@/lib/config.ts";
 import { keysAsString } from "@/lib/keybindings.ts";
+import { useMemoryStore } from "@/lib/memory-store.ts";
 import { ArrowLeft, Blocks, Loader2, Maximize2, Minimize2 } from "lucide-react";
-import { type ChangeEvent, type JSX, type RefObject, useState } from "react";
-import { Evilbob } from "./Evilbob.tsx";
+import { type ChangeEvent, useEffect, useRef } from "react";
+import { EvilbobRoot } from "../lib/evilbob-root.tsx";
 
-export interface MainTopBarProps {
-	hint?: string;
-	onChange?: (data: ChangeEvent<HTMLInputElement>) => void;
-	onBack?: () => void;
-	showBack?: boolean;
-	inputRef: RefObject<HTMLInputElement | null>;
-	search: string;
-	actions: JSX.Element;
-	config?: EvilbobConfig;
-	isActionsOpen?: boolean;
-	isCommandExecuting?: boolean;
-}
+export function MainTopBar() {
+	const [isFullscreen, setIsFullscreen] = useMemoryStore("isFullscreen");
+	const inputRef = useRef<HTMLInputElement>(null);
+	const [pluginViewCommand, setPluginViewCommand] =
+		useMemoryStore("pluginViewCommand");
+	const [isCommandExecuting, setIsCommandExecuting] =
+		useMemoryStore("isCommandExecuting");
+	const [search, setSearch] = useMemoryStore("search");
+	const [actions, setActions] = useMemoryStore("actions");
+	const [config, setConfig] = useMemoryStore("config");
+	const [searchHint, setSearchHint] = useMemoryStore("searchHint");
+	const [isActionsOpen, setIsActionsOpen] = useMemoryStore("isActionsOpen");
 
-export function MainTopBar({
-	hint,
-	onChange,
-	showBack,
-	onBack,
-	inputRef,
-	search,
-	actions,
-	config,
-	isActionsOpen,
-	isCommandExecuting,
-}: MainTopBarProps) {
-	const [isFullscreen, setIsFullscreen] = useState(false);
+	function onChange(data: ChangeEvent<HTMLInputElement>) {
+		setSearch(data.target.value);
+	}
 
-	function onOpenChange(isOpen: boolean) {
-		if (!isOpen) {
-			Evilbob.instance().isActionsOpen = false;
-			Evilbob.instance().updatePluginView({ search });
-			Evilbob.instance().renderMainView();
+	useEffect(() => {
+		if (!pluginViewCommand || !isActionsOpen) {
 			inputRef.current?.focus();
 		}
-	}
+	}, [pluginViewCommand, isActionsOpen]);
 
 	async function onPluginsClick() {
 		await chrome.runtime.sendMessage({ event: "open-plugins" });
 	}
-	Evilbob.instance().fullscreen(isFullscreen);
+
+	function onBack() {
+		EvilbobRoot.instance().unmountPluginView();
+	}
+
 	return (
 		<>
 			<div className="flex items-center gap-3">
@@ -56,7 +47,9 @@ export function MainTopBar({
 						onClick={onBack}
 						size={20}
 						className={
-							showBack ? "" : "pointer-events-none opacity-50"
+							pluginViewCommand
+								? ""
+								: "pointer-events-none opacity-50"
 						}
 					></ArrowLeft>
 				)}
@@ -90,14 +83,10 @@ export function MainTopBar({
 					Go Back{" "}
 					{keysAsString(config?.keybindings.closePluginView.keys)}
 				</div>
-				<div className="text-sm text-muted-foreground">{hint}</div>
-				<ActionsBoxTop
-					config={config}
-					open={!!isActionsOpen}
-					onOpenChange={onOpenChange}
-				>
-					{actions}
-				</ActionsBoxTop>
+				<div className="text-sm text-muted-foreground">
+					{searchHint}
+				</div>
+				<ActionsBoxTop>{actions}</ActionsBoxTop>
 			</div>
 		</>
 	);

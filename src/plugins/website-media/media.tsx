@@ -1,8 +1,8 @@
 import { Checkbox } from "@/components/Checkbox.tsx";
 import { toast } from "@/components/Toast";
 import { VList, VListItem, VListItemTile } from "@/components/VList.tsx";
+import { useMemoryStore } from "@/lib/memory-store";
 import { copyTextToClipboard } from "@/lib/utils.ts";
-import type { PluginViewProps } from "@/plugins";
 import { useEffect, useState } from "react";
 let imageIdCounter = 0;
 type MediaType =
@@ -13,8 +13,9 @@ type MediaType =
 	| "picture"
 	| "object"
 	| "canvas";
-export function Command({ search }: PluginViewProps) {
+export function Command() {
 	const [elements, setElements] = useState<HTMLOrSVGElement[]>([]);
+	const [search, useSearch] = useMemoryStore("search");
 	const [selectedCheckboxes, setSelectedCheckboxes] = useState<
 		Record<MediaType, boolean>
 	>({

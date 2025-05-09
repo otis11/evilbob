@@ -30,7 +30,7 @@ export default function App({ config }: AppProps) {
 		} else {
 			await enablePlugin(plugin);
 		}
-		await setLocalConfig(await getConfig());
+		setLocalConfig(await getConfig());
 		setPluginLoading("");
 	}
 
@@ -88,7 +88,10 @@ export default function App({ config }: AppProps) {
 							</div>
 							<Button
 								className="w-full"
-								onClick={() => onEnableDisableClick(item)}
+								onClick={(event) => {
+									event.stopPropagation();
+									onEnableDisableClick(item);
+								}}
 								variant={
 									localConfig.plugins.enabled[item.id]
 										? "secondary"

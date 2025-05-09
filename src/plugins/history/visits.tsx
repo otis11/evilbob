@@ -1,12 +1,11 @@
-import { browserApi } from "@/browser-api.ts";
 import { VList, VListItem } from "@/components/VList.tsx";
 import { Button } from "@/components/ui/button.tsx";
 import { Input } from "@/components/ui/input";
+import { browserApi } from "@/lib/browser-api.ts";
 import { formatTimeAgo } from "@/lib/utils.ts";
-import type { PluginViewProps } from "@/plugins";
 import { type KeyboardEvent, useState } from "react";
 
-export function Command({ search }: PluginViewProps) {
+export function Command() {
 	const [visits, setVisits] = useState<
 		chrome.history.VisitItem[] | undefined
 	>();

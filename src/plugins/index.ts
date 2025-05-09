@@ -73,12 +73,6 @@ export interface PluginDefinition {
 	description?: string;
 }
 
-export interface PluginViewProps {
-	search: string;
-}
-export type PluginView = (props: PluginViewProps) => JSX.Element;
-
 export interface PluginCommandImported {
 	Command: FunctionComponent | (() => Promise<void>);
-	Actions?: FunctionComponent;
 }

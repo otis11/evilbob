@@ -1,5 +1,5 @@
-import { browserApi } from "@/browser-api.ts";
 import { toast } from "@/components/Toast.tsx";
+import { browserApi } from "@/lib/browser-api.ts";
 
 export async function Command() {
 	await browserApi.bookmarks.create({

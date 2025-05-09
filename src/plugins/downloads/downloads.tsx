@@ -1,10 +1,12 @@
-import { browserApi } from "@/browser-api.ts";
 import { VList, VListItem } from "@/components/VList.tsx";
-import type { PluginViewProps } from "@/plugins";
+import { browserApi } from "@/lib/browser-api.ts";
+import { useMemoryStore } from "@/lib/memory-store.ts";
 import { CheckCheckIcon, CircleOffIcon, LoaderCircleIcon } from "lucide-react";
 import { useEffect, useState } from "react";
 
-export function Command({ search }: PluginViewProps) {
+export function Command() {
+	const [search, useSearch] = useMemoryStore("search");
+
 	const [downloads, setDownloads] = useState<
 		chrome.downloads.DownloadItem[] | undefined
 	>();

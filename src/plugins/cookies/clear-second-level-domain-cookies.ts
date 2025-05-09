@@ -1,5 +1,5 @@
-import { browserApi, getCurrentTab } from "@/browser-api.ts";
 import { toast } from "@/components/Toast.tsx";
+import { browserApi, getCurrentTab } from "@/lib/browser-api.ts";
 import { getDomainWithoutSubdomains } from "@/lib/utils.ts";
 
 export async function Command() {

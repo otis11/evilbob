@@ -1,8 +1,8 @@
-import { browserApi, getCurrentTab } from "@/browser-api.ts";
 import { toast } from "@/components/Toast.tsx";
 import { VList, VListItem } from "@/components/VList.tsx";
+import { browserApi, getCurrentTab } from "@/lib/browser-api.ts";
+import { useMemoryStore } from "@/lib/memory-store.ts";
 import { formatTimeFuture, getDomainWithoutSubdomains } from "@/lib/utils.ts";
-import type { PluginViewProps } from "@/plugins";
 import { LockIcon, PenOffIcon } from "lucide-react";
 import { useEffect, useState } from "react";
 interface Color {
@@ -10,7 +10,9 @@ interface Color {
 	title: string;
 }
 
-export function Command({ search }: PluginViewProps) {
+export function Command() {
+	const [search, useSearch] = useMemoryStore("search");
+
 	const [cookies, setCookies] = useState<
 		chrome.cookies.Cookie[] | undefined
 	>();

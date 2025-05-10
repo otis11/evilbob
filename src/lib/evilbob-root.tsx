@@ -1,3 +1,4 @@
+import { toast } from "@/components/Toast.tsx";
 import { memoryStore } from "@/lib/memory-store.ts";
 import {
 	getThemePreference,
@@ -54,6 +55,23 @@ export class EvilbobRoot {
 		shadowRoot.addEventListener("keyup", (e) => {
 			if (dialogElement.open) {
 				e.stopPropagation();
+			}
+		});
+
+		chrome.runtime.onMessage.addListener(async (message) => {
+			const event = message.event;
+			const data = message.data;
+			if (event === "background-error") {
+				try {
+					toast(
+						<>
+							<span>An error occurred.</span>
+							<pre>{JSON.stringify(data, null, 4)}</pre>
+						</>,
+					);
+				} catch {
+					toast("An error occurred.");
+				}
 			}
 		});
 

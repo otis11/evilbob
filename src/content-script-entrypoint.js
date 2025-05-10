@@ -5,4 +5,4 @@
  * Imported scripts can use top level imports.
  */
 /* @vite-ignore */
-import("./content-script.js");
+import(chrome.runtime.getURL("/content-script.js"));

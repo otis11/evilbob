@@ -7,7 +7,7 @@ export type Keybinding = {
 	title?: string;
 };
 
-const ACTION_KEY = isMac ? "Meta" : "Control";
+export const ACTION_KEY = isMac ? "Meta" : "Control";
 
 export const defaultKeybindings = {
 	selectResult: {
@@ -58,14 +58,20 @@ export const defaultKeybindings = {
 const KEYS_ICONS_MAP: Record<string, string> = {
 	Meta: "⌘",
 	Enter: "⏎",
+	Shift: "⇧",
+	Option: "⎇",
+	ArrowLeft: "←",
+	ArrowDown: "↓",
+	ArrowRight: "→",
+	ArrowUp: "↑",
 };
-export function keysAsString(keys: string[] | undefined): string {
+export function keysAsString(keys: string[] | undefined): string[] {
 	if (!keys) {
-		return "";
+		return [];
 	}
-	let result = "";
+	const result = [];
 	for (let i = 0; i < keys.length; i++) {
-		result += KEYS_ICONS_MAP[keys[i] || ""] || keys[i];
+		result.push(KEYS_ICONS_MAP[keys[i] || ""] || keys[i] || "");
 	}
 	return result;
 }

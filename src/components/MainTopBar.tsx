@@ -89,9 +89,13 @@ export function MainTopBar() {
 				></SettingsIcon>
 			</div>
 			<div className="h-8 min-h-8 flex items-center justify-between">
-				<div className="text-xs tracking-widest text-muted-foreground">
+				<div className="text-xs tracking-widest text-muted-foreground flex items-center gap-1">
 					Go Back{" "}
-					{keysAsString(config?.keybindings.closePluginView?.keys)}
+					{keysAsString(
+						config?.keybindings.closePluginView?.keys,
+					).map((key) => (
+						<span key={key}>{key}</span>
+					))}
 				</div>
 				<div className="text-sm text-muted-foreground">
 					{searchHint}

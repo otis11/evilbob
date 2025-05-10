@@ -14,7 +14,10 @@ export function BangsList({ search, onBangSelect }: BangsListProps) {
 	}, []);
 
 	return (
-		<VList onSelect={(item) => onBangSelect(item.b)}>
+		<VList
+			data-testid="bangs-list"
+			onSelect={(item) => onBangSelect(item.b)}
+		>
 			{(bangs ? bangs.filter((b) => searchInBang(search, b)) : []).map(
 				(item, index) => (
 					<VListItem key={item.t} data={item}>

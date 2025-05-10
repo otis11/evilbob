@@ -62,6 +62,7 @@ export function MainTopBar() {
 				)}
 
 				<Input
+					data-testid="search-input"
 					autoCapitalize="off"
 					autoCorrect="off"
 					autoComplete="off"

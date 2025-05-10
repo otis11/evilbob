@@ -13,5 +13,7 @@ A command palette prototype.
 </p>
 
 
-![Evilbob Dark](./src/media/evilbob-dark.png)
-![Evilbob Light](./src/media/evilbob-light.png)
+![Screenshot Evilbob commands](./src/media/screenshot-commands.png)
+![Screenshot Evilbob plugins](./src/media/screenshot-plugins.png)
+![Screenshot Evilbob bangs](./src/media/screenshot-bangs.png)
+![Screenshot Evilbob view](./src/media/screenshot-view.png)

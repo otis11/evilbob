@@ -36,6 +36,7 @@ export function ActionsBoxTop({ children }: ActionsTopBoxProps) {
 				)}
 			</PopoverTrigger>
 			<PopoverContent
+				data-testid="actions-container"
 				className="p-1 border rounded-md w-56"
 				onCloseAutoFocus={(event) => {
 					event.preventDefault();

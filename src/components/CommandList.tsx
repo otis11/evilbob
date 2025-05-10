@@ -7,7 +7,7 @@ export interface CommandListProps {
 }
 export function CommandList({ commands, onSelect }: CommandListProps) {
 	return (
-		<VList onSelect={onSelect}>
+		<VList data-testid="command-list" onSelect={onSelect}>
 			{commands.map((command) => (
 				<VListItem
 					data={command}

@@ -11,9 +11,17 @@ chrome.runtime.onMessage.addListener((message) => {
 });
 
 if (__IS_DEV_BUILD__) {
-	window.addEventListener("evilbob-open", (event) => {
+	const button = document.createElement("button");
+	button.setAttribute("data-testid", "open-evilbob-button");
+	button.addEventListener("click", () => {
 		openEvilbob().then();
 	});
+	button.innerText = "Open Evilbob";
+	button.style.position = "absolute";
+	button.style.top = "0";
+	button.style.left = "0";
+	button.style.zIndex = "99999999";
+	document.body.appendChild(button);
 }
 
 if (document.documentURI.endsWith("evilbob-empty-page.html")) {

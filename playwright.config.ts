@@ -1,5 +1,7 @@
 import { defineConfig, devices } from "@playwright/test";
 
+const SLOW = process.env.SLOW;
+
 export default defineConfig({
 	// Look for test files in the "tests" directory, relative to this configuration file.
 	testDir: "tests",
@@ -14,7 +16,7 @@ export default defineConfig({
 	retries: 1,
 
 	// Opt out of parallel tests on CI.
-	workers: process.env.CI ? 1 : undefined,
+	workers: SLOW || process.env.CI ? 1 : undefined,
 
 	// Reporter to use
 	reporter: [["html"], ["list"]],
@@ -22,6 +24,10 @@ export default defineConfig({
 	use: {
 		// Collect trace when retrying the failed test.
 		trace: "on-first-retry",
+		headless: !SLOW,
+		launchOptions: {
+			slowMo: SLOW ? 800 : undefined,
+		},
 	},
 	// Configure projects for major browsers.
 	projects: [

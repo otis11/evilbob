@@ -51,23 +51,28 @@ export function Command() {
 					{loadingMessage}
 				</div>
 			) : (
-				<VList onSelect={onSelect}>
+				<VList onSelect={onSelect} itemHeight={70}>
 					{(history || []).map((item) => (
 						<VListItem
+							className="flex-col"
 							data={item}
 							key={item.url}
 							actions={<Actions {...item}></Actions>}
 						>
-							<VListItemIcon
-								url={getFaviconUrl(item.url)}
-							></VListItemIcon>
-							<span>{item.title}</span>
-							<span className="text-muted-foreground pl-4 truncate shrink-0">
-								{item.visitCount} Visits
-							</span>
-							<span className="text-muted-foreground pl-4 truncate">
-								{item.url}
-							</span>
+							<p className="flex items-center w-full">
+								<VListItemIcon
+									url={getFaviconUrl(item.url)}
+								></VListItemIcon>
+								<span>{item.title}</span>
+							</p>
+							<p className="flex items-center w-full pt-1">
+								<span className="text-muted-foreground pl-8 truncate shrink-0">
+									{item.visitCount} Visits
+								</span>
+								<span className="text-muted-foreground pl-4 truncate">
+									{item.url}
+								</span>
+							</p>
 						</VListItem>
 					))}
 				</VList>

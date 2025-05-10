@@ -436,7 +436,7 @@ const VListItemIcon = ({ url, children }: VListItemIconProps) => {
 	const [error, setError] = useState(false);
 
 	return (
-		<span className="pr-2 flex items-center">
+		<span className="pr-2 flex items-center shrink-0">
 			{error ? (
 				<CircleHelpIcon></CircleHelpIcon>
 			) : url ? (

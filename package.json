@@ -5,7 +5,7 @@
 		"name": "otis11",
 		"url": "https://github.com/otis11"
 	},
-	"version": "0.6.1",
+	"version": "0.6.2",
 	"scripts": {
 		"lint": "biome check --write . && tsc",
 		"test": "playwright test",

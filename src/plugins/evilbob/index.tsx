@@ -16,5 +16,10 @@ export default definePlugin({
 			name: "open-plugins",
 			type: "command",
 		},
+		{
+			title: "Open Settings",
+			name: "open-settings",
+			type: "command",
+		},
 	],
 });

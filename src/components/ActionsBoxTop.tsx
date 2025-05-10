@@ -28,7 +28,7 @@ export function ActionsBoxTop({ children }: ActionsTopBoxProps) {
 	return (
 		<Popover open={isActionsOpen} onOpenChange={setIsActionsOpen}>
 			<PopoverTrigger className="text-xs tracking-widest text-muted-foreground">
-				Actions {keysAsString(config?.keybindings.openActions.keys)}
+				Actions {keysAsString(config?.keybindings.openActions?.keys)}
 			</PopoverTrigger>
 			<PopoverContent
 				className="p-1 border rounded-md w-56"

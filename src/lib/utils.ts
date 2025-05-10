@@ -122,15 +122,13 @@ export class KeyboardListener {
 					this.keysPressedDown = {};
 					return;
 				}
-				delete this.keysPressedDown[
-					this.normalizeKey(keyboardEvent.key)
-				];
+				delete this.keysPressedDown[normalizeKey(keyboardEvent.key)];
 			}
 		};
 
 		this.keydownHandler = (keyboardEvent) => {
 			if (keyboardEvent instanceof KeyboardEvent) {
-				const normalizedKey = this.normalizeKey(keyboardEvent.key);
+				const normalizedKey = normalizeKey(keyboardEvent.key);
 				this.keysPressedDown[normalizedKey] = true;
 
 				for (const listener of this.keydownListener) {
@@ -167,19 +165,12 @@ export class KeyboardListener {
 		}
 	}
 
-	normalizeKey(key: string) {
-		if (key.length === 1) {
-			return key.toLowerCase();
-		}
-		return key;
-	}
-
 	register(keys: string[], onActivate: () => void, onLeave?: () => void) {
 		if (keys.length === 0) {
 			return -1;
 		}
 		this.keydownListener.push({
-			keys: keys.map((key) => this.normalizeKey(key)),
+			keys: keys.map((key) => normalizeKey(key)),
 			onActivate,
 			onLeave,
 			isActive: false,
@@ -233,6 +224,13 @@ export function hexToRgba(hexStr: string): Rgba {
 		b: hexToDecimal(chunks[2]),
 		a: hexToDecimal(chunks[3]),
 	};
+}
+
+export function normalizeKey(key: string) {
+	if (key.length === 1) {
+		return key.toLowerCase();
+	}
+	return key;
 }
 
 export function chunkString(str: string, chunkSize: number) {

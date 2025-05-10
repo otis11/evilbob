@@ -13,6 +13,13 @@ export type ChromeStorageSetProps = {
 };
 
 export const browserApi = {
+	runtime: {
+		async openOptionsPage(): Promise<void> {
+			return await chrome.runtime.sendMessage({
+				event: "chrome.runtime.openOptionsPage",
+			});
+		},
+	},
 	sessions: {
 		async getRecentlyClosed(
 			props: chrome.sessions.Filter,

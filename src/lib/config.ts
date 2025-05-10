@@ -1,5 +1,9 @@
 import { deepMerge } from "@/lib/utils.ts";
-import { type KeybindingKey, defaultKeybindings } from "./keybindings.ts";
+import {
+	type Keybinding,
+	type KeybindingKey,
+	defaultKeybindings,
+} from "./keybindings.ts";
 
 let configCache: EvilbobConfig | undefined;
 
@@ -13,10 +17,7 @@ export interface EvilbobConfig {
 	plugins: {
 		enabled: Record<string, boolean>;
 	};
-	keybindings: Record<
-		KeybindingKey,
-		{ keys: string[]; description?: string; title?: string }
-	>;
+	keybindings: Record<KeybindingKey, Keybinding>;
 }
 
 export const DEFAULT_CONFIG: EvilbobConfig = {

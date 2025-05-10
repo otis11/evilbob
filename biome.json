@@ -10,8 +10,7 @@
 			"dist",
 			"src/lib/bangs/bangs.json",
 			"src/lib/bangs/bangs-sorted.json",
-			"src/plugins/list.json",
-			"src/globals.css"
+			"src/plugins/list.json"
 		],
 		"ignoreUnknown": false
 	},

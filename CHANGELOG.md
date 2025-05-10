@@ -1,7 +1,9 @@
 ## Unreleased
 - Rewrite From Scratch
-- Rename from `bob-command-palette` to `Evilbob`
-- Mark it clearly as a prototype
+- Rename from `bob-command-palette` to `Evilbob` and label it as a prototype
+- Introduce the concept of plugin commands. Each plugin command can be of type `command` or `view`. A `command` is just a function which gets executed. A `view` renders a custom view provided by the plugin. All Commands are listed in the root command palette.
+- Introduce the concept of actions. Each list item or plugin can have actions. Actions can be quickly shown via a shortcut (default `⌘⏎`)
+- Add plugins: `bookmarks` `browsing-data` `colors` `cookies` `downloads` `google-new` `history` `management` `sessions` `tabs` `top-sites` `website-media` `window` `youtube`
 
 ## 0.6.0 (January 05, 2025)
 - Feat: add an indicator below the search which prefix is currently active

@@ -9,6 +9,7 @@
 	"scripts": {
 		"lint": "biome check --write . && tsc",
 		"test": "playwright test",
+		"codegen": "bun scripts/codegen.ts",
 		"dev:chromium": "NODE_ENV=dev bun scripts/dev.ts",
 		"build": "bun scripts/build.ts --firefox --chromium",
 		"build:dev": "bun scripts/build.ts --firefox --chromium --dev",

@@ -5,6 +5,8 @@ import { type BrowserContext, test as base, chromium } from "@playwright/test";
 export const test = base.extend<{
 	context: BrowserContext;
 	extensionId: string;
+	extensionUrl: string;
+	openEvilbob: () => Promise<void>;
 }>({
 	// biome-ignore lint/correctness/noEmptyPattern: empty for now.
 	context: async ({}, use) => {
@@ -28,6 +30,24 @@ export const test = base.extend<{
 
 		const extensionId = background.url().split("/")[2];
 		await use(extensionId || "");
+	},
+	extensionUrl: async ({ context }, use) => {
+		let [background] = context.serviceWorkers();
+		if (!background)
+			background = await context.waitForEvent("serviceworker");
+
+		const extensionId = background.url().split("/")[2];
+		await use(extensionId ? `chrome-extension://${extensionId}` : "");
+	},
+	openEvilbob: async ({ page }, use) => {
+        // https://github.com/microsoft/playwright/issues/26693
+        // playwright does not currently support opening extensions via a shortcut
+        // __IS_DEV_BUILD__  adds a window event listener to open evilbob
+		await use(async () => {
+			await page.evaluate(() =>
+				window.dispatchEvent(new CustomEvent("evilbob-open")),
+			);
+		});
 	},
 });
 export const expect = test.expect;

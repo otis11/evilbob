@@ -85,6 +85,7 @@ export class EvilbobRoot {
 			]);
 			listener.register(config.keybindings.closePluginView.keys, () => {
 				EvilbobRoot.instance().unmountPluginView();
+				memoryStore.set("search", "");
 			});
 			listener.register(config.keybindings.openActions.keys, () => {
 				memoryStore.set("isActionsOpen", true);

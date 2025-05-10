@@ -70,7 +70,7 @@ function Actions(color: Color) {
 			(await browserApi.storage.sync.get(["colors"])).colors || [];
 		await browserApi.storage.sync.set({
 			colors: colors.filter(
-				(c) => !(c.title === color.title && c.title === color.c),
+				(c) => !(c.title === color.title && c.c === color.c),
 			),
 		});
 		toast(<span>Color Removed.</span>);

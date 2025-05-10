@@ -37,7 +37,20 @@ export function Command() {
 	async function onAddClick() {
 		const colors: Color[] =
 			(await browserApi.storage.sync.get(["colors"])).colors || [];
-		colors.push({ c: hexColor, title: hexColor });
+
+		let titleNumber = 0;
+		function title() {
+			return titleNumber > 0 ? `${hexColor} ${titleNumber}` : hexColor;
+		}
+
+		while (true) {
+			const sameTitleFound = colors.find((c) => c.title === title());
+			if (!sameTitleFound) {
+				break;
+			}
+			titleNumber += 1;
+		}
+		colors.push({ c: hexColor, title: title() });
 		await browserApi.storage.sync.set({ colors: colors });
 		toast(<span>Color Added.</span>);
 	}

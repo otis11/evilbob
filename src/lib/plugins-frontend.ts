@@ -78,10 +78,7 @@ export async function importPluginCommand(
 	pluginId: string,
 	name: string,
 ): Promise<PluginCommandImported> {
-	// TODO fix support persistent scripts
-	return await import(
-		`/plugins/${pluginId}/${name}.js?version=${Date.now()}`
-	);
+	return await import(`/plugins/${pluginId}/${name}.js`);
 }
 
 export async function importPluginDefinition(pluginId: string) {

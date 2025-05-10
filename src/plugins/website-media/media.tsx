@@ -23,9 +23,9 @@ export function Command() {
 		svg: true,
 		video: true,
 		picture: true,
-		object: false,
-		canvas: false,
-		"background-image": false,
+		object: true,
+		canvas: true,
+		"background-image": true,
 	});
 	const width = 120;
 	const height = 120;
@@ -128,7 +128,7 @@ export function Command() {
 					value="background-image"
 					checked={selectedCheckboxes["background-image"]}
 				>
-					background-image (!)
+					background-image
 				</Checkbox>
 				<div className="ml-auto">{elements.length} Items</div>
 			</div>

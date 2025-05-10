@@ -13,5 +13,5 @@ A command palette prototype.
 </p>
 
 
-
-> **_NOTE:_** The rewrite is not yet available. Only the old version.
+![Evilbob Dark](./src/media/evilbob-dark.png)
+![Evilbob Light](./src/media/evilbob-light.png)

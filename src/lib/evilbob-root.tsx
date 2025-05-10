@@ -58,7 +58,8 @@ export class EvilbobRoot {
 			}
 		});
 
-		chrome.runtime.onMessage.addListener(async (message) => {
+		// !! do not add async. Breaks in firefox sendResponse, will always be undefined
+		chrome.runtime.onMessage.addListener((message) => {
 			const event = message.event;
 			const data = message.data;
 			if (event === "background-error") {
@@ -136,9 +137,14 @@ export class EvilbobRoot {
 	private static createShadowRoot(root: HTMLElement) {
 		const shadow = root.attachShadow({ mode: "open" });
 
-		const sheet = new CSSStyleSheet();
-		sheet.replaceSync(styles);
-		shadow.adoptedStyleSheets = [sheet];
+		// https://bugzilla.mozilla.org/show_bug.cgi?id=1827104
+		// https://bugzilla.mozilla.org/show_bug.cgi?id=1766909
+		// cannot use [sheet] syntax. This would an array in a sandboxed context which is disallowed and breaks.
+		// also shadow.adoptedStyleSheets.push() throws shadow.adoptedStyleSheets.push is not a function.
+		// have to use a stylesheet
+		const style = document.createElement("style");
+		style.textContent = styles;
+		shadow.appendChild(style);
 
 		// window or document mouseover event does not seem to trigger consistent when a dialog opens from a shadow root
 		// it does trigger consistent on the shadow root

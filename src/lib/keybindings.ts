@@ -43,7 +43,7 @@ export const defaultKeybindings = {
 		title: "Close Evilbob.",
 	},
 	closePluginView: {
-		keys: [ACTION_KEY, "b"],
+		keys: [ACTION_KEY, "e"],
 		description: "Keybinding to close the active plugin view",
 		title: "Close plugin view.",
 	},

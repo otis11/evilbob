@@ -54,6 +54,7 @@ chrome.action.onClicked.addListener(async () => {
 // https://developer.chrome.com/docs/extensions/develop/concepts/messaging
 // return true if the sender should wait for a response
 // return false if its done
+// !! do not add async. Breaks in firefox sendResponse, will always be undefined
 chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
 	const event = message.event;
 	const data = message.data;

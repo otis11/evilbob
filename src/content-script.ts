@@ -1,11 +1,12 @@
 import { getConfig } from "./lib/config.ts";
 import { EvilbobRoot } from "./lib/evilbob-root.tsx";
 
-chrome.runtime.onMessage.addListener(async (message) => {
+// !! do not add async. Breaks in firefox sendResponse, will always be undefined
+chrome.runtime.onMessage.addListener((message) => {
 	const event = message.event;
 	const data = message.data;
 	if (event === "open") {
-		await openEvilbob();
+		openEvilbob().then();
 	}
 });
 

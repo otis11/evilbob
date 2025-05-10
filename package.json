@@ -11,6 +11,7 @@
 		"test": "playwright test",
 		"dev:chromium": "NODE_ENV=dev bun scripts/dev.ts",
 		"build": "bun scripts/build.ts --firefox --chromium",
+		"build:dev": "bun scripts/build.ts --firefox --chromium --dev",
 		"build:chromium": "bun scripts/build.ts --chromium",
 		"watch": "bun scripts/build.ts --firefox --chromium --watch",
 		"watch:chromium": "bun scripts/build.ts --chromium --watch"

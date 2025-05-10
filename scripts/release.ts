@@ -11,13 +11,6 @@ if (status.text()) {
 	process.exit(1);
 }
 
-// check for correct branch
-const branch = await $`git rev-parse --abbrev-ref HEAD`.quiet();
-if (branch.text().trim() !== "main") {
-	console.error('Tags are only meant to be created on the "main" branch!');
-	process.exit(1);
-}
-
 const versionTypes = ["major", "minor", "patch"];
 const versionType = Bun.argv[2] || "";
 

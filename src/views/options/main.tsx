@@ -4,7 +4,9 @@ import App from "./App.tsx";
 import "../../content-script.ts";
 import "../../globals.css";
 import { getConfig } from "@/lib/config.ts";
+import { automaticThemeUpdateDocument } from "@/lib/theme-preference.ts";
 
+automaticThemeUpdateDocument();
 getConfig().then((config) => {
 	const root = document.getElementById("root");
 	if (root) {

@@ -64,7 +64,7 @@ await $`bun run lint`;
 
 await $`git add .`;
 await $`git commit -m v${newVersion}`;
-await $`git tag v${newVersion}`;
+await $`git tag -a v${newVersion} -m "v${newVersion}"`;
 await $`git push`;
 await $`git push origin v${newVersion}`;
 

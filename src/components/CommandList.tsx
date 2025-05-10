@@ -9,7 +9,11 @@ export function CommandList({ commands, onSelect }: CommandListProps) {
 	return (
 		<VList onSelect={onSelect}>
 			{commands.map((command) => (
-				<VListItem data={command} key={command.name}>
+				<VListItem
+					data={command}
+					key={command.name}
+					data-testid={`command-${command.plugin.id}-${command.name}`}
+				>
 					<VListItemIcon>{command.plugin.icon}</VListItemIcon>
 					<span>{command.title}</span>
 					<span className="text-muted-foreground text-sm pl-4">

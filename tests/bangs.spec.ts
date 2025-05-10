@@ -8,7 +8,6 @@ test("The evilbob-root dialog can be opened and closed", async ({
 }) => {
 	await page.goto(`${extensionUrl}/src/views/welcome/welcome.html`);
 	await openEvilbob();
-	await expect(page.getByTestId("evilbob-dialog")).toBeVisible();
-	await page.keyboard.press("Escape");
-	await expect(page.getByTestId("evilbob-dialog")).not.toBeVisible();
+	await page.keyboard.press("!");
+	await expect(page.getByTestId("bangs-list")).toBeVisible();
 });

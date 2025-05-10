@@ -40,9 +40,9 @@ export const test = base.extend<{
 		await use(extensionId ? `chrome-extension://${extensionId}` : "");
 	},
 	openEvilbob: async ({ page }, use) => {
-        // https://github.com/microsoft/playwright/issues/26693
-        // playwright does not currently support opening extensions via a shortcut
-        // __IS_DEV_BUILD__  adds a window event listener to open evilbob
+		// https://github.com/microsoft/playwright/issues/26693
+		// playwright does not currently support opening extensions via a shortcut
+		// __IS_DEV_BUILD__  adds a window event listener to open evilbob
 		await use(async () => {
 			await page.evaluate(() =>
 				window.dispatchEvent(new CustomEvent("evilbob-open")),

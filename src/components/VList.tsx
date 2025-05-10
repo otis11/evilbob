@@ -39,6 +39,7 @@ const VList = <T,>({
 	itemSpacing,
 	onSelect,
 	activeElementTarget = EvilbobRoot.instance().shadowRoot,
+	...props
 }: VListProps<T>) => {
 	const [renderedChildren, setRenderedChildren] = useState<JSX.Element[]>([]);
 	const listRoot = useRef<HTMLUListElement>(null);
@@ -335,6 +336,7 @@ const VList = <T,>({
 			className="vlist m-0 text-sm flex list-none h-full overflow-auto relative "
 			ref={listRoot}
 			onScroll={onScroll}
+			{...props}
 		>
 			<div ref={heightDiv}>
 				{renderedChildren.map((child, index) => {
@@ -419,10 +421,12 @@ const VListItem = ({
 	onClick,
 	data,
 	actions,
+	...props
 }: VListItemProps) => {
 	return (
 		<div
 			className={`${className ? className : ""} truncate text-base text-fg items-center flex h-full w-full m-0 py-1.5 px-2 list-none`}
+			{...props}
 		>
 			{children}
 		</div>

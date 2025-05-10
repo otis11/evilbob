@@ -10,6 +10,12 @@ chrome.runtime.onMessage.addListener((message) => {
 	}
 });
 
+if (__IS_DEV_BUILD__) {
+	window.addEventListener("evilbob-open", (event) => {
+		openEvilbob().then();
+	});
+}
+
 if (document.documentURI.endsWith("evilbob-empty-page.html")) {
 	openEvilbob().then();
 }

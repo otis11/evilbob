@@ -173,6 +173,7 @@ export class EvilbobRoot {
 
 	private static createDialogElement() {
 		const dialog = document.createElement("dialog");
+		dialog.setAttribute("data-testid", "evilbob-dialog");
 		dialog.className =
 			"relative max-w-full max-h-full m-0 backdrop:bg-black backdrop:opacity-40 p-3 outline-none border-solid border-fg-weakest border bg-bg text-fg font-main rounded-lg m-auto overflow-hidden flex-col";
 

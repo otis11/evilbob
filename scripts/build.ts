@@ -61,6 +61,9 @@ async function buildExtension(options: BuildExtensionOptions) {
 				"@": path.resolve(__dirname, "../src"),
 			},
 		},
+		define: {
+			__IS_DEV_BUILD__: isDevBuild,
+		},
 		build: {
 			emptyOutDir: false,
 			watch,

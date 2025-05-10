@@ -13,7 +13,10 @@ export default function App() {
 				alt="Evilbob Logo"
 				src="https://raw.githubusercontent.com/otis11/evilbob/refs/heads/main/src/media/evilbob-icon-128x128.png"
 			/>
-			<p className="text-2xl flex items-center gap-1">
+			<p
+				className="text-2xl flex items-center gap-1"
+				data-testid="open-evilbob-keybinding"
+			>
 				To open me press
 				{keysAsString([ACTION_KEY, "Shift", "L"]).map((key) => (
 					<span key={key} className="font-bold tracking-widest">

@@ -58,7 +58,9 @@ chrome.action.onClicked.addListener(async () => {
 chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
 	const event = message.event;
 	const data = message.data;
-	if (event === "open-plugins") {
+	if (event === "open-evilbob") {
+		tryOpenEvilbobCurrentTab().then();
+	} else if (event === "open-plugins") {
 		chrome.tabs.create({
 			url: "src/views/plugins/plugins.html",
 		});

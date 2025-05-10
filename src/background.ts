@@ -4,6 +4,18 @@ chrome.commands.onCommand.addListener(async (command) => {
 	}
 });
 
+chrome.runtime.onInstalled.addListener(async (details) => {
+	if (details.reason === "install") {
+		await chrome.tabs.create({ url: "src/views/welcome/welcome.html" });
+	}
+
+	if (details.reason === "update") {
+		// on update
+	}
+	// set uninstall url
+	// chrome.runtime.setUninstallURL();
+});
+
 // biome-ignore lint/suspicious/noExplicitAny: can be any here
 async function notifyBackgroundError(err: any) {
 	const [currentTab] = await chrome.tabs.query({

@@ -4,7 +4,7 @@
 	"description": "Evilbob, a command palette prototype.",
 	"version": "0.6.1",
 	"background": {
-		"scripts": ["background.js"],
+		"service_worker": "background.js",
 		"type": "module"
 	},
 	"options_page": "src/views/options/options.html",
@@ -65,12 +65,6 @@
 				"linux": "Ctrl+Shift+L"
 			},
 			"description": "Open Evilbob"
-		}
-	},
-	"browser_specific_settings": {
-		"gecko": {
-			"id": "{b9b3ea58-ee1c-4d96-8b6e-9548ff99fa5b}",
-			"strict_min_version": "109.0"
 		}
 	}
 }

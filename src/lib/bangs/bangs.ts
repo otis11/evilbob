@@ -16,6 +16,6 @@ export function searchInBang(search: string, b: Bang) {
 }
 
 export function getBangSearchUrl(search: string, bang: Bang) {
-	const searchWithoutBang = search.replace(bang.t, "");
+	const searchWithoutBang = search.replace(`!${bang.t}`, "").trim();
 	return bang.u.replace("{{{s}}}", encodeURI(searchWithoutBang));
 }

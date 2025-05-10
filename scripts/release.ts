@@ -52,7 +52,7 @@ await Bun.write(
 	JSON.stringify(packageJson, null, 4),
 );
 await Bun.write(
-	resolve(__dirname, "../src/manifest-chrome.json"),
+	resolve(__dirname, "../src/manifest-chromium.json"),
 	JSON.stringify(chromiumManifest, null, 4),
 );
 await Bun.write(

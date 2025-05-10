@@ -24,3 +24,17 @@ export function onThemePreferenceChange(
 export function getThemePreference() {
 	return prefersColorScheme;
 }
+
+export function automaticThemeUpdateDocument() {
+	if (getThemePreference() === "dark") {
+		document.documentElement.classList.add("dark");
+	}
+
+	onThemePreferenceChange((preference) => {
+		if (preference === "dark") {
+			document.documentElement.classList.add("dark");
+		} else {
+			document.documentElement.classList.remove("dark");
+		}
+	});
+}

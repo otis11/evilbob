@@ -192,7 +192,8 @@
 		@apply max-w-screen-lg mx-auto p-5;
 	}
 
-	html {
+	html,
+	body {
 		@apply bg-background text-foreground;
 	}
 }

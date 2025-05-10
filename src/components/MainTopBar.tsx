@@ -42,6 +42,7 @@ export function MainTopBar() {
 
 	function onBack() {
 		EvilbobRoot.instance().unmountPluginView();
+		setSearch("");
 	}
 
 	return (

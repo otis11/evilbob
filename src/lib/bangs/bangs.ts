@@ -1,7 +1,4 @@
-// TODO support bangs separately from plugins i think. Maybe bangs can be a plugin view?
 // https://duckduckgo.com/bang.js
-// dont support all, but use the same structure to maybe support all in the future
-
 // bangs-sorted.json are generated via scripts/create-bangs-sorted.ts
 export type Bang = { s: string; t: string; u: string };
 let cache: Bang[] | undefined = undefined;

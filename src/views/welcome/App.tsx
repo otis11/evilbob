@@ -28,7 +28,7 @@ export default function App() {
 				<span className="mr-2">Choose Your Plugins</span>
 				<ExternalLinkIcon></ExternalLinkIcon>
 			</Button>
-			<p className="pt-8">
+			<div className="pt-8">
 				If the shortcut is not working, set the shortcut yourself.
 				<h3 className="pt-2 font-bold">Chrome</h3>
 				<ol>
@@ -55,7 +55,7 @@ export default function App() {
 					</li>
 					<li>Set the shortcut for "Open Evilbob"</li>
 				</ol>
-			</p>
+			</div>
 		</>
 	);
 }

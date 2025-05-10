@@ -23,8 +23,6 @@ export interface EvilbobConfig {
 export const DEFAULT_CONFIG: EvilbobConfig = {
 	dimensions: { width: 800, height: 600 },
 	plugins: {
-		// TODO determine default enabled plugins
-		// Should be only without permissions needed
 		enabled: {
 			colors: true,
 			"website-media": true,

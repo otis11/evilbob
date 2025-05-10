@@ -58,7 +58,7 @@ export function Command() {
 		);
 	}
 
-	// biome-ignore lint/correctness/useExhaustiveDependencies: TODO fix ignore
+	// biome-ignore lint/correctness/useExhaustiveDependencies: flattenBookmarksTree is not needed as a dependency
 	useEffect(() => {
 		browserApi.bookmarks.getTree().then((res) => {
 			if (!Array.isArray(res)) {

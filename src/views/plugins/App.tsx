@@ -2,10 +2,11 @@ import { VList, VListItemTile } from "@/components/VList.tsx";
 import { Button } from "@/components/ui/button.tsx";
 import { type Plugin, searchInPlugin } from "@/plugins";
 import pluginJsonList from "@/plugins/list.json";
-import { Check } from "lucide-react";
+import { Check, ExternalLinkIcon } from "lucide-react";
 import { type ChangeEvent, useEffect, useRef, useState } from "react";
 
 import { Input } from "@/components/ui/input.tsx";
+import { browserApi } from "@/lib/browser-api.ts";
 import { type EvilbobConfig, getConfig } from "@/lib/config.ts";
 import { disablePlugin, enablePlugin } from "@/lib/plugins-frontend.ts";
 const plugins = pluginJsonList as Plugin[];
@@ -38,17 +39,27 @@ export default function App({ config }: AppProps) {
 		setSearchValue(data.target.value);
 	}
 
+	async function onSettingsClick() {
+		await browserApi.runtime.openOptionsPage();
+	}
+
 	return (
 		<>
-			<Input
-				autoCapitalize="off"
-				autoCorrect="off"
-				autoComplete="off"
-				ref={inputRef}
-				className="h-12 !text-lg mb-4"
-				onChange={onChange}
-				data-vlist-stay-focused
-			></Input>
+			<div className="flex gap-4 items-center mb-4">
+				<Input
+					autoCapitalize="off"
+					autoCorrect="off"
+					autoComplete="off"
+					ref={inputRef}
+					className="h-12 !text-lg"
+					onChange={onChange}
+					data-vlist-stay-focused
+				></Input>
+				<Button onClick={onSettingsClick}>
+					<span className="mr-2">Settings</span>
+					<ExternalLinkIcon></ExternalLinkIcon>
+				</Button>
+			</div>
 			<VList
 				activeElementTarget={document}
 				onSelect={onEnableDisableClick}

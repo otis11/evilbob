@@ -11,11 +11,13 @@ export interface NumberSelectProps {
 	values: number[] | { value: number; label: string }[];
 	onValueChange?: (value: number) => void;
 	value: number | string;
+	container?: HTMLElement | ShadowRoot;
 }
 export function NumberSelect({
 	values,
 	onValueChange,
 	value,
+	container,
 }: NumberSelectProps) {
 	return (
 		<Select
@@ -33,7 +35,9 @@ export function NumberSelect({
 					e.stopPropagation();
 				}}
 				container={
-					EvilbobRoot.instance().dialogElement || document.body
+					container ||
+					EvilbobRoot.instance().dialogElement ||
+					document.body
 				}
 			>
 				{values.map((value, index) => (

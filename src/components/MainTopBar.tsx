@@ -1,8 +1,15 @@
 import { ActionsBoxTop } from "@/components/ActionsBoxTop.tsx";
 import { Input } from "@/components/ui/input.tsx";
+import { browserApi } from "@/lib/browser-api.ts";
 import { keysAsString } from "@/lib/keybindings.ts";
 import { useMemoryStore } from "@/lib/memory-store.ts";
-import { ArrowLeft, Blocks, Loader2, Maximize2, Minimize2 } from "lucide-react";
+import {
+	ArrowLeft,
+	Loader2,
+	Maximize2,
+	Minimize2,
+	SettingsIcon,
+} from "lucide-react";
 import { type ChangeEvent, useEffect, useRef } from "react";
 import { EvilbobRoot } from "../lib/evilbob-root.tsx";
 
@@ -29,8 +36,8 @@ export function MainTopBar() {
 		}
 	}, [pluginViewCommand, isActionsOpen]);
 
-	async function onPluginsClick() {
-		await chrome.runtime.sendMessage({ event: "open-plugins" });
+	async function onSettingsClick() {
+		await browserApi.runtime.openOptionsPage();
 	}
 
 	function onBack() {
@@ -76,12 +83,15 @@ export function MainTopBar() {
 						size={20}
 					></Maximize2>
 				)}
-				<Blocks size={20} onClick={onPluginsClick}></Blocks>
+				<SettingsIcon
+					size={20}
+					onClick={onSettingsClick}
+				></SettingsIcon>
 			</div>
 			<div className="h-8 min-h-8 flex items-center justify-between">
 				<div className="text-xs tracking-widest text-muted-foreground">
 					Go Back{" "}
-					{keysAsString(config?.keybindings.closePluginView.keys)}
+					{keysAsString(config?.keybindings.closePluginView?.keys)}
 				</div>
 				<div className="text-sm text-muted-foreground">
 					{searchHint}

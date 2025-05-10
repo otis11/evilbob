@@ -151,6 +151,8 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
 		return true;
 	} else if (event === "chrome.downloads.showDefaultFolder") {
 		chrome.downloads.showDefaultFolder();
+	} else if (event === "chrome.runtime.openOptionsPage") {
+		chrome.runtime.openOptionsPage();
 	}
 	return false;
 });

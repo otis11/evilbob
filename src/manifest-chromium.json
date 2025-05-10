@@ -7,6 +7,7 @@
 		"service_worker": "background.js",
 		"type": "module"
 	},
+	"options_page": "src/views/options/options.html",
 	"web_accessible_resources": [
 		{
 			"resources": [

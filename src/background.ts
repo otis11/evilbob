@@ -263,6 +263,18 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
 		chrome.downloads.showDefaultFolder();
 	} else if (event === "chrome.runtime.openOptionsPage") {
 		chrome.runtime.openOptionsPage();
+	} else if (event === "chrome.bookmarks.remove") {
+		chrome.bookmarks
+			.remove(data)
+			.then((res) => sendResponse(res))
+			.catch((err) => notifyBackgroundError(err));
+		return true;
+	} else if (event === "chrome.bookmarks.search") {
+		chrome.bookmarks
+			.search(data)
+			.then((res) => sendResponse(res))
+			.catch((err) => notifyBackgroundError(err));
+		return true;
 	}
 	return false;
 });

@@ -237,6 +237,20 @@ export const browserApi = {
 				data: props,
 			});
 		},
+		async remove(id: string) {
+			return await chrome.runtime.sendMessage({
+				event: "chrome.bookmarks.remove",
+				data: id,
+			});
+		},
+		async search(
+			query: string | chrome.bookmarks.SearchQuery,
+		): Promise<chrome.bookmarks.BookmarkTreeNode[]> {
+			return await chrome.runtime.sendMessage({
+				event: "chrome.bookmarks.search",
+				data: query,
+			});
+		},
 	},
 	storage: {
 		local: {

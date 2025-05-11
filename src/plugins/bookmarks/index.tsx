@@ -13,6 +13,11 @@ export default definePlugin({
 			type: "command",
 		},
 		{
+			title: "Remove bookmark current tab",
+			name: "remove-bookmark-current-tab",
+			type: "command",
+		},
+		{
 			title: "Bookmarks",
 			name: "bookmarks",
 			type: "view",

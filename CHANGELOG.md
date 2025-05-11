@@ -1,4 +1,4 @@
-## Unreleased
+## 0.7.0 (May 11, 2025)
 - Rewrite From Scratch
 - Rename from `bob-command-palette` to `Evilbob` and label it as a prototype
 - Introduce the concept of plugin commands. Each plugin command can be of type `command` or `view`. A `command` is just a function which gets executed. A `view` renders a custom view provided by the plugin. All Commands are listed in the root command palette.

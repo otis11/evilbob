@@ -1,3 +1,4 @@
+import { toast } from "@/components/Toast.tsx";
 import { VList, VListItem, VListItemIcon } from "@/components/VList.tsx";
 import { browserApi } from "@/lib/browser-api.ts";
 import { useMemoryStore } from "@/lib/memory-store.ts";
@@ -85,7 +86,11 @@ export function Command() {
 						bookmarks?.filter((b) => searchInBookmark(search, b)) ||
 						[]
 					).map((item) => (
-						<VListItem data={item} key={item.node.id}>
+						<VListItem
+							data={item}
+							key={item.node.id}
+							actions={<Actions {...item}></Actions>}
+						>
 							<VListItemIcon
 								url={getFaviconUrl(item.node.url)}
 							></VListItemIcon>
@@ -101,5 +106,17 @@ export function Command() {
 				</VList>
 			)}
 		</>
+	);
+}
+
+function Actions(bookmark: BookmarkItem) {
+	async function removeBookmark() {
+		await browserApi.bookmarks.remove(bookmark.node.id);
+		toast("Removed.");
+	}
+	return (
+		<VList>
+			<VListItem onClick={removeBookmark}>Remove</VListItem>
+		</VList>
 	);
 }

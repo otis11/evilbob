@@ -275,6 +275,12 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
 			.then((res) => sendResponse(res))
 			.catch((err) => notifyBackgroundError(err));
 		return true;
+	} else if (event === "chrome.bookmarks.update") {
+		chrome.bookmarks
+			.update(data.id, data.changes)
+			.then((res) => sendResponse(res))
+			.catch((err) => notifyBackgroundError(err));
+		return true;
 	}
 	return false;
 });

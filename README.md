@@ -4,7 +4,7 @@
 <p align="center">
     <a target="_blank" href="https://chromewebstore.google.com/detail/bob-command-palette/ofdklnmcjbihdajkbnfjpcamifkpngdl">Chrome</a>
     •
-    <a target="_blank" href="https://addons.mozilla.org/de/firefox/addon/bob-command-palette">Firefox</a>
+    <a target="_blank" href="https://addons.mozilla.org/de/firefox/addon/evilbob/">Firefox</a>
     •
     <a target="_blank" href="https://microsoftedge.microsoft.com/addons/detail/bobcommandpalette/nikplhepafilmghdhfkkkbjogblchima">Edge</a>
 </p>

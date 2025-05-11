@@ -251,6 +251,12 @@ export const browserApi = {
 				data: query,
 			});
 		},
+		async update(id: string, changes: chrome.bookmarks.UpdateChanges) {
+			return await chrome.runtime.sendMessage({
+				event: "chrome.bookmarks.update",
+				data: { id, changes },
+			});
+		},
 	},
 	storage: {
 		local: {

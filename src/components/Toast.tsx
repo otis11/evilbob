@@ -15,8 +15,27 @@ export function Toast() {
 			return toastContent;
 		},
 	);
+
+	function onMouseOver() {
+		if (activeTimeout) {
+			clearTimeout(activeTimeout);
+		}
+	}
+
+	function onMouseLeave() {
+		if (toastContent) {
+			createCloseTimeout();
+		}
+	}
+
 	return (
-		<div className="z-50 absolute pointer-events-none left-0 right-0 bottom-4 w-full flex justify-center">
+		<div
+			className="z-50 absolute pointer-events-none left-0 right-0 bottom-4 w-full flex justify-center"
+			onMouseOver={onMouseOver}
+			onFocus={onMouseOver}
+			onBlur={onMouseLeave}
+			onMouseLeave={onMouseLeave}
+		>
 			{toastContent ? (
 				<div className="animate-slide-bottom-in flex shadow-md items-center py-3 px-4 border-input rounded-sm border border-solid bg-primary text-primary-foreground pointer-events-auto">
 					{toastContent}
@@ -46,14 +65,18 @@ function updateToasts() {
 	}
 }
 
+function createCloseTimeout() {
+	activeTimeout = setTimeout(() => {
+		toastContent = undefined;
+		updateToasts();
+	}, toastDuration);
+}
+
 function showToast(content: JSX.Element | string) {
 	toastContent = content;
 	updateToasts();
 	if (activeTimeout) {
 		clearTimeout(activeTimeout);
 	}
-	activeTimeout = setTimeout(() => {
-		toastContent = undefined;
-		updateToasts();
-	}, toastDuration);
+	createCloseTimeout();
 }

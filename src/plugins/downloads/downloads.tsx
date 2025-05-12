@@ -24,7 +24,7 @@ export function Command() {
 		);
 	}
 
-	useEffect(() => {
+	function loadDownloads() {
 		browserApi.downloads.search({}).then(async (res) => {
 			if (res.length === 0) {
 				setLoadingMessage("No downloads found.");
@@ -44,6 +44,11 @@ export function Command() {
 			setDownloads(downloadsWithIcons);
 			setLoadingMessage("");
 		});
+	}
+
+	// biome-ignore lint/correctness/useExhaustiveDependencies: cannot use as a dependency
+	useEffect(() => {
+		loadDownloads();
 	}, []);
 
 	async function onSelect(item: DownloadItemWithIcon) {
@@ -66,7 +71,12 @@ export function Command() {
 						<VListItem
 							data={item}
 							key={item.id}
-							actions={<Actions {...item}></Actions>}
+							actions={
+								<Actions
+									item={item}
+									loadDownloads={loadDownloads}
+								></Actions>
+							}
 						>
 							<VListItemIcon url={item.icon}></VListItemIcon>
 							<div className="flex flex-col w-full truncate">
@@ -111,13 +121,19 @@ export function Command() {
 	);
 }
 
-function Actions(item: chrome.downloads.DownloadItem) {
+interface ActionsProps {
+	item: DownloadItemWithIcon;
+	loadDownloads: () => void;
+}
+function Actions({ item, loadDownloads }: ActionsProps) {
 	async function removeFile() {
 		await browserApi.downloads.removeFile(item.id);
+		loadDownloads();
 	}
 
 	async function eraseDownload() {
 		await browserApi.downloads.erase({ id: item.id });
+		loadDownloads();
 	}
 
 	return (

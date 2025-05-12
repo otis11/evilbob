@@ -355,3 +355,15 @@ export function unique(str: string, list: string[]) {
 	}
 	return uniqueStr();
 }
+
+//biome-ignore lint/suspicious/noExplicitAny: can be any
+export function errorToJson(err: any) {
+	//biome-ignore lint/suspicious/noExplicitAny: can be any
+	const data: Record<string, any> = {};
+	for (const key of Object.getOwnPropertyNames(err)) {
+		try {
+			data[key] = err[key];
+		} catch {}
+	}
+	return data;
+}

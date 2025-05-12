@@ -63,16 +63,17 @@ export class EvilbobRoot {
 			const event = message.event;
 			const data = message.data;
 			if (event === "background-error") {
-				try {
-					toast(
-						<>
-							<span>An error occurred.</span>
-							<pre>{JSON.stringify(data, null, 4)}</pre>
-						</>,
-					);
-				} catch {
-					toast("An error occurred.");
-				}
+				console.error("Evilbob error", data);
+				toast(
+					<div className="flex flex-col">
+						<span className="text-destructive-foreground font-bold text-sm">
+							An error occurred.
+						</span>
+						<pre className="text-xs">
+							{JSON.stringify(data, null, 4)}
+						</pre>
+					</div>,
+				);
 			}
 		});
 

@@ -51,14 +51,18 @@ export function Command() {
 		});
 		await browserApi.storage.sync.set({ colors: currentColors });
 		toast(<span>Color Edited.</span>);
+		setEditColor(undefined);
+		loadColors();
 	}
 
-	useEffect(() => {
+	function loadColors() {
 		browserApi.storage.sync.get(["colors"]).then((res) => {
 			setColors(res.colors);
 			setColorsLoadingMessage("");
 		});
-	}, []);
+	}
+
+	useEffect(loadColors, []);
 
 	return (
 		<>
@@ -75,6 +79,7 @@ export function Command() {
 				></EditColor>
 			) : (
 				<ColorList
+					loadColors={loadColors}
 					setEditColor={setEditColor}
 					colors={colors}
 					search={search}
@@ -88,8 +93,14 @@ interface ColorListProps {
 	colors: Color[] | undefined;
 	search: string;
 	setEditColor: (newColor: Color | undefined) => void;
+	loadColors: () => void;
 }
-function ColorList({ colors, search, setEditColor }: ColorListProps) {
+function ColorList({
+	colors,
+	search,
+	setEditColor,
+	loadColors,
+}: ColorListProps) {
 	function searchInColor(s: string, color: Color) {
 		return (
 			color.title.toLowerCase().includes(s.toLowerCase()) ||
@@ -117,6 +128,7 @@ function ColorList({ colors, search, setEditColor }: ColorListProps) {
 					key={item.title}
 					actions={
 						<Actions
+							loadColors={loadColors}
 							color={item}
 							setEditColor={setEditColor}
 						></Actions>
@@ -136,8 +148,9 @@ function ColorList({ colors, search, setEditColor }: ColorListProps) {
 interface ActionsProps {
 	color: Color;
 	setEditColor: (color: Color | undefined) => void;
+	loadColors: () => void;
 }
-function Actions({ color, setEditColor }: ActionsProps) {
+function Actions({ color, setEditColor, loadColors }: ActionsProps) {
 	async function removeColor() {
 		const colors: Color[] =
 			(await browserApi.storage.sync.get(["colors"])).colors || [];
@@ -147,6 +160,7 @@ function Actions({ color, setEditColor }: ActionsProps) {
 			),
 		});
 		toast(<span>Color Removed.</span>);
+		loadColors();
 	}
 
 	function editColor() {

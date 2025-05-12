@@ -5,6 +5,7 @@ import { Input } from "@/components/ui/input";
 import { browserApi } from "@/lib/browser-api.ts";
 import { memoryStore, useMemoryStore } from "@/lib/memory-store.ts";
 import { copyTextToClipboard, getFaviconUrl } from "@/lib/utils.ts";
+import { flattenBookmarksTree } from "@/plugins/bookmarks/utils.ts";
 import { Label } from "@radix-ui/react-label";
 import { useEffect, useState } from "react";
 
@@ -40,6 +41,7 @@ export function Command() {
 			memoryStore.set(
 				"actions",
 				<EditActions
+					loadBookmarks={loadBookmarks}
 					newUrl={editUrl}
 					newTitle={editTitle}
 					id={editBookmark.node.id}
@@ -49,33 +51,11 @@ export function Command() {
 		}
 	}, [editTitle, editUrl, editBookmark]);
 
-	function flattenBookmarksTree(
-		tree: chrome.bookmarks.BookmarkTreeNode[],
-		folders: BookmarkFolder[],
-	) {
-		const results: BookmarkItem[] = [];
-		for (const item of tree) {
-			if (item.children) {
-				const childFolders: BookmarkFolder[] = [
-					...folders,
-					{ title: item.title, id: item.id },
-				];
-				results.push(
-					...flattenBookmarksTree(item.children, childFolders),
-				);
-				continue;
-			}
-
-			results.push({
-				node: item,
-				folders,
-			});
-		}
-		return results;
-	}
-
-	// biome-ignore lint/correctness/useExhaustiveDependencies: flattenBookmarksTree is not needed as a dependency
 	useEffect(() => {
+		loadBookmarks();
+	}, []);
+
+	function loadBookmarks() {
 		browserApi.bookmarks.getTree().then((res) => {
 			if (!Array.isArray(res)) {
 				setBookmarksLoadingMessage("Failed loading bookmarks.");
@@ -88,7 +68,8 @@ export function Command() {
 			}
 			setBookmarks(bookmarksFlat);
 		});
-	}, []);
+	}
+
 	return (
 		<>
 			{bookmarksLoadingMessage ? (
@@ -103,9 +84,11 @@ export function Command() {
 					setTitle={setEditTitle}
 					setUrl={setEditUrl}
 					id={editBookmark.node.id}
+					loadBookmarks={loadBookmarks}
 				></EditBookmark>
 			) : (
 				<BookmarksList
+					loadBookmarks={loadBookmarks}
 					bookmarks={bookmarks}
 					setEditBookmark={setBookmarkToEdit}
 					search={search}
@@ -118,11 +101,13 @@ export function Command() {
 interface ActionsProps {
 	bookmark: BookmarkItem;
 	setEditBookmark: (item: BookmarkItem | undefined) => void;
+	loadBookmarks: () => void;
 }
-function Actions({ bookmark, setEditBookmark }: ActionsProps) {
+function Actions({ bookmark, setEditBookmark, loadBookmarks }: ActionsProps) {
 	async function removeBookmark() {
 		await browserApi.bookmarks.remove(bookmark.node.id);
 		toast("Removed.");
+		loadBookmarks();
 	}
 
 	function editBookmark() {
@@ -161,11 +146,13 @@ interface BookmarksListProps {
 	bookmarks: BookmarkItem[] | undefined;
 	search: string;
 	setEditBookmark: (item: BookmarkItem | undefined) => void;
+	loadBookmarks: () => void;
 }
 function BookmarksList({
 	bookmarks,
 	search,
 	setEditBookmark,
+	loadBookmarks,
 }: BookmarksListProps) {
 	async function onBookmarkClick(item: BookmarkItem) {
 		if (item.node.url) {
@@ -188,6 +175,7 @@ function BookmarksList({
 						key={item.node.id}
 						actions={
 							<Actions
+								loadBookmarks={loadBookmarks}
 								bookmark={item}
 								setEditBookmark={setEditBookmark}
 							></Actions>
@@ -221,6 +209,7 @@ interface EditBookmarkProps {
 	setTitle: (newTitle: string) => void;
 	setUrl: (newUrl: string) => void;
 	id: string;
+	loadBookmarks: () => void;
 }
 function EditBookmark({
 	id,
@@ -229,6 +218,7 @@ function EditBookmark({
 	url,
 	setTitle,
 	setUrl,
+	loadBookmarks,
 }: EditBookmarkProps) {
 	function onEditCancel() {
 		setEditBookmark(undefined);
@@ -238,6 +228,7 @@ function EditBookmark({
 		await browserApi.bookmarks.update(id, { title, url });
 		toast("Bookmark updated.");
 		setEditBookmark(undefined);
+		loadBookmarks();
 	}
 
 	return (
@@ -275,12 +266,14 @@ interface EditActionsProps {
 	newTitle: string;
 	newUrl: string;
 	id: string;
+	loadBookmarks: () => void;
 }
 function EditActions({
 	setEditBookmark,
 	newTitle,
 	newUrl,
 	id,
+	loadBookmarks,
 }: EditActionsProps) {
 	function onEditCancel() {
 		setEditBookmark(undefined);
@@ -290,6 +283,7 @@ function EditActions({
 		await browserApi.bookmarks.update(id, { title: newTitle, url: newUrl });
 		toast("Bookmark updated.");
 		setEditBookmark(undefined);
+		loadBookmarks();
 	}
 	return (
 		<VList>

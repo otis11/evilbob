@@ -13,13 +13,8 @@ export interface CopyToClipboardProps {
 }
 
 export async function copyTextToClipboard(text: string) {
-	const type = "text/plain";
-	const clipboardItemData = {
-		[type]: text,
-	};
-	const clipboardItem = new ClipboardItem(clipboardItemData);
 	return await navigator.clipboard
-		.write([clipboardItem])
+		.writeText(text)
 		.then(() => true)
 		.catch(() => false);
 }
@@ -208,7 +203,7 @@ export interface Rgba {
 }
 export type RgbaKey = keyof Rgba;
 export function rgbaToHex({ r, g, b, a }: Rgba) {
-	// 255 -> FF
+	return `#${decimalToHex(r)}${decimalToHex(g)}${decimalToHex(b)}${decimalToHex(a)}`;
 }
 
 export function hexToRgba(hexStr: string): Rgba {
@@ -343,4 +338,20 @@ export function getSecondLevelDomain(urlString: string) {
 export function getDomainWithoutSubdomains(urlString: string) {
 	const url = new URL(urlString);
 	return `${url.hostname.split(".").at(-2) || ""}.${url.hostname.split(".").at(-1) || ""}`;
+}
+
+export function unique(str: string, list: string[]) {
+	let number = 0;
+	function uniqueStr() {
+		return number > 0 ? `${str} ${number}` : str;
+	}
+
+	while (true) {
+		const sameStrFound = list.find((l) => l === uniqueStr());
+		if (!sameStrFound) {
+			break;
+		}
+		number += 1;
+	}
+	return uniqueStr();
 }

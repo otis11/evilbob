@@ -28,11 +28,17 @@ export function ActionsBoxTop({ children }: ActionsTopBoxProps) {
 	return (
 		<Popover open={isActionsOpen} onOpenChange={setIsActionsOpen}>
 			<PopoverTrigger className="text-xs tracking-widest text-muted-foreground flex items-center gap-1">
-				Actions{" "}
-				{keysAsString(config?.keybindings.openActions?.keys).map(
-					(key) => (
-						<span key={key}>{key}</span>
-					),
+				{children ? (
+					<>
+						Actions{" "}
+						{keysAsString(
+							config?.keybindings.openActions?.keys,
+						).map((key) => (
+							<span key={key}>{key}</span>
+						))}
+					</>
+				) : (
+					""
 				)}
 			</PopoverTrigger>
 			<PopoverContent

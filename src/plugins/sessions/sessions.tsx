@@ -13,6 +13,9 @@ export function Command() {
 	const [loadingMessage, setLoadingMessage] = useState("loading...");
 
 	function searchInSession(search: string, session: chrome.sessions.Session) {
+		if (search === "") {
+			return true;
+		}
 		if (session.window) {
 			let found = false;
 			for (const tab of session.window.tabs || []) {

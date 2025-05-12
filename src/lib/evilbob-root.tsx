@@ -221,9 +221,6 @@ export class EvilbobRoot {
 			EvilbobRoot.instance().pluginViewRoot?.unmount();
 			EvilbobRoot.instance().mainRoot = undefined;
 			EvilbobRoot.instance().pluginViewRoot = undefined;
-		});
-
-		dialog.addEventListener("close", async () => {
 			document.body.style.overflow = "auto";
 		});
 
@@ -310,5 +307,9 @@ export class EvilbobRoot {
 				"!rounded-none",
 			);
 		}
+	}
+
+	public close() {
+		this.dialogElement.close();
 	}
 }

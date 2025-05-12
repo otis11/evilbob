@@ -23,7 +23,7 @@ export function Command() {
 		);
 	}
 
-	useEffect(() => {
+	function loadExtensions() {
 		browserApi.management.getAll().then((res) => {
 			if (!Array.isArray(res)) {
 				setLoadingMessage("Failed loading extensions.");
@@ -32,6 +32,11 @@ export function Command() {
 			setLoadingMessage("");
 			setExtensions(res);
 		});
+	}
+
+	// biome-ignore lint/correctness/useExhaustiveDependencies: cannot use loadExtensions as a dependency
+	useEffect(() => {
+		loadExtensions();
 	}, []);
 
 	async function onSelect(extension: chrome.management.ExtensionInfo) {
@@ -57,7 +62,12 @@ export function Command() {
 						<VListItem
 							data={extension}
 							key={extension.id}
-							actions={<Actions {...extension}></Actions>}
+							actions={
+								<Actions
+									extension={extension}
+									loadExtensions={loadExtensions}
+								></Actions>
+							}
 						>
 							<VListItemIcon
 								url={extension.icons?.[0]?.url}
@@ -97,9 +107,14 @@ export function Command() {
 	);
 }
 
-function Actions(extension: chrome.management.ExtensionInfo) {
+interface ActionsProps {
+	loadExtensions: () => void;
+	extension: chrome.management.ExtensionInfo;
+}
+function Actions({ extension, loadExtensions }: ActionsProps) {
 	async function uninstall() {
 		await browserApi.management.uninstall({ id: extension.id });
+		loadExtensions();
 		toast(<span>Extension uninstalled.</span>);
 	}
 

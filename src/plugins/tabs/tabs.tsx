@@ -24,7 +24,7 @@ export function Command() {
 		);
 	}
 
-	useEffect(() => {
+	function loadTabs() {
 		browserApi.tabs.query({}).then((res) => {
 			if (!Array.isArray(res)) {
 				setLoadingMessage("Failed loading top Sites.");
@@ -33,6 +33,11 @@ export function Command() {
 			setLoadingMessage("");
 			setTabs(res);
 		});
+	}
+
+	// biome-ignore lint/correctness/useExhaustiveDependencies: cannot declare loadTabs as a dependency
+	useEffect(() => {
+		loadTabs();
 	}, []);
 
 	async function onSelect(tab: chrome.tabs.Tab) {
@@ -57,7 +62,12 @@ export function Command() {
 							<VListItem
 								data={tab}
 								key={tab.id}
-								actions={<Actions {...tab}></Actions>}
+								actions={
+									<Actions
+										tab={tab}
+										loadTabs={loadTabs}
+									></Actions>
+								}
 							>
 								<VListItemIcon
 									url={
@@ -114,9 +124,14 @@ export function Command() {
 	);
 }
 
-function Actions(tab: chrome.tabs.Tab) {
+interface ActionsProps {
+	tab: chrome.tabs.Tab;
+	loadTabs: () => void;
+}
+function Actions({ tab, loadTabs }: ActionsProps) {
 	async function onCloseOtherTabs() {
 		await closeOtherTabs(tab);
+		loadTabs();
 	}
 	async function onCopyUrl() {
 		if (tab.url) {

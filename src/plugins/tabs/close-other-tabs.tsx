@@ -1,16 +1,10 @@
-import { browserApi, getCurrentTab } from "@/lib/browser-api.ts";
+import { getCurrentTab } from "@/lib/browser-api.ts";
+import { closeOtherTabs } from "@/plugins/tabs/utils.ts";
 
 export async function Command() {
-	const activeWindow = await browserApi.windows.getLastFocused();
-	const tabs = await browserApi.tabs.query({
-		windowId: activeWindow.id,
-	});
 	const lastActiveTab = await getCurrentTab();
-	const promises = [];
-	for (const tab of tabs) {
-		if (tab.id && tab.id !== lastActiveTab?.id) {
-			promises.push(browserApi.tabs.remove(tab.id));
-		}
+	if (!lastActiveTab) {
+		return;
 	}
-	await Promise.all(promises);
+	await closeOtherTabs(lastActiveTab);
 }

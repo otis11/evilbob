@@ -2,8 +2,11 @@ import { toast } from "@/components/Toast.tsx";
 import { VList, VListItem } from "@/components/VList.tsx";
 import { browserApi, getCurrentTab } from "@/lib/browser-api.ts";
 import { useMemoryStore } from "@/lib/memory-store.ts";
-import { formatTimeFuture, getDomainWithoutSubdomains } from "@/lib/utils.ts";
-import { LockIcon, PenOffIcon } from "lucide-react";
+import {
+	copyTextToClipboard,
+	formatTimeFuture,
+	getDomainWithoutSubdomains,
+} from "@/lib/utils.ts";
 import { useEffect, useState } from "react";
 interface Color {
 	c: string;
@@ -65,25 +68,39 @@ export function Command() {
 							key={cookie.name}
 							actions={<Actions {...cookie}></Actions>}
 						>
-							<div className="flex flex-col w-full pr-4">
-								<span className="m-auto p-1 flex gap-4 items-center justify-start w-full">
+							<div className="flex flex-col w-full pr-4 truncate">
+								<span className="m-auto p-1 flex gap-4 items-center truncate justify-start w-full">
 									<span>{cookie.name}</span>
+									<span className="text-muted-foreground">
+										{cookie.domain}
+									</span>
+									{cookie.secure ? (
+										<span className="text-muted-foreground text-xs">
+											secure
+										</span>
+									) : (
+										""
+									)}
+									{cookie.httpOnly ? (
+										<span className="text-muted-foreground text-xs">
+											httpOnly
+										</span>
+									) : (
+										""
+									)}
+									{cookie.hostOnly ? (
+										<span className="text-muted-foreground text-xs">
+											hostOnly
+										</span>
+									) : (
+										""
+									)}
 								</span>
-								<span className="text-muted-foreground truncate w-full justify-start flex items-center">
-									{cookie.domain}
+								<span className="text-muted-foreground truncate justify-start flex items-center">
+									{cookie.value}
 								</span>
 							</div>
 							<div className="shrink-0 flex align-center gap-4 ml-auto">
-								{cookie.secure ? (
-									<LockIcon size={20}></LockIcon>
-								) : (
-									""
-								)}
-								{cookie.httpOnly ? (
-									<PenOffIcon size={20}></PenOffIcon>
-								) : (
-									""
-								)}
 								<span className="text-muted-foreground">
 									{cookie.session
 										? "Session"
@@ -116,7 +133,18 @@ function Actions(cookie: chrome.cookies.Cookie) {
 	}
 	return (
 		<VList>
-			<VListItem onClick={removeCookie}>Remove</VListItem>
+			<VListItem
+				key={2}
+				onClick={() => copyTextToClipboard(cookie.value)}
+			>
+				Copy value
+			</VListItem>
+			<VListItem key={3} onClick={() => copyTextToClipboard(cookie.name)}>
+				Copy name
+			</VListItem>
+			<VListItem key={1} onClick={removeCookie}>
+				Remove
+			</VListItem>
 		</VList>
 	);
 }

@@ -254,6 +254,7 @@ export class EvilbobRoot {
 		memoryStore.set("PluginView", undefined);
 		memoryStore.set("pluginViewCommand", undefined);
 		memoryStore.set("actions", undefined);
+		memoryStore.set("searchHint", "");
 		window.dispatchEvent(new CustomEvent("evilbob-unmount-plugin-view"));
 	}
 

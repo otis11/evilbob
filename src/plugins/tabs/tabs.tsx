@@ -1,7 +1,8 @@
 import { VList, VListItem, VListItemIcon } from "@/components/VList.tsx";
 import { browserApi } from "@/lib/browser-api.ts";
 import { useMemoryStore } from "@/lib/memory-store.ts";
-import { getFaviconUrl } from "@/lib/utils.ts";
+import { copyTextToClipboard, getFaviconUrl } from "@/lib/utils.ts";
+import { closeOtherTabs } from "@/plugins/tabs/utils.ts";
 import {
 	EyeIcon,
 	PinIcon,
@@ -34,8 +35,13 @@ export function Command() {
 		});
 	}, []);
 
-	async function onSelect(site: chrome.topSites.MostVisitedURL) {
-		await browserApi.tabs.create({ url: site.url });
+	async function onSelect(tab: chrome.tabs.Tab) {
+		if (tab.id) {
+			await browserApi.tabs.update(tab.id, {
+				active: true,
+				highlighted: true,
+			});
+		}
 	}
 
 	return (
@@ -48,7 +54,11 @@ export function Command() {
 				<VList onSelect={onSelect}>
 					{(tabs?.filter((s) => searchInTab(search, s)) || []).map(
 						(tab) => (
-							<VListItem data={tab} key={tab.id}>
+							<VListItem
+								data={tab}
+								key={tab.id}
+								actions={<Actions {...tab}></Actions>}
+							>
 								<VListItemIcon
 									url={
 										tab.favIconUrl || getFaviconUrl(tab.url)
@@ -101,5 +111,41 @@ export function Command() {
 				</VList>
 			)}
 		</>
+	);
+}
+
+function Actions(tab: chrome.tabs.Tab) {
+	async function onCloseOtherTabs() {
+		await closeOtherTabs(tab);
+	}
+	async function onCopyUrl() {
+		if (tab.url) {
+			await copyTextToClipboard(tab.url);
+		}
+	}
+	async function onCopyTitle() {
+		if (tab.title) {
+			await copyTextToClipboard(tab.title);
+		}
+	}
+
+	return (
+		<VList>
+			{tab.url ? (
+				<VListItem key={1} onClick={onCopyUrl}>
+					Copy url
+				</VListItem>
+			) : (
+				""
+			)}
+			{tab.title ? (
+				<VListItem key={2} onClick={onCopyTitle}>
+					Copy title
+				</VListItem>
+			) : (
+				""
+			)}
+			<VListItem onClick={onCloseOtherTabs}>Close other tabs</VListItem>
+		</VList>
 	);
 }

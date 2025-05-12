@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button.tsx";
 import { Input } from "@/components/ui/input";
 import { browserApi } from "@/lib/browser-api.ts";
 import { memoryStore, useMemoryStore } from "@/lib/memory-store.ts";
-import { getFaviconUrl } from "@/lib/utils.ts";
+import { copyTextToClipboard, getFaviconUrl } from "@/lib/utils.ts";
 import { Label } from "@radix-ui/react-label";
 import { useEffect, useState } from "react";
 
@@ -128,10 +128,27 @@ function Actions({ bookmark, setEditBookmark }: ActionsProps) {
 	function editBookmark() {
 		setEditBookmark(bookmark);
 	}
+
+	async function onCopyUrl() {
+		if (bookmark.node.url) {
+			await copyTextToClipboard(bookmark.node.url);
+		}
+	}
+
+	async function onCopyTitle() {
+		await copyTextToClipboard(bookmark.node.title);
+	}
+
 	return (
 		<VList>
 			<VListItem key={2} onClick={editBookmark}>
 				Edit
+			</VListItem>
+			<VListItem key={3} onClick={onCopyTitle}>
+				Copy title
+			</VListItem>
+			<VListItem key={4} onClick={onCopyUrl}>
+				Copy url
 			</VListItem>
 			<VListItem key={1} onClick={removeBookmark}>
 				Remove

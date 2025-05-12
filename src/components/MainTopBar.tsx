@@ -10,7 +10,7 @@ import {
 	Minimize2,
 	SettingsIcon,
 } from "lucide-react";
-import { type ChangeEvent, useEffect, useRef } from "react";
+import { type ChangeEvent, type KeyboardEvent, useEffect, useRef } from "react";
 import { EvilbobRoot } from "../lib/evilbob-root.tsx";
 
 export function MainTopBar() {
@@ -45,6 +45,18 @@ export function MainTopBar() {
 		setSearch("");
 	}
 
+	function onKeyUp(event: KeyboardEvent<HTMLInputElement>) {
+		if (event.key === "Enter") {
+			for (const callback of EvilbobRoot.instance()
+				.onSearchEnterCallbacks) {
+				callback(event);
+			}
+		}
+		for (const callback of EvilbobRoot.instance().onSearchKeyUpCallbacks) {
+			callback(event);
+		}
+	}
+
 	return (
 		<>
 			<div className="flex items-center gap-3">
@@ -72,6 +84,7 @@ export function MainTopBar() {
 					className="h-12 !text-lg"
 					ref={inputRef}
 					onChange={onChange}
+					onKeyUp={onKeyUp}
 					value={search}
 				></Input>
 				{isFullscreen ? (

@@ -14,12 +14,8 @@ export function Command() {
 	const [loadingMessage, setLoadingMessage] = useState("loading...");
 	const [maxResults, setMaxResults] = useState<number>(100);
 
-	useEffect(() => {
-		let isMounted = true;
+	function loadHistory() {
 		browserApi.history.search({ text: search, maxResults }).then((res) => {
-			if (!isMounted) {
-				return;
-			}
 			if (!Array.isArray(res)) {
 				setLoadingMessage("Failed loading history..");
 				return;
@@ -27,9 +23,11 @@ export function Command() {
 			setLoadingMessage("");
 			setHistory(res);
 		});
-		return () => {
-			isMounted = false;
-		};
+	}
+
+	// biome-ignore lint/correctness/useExhaustiveDependencies: both are used in loadHistory
+	useEffect(() => {
+		loadHistory();
 	}, [search, maxResults]);
 
 	async function onSelect(site: chrome.topSites.MostVisitedURL) {
@@ -57,7 +55,12 @@ export function Command() {
 							className="flex-col"
 							data={item}
 							key={item.url}
-							actions={<Actions {...item}></Actions>}
+							actions={
+								<Actions
+									item={item}
+									loadHistory={loadHistory}
+								></Actions>
+							}
 						>
 							<p className="flex items-center w-full">
 								<VListItemIcon
@@ -81,7 +84,11 @@ export function Command() {
 	);
 }
 
-function Actions(item: chrome.history.HistoryItem) {
+interface ActionsProps {
+	loadHistory: () => void;
+	item: chrome.history.HistoryItem;
+}
+function Actions({ item, loadHistory }: ActionsProps) {
 	async function deleteUrl() {
 		if (!item.url) {
 			toast(<span>Item has no url.</span>);
@@ -90,6 +97,7 @@ function Actions(item: chrome.history.HistoryItem) {
 
 		await browserApi.history.deleteUrl({ url: item.url });
 		toast(<span>Url deleted.</span>);
+		loadHistory();
 	}
 
 	async function onCopyUrl() {

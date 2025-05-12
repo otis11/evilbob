@@ -1,23 +1,35 @@
 import { VList, VListItem } from "@/components/VList.tsx";
 import { Button } from "@/components/ui/button.tsx";
-import { Input } from "@/components/ui/input";
 import { browserApi } from "@/lib/browser-api.ts";
+import { EvilbobRoot } from "@/lib/evilbob-root.tsx";
+import { useMemoryStore } from "@/lib/memory-store.ts";
 import { formatTimeAgo } from "@/lib/utils.ts";
-import { type KeyboardEvent, useState } from "react";
+import { useEffect, useState } from "react";
 
 export function Command() {
 	const [visits, setVisits] = useState<
 		chrome.history.VisitItem[] | undefined
 	>();
 	const [loadingMessage, setLoadingMessage] = useState("");
-	const [url, setUrl] = useState<string>("");
+	const [search, setSearch] = useMemoryStore("search");
 
 	async function onButtonClick() {
 		await loadVisits();
 	}
 
+	useEffect(() => {
+		const onEnter = () => {
+			if (search === "") {
+				return;
+			}
+			loadVisits().then();
+		};
+		EvilbobRoot.instance().onSearchEnter(onEnter);
+		return () => EvilbobRoot.instance().removeOnSearchEnter(onEnter);
+	}, [search]);
+
 	async function loadVisits() {
-		browserApi.history.getVisits({ url }).then((res) => {
+		browserApi.history.getVisits({ url: search }).then((res) => {
 			if (!Array.isArray(res)) {
 				setLoadingMessage("Failed loading history..");
 				return;
@@ -31,33 +43,21 @@ export function Command() {
 		});
 	}
 
-	async function onKeyUp(e: KeyboardEvent<HTMLInputElement>) {
-		if (e.key === "Enter") {
-			await loadVisits();
-		}
-	}
-
 	return (
 		<>
-			<div className="flex pt-4 items-center">
-				<Input
-					onKeyUp={onKeyUp}
-					className="mr-4"
-					placeholder="Enter Url..."
-					onChange={(e) => setUrl(e.target.value)}
-					value={url}
-				></Input>
+			<div className="flex py-4 items-center justify-center">
+				<span className="shrink-0 pr-4 text-muted-foreground">
+					{visits?.length || 0} Visits
+				</span>
 				<Button onClick={onButtonClick}>Get Visits</Button>
+				<span className="pl-4 text-muted-foreground">Type url ^</span>
 			</div>
 			{loadingMessage ? (
-				<div className="flex w-full justify-center text-xl">
+				<div className="flex w-full justify-center text-xl mt-4">
 					{loadingMessage}
 				</div>
 			) : (
 				<>
-					<div className="pb-4 pl-2 shrink-0">
-						{visits?.length || 0} Visits
-					</div>
 					<VList>
 						{(visits || []).map((item) => (
 							<VListItem data={item} key={item.visitId}>

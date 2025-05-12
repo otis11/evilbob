@@ -1,3 +1,35 @@
+## 0.8.0 (May 12, 2025)
+- Plugin `tabs`
+    - when selecting a tab don't create a new one, focus the selected tab instead
+    - add copy and close other tabs actions to each tab item
+- Plugin `cookies`
+    - improve the displayed information for each cookie item
+    - add copy actions
+    - reload cookies after deleting a cookie
+- Plugin `history`
+  - add copy actions
+  - reload history after removing an item
+- Plugin `downloads`
+    - add copy actions
+- Plugin `top-sites`
+    - add copy actions
+- Plugin `colors`
+  - add the ability to edit the color title and value
+  - copy a color to the clipboard when clicked
+- Plugin `bookmarks`
+  - add command `Remove bookmark current tab` [3d7b7dd](https://github.com/otis11/evilbob/pull/66/commits/3d7b7dd8768f1f2bc4ab920bb36c167e5bc317d8)
+  - add `remove` action to each bookmark item in the `bookmarks` command view [3d7b7dd](https://github.com/otis11/evilbob/pull/66/commits/3d7b7dd8768f1f2bc4ab920bb36c167e5bc317d8)
+  - add the ability to edit a bookmarks title and url [b4a9518](https://github.com/otis11/evilbob/pull/66/commits/b4a95184b8c1d7506ef5dd015475719d6de6a849)
+  - add copy actions
+  - reload bookmarks after removing a bookmark
+- Add plugin `Emoji & Kaomoji` [0fbfb3e](https://github.com/otis11/evilbob/pull/66/commits/0fbfb3e94d08aca82767cd3b0dd99033ca2411c1)
+  - add command view `Emoji` to search and copy emoji
+  - add command view `Kaomoji` to search and copy kaomoji
+- Don't try to scroll to surroundings items on a list when a mouseover even triggers [4b14e67](https://github.com/otis11/evilbob/pull/66/commits/4b14e674c520382bdf3630230200e30efff31470)
+- Hide `Go Back` and `Actions` below the search bar when these actions are not available [8490c42](https://github.com/otis11/evilbob/pull/66/commits/8490c42a401a0fcda83d776429a0cb41962798f1)
+- Fixed a bug caused the rgba to hex conversion to be not correct for small values
+- Improved error messages displayed
+- When hovering over a toast message, stops the timer to close it. Timer to close the toast starts again when the mouse leaves the toast
 ## 0.7.0 (May 11, 2025)
 - Rewrite From Scratch
 - Rename from `bob-command-palette` to `Evilbob` and label it as a prototype

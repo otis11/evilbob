@@ -5,6 +5,7 @@ import {
 	onThemePreferenceChange,
 } from "@/lib/theme-preference.ts";
 import { KeyboardListener } from "@/lib/utils.ts";
+import type { KeyboardEvent } from "react";
 import { type Root, createRoot } from "react-dom/client";
 // @ts-expect-error typescript does not know ?inline imports
 import styles from "../globals.css?inline";
@@ -17,6 +18,12 @@ export type HTMLEvilbobRoot = HTMLElement & { instance: EvilbobRoot };
 export class EvilbobRoot {
 	public mainRoot: Root | undefined;
 	public pluginViewRoot: Root | undefined = undefined;
+	public onSearchEnterCallbacks: ((
+		event: KeyboardEvent<HTMLInputElement>,
+	) => void)[] = [];
+	public onSearchKeyUpCallbacks: ((
+		event: KeyboardEvent<HTMLInputElement>,
+	) => void)[] = [];
 
 	private constructor(
 		public readonly pluginViewElement: HTMLDivElement,
@@ -157,6 +164,34 @@ export class EvilbobRoot {
 		});
 
 		return shadow;
+	}
+
+	public onSearchEnter(
+		callback: (event: KeyboardEvent<HTMLInputElement>) => void,
+	) {
+		this.onSearchEnterCallbacks.push(callback);
+	}
+
+	public onSearchKeyUp(
+		callback: (event: KeyboardEvent<HTMLInputElement>) => void,
+	) {
+		this.onSearchKeyUpCallbacks.push(callback);
+	}
+
+	public removeOnSearchEnter(
+		callback: (event: KeyboardEvent<HTMLInputElement>) => void,
+	) {
+		this.onSearchEnterCallbacks = this.onSearchEnterCallbacks.filter(
+			(cb) => cb !== callback,
+		);
+	}
+
+	public removeOnSearchKeyUp(
+		callback: (event: KeyboardEvent<HTMLInputElement>) => void,
+	) {
+		this.onSearchKeyUpCallbacks = this.onSearchKeyUpCallbacks.filter(
+			(cb) => cb !== callback,
+		);
 	}
 
 	private static createMainElement() {

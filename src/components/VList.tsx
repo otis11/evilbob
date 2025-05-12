@@ -131,33 +131,35 @@ const VList = <T,>({
 		};
 	}, [activeIndex, itemCountPerRow, parsedChildren]);
 
-	// biome-ignore lint/correctness/useExhaustiveDependencies: possibly sets scroll top, don't set as a dependency
-	useEffect(() => {
-		const start = scrollTop + surroundingItems * realItemHeight;
-		const end = scrollTop + availHeight - surroundingItems * realItemHeight;
-		const item = realItemHeight * Math.floor(activeIndex / itemCountPerRow);
-		/*
-            |   - start
-            |
-            |   - item
-            |
-            |   - end
-         */
-		if (item > end) {
-			const newScrollTop = scrollTop + realItemHeight;
-			if (listRoot.current) {
-				listRoot.current.scrollTop = newScrollTop;
+	function updateScrollTopSurroundingItems(index: number) {
+		setTimeout(() => {
+			const start = scrollTop + surroundingItems * realItemHeight;
+			const end =
+				scrollTop + availHeight - surroundingItems * realItemHeight;
+			const item = realItemHeight * Math.floor(index / itemCountPerRow);
+			/*
+                |   - start
+                |
+                |   - item
+                |
+                |   - end
+             */
+			if (item > end) {
+				const newScrollTop = scrollTop + realItemHeight;
+				if (listRoot.current) {
+					listRoot.current.scrollTop = newScrollTop;
+				}
+				setScrollTop(newScrollTop);
 			}
-			setScrollTop(newScrollTop);
-		}
-		if (item < start) {
-			const newScrollTop = scrollTop - realItemHeight;
-			if (listRoot.current) {
-				listRoot.current.scrollTop = newScrollTop;
+			if (item < start) {
+				const newScrollTop = scrollTop - realItemHeight;
+				if (listRoot.current) {
+					listRoot.current.scrollTop = newScrollTop;
+				}
+				setScrollTop(newScrollTop);
 			}
-			setScrollTop(newScrollTop);
-		}
-	}, [activeIndex, surroundingItems]);
+		}, 0);
+	}
 
 	useEffect(() => {
 		let isMounted = true;
@@ -244,9 +246,10 @@ const VList = <T,>({
 				// border do nothing
 				return;
 			}
-			setActiveIndex(
-				(activeIndex + itemCountPerRow) % parsedChildren.length,
-			);
+			const newIndex =
+				(activeIndex + itemCountPerRow) % parsedChildren.length;
+			setActiveIndex(newIndex);
+			updateScrollTopSurroundingItems(newIndex);
 		}
 	}
 	function highlightNextAbove() {
@@ -262,6 +265,7 @@ const VList = <T,>({
 				targetIndex = parsedChildren.length - 1;
 			}
 			setActiveIndex(targetIndex);
+			updateScrollTopSurroundingItems(targetIndex);
 		}
 	}
 	function highlightNextLeft() {

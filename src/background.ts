@@ -1,3 +1,5 @@
+import { errorToJson } from "@/lib/utils.ts";
+
 chrome.commands.onCommand.addListener(async (command) => {
 	if (command === "open") {
 		await tryOpenEvilbobCurrentTab();
@@ -24,7 +26,7 @@ async function notifyBackgroundError(err: any) {
 	});
 	await chrome.tabs.sendMessage(currentTab?.id || -1, {
 		event: "background-error",
-		data: err,
+		data: errorToJson(err),
 	});
 }
 

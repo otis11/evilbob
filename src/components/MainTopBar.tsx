@@ -90,19 +90,27 @@ export function MainTopBar() {
 					onClick={onSettingsClick}
 				></SettingsIcon>
 			</div>
-			<div className="h-8 min-h-8 flex items-center justify-between">
+			<div className="h-8 min-h-8 flex items-center relative">
 				<div className="text-xs tracking-widest text-muted-foreground flex items-center gap-1">
-					Go Back{" "}
-					{keysAsString(
-						config?.keybindings.closePluginView?.keys,
-					).map((key) => (
-						<span key={key}>{key}</span>
-					))}
+					{pluginViewCommand ? (
+						<>
+							Go Back{" "}
+							{keysAsString(
+								config?.keybindings.closePluginView?.keys,
+							).map((key) => (
+								<span key={key}>{key}</span>
+							))}
+						</>
+					) : (
+						""
+					)}
 				</div>
-				<div className="text-sm text-muted-foreground">
+				<div className="text-sm text-muted-foreground left-1/2 transform -translate-x-1/2 absolute">
 					{searchHint}
 				</div>
-				<ActionsBoxTop>{actions}</ActionsBoxTop>
+				<span className="ml-auto">
+					<ActionsBoxTop>{actions}</ActionsBoxTop>
+				</span>
 			</div>
 		</>
 	);

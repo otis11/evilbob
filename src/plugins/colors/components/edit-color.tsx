@@ -4,12 +4,7 @@ import { Button } from "@/components/ui/button.tsx";
 import { Input } from "@/components/ui/input.tsx";
 import { Slider } from "@/components/ui/slider.tsx";
 import { browserApi } from "@/lib/browser-api.ts";
-import {
-	type Rgba,
-	type RgbaKey,
-	decimalToHex,
-	hexToRgba,
-} from "@/lib/utils.ts";
+import { type Rgba, type RgbaKey, hexToRgba, rgbaToHex } from "@/lib/utils.ts";
 import { Label } from "@radix-ui/react-label";
 import { type ChangeEvent, useEffect, useState } from "react";
 
@@ -45,20 +40,20 @@ export function EditColor({
 	initialTitle,
 	onSave,
 }: EditColorProps) {
-	function rgbaAsHex() {
-		return `#${decimalToHex(rgba.r)}${decimalToHex(rgba.g)}${decimalToHex(rgba.b)}${`0${decimalToHex(rgba.a)}`.slice(-2)}`;
-	}
+	useEffect(() => {
+		setRgba({ r, g, b, a });
+	}, [r, g, b, a]);
 	const [rgba, setRgba] = useState<Rgba>({
 		r,
 		g,
 		b,
 		a,
 	});
-	const [title, setTitle] = useState<string>(initialTitle || rgbaAsHex());
-	const [hexColor, setHexColor] = useState(rgbaAsHex());
+	const [title, setTitle] = useState<string>(initialTitle || rgbaToHex(rgba));
+	const [hexColor, setHexColor] = useState(rgbaToHex(rgba));
 	// biome-ignore lint/correctness/useExhaustiveDependencies: seems like an error, rgbaAsHex uses rgba.
 	useEffect(() => {
-		const newHexColor = rgbaAsHex();
+		const newHexColor = rgbaToHex(rgba);
 		setHexColor(newHexColor);
 		if (title === hexColor) {
 			setTitle(newHexColor);

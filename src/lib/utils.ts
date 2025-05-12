@@ -203,7 +203,7 @@ export interface Rgba {
 }
 export type RgbaKey = keyof Rgba;
 export function rgbaToHex({ r, g, b, a }: Rgba) {
-	return `#${decimalToHex(r)}${decimalToHex(g)}${decimalToHex(b)}${decimalToHex(a)}`;
+	return `#${`0${decimalToHex(r)}`.slice(-2)}${`0${decimalToHex(g)}`.slice(-2)}${`0${decimalToHex(b)}`.slice(-2)}${`0${decimalToHex(a)}`.slice(-2)}`;
 }
 
 export function hexToRgba(hexStr: string): Rgba {

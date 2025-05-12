@@ -29,26 +29,28 @@ export function Command() {
 		);
 	}
 
-	useEffect(() => {
-		(async () => {
-			const currentTab = await getCurrentTab();
-			if (!currentTab?.url) {
-				setLoadingMessage("Tab not found.");
-				setCookies([]);
-				return;
-			}
-			const cookies = await browserApi.cookies.getAll({
-				domain: getDomainWithoutSubdomains(currentTab.url),
-			});
+	async function loadCookies() {
+		const currentTab = await getCurrentTab();
+		if (!currentTab?.url) {
+			setLoadingMessage("Tab not found.");
+			setCookies([]);
+			return;
+		}
+		const cookies = await browserApi.cookies.getAll({
+			domain: getDomainWithoutSubdomains(currentTab.url),
+		});
 
-			if (cookies.length === 0) {
-				setLoadingMessage("No cookies found.");
-				setCookies([]);
-				return;
-			}
-			setCookies(cookies);
-			setLoadingMessage("");
-		})();
+		if (cookies.length === 0) {
+			setLoadingMessage("No cookies found.");
+			setCookies([]);
+			return;
+		}
+		setCookies(cookies);
+		setLoadingMessage("");
+	}
+	// biome-ignore lint/correctness/useExhaustiveDependencies: cannot use loadCookies as a dependency
+	useEffect(() => {
+		loadCookies().then();
 	}, []);
 
 	return (
@@ -66,7 +68,12 @@ export function Command() {
 					).map((cookie, index) => (
 						<VListItem
 							key={cookie.name}
-							actions={<Actions {...cookie}></Actions>}
+							actions={
+								<Actions
+									cookie={cookie}
+									loadCookies={loadCookies}
+								></Actions>
+							}
 						>
 							<div className="flex flex-col w-full pr-4 truncate">
 								<span className="m-auto p-1 flex gap-4 items-center truncate justify-start w-full">
@@ -120,7 +127,11 @@ export function Command() {
 	);
 }
 
-function Actions(cookie: chrome.cookies.Cookie) {
+interface ActionsProps {
+	cookie: chrome.cookies.Cookie;
+	loadCookies: () => Promise<void>;
+}
+function Actions({ cookie, loadCookies }: ActionsProps) {
 	async function removeCookie() {
 		const currentTab = await getCurrentTab();
 		if (currentTab?.url) {
@@ -128,6 +139,7 @@ function Actions(cookie: chrome.cookies.Cookie) {
 				url: currentTab.url,
 				name: cookie.name,
 			});
+			await loadCookies();
 			toast("Removed.");
 		}
 	}

@@ -367,3 +367,9 @@ export function errorToJson(err: any) {
 	}
 	return data;
 }
+
+export function markElementInDocument(el: HTMLElement | SVGElement) {
+	el.style.setProperty("border", "5px solid red", "important");
+	el.style.setProperty("filter", "none", "important");
+	el.scrollIntoView({ block: "center", behavior: "smooth" });
+}

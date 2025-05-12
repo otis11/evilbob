@@ -1,8 +1,9 @@
 import { Checkbox } from "@/components/Checkbox.tsx";
 import { toast } from "@/components/Toast";
 import { VList, VListItem, VListItemTile } from "@/components/VList.tsx";
+import { EvilbobRoot } from "@/lib/evilbob-root";
 import { useMemoryStore } from "@/lib/memory-store";
-import { copyTextToClipboard } from "@/lib/utils.ts";
+import { copyTextToClipboard, markElementInDocument } from "@/lib/utils.ts";
 import { useEffect, useState } from "react";
 let imageIdCounter = 0;
 type MediaType =
@@ -151,6 +152,7 @@ export function Command() {
 								key={imageIdCounter++}
 								actions={
 									<Actions
+										ogItemReference={element}
 										url={element.src}
 										html={element.outerHTML}
 									></Actions>
@@ -180,7 +182,10 @@ export function Command() {
 								className="p-1"
 								key={imageIdCounter++}
 								actions={
-									<Actions html={element.outerHTML}></Actions>
+									<Actions
+										html={element.outerHTML}
+										ogItemReference={element}
+									></Actions>
 								}
 							>
 								<div
@@ -203,6 +208,7 @@ export function Command() {
 								key={imageIdCounter++}
 								actions={
 									<Actions
+										ogItemReference={element}
 										url={element.src}
 										html={element.outerHTML}
 									></Actions>
@@ -230,6 +236,7 @@ export function Command() {
 								key={imageIdCounter++}
 								actions={
 									<Actions
+										ogItemReference={element}
 										backgroundStyle={
 											getComputedStyle(element)
 												.backgroundImage
@@ -260,6 +267,7 @@ function Actions(props: {
 	url?: string;
 	html?: string;
 	backgroundStyle?: string;
+	ogItemReference: HTMLOrSVGElement;
 }) {
 	async function tryCopy(text: string | undefined) {
 		if (!text) {
@@ -272,6 +280,18 @@ function Actions(props: {
 		}
 	}
 
+	function highlightOnPage() {
+		EvilbobRoot.instance().close();
+		requestAnimationFrame(() => {
+			if (
+				props.ogItemReference instanceof HTMLElement ||
+				props.ogItemReference instanceof SVGElement
+			) {
+				markElementInDocument(props.ogItemReference);
+			}
+		});
+	}
+
 	return (
 		<VList>
 			{props.url ? (
@@ -281,6 +301,9 @@ function Actions(props: {
 			) : (
 				""
 			)}
+			<VListItem key="highlightOnPage" onClick={highlightOnPage}>
+				Highlight on Page (experimental)
+			</VListItem>
 			{props.html ? (
 				<VListItem key="html" onClick={() => tryCopy(props.html)}>
 					Copy Html

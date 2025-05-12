@@ -3,7 +3,7 @@ import { toast } from "@/components/Toast";
 import { VList, VListItem, VListItemIcon } from "@/components/VList.tsx";
 import { browserApi } from "@/lib/browser-api.ts";
 import { useMemoryStore } from "@/lib/memory-store.ts";
-import { getFaviconUrl } from "@/lib/utils.ts";
+import { copyTextToClipboard, getFaviconUrl } from "@/lib/utils.ts";
 import { useEffect, useState } from "react";
 
 export function Command() {
@@ -92,10 +92,35 @@ function Actions(item: chrome.history.HistoryItem) {
 		toast(<span>Url deleted.</span>);
 	}
 
+	async function onCopyUrl() {
+		if (item.url) {
+			await copyTextToClipboard(item.url);
+		}
+	}
+	async function onCopyTitle() {
+		if (item.title) {
+			await copyTextToClipboard(item.title);
+		}
+	}
+
 	return (
 		<VList>
+			{item.url ? (
+				<VListItem key={1} onClick={onCopyUrl}>
+					Copy url
+				</VListItem>
+			) : (
+				""
+			)}
+			{item.title ? (
+				<VListItem key={2} onClick={onCopyTitle}>
+					Copy title
+				</VListItem>
+			) : (
+				""
+			)}
 			<VListItem onClick={deleteUrl}>
-				Delete Url (Removes all occurrences)
+				Delete url (Removes all occurrences)
 			</VListItem>
 		</VList>
 	);

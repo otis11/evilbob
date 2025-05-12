@@ -1,6 +1,7 @@
 import { VList, VListItem, VListItemIcon } from "@/components/VList.tsx";
 import { browserApi } from "@/lib/browser-api.ts";
 import { useMemoryStore } from "@/lib/memory-store.ts";
+import { copyTextToClipboard } from "@/lib/utils.ts";
 import { CheckCheckIcon, CircleOffIcon, LoaderCircleIcon } from "lucide-react";
 import { useEffect, useState } from "react";
 
@@ -45,6 +46,10 @@ export function Command() {
 		});
 	}, []);
 
+	async function onSelect(item: DownloadItemWithIcon) {
+		await browserApi.downloads.show(item.id);
+	}
+
 	return (
 		<>
 			{loadingMessage ? (
@@ -52,20 +57,24 @@ export function Command() {
 					{loadingMessage}
 				</div>
 			) : (
-				<VList itemHeight={80}>
+				<VList itemHeight={80} onSelect={onSelect}>
 					{(
 						downloads?.filter((color) =>
 							searchInDownload(search, color),
 						) || []
 					).map((item, index) => (
 						<VListItem
+							data={item}
 							key={item.id}
 							actions={<Actions {...item}></Actions>}
 						>
 							<VListItemIcon url={item.icon}></VListItemIcon>
 							<div className="flex flex-col w-full truncate">
-								<span className="m-auto p-1">
-									<div className="shrink-0 mr-4 flex align-center gap-4">
+								<span className="pb-1 flex items-center">
+									<span className="pr-2 truncate">
+										{item.filename} {item.icon}
+									</span>
+									<div className="shrink-0 mr-4 flex align-center gap-4 ml-auto">
 										{item.state === "complete" ? (
 											<CheckCheckIcon
 												size={20}
@@ -89,9 +98,8 @@ export function Command() {
 											""
 										)}
 									</div>
-									{item.filename} {item.icon}
 								</span>
-								<span className="text-muted-foreground pl-4 truncate">
+								<span className="text-muted-foreground truncate">
 									{item.url}
 								</span>
 							</div>
@@ -104,10 +112,6 @@ export function Command() {
 }
 
 function Actions(item: chrome.downloads.DownloadItem) {
-	async function showInExplorer() {
-		await browserApi.downloads.show(item.id);
-	}
-
 	async function removeFile() {
 		await browserApi.downloads.removeFile(item.id);
 	}
@@ -118,14 +122,23 @@ function Actions(item: chrome.downloads.DownloadItem) {
 
 	return (
 		<VList>
+			<VListItem
+				key="copyFilename"
+				onClick={() => copyTextToClipboard(item.filename)}
+			>
+				Copy filename
+			</VListItem>
+			<VListItem
+				key="copyUrl"
+				onClick={() => copyTextToClipboard(item.url)}
+			>
+				Copy url
+			</VListItem>
 			<VListItem key="removeFile" onClick={removeFile}>
 				Remove
 			</VListItem>
 			<VListItem key="eraseDownload" onClick={eraseDownload}>
 				Erase
-			</VListItem>
-			<VListItem key="showInExplorer" onClick={showInExplorer}>
-				Show in Explorer
 			</VListItem>
 		</VList>
 	);

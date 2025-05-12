@@ -1,7 +1,7 @@
 import { VList, VListItem, VListItemIcon } from "@/components/VList.tsx";
 import { browserApi } from "@/lib/browser-api.ts";
 import { useMemoryStore } from "@/lib/memory-store.ts";
-import { getFaviconUrl } from "@/lib/utils.ts";
+import { copyTextToClipboard, getFaviconUrl } from "@/lib/utils.ts";
 import { useEffect, useState } from "react";
 
 export function Command() {
@@ -48,7 +48,11 @@ export function Command() {
 						topSites?.filter((s) => searchInTopSite(search, s)) ||
 						[]
 					).map((site) => (
-						<VListItem data={site} key={site.url}>
+						<VListItem
+							data={site}
+							key={site.url}
+							actions={<Actions {...site}></Actions>}
+						>
 							<VListItemIcon
 								url={getFaviconUrl(site.url)}
 							></VListItemIcon>
@@ -61,5 +65,18 @@ export function Command() {
 				</VList>
 			)}
 		</>
+	);
+}
+
+function Actions(site: chrome.topSites.MostVisitedURL) {
+	return (
+		<VList>
+			<VListItem key={1} onClick={() => copyTextToClipboard(site.url)}>
+				Copy url
+			</VListItem>
+			<VListItem key={2} onClick={() => copyTextToClipboard(site.title)}>
+				Copy title
+			</VListItem>
+		</VList>
 	);
 }

@@ -9,9 +9,13 @@
     <a target="_blank" href="https://microsoftedge.microsoft.com/addons/detail/bobcommandpalette/nikplhepafilmghdhfkkkbjogblchima">Edge</a>
 </p>
 <p align="center">
-A command palette prototype.
+Evilbob - A powerful command palette prototype for Chromium and Firefox
 </p>
 
+
+Access a variety of features from one interface that is fast and customizable.
+Quickly search and interact with commands, history, website data and more.
+You decide wich plugins you need.
 
 ![Screenshot Evilbob commands](./src/media/screenshot-commands.png)
 ![Screenshot Evilbob plugins](./src/media/screenshot-plugins.png)

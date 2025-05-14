@@ -1,3 +1,8 @@
+## 0.8.1 (May 14, 2025)
+- Improve the description and title of Evilbob
+- Plugin `colors`
+  - add the `Website Colors` view to list all colors of a website
+
 ## 0.8.0 (May 12, 2025)
 - Plugin `tabs`
     - when selecting a tab don't create a new one, focus the selected tab instead

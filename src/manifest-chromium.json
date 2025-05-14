@@ -1,7 +1,7 @@
 {
 	"manifest_version": 3,
 	"name": "Evilbob",
-	"description": "Evilbob, a command palette prototype.",
+	"description": "Evilbob - A powerful command palette prototype for Chromium and Firefox",
 	"version": "0.8.0",
 	"background": {
 		"service_worker": "background.js",

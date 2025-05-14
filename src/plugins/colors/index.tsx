@@ -12,6 +12,11 @@ export default definePlugin({
 			type: "view",
 		},
 		{
+			title: "Website Colors",
+			name: "website-colors",
+			type: "view",
+		},
+		{
 			title: "Add color",
 			name: "add-color",
 			type: "view",

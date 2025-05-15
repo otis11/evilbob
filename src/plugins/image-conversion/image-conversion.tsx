@@ -3,6 +3,7 @@ import { type FileWithId, UploadZone } from "@/components/UploadZone.tsx";
 import { Button } from "@/components/ui/button.tsx";
 import {
 	IMAGE_CANVAS_TYPES,
+	IMAGE_TYPE_FILE_EXTENSION_MAP,
 	ImageCanvas,
 	type ImageCanvasType,
 } from "@/lib/image-canvas.ts";
@@ -22,7 +23,10 @@ export function Command() {
 			if (!url) {
 				continue;
 			}
-			downloadUrl(url, file.file.name);
+			downloadUrl(
+				url,
+				`${file.file.name.substring(0, file.file.name.lastIndexOf("."))}${IMAGE_TYPE_FILE_EXTENSION_MAP[imageTypeValue]}`,
+			);
 		}
 	}
 

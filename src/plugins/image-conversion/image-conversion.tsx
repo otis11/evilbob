@@ -28,6 +28,7 @@ export function Command() {
 				`${file.file.name.substring(0, file.file.name.lastIndexOf("."))}${IMAGE_TYPE_FILE_EXTENSION_MAP[imageTypeValue]}`,
 			);
 		}
+		imageCanvas.destroy();
 	}
 
 	function onDeleteClick(file: FileWithId) {

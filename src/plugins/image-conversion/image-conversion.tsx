@@ -1,0 +1,73 @@
+import { TextSelect } from "@/components/TextSelect.tsx";
+import { UploadZone } from "@/components/UploadZone.tsx";
+import { Button } from "@/components/ui/button.tsx";
+import {
+	IMAGE_CANVAS_TYPES,
+	ImageCanvas,
+	type ImageCanvasType,
+} from "@/lib/image-canvas.ts";
+import { downloadUrl } from "@/lib/utils.ts";
+import { XIcon } from "lucide-react";
+import { useState } from "react";
+
+export function Command() {
+	const [files, setFiles] = useState<File[]>([]);
+	const [imageTypeValue, setImageTypeValue] =
+		useState<ImageCanvasType>("image/jpeg");
+	async function onSaveClick() {
+		const imageCanvas = new ImageCanvas();
+		for (const file of files) {
+			await imageCanvas.drawImage(file);
+			const url = await imageCanvas.getImageUrl(imageTypeValue, 1);
+			if (!url) {
+				continue;
+			}
+			downloadUrl(url);
+		}
+	}
+
+	function onDeleteClick(file: File) {
+		setFiles(files.filter((f) => f.name !== file.name));
+	}
+
+	return (
+		<>
+			<div className="flex items-center gap-2">
+				<UploadZone files={files} onChange={setFiles}></UploadZone>
+			</div>
+			<div className="flex py-4">
+				<div className="flex flex-col gap-2 pt-4">
+					<span>{files.length} files uploaded.</span>
+					{files.map((file, index) => (
+						<span
+							className="text-muted-foreground flex items-center"
+							key={file.name}
+						>
+							{file.name}
+							<XIcon
+								className="ml-2 text-destructive-foreground"
+								size={20}
+								onClick={() => onDeleteClick(file)}
+							></XIcon>
+						</span>
+					))}
+				</div>
+				<div className="ml-auto">
+					<span className="text-muted-foreground">Convert to</span>
+					<TextSelect
+						values={[...IMAGE_CANVAS_TYPES]}
+						value={imageTypeValue}
+						onValueChange={(value) =>
+							setImageTypeValue(value as ImageCanvasType)
+						}
+					></TextSelect>
+				</div>
+			</div>
+			<div className="flex mt-auto">
+				<Button className="ml-auto" onClick={onSaveClick}>
+					Convert
+				</Button>
+			</div>
+		</>
+	);
+}

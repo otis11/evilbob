@@ -3,6 +3,11 @@ export const IMAGE_CANVAS_TYPES = [
 	"image/png",
 	"image/jpeg",
 ] as const;
+export const IMAGE_TYPE_FILE_EXTENSION_MAP = {
+	"image/png": ".png",
+	"image/jpeg": ".jpg",
+	"image/webp": ".webp",
+};
 export type ImageCanvasType = (typeof IMAGE_CANVAS_TYPES)[number];
 export class ImageCanvas {
 	private readonly canvas: HTMLCanvasElement;
@@ -26,6 +31,8 @@ export class ImageCanvas {
 
 		const conversion = new Promise((resolve, reject) => {
 			img.onload = async () => {
+				this.canvas.height = img.naturalHeight;
+				this.canvas.width = img.naturalWidth;
 				this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
 				this.ctx.drawImage(
 					img,

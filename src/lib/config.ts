@@ -29,7 +29,7 @@ export const DEFAULT_CONFIG: EvilbobConfig = {
 			window: true,
 			evilbob: true,
 			emoji: true,
-			image: true,
+			"image-conversion": true,
 		},
 	},
 	keybindings: defaultKeybindings,

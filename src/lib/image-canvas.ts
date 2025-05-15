@@ -1,5 +1,9 @@
-const IMAGE_CANVAS_TYPES = ["image/webp", "image/png", "image/jpeg"] as const;
-
+export const IMAGE_CANVAS_TYPES = [
+	"image/webp",
+	"image/png",
+	"image/jpeg",
+] as const;
+export type ImageCanvasType = (typeof IMAGE_CANVAS_TYPES)[number];
 export class ImageCanvas {
 	private readonly canvas: HTMLCanvasElement;
 	private readonly ctx: CanvasRenderingContext2D;
@@ -41,7 +45,7 @@ export class ImageCanvas {
 	}
 
 	async getImageUrl(
-		type?: (typeof IMAGE_CANVAS_TYPES)[number],
+		type?: ImageCanvasType,
 		quality?: number,
 	): Promise<null | string> {
 		return new Promise((resolve) => {

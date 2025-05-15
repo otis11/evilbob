@@ -7,14 +7,19 @@ import {
 	useState,
 } from "react";
 
+let globalFileIdCounter = 0;
+export interface FileWithId {
+	id: number;
+	file: File;
+}
 export interface DropZoneProps {
-	onChange?: (files: File[]) => void;
-	files?: File[];
+	onChange?: (files: FileWithId[]) => void;
+	files?: FileWithId[];
 }
 export function UploadZone({ onChange, files }: DropZoneProps) {
 	const [isDragOver, setDragOver] = useState<boolean>(false);
 	const input = useRef<HTMLInputElement>(null);
-	const [localFiles, setLocalFiles] = useState<File[]>([]);
+	const [localFiles, setLocalFiles] = useState<FileWithId[]>([]);
 
 	useEffect(() => {
 		if (files) {
@@ -22,22 +27,24 @@ export function UploadZone({ onChange, files }: DropZoneProps) {
 		}
 	}, [files]);
 
-	function onDropHandler(event: DragEvent<HTMLDivElement>) {
+	function onDropHandler(event: DragEvent<HTMLButtonElement>) {
 		event.preventDefault();
-		const newFiles = [
+		const newFiles: FileWithId[] = [
 			...localFiles,
 			...Array.from(event.dataTransfer.files),
-		] as File[];
+		].map((file) =>
+			file instanceof File ? { id: globalFileIdCounter++, file } : file,
+		);
 		setLocalFiles(newFiles);
 		onChange?.(newFiles);
 	}
 
-	function onDragOverHandler(event: DragEvent<HTMLDivElement>) {
+	function onDragOverHandler(event: DragEvent<HTMLButtonElement>) {
 		event.preventDefault();
 		setDragOver(true);
 	}
 
-	function onDragLeaveHandler(event: DragEvent<HTMLDivElement>) {
+	function onDragLeaveHandler(event: DragEvent<HTMLButtonElement>) {
 		event.preventDefault();
 		setDragOver(false);
 	}
@@ -50,18 +57,25 @@ export function UploadZone({ onChange, files }: DropZoneProps) {
 		if (!event.target.files) {
 			return;
 		}
-		const newFiles = [...localFiles, ...Array.from(event.target.files)];
+		const newFiles: FileWithId[] = [
+			...localFiles,
+			...Array.from(event.target.files),
+		].map((file) =>
+			file instanceof File ? { id: globalFileIdCounter++, file } : file,
+		);
 		setLocalFiles(newFiles);
 		onChange?.(newFiles);
 	}
 
 	return (
-		<div
-			className={`bg-muted flex items-center flex-col justify-center border border-dashed w-full h-full min-h-32 ${isDragOver ? "border-foreground" : "border-muted-foreground"}`}
+		<button
+			className={`bg-muted flex items-center flex-col justify-center border border-dashed w-full h-full min-h-32 focus-visible:border-foreground ${isDragOver ? "border-foreground" : "border-muted-foreground"}`}
 			onDrop={onDropHandler}
 			onDragLeave={onDragLeaveHandler}
 			onDragOver={onDragOverHandler}
 			onClick={onClickHandler}
+			tabIndex={0}
+			type="button"
 		>
 			<Input
 				type="file"
@@ -72,6 +86,6 @@ export function UploadZone({ onChange, files }: DropZoneProps) {
 				onChange={onInputChangeHandler}
 			/>
 			<div>Drop files or click to upload</div>
-		</div>
+		</button>
 	);
 }

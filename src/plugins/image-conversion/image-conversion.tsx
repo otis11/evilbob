@@ -1,5 +1,5 @@
 import { TextSelect } from "@/components/TextSelect.tsx";
-import { UploadZone } from "@/components/UploadZone.tsx";
+import { type FileWithId, UploadZone } from "@/components/UploadZone.tsx";
 import { Button } from "@/components/ui/button.tsx";
 import {
 	IMAGE_CANVAS_TYPES,
@@ -11,23 +11,23 @@ import { XIcon } from "lucide-react";
 import { useState } from "react";
 
 export function Command() {
-	const [files, setFiles] = useState<File[]>([]);
+	const [files, setFiles] = useState<FileWithId[]>([]);
 	const [imageTypeValue, setImageTypeValue] =
 		useState<ImageCanvasType>("image/jpeg");
 	async function onSaveClick() {
 		const imageCanvas = new ImageCanvas();
 		for (const file of files) {
-			await imageCanvas.drawImage(file);
+			await imageCanvas.drawImage(file.file);
 			const url = await imageCanvas.getImageUrl(imageTypeValue, 1);
 			if (!url) {
 				continue;
 			}
-			downloadUrl(url);
+			downloadUrl(url, file.file.name);
 		}
 	}
 
-	function onDeleteClick(file: File) {
-		setFiles(files.filter((f) => f.name !== file.name));
+	function onDeleteClick(file: FileWithId) {
+		setFiles(files.filter((f) => f.id !== file.id));
 	}
 
 	return (
@@ -41,9 +41,9 @@ export function Command() {
 					{files.map((file, index) => (
 						<span
 							className="text-muted-foreground flex items-center"
-							key={file.name}
+							key={file.id}
 						>
-							{file.name}
+							{file.file.name}
 							<XIcon
 								className="ml-2 text-destructive-foreground"
 								size={20}

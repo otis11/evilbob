@@ -4,6 +4,9 @@ import type * as React from "react";
 
 import { cn } from "@/lib/utils";
 
+// TODO https://github.com/radix-ui/primitives/issues/2606
+// arrow navigation does not work in shadow dom. use vlist or fix this select component
+
 function Select({
 	...props
 }: React.ComponentProps<typeof SelectPrimitive.Root>) {

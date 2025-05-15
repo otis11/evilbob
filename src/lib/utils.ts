@@ -373,3 +373,11 @@ export function markElementInDocument(el: HTMLElement | SVGElement) {
 	el.style.setProperty("filter", "none", "important");
 	el.scrollIntoView({ block: "center", behavior: "smooth" });
 }
+
+export function downloadUrl(url: string, title?: string) {
+	const link = document.createElement("a");
+	link.href = url;
+	link.download = title || "download";
+	link.click();
+	link.remove();
+}

@@ -32,7 +32,7 @@ export const test = base.extend<{
 		let [background] = context.serviceWorkers();
 		if (!background)
 			background = await context.waitForEvent("serviceworker");
-		await new Promise((resolve) => setTimeout(resolve, 1000));
+		await new Promise((resolve) => setTimeout(resolve, 200));
 		await background.evaluate(
 			async ([c, d]) => {
 				await chrome.storage.sync.set({

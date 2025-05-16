@@ -2,7 +2,7 @@ import { toast } from "@/components/Toast.tsx";
 import { VList, VListItem, VListItemTile } from "@/components/VList.tsx";
 import { browserApi } from "@/lib/browser-api.ts";
 import { useMemoryStore } from "@/lib/memory-store.ts";
-import { copyTextToClipboard, unique } from "@/lib/utils.ts";
+import { copyTextToClipboard, rgbaStyleToHex, unique } from "@/lib/utils.ts";
 import type { Color } from "@/plugins/colors/components/edit-color.tsx";
 import { useEffect, useState } from "react";
 
@@ -20,11 +20,14 @@ export function Command() {
 		const allElements = Array.from(document.querySelectorAll("*"));
 
 		function addToColorMap(c: string) {
-			if (colorMap[c]) {
-				colorMap[c] += 1;
-			} else {
-				colorMap[c] = 1;
-			}
+			try {
+				const hex = rgbaStyleToHex(c);
+				if (colorMap[hex]) {
+					colorMap[hex] += 1;
+				} else {
+					colorMap[hex] = 1;
+				}
+			} catch (e) {}
 		}
 
 		for (const el of allElements) {

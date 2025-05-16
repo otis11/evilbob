@@ -8,7 +8,9 @@ chrome.commands.onCommand.addListener(async (command) => {
 
 chrome.runtime.onInstalled.addListener(async (details) => {
 	if (details.reason === "install") {
-		await chrome.tabs.create({ url: "src/views/welcome/welcome.html" });
+		if (!__IS_TEST_BUILD__) {
+			await chrome.tabs.create({ url: "src/views/welcome/welcome.html" });
+		}
 	}
 
 	if (details.reason === "update") {

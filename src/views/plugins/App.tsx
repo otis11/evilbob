@@ -47,6 +47,7 @@ export default function App({ config }: AppProps) {
 		<>
 			<div className="flex gap-4 items-center mb-4">
 				<Input
+					data-testid="plugins-search"
 					autoCapitalize="off"
 					autoCorrect="off"
 					autoComplete="off"
@@ -98,6 +99,7 @@ export default function App({ config }: AppProps) {
 								</span>
 							</div>
 							<Button
+								data-testid={`plugin-${item.id}-enable`}
 								className="w-full"
 								onClick={(event) => {
 									event.stopPropagation();

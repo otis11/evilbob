@@ -10,7 +10,7 @@ chrome.runtime.onMessage.addListener((message) => {
 	}
 });
 
-if (__IS_DEV_BUILD__) {
+if (__IS_TEST_BUILD__) {
 	const button = document.createElement("button");
 	button.setAttribute("data-testid", "open-evilbob-button");
 	button.addEventListener("click", () => {

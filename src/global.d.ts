@@ -1,5 +1,5 @@
 declare global {
-	const __IS_DEV_BUILD__ = boolean;
+	const __IS_TEST_BUILD__ = boolean;
 }
 
 export {};

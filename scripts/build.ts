@@ -8,8 +8,9 @@ import { build } from "vite";
 
 const buildFirefox = Bun.argv.includes("--firefox");
 const buildChromium = Bun.argv.includes("--chromium");
+const buildChromiumTest = Bun.argv.includes("--chromium-test");
+const minify = Bun.argv.includes("--minify");
 const watch = Bun.argv.includes("--watch") ? {} : null;
-const isDevBuild = Bun.argv.includes("--dev");
 
 // chromium will break as it cannot find background.js when its removed for a short time
 if (!watch) {
@@ -39,6 +40,19 @@ if (buildChromium) {
 	});
 }
 
+if (buildChromiumTest) {
+	// https://github.com/microsoft/playwright/issues/32755
+	// playwright does not support optional permissions.
+	// to test all extension we need a manifest which grants all extension permissions directly on install
+	await buildExtension({
+		outputFolder: "chromium",
+		copy: {
+			[path.resolve(__dirname, "../src/manifest-chromium-test.json")]:
+				"manifest.json",
+		},
+	});
+}
+
 interface BuildExtensionOptions {
 	outputFolder: string;
 	copy?: Record<string, string>;
@@ -62,12 +76,12 @@ async function buildExtension(options: BuildExtensionOptions) {
 			},
 		},
 		define: {
-			__IS_DEV_BUILD__: isDevBuild,
+			__IS_TEST_BUILD__: buildChromiumTest,
 		},
 		build: {
 			emptyOutDir: false,
 			watch,
-			minify: !isDevBuild,
+			minify,
 			rollupOptions: {
 				input: [
 					path.resolve(__dirname, "../src/content-script.ts"),

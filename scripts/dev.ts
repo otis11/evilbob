@@ -4,13 +4,7 @@ import { $ } from "bun";
 
 await $`bun run build:chromium -- --dev`;
 
-const buildWatchProcess = Bun.spawn([
-	"bun",
-	"run",
-	"watch:chromium",
-	"--",
-	"--dev",
-]);
+const buildWatchProcess = Bun.spawn(["bun", "run", "watch:chromium"]);
 const pathToExtension = path.join(__dirname, "../dist/chromium");
 const browserContext = await chromium.launchPersistentContext("", {
 	channel: "chromium",

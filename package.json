@@ -11,9 +11,10 @@
 		"test": "playwright test",
 		"codegen": "bun scripts/codegen.ts",
 		"dev:chromium": "NODE_ENV=dev bun scripts/dev.ts",
-		"build": "bun scripts/build.ts --firefox --chromium",
-		"build:dev": "bun scripts/build.ts --firefox --chromium --dev",
-		"build:chromium": "bun scripts/build.ts --chromium",
+		"build": "bun scripts/build.ts --firefox --chromium --minify",
+		"build:dev": "bun scripts/build.ts --firefox --chromium",
+		"build:chromium": "bun scripts/build.ts --chromium --minify",
+		"build:test": "bun scripts/build.ts --chromium-test",
 		"watch": "bun scripts/build.ts --firefox --chromium --watch",
 		"watch:chromium": "bun scripts/build.ts --chromium --watch"
 	},

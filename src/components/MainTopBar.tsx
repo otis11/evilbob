@@ -64,6 +64,7 @@ export function MainTopBar() {
 					<Loader2 className="animate-spin" size={20} />
 				) : (
 					<ArrowLeft
+						data-testid="back"
 						onClick={onBack}
 						size={20}
 						className={

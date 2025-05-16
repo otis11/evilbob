@@ -152,6 +152,7 @@ export function EditColor({
 					<div className="grid w-full max-w-sm items-center gap-1.5">
 						<Label htmlFor="title">Title</Label>
 						<Input
+							data-testid="colors-title"
 							id="title"
 							className="text-center"
 							value={title}
@@ -162,7 +163,11 @@ export function EditColor({
 			</div>
 			<div className="mt-auto flex items-center">
 				<Button onClick={onCancel}>Cancel</Button>
-				<Button className="ml-auto" onClick={onSaveClick}>
+				<Button
+					className="ml-auto"
+					onClick={onSaveClick}
+					data-testid="colors-save"
+				>
 					Save
 				</Button>
 			</div>

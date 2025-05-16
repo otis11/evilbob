@@ -401,10 +401,12 @@ const VListItemTile = ({
 	actions,
 	data,
 	onClick,
+	...props
 }: VListItemTileProps) => {
 	return (
 		<div
 			className={`${className} h-full w-full overflow-hidden flex flex-col items-start justify-start`}
+			{...props}
 		>
 			{children}
 		</div>

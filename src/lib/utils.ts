@@ -381,3 +381,18 @@ export function downloadUrl(url: string, title?: string) {
 	link.click();
 	link.remove();
 }
+
+export function rgbaStyleToHex(str: string) {
+	if (!str.includes("rgb")) {
+		throw new Error("Only rgb and rgba values supported.");
+	}
+	if (str.indexOf("rgb") !== str.lastIndexOf("rgb")) {
+		throw new Error("Multiple rgb values not supported.");
+	}
+	const colorFormat = str.startsWith("rgba") ? "rgba" : "rgb";
+	const colorValuesOnly = str.replace(`${colorFormat}(`, "").replace(")", "");
+	const [r, g, b, a] = colorValuesOnly
+		.split(",")
+		.map((s) => Number.parseInt(s));
+	return rgbaToHex({ r: r || 0, g: g || 0, b: b || 0, a: a || 255 });
+}

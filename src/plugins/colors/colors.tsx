@@ -124,6 +124,7 @@ function ColorList({
 				colors?.filter((color) => searchInColor(search, color)) || []
 			).map((item, index) => (
 				<VListItemTile
+					data-testid={`colors-${item.title}`}
 					data={item}
 					key={item.title}
 					actions={

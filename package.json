@@ -8,12 +8,13 @@
 	"version": "0.8.1",
 	"scripts": {
 		"lint": "biome check --write . && tsc",
-		"test": "playwright test",
+		"test": "bun run build:test && playwright test",
 		"codegen": "bun scripts/codegen.ts",
 		"dev:chromium": "NODE_ENV=dev bun scripts/dev.ts",
 		"build": "bun scripts/build.ts --firefox --chromium --minify",
 		"build:dev": "bun scripts/build.ts --firefox --chromium",
 		"build:chromium": "bun scripts/build.ts --chromium --minify",
+		"build:chromium-dev": "bun scripts/build.ts --chromium",
 		"build:test": "bun scripts/build.ts --chromium-test",
 		"watch": "bun scripts/build.ts --firefox --chromium --watch",
 		"watch:chromium": "bun scripts/build.ts --chromium --watch"

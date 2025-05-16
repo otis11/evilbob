@@ -27,7 +27,10 @@ export function ActionsBoxTop({ children }: ActionsTopBoxProps) {
 
 	return (
 		<Popover open={isActionsOpen} onOpenChange={setIsActionsOpen}>
-			<PopoverTrigger className="text-xs tracking-widest text-muted-foreground flex items-center gap-1">
+			<PopoverTrigger
+				data-testid="actions-trigger"
+				className="text-xs tracking-widest text-muted-foreground flex items-center gap-1"
+			>
 				{children ? (
 					<>
 						Actions{" "}

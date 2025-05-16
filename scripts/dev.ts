@@ -2,7 +2,7 @@ import path from "node:path";
 import { chromium } from "@playwright/test";
 import { $ } from "bun";
 
-await $`bun run build:chromium -- --dev`;
+await $`bun run build:chromium-dev`;
 
 const buildWatchProcess = Bun.spawn(["bun", "run", "watch:chromium"]);
 const pathToExtension = path.join(__dirname, "../dist/chromium");

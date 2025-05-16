@@ -21,7 +21,7 @@ export const test = base.extend<{
 	context: async ({ config }, use) => {
 		const __filename = fileURLToPath(import.meta.url);
 		const __dirname = dirname(__filename);
-		const pathToExtension = join(__dirname, "../dist/chromium");
+		const pathToExtension = join(__dirname, "../dist/chromium-test");
 		const context = await chromium.launchPersistentContext("", {
 			channel: "chromium",
 			args: [

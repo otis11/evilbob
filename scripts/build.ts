@@ -45,7 +45,7 @@ if (buildChromiumTest) {
 	// playwright does not support optional permissions.
 	// to test all extension we need a manifest which grants all extension permissions directly on install
 	await buildExtension({
-		outputFolder: "chromium",
+		outputFolder: "chromium-test",
 		copy: {
 			[path.resolve(__dirname, "../src/manifest-chromium-test.json")]:
 				"manifest.json",

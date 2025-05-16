@@ -66,7 +66,7 @@ export const test = base.extend<{
 	openEvilbob: async ({ page }, use) => {
 		// https://github.com/microsoft/playwright/issues/26693
 		// playwright does not currently support opening extensions via a shortcut
-		// __IS_DEV_BUILD__  adds a button to open evilbob
+		// __IS_TEST_BUILD__  adds a button to open evilbob
 		await use(async () => {
 			await page.getByTestId("open-evilbob-button").click();
 		});

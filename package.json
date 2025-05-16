@@ -15,7 +15,7 @@
 		"build:dev": "bun scripts/build.ts --firefox --chromium",
 		"build:chromium": "bun scripts/build.ts --chromium --minify",
 		"build:chromium-dev": "bun scripts/build.ts --chromium",
-		"build:test": "bun scripts/build.ts --chromium-test",
+		"build:test": "bun scripts/build.ts --chromium-test --minify",
 		"watch": "bun scripts/build.ts --firefox --chromium --watch",
 		"watch:chromium": "bun scripts/build.ts --chromium --watch"
 	},

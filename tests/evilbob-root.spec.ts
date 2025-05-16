@@ -1,14 +1,9 @@
 import { expect, test } from "./fixtures.ts";
 
 test("The evilbob-root dialog can be opened and closed", async ({
-	context,
-	page,
-	extensionUrl,
-	openEvilbob,
+	openedPage,
 }) => {
-	await page.goto(`${extensionUrl}/src/views/welcome/welcome.html`);
-	await openEvilbob();
-	await expect(page.getByTestId("evilbob-dialog")).toBeVisible();
-	await page.keyboard.press("Escape");
-	await expect(page.getByTestId("evilbob-dialog")).not.toBeVisible();
+	await expect(openedPage.getByTestId("evilbob-dialog")).toBeVisible();
+	await openedPage.keyboard.press("Escape");
+	await expect(openedPage.getByTestId("evilbob-dialog")).not.toBeVisible();
 });

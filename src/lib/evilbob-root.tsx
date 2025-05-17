@@ -1,10 +1,10 @@
 import { toast } from "@/components/Toast.tsx";
+import { KeyboardListener } from "@/lib/keyboard-listener.ts";
 import { memoryStore } from "@/lib/memory-store.ts";
 import {
 	getThemePreference,
 	onThemePreferenceChange,
 } from "@/lib/theme-preference.ts";
-import { KeyboardListener } from "@/lib/utils.ts";
 import type { KeyboardEvent } from "react";
 import { type Root, createRoot } from "react-dom/client";
 // @ts-expect-error typescript does not know ?inline imports
@@ -55,13 +55,27 @@ export class EvilbobRoot {
 		(target || document.body).appendChild(rootElement);
 
 		shadowRoot.addEventListener("keydown", (e) => {
+			// to stop pages like github.com to trigger shortcuts
 			if (dialogElement.open) {
 				e.stopPropagation();
+				window.dispatchEvent(
+					new CustomEvent("evilbob-keydown", {
+						detail: e,
+						bubbles: true,
+					}),
+				);
 			}
 		});
 		shadowRoot.addEventListener("keyup", (e) => {
+			// to stop pages like github.com to trigger shortcuts
 			if (dialogElement.open) {
 				e.stopPropagation();
+				window.dispatchEvent(
+					new CustomEvent("evilbob-keyup", {
+						detail: e,
+						bubbles: true,
+					}),
+				);
 			}
 		});
 

@@ -1,5 +1,5 @@
+import { KeyboardListener } from "@/lib/keyboard-listener.ts";
 import { memoryStore } from "@/lib/memory-store.ts";
-import { KeyboardListener } from "@/lib/utils.ts";
 import { CircleHelpIcon } from "lucide-react";
 import {
 	type CSSProperties,

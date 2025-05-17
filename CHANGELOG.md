@@ -1,3 +1,13 @@
+## 0.8.2 (May 17, 2025)
+- Plugin `image-conversion`
+  - add the `Image Conversion` view to convert images to `png`, `jpeg` or `webp`
+- Plugin `website-media`
+  - `Website Media` view support svgs with strokes
+- Plugin `colors`
+  - `Website Colors` view show only relevant colors and show them in hex instead of the original format
+- Fix a color highlighting issue for lists (VListItemTiles were not correctly highlighted)
+- Fix a keyboard listener issue were listening for multiple keys would not correctly trigger the listener
+
 ## 0.8.1 (May 14, 2025)
 - Improve the description and title of Evilbob
 - Plugin `colors`

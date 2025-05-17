@@ -1,3 +1,4 @@
+import { NumberSelect } from "@/components/NumberSelect.tsx";
 import { TextSelect } from "@/components/TextSelect.tsx";
 import { type FileWithId, UploadZone } from "@/components/UploadZone.tsx";
 import { Button } from "@/components/ui/button.tsx";
@@ -15,11 +16,15 @@ export function Command() {
 	const [files, setFiles] = useState<FileWithId[]>([]);
 	const [imageTypeValue, setImageTypeValue] =
 		useState<ImageCanvasType>("image/jpeg");
+	const [imageQuality, setImageQuality] = useState<number>(1.0);
 	async function onSaveClick() {
 		const imageCanvas = new ImageCanvas();
 		for (const file of files) {
 			await imageCanvas.drawImage(file.file);
-			const url = await imageCanvas.getImageUrl(imageTypeValue, 1);
+			const url = await imageCanvas.getImageUrl(
+				imageTypeValue,
+				imageQuality,
+			);
 			if (!url) {
 				continue;
 			}
@@ -66,6 +71,15 @@ export function Command() {
 							setImageTypeValue(value as ImageCanvasType)
 						}
 					></TextSelect>
+					<div className="text-muted-foreground pt-2">Quality</div>
+					<NumberSelect
+						values={[
+							0.05, 0.1, 0.15, 0.2, 0.25, 0.3, 0.35, 0.4, 0.5,
+							0.6, 0.7, 0.75, 0.8, 0.85, 0.9, 0.95, 1.0,
+						]}
+						value={imageQuality}
+						onValueChange={setImageQuality}
+					></NumberSelect>
 				</div>
 			</div>
 			<div className="flex mt-auto">

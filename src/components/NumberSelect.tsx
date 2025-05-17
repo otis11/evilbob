@@ -22,7 +22,7 @@ export function NumberSelect({
 	return (
 		<Select
 			value={value.toString()}
-			onValueChange={(e) => onValueChange?.(Number.parseInt(e))}
+			onValueChange={(e) => onValueChange?.(Number.parseFloat(e))}
 		>
 			<SelectTrigger className="w-[180px]">
 				<SelectValue placeholder="Theme" />

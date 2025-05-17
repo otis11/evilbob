@@ -351,14 +351,6 @@ const VList = <T,>({
 						width: itemWidth === -1 ? "100%" : `${itemWidth}px`,
 						left: `${((startIndex + index) % itemCountPerRow) * realItemWidth}px`,
 					};
-					const classes =
-						child.type?.name === "VListItemTile"
-							? " overflow-hidden rounded-sm border-1 border-solid border-transparent"
-							: "rounded-sm overflow-hidden";
-					const activeClasses =
-						child.type?.name === "VListItemTile"
-							? "!bg-accent !border-primary"
-							: "!bg-accent";
 					return (
 						// biome-ignore lint/a11y/useKeyWithClickEvents: they key listener for keyboard events is registered in the root of the list
 						<li
@@ -370,9 +362,9 @@ const VList = <T,>({
 							}
 							onFocus={(event) => onChildFocus(event, child)}
 							style={style}
-							className={`${classes} ${
+							className={`${
 								activeIndex === startIndex + index
-									? activeClasses
+									? "vlist-item-active"
 									: ""
 							}`}
 							key={child.key}
@@ -405,7 +397,7 @@ const VListItemTile = ({
 }: VListItemTileProps) => {
 	return (
 		<div
-			className={`${className} h-full w-full overflow-hidden flex flex-col items-start justify-start`}
+			className={`${className ? className : ""} vlist-item-tile border border-solid border-transparent rounded-sm h-full w-full overflow-hidden flex flex-col items-start justify-start`}
 			{...props}
 		>
 			{children}
@@ -431,7 +423,7 @@ const VListItem = ({
 }: VListItemProps) => {
 	return (
 		<div
-			className={`${className ? className : ""} truncate text-base text-fg items-center flex h-full w-full m-0 py-1.5 px-2 list-none`}
+			className={`${className ? className : ""} vlist-item rounded-sm overflow-hidden truncate text-base text-fg items-center flex h-full w-full m-0 py-1.5 px-2 list-none`}
 			{...props}
 		>
 			{children}

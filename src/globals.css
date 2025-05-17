@@ -202,6 +202,14 @@
 	animation: animate-slide-bottom-in 0.2s ease-in;
 }
 
+.vlist-item-active .vlist-item {
+	@apply !bg-accent;
+}
+
+.vlist-item-active .vlist-item-tile {
+	@apply !bg-accent !border-primary;
+}
+
 @keyframes animate-slide-bottom-in {
 	from {
 		transform: translateY(35px);

@@ -171,12 +171,22 @@ export function Command() {
 							return "";
 						}
 						const node = element.cloneNode(true) as SVGElement;
-						node.classList.add(
-							"text-foreground",
-							"fill-foreground",
+						const ogStyle = getComputedStyle(element);
+						const classes = [
 							"w-full",
 							"h-auto",
-						);
+							"!text-foreground",
+						];
+						if (ogStyle.fill !== "none" && ogStyle.fill !== "") {
+							classes.push("!fill-foreground");
+						}
+						if (
+							ogStyle.stroke !== "none" &&
+							ogStyle.stroke !== ""
+						) {
+							classes.push("!stroke-foreground");
+						}
+						node.classList.add(...classes);
 						return (
 							<VListItemTile
 								className="p-1"

@@ -120,11 +120,7 @@ async function buildExtension(options: BuildExtensionOptions) {
 
 async function getPluginEntryPoints() {
 	const entryPoints: string[] = [];
-	const pluginFolders = readdirSync(
-		path.resolve(__dirname, "../src/plugins"),
-	);
 
-	const commandSlashes: Record<string, string> = {};
 	for (const plugin of plugins) {
 		entryPoints.push(plugin.entrypointPath);
 		const pluginDefinition = (await import(plugin.entrypointPath))
@@ -142,6 +138,14 @@ async function getPluginEntryPoints() {
 						? `${filePathWithoutExtension}.ts`
 						: `${filePathWithoutExtension}.tsx`;
 				}),
+			);
+		}
+		if (pluginDefinition.searchEverywhereName) {
+			entryPoints.push(
+				path.resolve(
+					__dirname,
+					`../src/plugins/${plugin.folder}/${pluginDefinition.searchEverywhereName}.tsx`,
+				),
 			);
 		}
 	}

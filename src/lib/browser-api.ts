@@ -97,7 +97,7 @@ export const browserApi = {
 		},
 	},
 	topSites: {
-		async get() {
+		async get(): Promise<chrome.topSites.MostVisitedURL[]> {
 			return await chrome.runtime.sendMessage({
 				event: "chrome.topSites.get",
 			});

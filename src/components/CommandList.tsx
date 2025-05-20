@@ -1,5 +1,11 @@
 import type { PluginCommandExtended } from "@/plugins";
-import { VList, VListItem, VListItemIcon } from "./VList.tsx";
+import {
+	VList,
+	VListItem,
+	VListItemIcon,
+	VListItemText,
+	VListItemTitle,
+} from "./VList.tsx";
 export interface CommandListProps {
 	commands: PluginCommandExtended[];
 	// biome-ignore lint/suspicious/noExplicitAny: Can be any but can probably be improved via generic types?
@@ -15,18 +21,14 @@ export function CommandList({ commands, onSelect }: CommandListProps) {
 					data-testid={`command-${command.plugin.id}-${command.name}`}
 				>
 					<VListItemIcon>{command.plugin.icon}</VListItemIcon>
-					<span>{command.title}</span>
-					<span className="text-muted-foreground text-sm pl-4">
-						{command.plugin?.title}
-					</span>
+					<VListItemTitle>{command.title}</VListItemTitle>
+					<VListItemText>{command.plugin?.title}</VListItemText>
 					{command.type === "command" ? (
-						<span className="ml-auto text-muted-foreground text-sm">
+						<VListItemText className="ml-auto">
 							Command
-						</span>
+						</VListItemText>
 					) : (
-						<span className="ml-auto text-muted-foreground text-sm">
-							View
-						</span>
+						<VListItemText className="ml-auto">View</VListItemText>
 					)}
 				</VListItem>
 			))}

@@ -9,7 +9,7 @@ import type { KeyboardEvent } from "react";
 import { type Root, createRoot } from "react-dom/client";
 // @ts-expect-error typescript does not know ?inline imports
 import styles from "../globals.css?inline";
-import { MainSearchView } from "../views/MainSearchView.tsx";
+import { Search } from "../views/Search.tsx";
 import { type EvilbobConfig, getConfig } from "./config.ts";
 import { loadEnabledPlugins } from "./plugins-frontend.ts";
 
@@ -254,7 +254,7 @@ export class EvilbobRoot {
 	}
 
 	public renderMainView() {
-		this.mainRoot?.render(<MainSearchView></MainSearchView>);
+		this.mainRoot?.render(<Search></Search>);
 	}
 
 	public async openDialog(config: EvilbobConfig) {

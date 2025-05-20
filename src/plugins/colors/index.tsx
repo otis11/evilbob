@@ -1,6 +1,5 @@
 import { definePlugin } from "@/plugins/index.ts";
 import { PaletteIcon } from "lucide-react";
-
 export default definePlugin({
 	title: "Colors",
 	description: "Manage your colors",
@@ -22,4 +21,5 @@ export default definePlugin({
 			type: "view",
 		},
 	],
+	searchEverywhereName: "everywhere",
 });

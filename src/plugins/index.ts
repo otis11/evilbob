@@ -71,8 +71,15 @@ export interface PluginDefinition {
 	icon?: JSX.Element;
 	title: string;
 	description?: string;
+	searchEverywhereName?: "everywhere";
+}
+
+export interface SearchItem {
+	content: JSX.Element;
+	search: string;
 }
 
 export interface PluginCommandImported {
 	Command: FunctionComponent | (() => Promise<void>);
+	AdditionalSearchItems?: () => Promise<SearchItem[]>;
 }

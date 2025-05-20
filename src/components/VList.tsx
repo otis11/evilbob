@@ -455,4 +455,46 @@ const VListItemIcon = ({ url, children }: VListItemIconProps) => {
 	);
 };
 
-export { VList, VListItemTile, VListItem, VListItemIcon };
+export interface VListItemTitleProps {
+	children: ReactNode;
+	className?: string;
+}
+const VListItemTitle = ({
+	children,
+	className,
+	...props
+}: VListItemTitleProps) => {
+	return (
+		<span className={`pr-4 ${className ? className : ""}`} {...props}>
+			{children}
+		</span>
+	);
+};
+
+export interface VListItemTextProps {
+	children: ReactNode;
+	className?: string;
+}
+const VListItemText = ({
+	children,
+	className,
+	...props
+}: VListItemTextProps) => {
+	return (
+		<span
+			className={`text-muted-foreground text-sm truncate ${className ? className : ""}`}
+			{...props}
+		>
+			{children}
+		</span>
+	);
+};
+
+export {
+	VList,
+	VListItemTile,
+	VListItem,
+	VListItemIcon,
+	VListItemText,
+	VListItemTitle,
+};

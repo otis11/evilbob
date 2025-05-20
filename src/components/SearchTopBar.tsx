@@ -1,7 +1,5 @@
-import { ActionsBoxTop } from "@/components/ActionsBoxTop.tsx";
 import { Input } from "@/components/ui/input.tsx";
 import { browserApi } from "@/lib/browser-api.ts";
-import { keysAsString } from "@/lib/keybindings.ts";
 import { useMemoryStore } from "@/lib/memory-store.ts";
 import {
 	ArrowLeft,
@@ -13,7 +11,7 @@ import {
 import { type ChangeEvent, type KeyboardEvent, useEffect, useRef } from "react";
 import { EvilbobRoot } from "../lib/evilbob-root.tsx";
 
-export function MainTopBar() {
+export function SearchTopBar() {
 	const [isFullscreen, setIsFullscreen] = useMemoryStore("isFullscreen");
 	const inputRef = useRef<HTMLInputElement>(null);
 	const [pluginViewCommand, setPluginViewCommand] =
@@ -21,9 +19,6 @@ export function MainTopBar() {
 	const [isCommandExecuting, setIsCommandExecuting] =
 		useMemoryStore("isCommandExecuting");
 	const [search, setSearch] = useMemoryStore("search");
-	const [actions, setActions] = useMemoryStore("actions");
-	const [config, setConfig] = useMemoryStore("config");
-	const [searchHint, setSearchHint] = useMemoryStore("searchHint");
 	const [isActionsOpen, setIsActionsOpen] = useMemoryStore("isActionsOpen");
 
 	function onChange(data: ChangeEvent<HTMLInputElement>) {
@@ -103,28 +98,6 @@ export function MainTopBar() {
 					size={20}
 					onClick={onSettingsClick}
 				></SettingsIcon>
-			</div>
-			<div className="h-8 min-h-8 flex items-center relative">
-				<div className="text-xs tracking-widest text-muted-foreground flex items-center gap-1">
-					{pluginViewCommand ? (
-						<>
-							Go Back{" "}
-							{keysAsString(
-								config?.keybindings.closePluginView?.keys,
-							).map((key) => (
-								<span key={key}>{key}</span>
-							))}
-						</>
-					) : (
-						""
-					)}
-				</div>
-				<div className="text-sm text-muted-foreground left-1/2 transform -translate-x-1/2 absolute">
-					{searchHint}
-				</div>
-				<span className="ml-auto">
-					<ActionsBoxTop>{actions}</ActionsBoxTop>
-				</span>
 			</div>
 		</>
 	);

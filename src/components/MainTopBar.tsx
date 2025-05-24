@@ -31,6 +31,7 @@ export function MainTopBar() {
 			// 10ms delay to wait for any website focus redirects
 			setTimeout(() => {
 				inputRef.current?.focus();
+				inputRef.current?.select();
 			}, 10);
 		}
 		window.addEventListener("focus", onWindowFocus);
@@ -41,14 +42,26 @@ export function MainTopBar() {
 		};
 	}, []);
 
+	useEffect(() => {
+		if (!isCommandExecuting) {
+			// 10ms delay to wait for any website focus redirects
+			setTimeout(() => {
+				inputRef.current?.focus();
+				inputRef.current?.select();
+			}, 10);
+		}
+	}, [isCommandExecuting]);
+
 	function onChange(data: ChangeEvent<HTMLInputElement>) {
 		setSearch(data.target.value);
 	}
 
 	useEffect(() => {
 		if (!pluginViewCommand || !isActionsOpen) {
+			// 10ms delay to wait for any website focus redirects
 			setTimeout(() => {
 				inputRef.current?.focus();
+				inputRef.current?.select();
 			}, 10);
 		}
 	}, [pluginViewCommand, isActionsOpen]);
@@ -59,7 +72,6 @@ export function MainTopBar() {
 
 	function onBack() {
 		EvilbobRoot.instance().unmountPluginView();
-		setSearch("");
 	}
 
 	function onKeyUp(event: KeyboardEvent<HTMLInputElement>) {

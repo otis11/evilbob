@@ -107,7 +107,6 @@ export class EvilbobRoot {
 			]);
 			listener.register(config.keybindings.closePluginView.keys, () => {
 				EvilbobRoot.instance().unmountPluginView();
-				memoryStore.set("search", "");
 			});
 			listener.register(config.keybindings.openActions.keys, () => {
 				memoryStore.set("isActionsOpen", true);
@@ -302,6 +301,7 @@ export class EvilbobRoot {
 		memoryStore.set("pluginViewCommand", undefined);
 		memoryStore.set("actions", undefined);
 		memoryStore.set("searchHint", "");
+		memoryStore.set("search", memoryStore.get("lastGlobalSearch"));
 		window.dispatchEvent(new CustomEvent("evilbob-unmount-plugin-view"));
 	}
 

@@ -51,6 +51,7 @@ export function MainSearchView() {
 	async function onCommandClick(item: PluginCommandExtended) {
 		const command = await importPluginCommand(item.plugin.id, item.name);
 		if (item.type === "view") {
+			memoryStore.set("lastGlobalSearch", search);
 			memoryStore.set("search", "");
 			memoryStore.set("pluginViewCommand", item);
 			memoryStore.set(

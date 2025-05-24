@@ -12,6 +12,7 @@ interface MemoryStoreData {
 	config: EvilbobConfig | undefined;
 	search: string;
 	searchHint: string;
+	lastGlobalSearch: string;
 
 	isActionsOpen: boolean;
 	actions: JSX.Element | JSX.Element[] | undefined;
@@ -46,7 +47,7 @@ class MemoryStore<T> {
 		}
 	}
 	get<K extends keyof T>(key: K) {
-		return this.data.get(key) as T[K] | undefined;
+		return this.data.get(key) as T[K];
 	}
 	subscribe<K extends keyof T>(key: K, callback: (newValue: T[K]) => void) {
 		const currentSubscribers = this.subscribers.get(key) || [];
@@ -74,6 +75,7 @@ export const memoryStore = new MemoryStore<MemoryStoreData>({
 	config: undefined,
 	plugins: undefined,
 	isFullscreen: false,
+	lastGlobalSearch: "",
 });
 
 export const useMemoryStore = <K extends keyof MemoryStoreData>(key: K) => {

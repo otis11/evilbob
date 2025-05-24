@@ -9,6 +9,7 @@ export default definePlugin({
 	commands: [
 		{
 			title: "Top Sites",
+			description: "inspect your top visited sites",
 			type: "view",
 			name: "top-sites",
 		},

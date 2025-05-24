@@ -9,6 +9,7 @@ export default definePlugin({
 		{
 			title: "Colors",
 			name: "colors",
+			description: "Your saved colors",
 			type: "view",
 		},
 		{

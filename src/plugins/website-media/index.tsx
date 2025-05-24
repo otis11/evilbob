@@ -8,6 +8,7 @@ export default definePlugin({
 	commands: [
 		{
 			title: "Website Media Contents",
+			description: "Inspect images, svgs ...",
 			name: "media",
 			type: "view",
 		},

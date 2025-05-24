@@ -334,12 +334,15 @@ const VList = <T,>({
 	}
 
 	function onClick(child?: JSX.Element) {
+		if (!child) {
+			return;
+		}
 		window.dispatchEvent(new CustomEvent("evilbob-vlist-click"));
-		onSelect?.(child?.props.data);
+		onSelect?.(child.props.data);
 		setTimeout(() => {
 			listRoot.current?.focus();
 		}, 5);
-		if (typeof child?.props.onClick === "function") {
+		if (typeof child.props.onClick === "function") {
 			child.props.onClick();
 		}
 	}

@@ -8,7 +8,7 @@ export default definePlugin({
 	permissions: ["management"],
 	commands: [
 		{
-			title: "Extensions",
+			title: "Browser Extensions",
 			type: "view",
 			name: "extensions",
 		},

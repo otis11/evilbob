@@ -48,7 +48,7 @@ export default definePlugin({
 			name: "merge-windows",
 		},
 		{
-			title: "Split into windows",
+			title: "Split tabs into windows",
 			type: "command",
 			name: "split-into-windows",
 		},

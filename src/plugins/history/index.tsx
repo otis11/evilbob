@@ -8,12 +8,13 @@ export default definePlugin({
 	permissions: ["history"],
 	commands: [
 		{
-			title: "History",
+			title: "Browser history",
 			type: "view",
 			name: "history",
 		},
 		{
-			title: "History Visits",
+			title: "Url history",
+			description: "inspect all visits to a url",
 			type: "view",
 			name: "visits",
 		},

@@ -30,6 +30,14 @@ interface VListProps<T> {
 	activeElementTarget?: Document | ShadowRoot;
 }
 
+let lastMousePosition = { x: 0, y: 0 };
+function onMouseOver(event: Event) {
+	if (event instanceof MouseEvent) {
+		lastMousePosition = { x: event.clientX, y: event.clientY };
+	}
+}
+window.addEventListener("mouseover", onMouseOver);
+
 const VList = <T,>({
 	children,
 	surroundingItems = 1,
@@ -53,7 +61,6 @@ const VList = <T,>({
 	);
 	const [activeIndex, setActiveIndex] = useState(0);
 	const [parsedChildren, setParsedChildren] = useState<JSX.Element[]>([]);
-	const [lastMousePosition, setLastMousePosition] = useState({ x: 0, y: 0 });
 	const [availHeight, setAvailHeight] = useState<number>(0);
 
 	// biome-ignore lint/correctness/useExhaustiveDependencies : should not update if parsedChildren.length, itself sets it
@@ -313,7 +320,6 @@ const VList = <T,>({
 				(c) => c.key === child.key,
 			);
 			setActiveIndex(childIndex);
-			setLastMousePosition({ x: event.clientX, y: event.clientY });
 		}
 	}
 

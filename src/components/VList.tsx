@@ -21,6 +21,7 @@ interface VListProps<T> {
 	surroundingItems?: number;
 	itemWidth?: number;
 	itemsOutOfBounds?: number;
+	className?: string;
 	itemSpacing?: {
 		x: number;
 		y: number;
@@ -47,6 +48,7 @@ const VList = <T,>({
 	itemSpacing,
 	onSelect,
 	activeElementTarget = EvilbobRoot.instance().shadowRoot,
+	className,
 	...props
 }: VListProps<T>) => {
 	const [renderedChildren, setRenderedChildren] = useState<JSX.Element[]>([]);
@@ -346,7 +348,7 @@ const VList = <T,>({
 		<ul
 			// biome-ignore lint/a11y/noNoninteractiveTabindex: this one is interactive
 			tabIndex={0}
-			className="vlist m-0 text-sm flex list-none h-full overflow-auto relative "
+			className={`vlist m-0 text-sm flex list-none h-full overflow-auto relative ${className ? className : ""}`}
 			ref={listRoot}
 			onScroll={onScroll}
 			{...props}

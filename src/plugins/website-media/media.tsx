@@ -140,6 +140,9 @@ export function Command() {
 			>
 				{elements.map((element, index) => {
 					if (element instanceof HTMLImageElement) {
+						if (!element.src) {
+							return "";
+						}
 						if (
 							!element.src.includes(search.toLowerCase()) &&
 							!element.alt.includes(search.toLowerCase())

@@ -9,7 +9,7 @@ export default definePlugin({
 	permissions: ["sessions"],
 	commands: [
 		{
-			title: "Sessions",
+			title: "Browser sessions",
 			type: "view",
 			name: "sessions",
 		},

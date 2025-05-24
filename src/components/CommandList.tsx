@@ -16,7 +16,14 @@ export function CommandList({ commands, onSelect }: CommandListProps) {
 				>
 					<VListItemIcon>{command.plugin.icon}</VListItemIcon>
 					<span>{command.title}</span>
-					<span className="text-muted-foreground text-sm pl-4">
+					{command.description ? (
+						<span className="text-muted-foreground text-sm pl-4">
+							{command.description}
+						</span>
+					) : (
+						""
+					)}
+					<span className="text-muted-foreground text-xs pl-4">
 						{command.plugin?.title}
 					</span>
 					{command.type === "command" ? (

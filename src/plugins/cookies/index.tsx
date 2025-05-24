@@ -9,13 +9,12 @@ export default definePlugin({
 	icon: <CookieIcon></CookieIcon>,
 	commands: [
 		{
-			title: "Cookies",
+			title: "Cookies current tab",
 			name: "cookies",
 			type: "view",
 		},
 		{
-			title: "Clear second level domain cookies",
-			description: "(e.g. .github.com)",
+			title: "Clear cookies current tab",
 			name: "clear-second-level-domain-cookies",
 			type: "command",
 		},

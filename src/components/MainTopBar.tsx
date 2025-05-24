@@ -34,7 +34,11 @@ export function MainTopBar() {
 			}, 10);
 		}
 		window.addEventListener("focus", onWindowFocus);
-		return () => window.removeEventListener("focus", onWindowFocus);
+		window.addEventListener("focusin", onWindowFocus);
+		return () => {
+			window.removeEventListener("focus", onWindowFocus);
+			window.removeEventListener("focusin", onWindowFocus);
+		};
 	}, []);
 
 	function onChange(data: ChangeEvent<HTMLInputElement>) {
@@ -43,7 +47,9 @@ export function MainTopBar() {
 
 	useEffect(() => {
 		if (!pluginViewCommand || !isActionsOpen) {
-			inputRef.current?.focus();
+			setTimeout(() => {
+				inputRef.current?.focus();
+			}, 10);
 		}
 	}, [pluginViewCommand, isActionsOpen]);
 

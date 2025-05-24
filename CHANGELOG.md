@@ -1,3 +1,16 @@
+## 0.8.3 (May 24, 2025)
+- Change the default shortcut to close a view to `cmd` `x` to not interfere with other browser shortcuts
+- Plugin `media`
+  - Resize images and svgs based on their height and width to contain the full media visible in one list item
+- Improve focus handling
+  - When a list is clicked, focus the list
+  - When the window gets focused and evilbob is open, focus the search input
+  - Trigger all focus handling after a short delay to wait for website focus redirects
+- When going back to the global command search, reset the small search hint which view is currently active
+- When the mouse wasn't move don't select a list item
+- Restore the last search in the global command search when going back from a plugin view
+- Improve the description of some commands
+
 ## 0.8.2 (May 17, 2025)
 - Plugin `image-conversion`
   - add the `Image Conversion` view to convert images to `png`, `jpeg` or `webp`

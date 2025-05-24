@@ -26,6 +26,17 @@ export function MainTopBar() {
 	const [searchHint, setSearchHint] = useMemoryStore("searchHint");
 	const [isActionsOpen, setIsActionsOpen] = useMemoryStore("isActionsOpen");
 
+	useEffect(() => {
+		function onWindowFocus() {
+			// 10ms delay to wait for any website focus redirects
+			setTimeout(() => {
+				inputRef.current?.focus();
+			}, 10);
+		}
+		window.addEventListener("focus", onWindowFocus);
+		return () => window.removeEventListener("focus", onWindowFocus);
+	}, []);
+
 	function onChange(data: ChangeEvent<HTMLInputElement>) {
 		setSearch(data.target.value);
 	}

@@ -83,7 +83,7 @@ export function Search() {
 	return (
 		<>
 			<Toast></Toast>
-			<Tabs defaultValue="everywhere" className="w-full h-full">
+			<Tabs defaultValue={config?.search.default || "everywhere"} className="w-full h-full">
 				<SearchTopBar></SearchTopBar>
 				<div className="h-8 min-h-8 flex items-center relative">
 					<TabsList className="ml-8">

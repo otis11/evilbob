@@ -5,6 +5,7 @@ export default definePlugin({
 	title: "Bookmarks",
 	description: "Interact with bookmarks",
 	permissions: ["bookmarks"],
+    searchEverywhereName: "everywhere",
 	icon: <BookmarkIcon></BookmarkIcon>,
 	commands: [
 		{

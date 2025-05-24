@@ -482,7 +482,7 @@ const VListItemText = ({
 }: VListItemTextProps) => {
 	return (
 		<span
-			className={`text-muted-foreground text-sm truncate ${className ? className : ""}`}
+			className={`text-muted-foreground text-sm truncate shrink-0 pr-4 ${className ? className : ""}`}
 			{...props}
 		>
 			{children}

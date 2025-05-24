@@ -18,6 +18,9 @@ export interface EvilbobConfig {
 		enabled: Record<string, boolean>;
 	};
 	keybindings: Record<KeybindingKey, Keybinding>;
+    search: {
+        default: "everywhere" | "by-plugins"
+    }
 }
 
 export const DEFAULT_CONFIG: EvilbobConfig = {
@@ -32,6 +35,9 @@ export const DEFAULT_CONFIG: EvilbobConfig = {
 			"image-conversion": true,
 		},
 	},
+    search: {
+        default: "everywhere",
+    },
 	keybindings: defaultKeybindings,
 };
 

@@ -226,7 +226,7 @@ export const browserApi = {
 		},
 	},
 	bookmarks: {
-		async getTree() {
+		async getTree(): Promise<chrome.bookmarks.BookmarkTreeNode[]> {
 			return await chrome.runtime.sendMessage({
 				event: "chrome.bookmarks.getTree",
 			});

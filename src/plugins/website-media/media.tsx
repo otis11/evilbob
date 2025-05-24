@@ -146,6 +146,12 @@ export function Command() {
 						) {
 							return "";
 						}
+						const classes: string[] = [];
+						if (element.naturalHeight > element.naturalWidth) {
+							classes.push("w-auto", "h-full");
+						} else {
+							classes.push("w-full", "h-auto");
+						}
 						return (
 							<VListItemTile
 								className="p-1"
@@ -172,11 +178,15 @@ export function Command() {
 						}
 						const node = element.cloneNode(true) as SVGElement;
 						const ogStyle = getComputedStyle(element);
-						const classes = [
-							"w-full",
-							"h-auto",
-							"!text-foreground",
-						];
+						const classes = ["!text-foreground"];
+						if (
+							Number.parseInt(ogStyle.height.replace("px", "")) >
+							Number.parseInt(ogStyle.width.replace("px", ""))
+						) {
+							classes.push("w-auto", "h-full");
+						} else {
+							classes.push("w-full", "h-auto");
+						}
 						if (ogStyle.fill !== "none" && ogStyle.fill !== "") {
 							classes.push("!fill-foreground");
 						}
@@ -199,7 +209,7 @@ export function Command() {
 								}
 							>
 								<div
-									className="w-full h-full object-contain"
+									className="w-full h-full flex items-center justify-center"
 									// biome-ignore lint/security/noDangerouslySetInnerHtml: can do better? seems okish
 									dangerouslySetInnerHTML={{
 										__html: node.outerHTML,
@@ -261,7 +271,7 @@ export function Command() {
 											getComputedStyle(element)
 												.backgroundImage,
 									}}
-									className="w-full h-full object-contain"
+									className="w-full h-full bg-contain bg-center bg-no-repeat"
 								/>
 							</VListItemTile>
 						);

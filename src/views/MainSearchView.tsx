@@ -27,6 +27,8 @@ export function MainSearchView() {
 			memoryStore.set("searchHint", pluginViewCommand.title);
 		} else if (searchHasBang) {
 			memoryStore.set("searchHint", "Bangs");
+		} else {
+			memoryStore.set("searchHint", "");
 		}
 	}, [pluginViewCommand, searchHasBang]);
 

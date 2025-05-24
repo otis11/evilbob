@@ -115,8 +115,8 @@ export function MainTopBar() {
 					onClick={onSettingsClick}
 				></SettingsIcon>
 			</div>
-			<div className="h-8 min-h-8 flex items-center relative">
-				<div className="text-xs tracking-widest text-muted-foreground flex items-center gap-1">
+			<div className="h-8 min-h-8 flex items-center justify-center relative">
+				<div className="text-xs tracking-widest text-muted-foreground flex items-center gap-1 absolute left-0 top-2">
 					{pluginViewCommand ? (
 						<>
 							Go Back{" "}
@@ -130,10 +130,10 @@ export function MainTopBar() {
 						""
 					)}
 				</div>
-				<div className="text-sm text-muted-foreground left-1/2 transform -translate-x-1/2 absolute">
+				<div className="text-sm text-muted-foreground">
 					{searchHint}
 				</div>
-				<span className="ml-auto">
+				<span className="absolute right-0 top-2">
 					<ActionsBoxTop>{actions}</ActionsBoxTop>
 				</span>
 			</div>

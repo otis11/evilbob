@@ -1,3 +1,8 @@
+> **_NOTE:_** This browser extension will not be continued as the ultimate goal to provide a raycast like command palette does not comply with the single purpose guideline. Was fun prototyping though :)
+> - https://blog.chromium.org/2013/12/keeping-chrome-extensions-simple.html
+> - https://developer.chrome.com/docs/webstore/program-policies/quality-guidelines-faq#single-purpose
+
+
 <p align="center">
     <img src="https://raw.githubusercontent.com/otis11/evilbob/refs/heads/main/src/media/evilbob-icon-128x128.png">
 </p>
